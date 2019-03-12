@@ -13,7 +13,6 @@ export function holiday(date)
     dayofweek = (new Date(date)).getDay(),
     Mon = dayofweek === 1,
     Tue = dayofweek === 2,
-    Wed = dayofweek === 3,
 
   // Thai official holiday & Compensation
   Thai = {
@@ -27,8 +26,8 @@ export function holiday(date)
     "04-13": "Songkran",
     "04-14": "Songkran",
     "04-15": "Songkran",
-    "04-16": (Mon || Tue || Wed) && "Songkransub",
-    "04-17": (Mon || Tue || Wed) && "Songkransub",
+    "04-16": (Mon || Tue) && "Songkransub",
+    "04-17": (Mon || Tue) && "Songkransub",
     "07-28": "King10",
     "07-29": Mon && "King10sub",
     "07-30": Mon && "King10sub",

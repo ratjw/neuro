@@ -1,15 +1,13 @@
 
-import { EQUIPMENT } from "../model/const.js"
+import { EQUIPMENT, NAMEOFDAYTHAI } from "../model/const.js"
 import { clearEditcell } from "../control/edit.js"
 import { USER } from "../main.js"
 import { sqlGetEquip, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlGetEquip.js"
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
-import { BOOK, CONSULT, updateBOOK } from "../util/updateBOOK.js"
-import { Alert, isOnConsultsTbl } from "../util/util.js"
+import { updateBOOK } from "../util/updateBOOK.js"
+import { Alert, winHeight } from "../util/util.js"
 import { viewEquipJSON } from "../view/viewEquip.js"
-
-const NAMEOFDAYTHAI  = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์"]
 
 let rowEquip,
   JsonEquip,
@@ -18,27 +16,25 @@ let rowEquip,
 
 export function getEQUIP(pointing)
 {
-  let qn = pointing.closest('tr').dataset.qn
-
-  if (!qn) { return }
-
   let tableID = pointing.closest('table').id,
     row = pointing.closest('tr'),
-    book = isOnConsultsTbl(tableID)? CONSULT : BOOK,
-    height = window.innerHeight,
+    qn = row.dataset.qn,
+    height = winHeight(95),
     thisEquip = {
-      oproom: row.dataset.oproom || "",
-      casenum: row.dataset.casenum || "",
-      optime: row.dataset.optime,
-      opday: NAMEOFDAYTHAI[(new Date(row.dataset.opdate)).getDay()],
-      opdateth: putThdate(row.dataset.opdate),
-      staffname: row.dataset.staffname,
-      hn: row.dataset.hn,
-      patientname: row.dataset.patient,
-      age: putAgeOpdate(row.dataset.dob, row.dataset.opdate),
-      diagnosis: row.dataset.diagnosis,
-      treatment: row.dataset.treatment
+      oproomequip: row.dataset.oproom || "",
+      casenumequip: row.dataset.casenum || "",
+      optimeequip: row.dataset.optime,
+      opdayequip: NAMEOFDAYTHAI[(new Date(row.dataset.opdate)).getDay()],
+      opdatethequip: putThdate(row.dataset.opdate),
+      staffnameequip: row.dataset.staffname,
+      hnequip: row.dataset.hn,
+      patientnameequip: row.dataset.patient,
+      ageequip: putAgeOpdate(row.dataset.dob, row.dataset.opdate),
+      diagnosisequip: row.dataset.diagnosis,
+      treatmentequip: row.dataset.treatment
     }
+
+  if (!qn) { return }
 
   for (let key in thisEquip) {
     document.getElementById(key).innerHTML = thisEquip[key]
@@ -100,13 +96,14 @@ function clickRadioInput()
 
 function showNonEditableEquip()
 {
-  $('#dialogEquip').dialog("option", "buttons", [
+  $dialogEquip.dialog("option", "buttons", [
     {
       text: "ยกเลิกทุกรายการ",
       style: "margin-right:450px",
       click: function () {
         if (confirm("ลบออกทั้งหมด")) {
           cancelAllEquip()
+          $dialogEquip.dialog('close')
         }
       }
     },
@@ -123,7 +120,7 @@ function showNonEditableEquip()
 // having any equip must have copay. if no copay, ->alert
 // having no equip, cancel copay
 let showEditableEquip = function () {
-  $('#dialogEquip').dialog("option", "buttons", [
+  $dialogEquip.dialog("option", "buttons", [
     {
       text: "Save",
       click: function () {
@@ -136,6 +133,7 @@ let showEditableEquip = function () {
           }
         } else {
           cancelAllEquip()
+          $dialogEquip.dialog('close')
         }
       }
     }
@@ -196,7 +194,7 @@ function checkEquip()
 {
   let equip = false
 
-  document.querySelectorAll('#dialogEquip input:not(#copay), #dialogEquip textarea').forEach(e => {
+  $('#dialogEquip input:not(#copay), #dialogEquip textarea').each((i, e) => {
     if (e.checked) {
       equip = true
       return false
@@ -246,7 +244,7 @@ let Checklistequip = function () {
       $('#dialogEquip input').val('')
       $('#dialogEquip textarea').val('')
       rowEquip &&
-        Object.entries(JSON.parse(rowEquip)).each(([key, val]) => {
+        Object.entries(JSON.parse(rowEquip)).forEach(([key, val]) => {
           val === 'checked'
           ? document.getElementById("#"+ key).checked = true
           : document.getElementById("#"+ key).value = val
@@ -262,7 +260,7 @@ function cancelAllEquip()
   sqlCancelAllEquip(thisqn).then(response => {
     let hasData = function () {
       updateBOOK(response)
-      delelteAllEquip(response)
+      delelteAllEquip()
     }
 
     typeof response === "object"
@@ -272,12 +270,11 @@ function cancelAllEquip()
   }).catch(error => {})
 }
 
-function delelteAllEquip(qn)
+function delelteAllEquip()
 {
-  let $row = getTableRowByQN("maintbl", qn)
+  let $row = getTableRowByQN("maintbl", thisqn)
 
   $row.find("td").eq(EQUIPMENT).html('')
-  $("#dialogEquip").dialog('close')
 }
 
 function restoreAllEquip(response, rowEquip, JsonEquip)

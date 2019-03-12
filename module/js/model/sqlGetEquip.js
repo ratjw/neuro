@@ -17,7 +17,7 @@ export function sqlSaveEquip(equipment, qn) {
 
 export function sqlCancelAllEquip(qn)
 {
-  sql = `sqlReturnbook=UPDATE book SET equipment='',editor='${USER}' WHERE qn='${qn}';`
+  let sql = `sqlReturnbook=UPDATE book SET equipment='',editor='${USER}' WHERE qn='${qn}';`
 
   return postData(MYSQLIPHP, sql)
 }

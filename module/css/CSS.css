@@ -154,7 +154,7 @@ td.consult:nth-child(8)::after {
 #maintbl td:nth-child(8) { min-width: 70px; width: 10%; }
 #maintbl td:nth-child(9) { min-width: 200px; width: 15%; }
 #maintbl td:nth-child(10) { min-width: 200px; width: 15%; }
-#maintbl td:nth-child(11) { min-width: 100px; width: 25%; }
+#maintbl td:nth-child(11) { min-width: 200px; width: 20%; }
 #maintbl td:nth-child(12) { min-width: 100px; width: 15%; }
 
 #queuetbl td:first-child { min-width: 40px; max-width: 60px; }
@@ -265,7 +265,6 @@ td.consult:nth-child(8)::after {
 #monthpicker button.ui-datepicker-current,
 #monthpicker .ui-datepicker-calendar,
 #monthstart,
-.imgclose,
 #dialogReview,
 #dialogEquip,
 #dialogAll, #allcells,
@@ -287,6 +286,7 @@ td.consult:nth-child(8)::after {
 #holidayInput,
 #capture,
 #dialogNotify,
+.imgclose,
 .ui-datepicker-year {
 	display: none;
 }
@@ -513,7 +513,7 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 }
 
 .ui-dialog-title {
-    font-size: 120%;
+  font-size: 120%;
 	text-align: center; 
 }
 
@@ -701,12 +701,6 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 
 #Grand {
 	background-color: Turquoise;
-}
-
-#dialogEquip {
-	font-size: 14px;
-	color: black;
-	background-color: white;
 }
 
 #oproom,

@@ -61,7 +61,7 @@ function success(response) {
   clearSelection()
   overrideJqueryUI()
   resetTimer()
-  serverSentEvent()
+//  serverSentEvent()
 }
 
 // *** plan -> offline browsing by service worker ***
