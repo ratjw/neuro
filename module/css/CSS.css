@@ -6,60 +6,60 @@ html, body {
 }
 
 #wrapper {
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
-	font-family: sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: sans-serif;
 }
 
 #mainwrapper {
-	float: left;
-	height: 100%;
-	width: 100%;
+  float: left;
+  height: 100%;
+  width: 100%;
 }
 
 #maincontainer {
-	height: 95%;
-	width: 100%;
-	overflow: scroll;
-	box-sizing: border-box;
-	border: solid 2px silver;
+  height: 95%;
+  width: 100%;
+  overflow: scroll;
+  box-sizing: border-box;
+  border: solid 2px silver;
 }
 
 table {
-	border-right: solid 1px gray;
-	border-collapse: collapse;
+  border-right: solid 1px gray;
+  border-collapse: collapse;
 }
 
 th {
-	height: 30px;
-	font-size: 14px;
-	font-weight: bold;
-	background-color: #7799AA;
-	color: white;
-	border-top: solid 1px silver;
-	border-left: solid 1px silver;
-	border-bottom: solid 1px silver;
+  height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #7799AA;
+  color: white;
+  border-top: solid 1px silver;
+  border-left: solid 1px silver;
+  border-bottom: solid 1px silver;
 }
 
 td {
-	empty-cells: show;
-	height: 30px;
-	font-size: 14px;
-	padding-left: 3px;
-	border-left: solid 1px lightgray;
-	border-bottom: solid 1px silver;
-	background-repeat: no-repeat;
-	background-position: right bottom;
+  empty-cells: show;
+  height: 30px;
+  font-size: 14px;
+  padding-left: 3px;
+  border-left: solid 1px lightgray;
+  border-bottom: solid 1px silver;
+  background-repeat: no-repeat;
+  background-position: right bottom;
 }
 
 /* used in Equipment column */
 td img {
-	height: 25px;
-	width: 25px;
+  height: 25px;
+  width: 25px;
 }
 td img.imgpale {
-	filter: opacity(30%);
+  filter: opacity(30%);
 }
 
 td.consult:nth-child(8)::after { 
@@ -70,15 +70,15 @@ td.consult:nth-child(8)::after {
 }
 
 #queuewrapper {
-	float: right;
+  float: right;
 }
 
 #queuecontainer {
-	overflow: auto;
-	box-sizing: border-box;
-	border-top: solid 2px silver;
-	border-right: solid 2px silver;
-	border-left: solid 2px snow;
+  overflow: auto;
+  box-sizing: border-box;
+  border-top: solid 2px silver;
+  border-right: solid 2px silver;
+  border-left: solid 2px snow;
 }
 
 #maintbl.showColumn2 th:nth-child(2),
@@ -96,7 +96,7 @@ td.consult:nth-child(8)::after {
 #queuetbl td:nth-child(3),
 #queuetbl td:nth-child(4),
 #queuetbl td:nth-child(5) {
-	font-size: xx-small;
+  font-size: xx-small;
   padding: 0px;
 }
 
@@ -132,7 +132,7 @@ td.consult:nth-child(8)::after {
 #historytbl td:nth-child(12),
 #findtbl td,
 #alltbl td {
-	font-size: 12px;
+  font-size: 12px;
 }
 
 #maintbl td:nth-child(2),
@@ -142,7 +142,7 @@ td.consult:nth-child(8)::after {
 #servicetbl td:first-child,
 #historytbl td:nth-child(2),
 #historytbl td:nth-child(3) {
-	text-align: center;
+  text-align: center;
 }
 
 #maintbl td:first-child { min-width: 40px; max-width: 60px; }
@@ -166,21 +166,21 @@ td.consult:nth-child(8)::after {
 #queuetbl td:nth-child(12) { min-width: 100px; width: 20%; }
 
 #queuetbl {
-	margin-bottom: 100px;
+  margin-bottom: 100px;
 }
 
 #titlebar {
-	height: 40px;
-	background-color: #7799AA;
+  height: 40px;
+  background-color: #7799AA;
 }
 
 #titlename {
-	font-size: 20px;
-	font-weight: bold;
-	color: white;
-	width: 100px;
-	line-height: 35px;
-	margin-left: 25px;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  width: 100px;
+  line-height: 35px;
+  margin-left: 25px;
 }
 
 #servicetbl th:nth-child(1) { width: 15px; }
@@ -201,12 +201,12 @@ td.consult:nth-child(8)::after {
 #servicetbl td:nth-child(11) { width: 40px; }
 
 #servicetbl td.serviceStaff {
-	height: 40px;
-	font-weight: bold;
-	font-size: 16px;
-	text-align: left;
-	padding-left: 10px;
-	background-color: #DDFFFF;
+  height: 40px;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: left;
+  padding-left: 10px;
+  background-color: #DDFFFF;
 }
 
 #historytbl th:nth-child(1) { width: 5%; }
@@ -288,42 +288,42 @@ td.consult:nth-child(8)::after {
 #dialogNotify,
 .imgclose,
 .ui-datepicker-year {
-	display: none;
+  display: none;
 }
 
 #dialogInput { font-size: 14px; overflow: hidden; }
 #dialogInput span { width:50px }
 #dialogInput input[name=others] { width:450px }
 #dialogInput img {
-	float: right;
-	width: 150px;
-	border: 1px solid skyblue;
-	margin-right: 20px;
+  float: right;
+  width: 150px;
+  border: 1px solid skyblue;
+  margin-right: 20px;
 }
 #dialogInput img:hover {
-	border: 2px outset blue;
+  border: 2px outset blue;
 }
 
 #deleted,
 #notdeleted {
-	height:30px;
-	width:140px;
+  height:30px;
+  width:140px;
 }
 
 #undelete { 
-	width: 127px;
+  width: 127px;
 }
 
 #undel { 
-	display: inline-block;
-	text-align: center; 
-	height: 25px;
-	width: 100px;
-	font-size: 14px;
-	color: black;
-	background-color: white;
-	border: 2px solid slategray;
-	line-height: 25px;
+  display: inline-block;
+  text-align: center; 
+  height: 25px;
+  width: 100px;
+  font-size: 14px;
+  color: black;
+  background-color: white;
+  border: 2px solid slategray;
+  line-height: 25px;
 }
 
 #reviewtbl tbody tr:nth-child(6) td:first-child { font-weight: normal }
@@ -331,12 +331,12 @@ td.consult:nth-child(8)::after {
 
 tr#movefrom td,
 tr#moveto td {
-	height: 50px;
-	font-size: 16px;
-	font-weight: bold;
-	vertical-align: bottom;
-	padding-bottom: 15px;	
-	border-left: 0px;
+  height: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  vertical-align: bottom;
+  padding-bottom: 15px;  
+  border-left: 0px;
 }
 
 .leftButton { margin-right: 80px !important; }
@@ -355,7 +355,7 @@ tr#moveto td {
 
 /* mark the row of fillEquipTable, tracking, find, and pasted row after moveCase */
 tr.marker {
-	border: solid 3px skyblue !important;
+  border: solid 3px skyblue !important;
 }
 
 @keyframes blink1 { 
@@ -363,13 +363,13 @@ tr.marker {
 }
 
 tr.moveCase {
-	animation: blink1 .5s step-end infinite alternate;
-	background-color: pink !important;
+  animation: blink1 .5s step-end infinite alternate;
+  background-color: pink !important;
 }
 
 tr.copyCase {
-	animation: blink1 .5s step-end infinite alternate;
-	background-color: lightblue !important;
+  animation: blink1 .5s step-end infinite alternate;
+  background-color: lightblue !important;
 }
 
 @keyframes blink2 { 
@@ -378,16 +378,16 @@ tr.copyCase {
 
 /* mark where move/copy case will be pasted */
 tr.pasteDate {
-	animation: blink2 .5s step-end infinite alternate;
-	border-bottom: solid 3px skyblue;
+  animation: blink2 .5s step-end infinite alternate;
+  border-bottom: solid 3px skyblue;
 }
 
 tr.selected {
-	border: solid 2px #0099FF !important;
+  border: solid 2px #0099FF !important;
 }
 
 tr.selected td {
-	background-color: #d9f0FF;
+  background-color: #d9f0FF;
 }
 
 tr.Sunday { background-color: #FFDDEE; }
@@ -427,7 +427,7 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 .Dead { background-color: #AAAAAA !important; }
 
 .divRecord {
-	width: 200px;
+  width: 200px;
 }
 
 .divRecord label {
@@ -504,69 +504,69 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 }
 
 .ui-sortable-helper {
-	display: table;
+  display: table;
 }
 
 .ui-dialog {
-	position: fixed;
-	box-shadow: 10px 20px 30px slategray;
+  position: fixed;
+  box-shadow: 10px 20px 30px slategray;
 }
 
 .ui-dialog-title {
   font-size: 120%;
-	text-align: center; 
+  text-align: center; 
 }
 
 .ui-icon-closethick {
-	float: right;
-	top: 15px;
-	right:10px;
+  float: right;
+  top: 15px;
+  right:10px;
 }
 
 .iconcontainer {
-	float: right;
-	height: 30px;
+  float: right;
+  height: 30px;
 }
 
 .ui-resizable-e { 
-	cursor: e-resize; 
-	width: 10px; 
-	top: 0; 
+  cursor: e-resize; 
+  width: 10px; 
+  top: 0; 
 }
 
 .ui-icon:hover {
-	cursor: pointer;
-	border: black dotted
+  cursor: pointer;
+  border: black dotted
 }
 
 .ui-icon-circle-close {
-	float: right;
-	background-color: white;
-	height: 15px;
-	width: 15px;
+  float: right;
+  background-color: white;
+  height: 15px;
+  width: 15px;
 }
 
 .ui-dialog-buttonpane {
-	font-size: 0px;
+  font-size: 0px;
 }
 
 .ui-dialog-buttonset {
-	font-size: 14px;
-	margin: 0 30px 0 0;
+  font-size: 14px;
+  margin: 0 30px 0 0;
 }
 
 .dialogBox span {
-	display:inline-block;
-	padding: 0px;
-	margin: 0px;
-	border: 0px;
+  display:inline-block;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
 }
 
 .fixed{
-	position: fixed;
-	width: auto;
-	display: none;
-	border: none;
+  position: fixed;
+  width: auto;
+  display: none;
+  border: none;
 }
 
 .floatleft { float: left;}
@@ -606,101 +606,105 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 .yearbut { color:white !important; background-color: #0077BB !important; }
 
 #historytbl tr:nth-child(odd) {
-	background-color: #EEEEFF;
+  background-color: #EEEEFF;
 }
 
 #deletedtbl tr:nth-child(odd) {
-	background-color: #FFF3F9;
+  background-color: #FFF3F9;
 }
 #deletedtbl tr:nth-child(even) {
-	background-color: snow;
+  background-color: snow;
 }
 
 #servicehead {
-	width: auto;
-	text-align: center;
+  width: auto;
+  text-align: center;
 }
 
 #servicehead span.item {
-	display: inline-block; 
-	border: solid 1px white;
-	width: 170px;
-	padding: 2px 10px;
+  display: inline-block; 
+  border: solid 1px white;
+  width: 170px;
+  padding: 2px 10px;
 }
 
 #monthpicker { margin-left:5px }
 
 .imgopen,
 .imgclose {
-	float: left;
-	width: 20px;
+  float: left;
+  width: 20px;
 }
 
 #editcell { 
-	text-align: left; 
-	overflow: hidden;
-	padding-left: 3px;
-	border: solid 1px #0099FF;
-	background-color: white;
-	box-shadow: 5px 5px 10px slategray;
+  text-align: left; 
+  overflow: hidden;
+  padding-left: 3px;
+  border: solid 1px #0099FF;
+  background-color: white;
+  box-shadow: 5px 5px 10px slategray;
 }
 
 #stafflist {
-	font-size: 14px;
-	width: 110px;
+  font-size: 14px;
+  width: 110px;
 }
 
 #staffmenu {
-	width: 100px;
-	box-shadow: 10px 20px 30px slategray;
+  width: 100px;
+  box-shadow: 10px 20px 30px slategray;
 }
 
 #postponecase {
-	width: 200px;
-	white-space: nowrap;
+  width: 200px;
+  white-space: nowrap;
 }
 
 #delcase {
-	width: 170px;
-	white-space: nowrap;
+  width: 170px;
+  white-space: nowrap;
 }
 
 #reviewtbl {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 #reviewtbl th.first {
-	width: 150px;
+  width: 150px;
 }
 
 #reviewtbl td {
-	width: 40px;
-	text-align: center;
+  width: 40px;
+  text-align: center;
 }
 
 #reviewtbl td:first-child {
-	text-align: left;
+  text-align: left;
 }
 
 #reviewtbl th.elect {
-	background-color: #33AA77;
+  background-color: #33AA77;
 }
 
 #reviewtbl th.emer {
-	background-color: #FF6688;
+  background-color: #FF6688;
 }
 
 #reviewtbl tr.nonsurgical td {
-	background-color: LightGray;
-	border-left: solid 1px silver;
+  background-color: LightGray;
+  border-left: solid 1px silver;
 }
 
 #Total {
-	background-color: BurlyWood;
+  background-color: BurlyWood;
 }
 
 #Grand {
-	background-color: Turquoise;
+  background-color: Turquoise;
+}
+
+#dialogEquip {
+  font-size: 14px;
 }
 
 #oproom,
@@ -711,131 +715,131 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 
 #dialogEquip input[type=radio] + label,
 #dialogEquip input[type=checkbox] + label {
-	color: #999999;
+  color: #999999;
 }
 #dialogEquip input[type=radio]:checked + label,
 #dialogEquip input[type=checkbox]:checked + label {
-	color: black;
-	font-weight: bold;
+  color: black;
+  font-weight: bold;
 }
 #dialogEquip input[type=text] {
-	border: 0;
-	outline: 0;
-	background: transparent;
-	border-bottom: 1px dashed gray;
-	color: blue;
-	font-weight: bold;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px dashed gray;
+  color: blue;
+  font-weight: bold;
 }
 #dialogEquip textarea {
-	width: 500px;
-	height: 55px;
-	padding: 2px;
-	color: blue;
-	font-weight: bold;
+  width: 500px;
+  height: 55px;
+  padding: 2px;
+  color: blue;
+  font-weight: bold;
 }
 #editedby {
-	position: absolute;
+  position: absolute;
 }
 
 #dialogHoliday table td {
-	padding: 0 10px;
+  padding: 0 10px;
 }
 
 #dialogNotify textarea {
-	height: 190px;
-	padding: 7px;
-	font-size: 14px;
+  height: 190px;
+  padding: 7px;
+  font-size: 14px;
 }
 #buttonLINE {
-	width: 50px;
-	height: 50px;
-	background-image: url(pic/general/message.png);
-	background-size: 50px;
-	border: 1px solid lightblue;
+  width: 50px;
+  height: 50px;
+  background-image: url(pic/general/message.png);
+  background-size: 50px;
+  border: 1px solid lightblue;
 }
 #buttonLINE:hover {
-	border: 2px solid lightblue;
+  border: 2px solid lightblue;
 }
 
 #spin {
-	height: 20px;
-	width: 35px;
-	font-size: 14px;
-	margin: 0px;
+  height: 20px;
+  width: 35px;
+  font-size: 14px;
+  margin: 0px;
 }
 
 @media only screen and (max-width: 640px) {
 
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, tr, th, td { 
-		display: block; 
-	}
+  /* Force table to not be like tables anymore */
+  table, thead, tbody, tr, th, td { 
+    display: block; 
+  }
 
-	/* Hide table headers (but not display: none;, for accessibility) */
-	th { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
+  /* Hide table headers (but not display: none;, for accessibility) */
+  th { 
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
  
-	tr { border: 1px solid #ccc; }
+  tr { border: 1px solid #ccc; }
 
-	#maintbl td:first-child,
-	#maintbl td:nth-child(2),
-	#maintbl td:nth-child(3),
-	#maintbl td:nth-child(4),
-	#maintbl td:nth-child(5),
-	#maintbl td:nth-child(6),
-	#maintbl td:nth-child(7),
-	#maintbl td:nth-child(8),
-	#maintbl td:nth-child(9),
-	#maintbl td:nth-child(10),
-	#maintbl td:nth-child(11),
-	#maintbl td:nth-child(12) { width: auto; }
+  #maintbl td:first-child,
+  #maintbl td:nth-child(2),
+  #maintbl td:nth-child(3),
+  #maintbl td:nth-child(4),
+  #maintbl td:nth-child(5),
+  #maintbl td:nth-child(6),
+  #maintbl td:nth-child(7),
+  #maintbl td:nth-child(8),
+  #maintbl td:nth-child(9),
+  #maintbl td:nth-child(10),
+  #maintbl td:nth-child(11),
+  #maintbl td:nth-child(12) { width: auto; }
 
-	td { 
-		/* Behave  like a "row" */
-		height: auto;
-		min-height: 30px;
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 40%; 
-		white-space: normal;
-		text-align: left;
-		empty-cells: show;
-	}
+  td { 
+    /* Behave  like a "row" */
+    height: auto;
+    min-height: 30px;
+    border: none;
+    border-bottom: 1px solid #eee; 
+    position: relative;
+    padding-left: 40%; 
+    white-space: normal;
+    text-align: left;
+    empty-cells: show;
+  }
 
-	td:first-child {
-		font-size: 16px;
-	}
+  td:first-child {
+    font-size: 16px;
+  }
 
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 7px;
-		left: 7px;
-		width: 35%; 
-		white-space: nowrap;
-		text-align: left;
-		font-weight: bold;
-	/*
-	Label the data
-	*/
-		content: attr(data-title);
-	}
+  td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 7px;
+    left: 7px;
+    width: 35%; 
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+  /*
+  Label the data
+  */
+    content: attr(data-title);
+  }
 
-	td.Sun:before { font-size: 18px; top: 2px; content: "วันอาทิตย์ "; }
-	td.Mon:before { font-size: 18px; top: 2px; content: "วันจันทร์ "; }
-	td.Tue:before { font-size: 18px; top: 2px; content: "วันอังคาร "; }
-	td.Wed:before { font-size: 18px; top: 2px; content: "วันพุธ "; }
-	td.Thu:before { font-size: 18px; top: 2px; content: "วันพฤหัส "; }
-	td.Fri:before { font-size: 18px; top: 2px; content: "วันศุกร์ "; }
-	td.Sat:before { font-size: 18px; top: 2px; content: "วันเสาร์ "; }
+  td.Sun:before { font-size: 18px; top: 2px; content: "วันอาทิตย์ "; }
+  td.Mon:before { font-size: 18px; top: 2px; content: "วันจันทร์ "; }
+  td.Tue:before { font-size: 18px; top: 2px; content: "วันอังคาร "; }
+  td.Wed:before { font-size: 18px; top: 2px; content: "วันพุธ "; }
+  td.Thu:before { font-size: 18px; top: 2px; content: "วันพฤหัส "; }
+  td.Fri:before { font-size: 18px; top: 2px; content: "วันศุกร์ "; }
+  td.Sat:before { font-size: 18px; top: 2px; content: "วันเสาร์ "; }
 
-	#menu, #stafflist {
-	/*	position: relative;*/
-		font-size: 14px;
-	}
+  #menu, #stafflist {
+  /*  position: relative;*/
+    font-size: 14px;
+  }
 }
