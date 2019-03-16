@@ -53,9 +53,7 @@ export function htmlEquipment()
     } else if (type === "radio" || type === "checkbox") {
       equip += `<span class="w${width}">
                  <label for="${id}">
-                   <input type="${type}" name="${name}" id="${id}">
-                   ${label}
-                 </label>
+                   <input type="${type}" name="${name}" id="${id}">${label}</label>
                 </span>`
     } else if (type === "text") {
       equip += `<span>
@@ -96,20 +94,18 @@ export function htmldivRecord()
     max = item[7] || ""
 
     if (labelwidth === "br") {
-    record += `<br>`
+			record += `<br>`
     } else if (labelwidth === "hr") {
-    record += `<hr>`
+			record += `<hr>`
     } else if (type === "number") {
-    record += `<label class="w${labelwidth}">
-           <span>${label}</span>
-           <input class="w${inputwidth}" type="${type}" name="${name}" title="${title}" value="" min="${min}" max="${max}">
-         </label>`
-  } else {
-    record += `<label class="w${labelwidth}">
-           <input class="w${inputwidth}" type="${type}" name="${name}" title="${title}" value="${title}">
-           <span style="right:${inputwidth}px">${label}</span>
-         </label>`
-  }
+			record += `<label class="w${labelwidth}">
+				<span>${label}</span>
+				<input class="w${inputwidth}" type="${type}" name="${name}" title="${title}" value="" min="${min}" max="${max}"></label>`
+		} else {
+			record += `<label class="w${labelwidth}">
+				<input class="w${inputwidth}" type="${type}" name="${name}" title="${title}" value="${title}">
+				<span style="right:${inputwidth}px">${label}</span></label>`
+		}
   })
 
   document.querySelector("#profileRecord .divRecord").innerHTML = record
