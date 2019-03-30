@@ -1,71 +1,45 @@
 
-import { UndoManager } from "../model/UndoManager.js"
-import {
-	OPDATE, THEATRE, OPROOM, STAFFNAME, QN, LARGESTDATE
-} from "../model/const.js"
-import { fetchPostponeCase } from "../model/move.js"
-import { getOpdate } from "../util/date.js"
-import { sameDateRoomTableQN } from "../util/getrows.js"
-import { BOOK, updateBOOK } from "../util/variables.js"
-import { Alert } from "../util/util.js"
-import { viewPostponeCase } from "../view/viewPostponeCase.js"
+import { LARGESTDATE } from "../model/const.js"
+import { sqlPostponeCase } from "../model/sqlPostponeCase.js"
+import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
+import { BOOK, updateBOOK } from "../util/updateBOOK.js"
+import { Alert, getLargestWaitnum, isSplit } from "../util/util.js"
 import { clearSelection } from "../control/clearSelection.js"
+import { locateFound } from "../view/scrolltoThisCase.js"
 
-// Undefined date booking has opdate = LARGESTDATE
+// Undefined date booking has opdate set to LARGESTDATE
 // but was shown blank date on screen
 export function postponeCase()
 {
-	let	$selected = $(".selected"),
-		tableID = $selected.closest('table').attr('id'),
-		$row = $selected.closest('tr'),
-		$cell = $row.find("td"),
-		opdateth = $cell.eq(OPDATE).html(),
-		opdate = getOpdate(opdateth),
-		staffname = $cell.eq(STAFFNAME).html(),
-		qn = $cell.eq(QN).html(),
-		theatre = $cell.eq(THEATRE).html(),
-		oproom = $cell.eq(OPROOM).html(),
-		oldwaitnum = $row[0].title,
-		newwaitnum = getLargestWaitnum(staffname) + 1,
-		allCases = []
+  let row = document.querySelector(".selected"),
+    tableID = row.closest('table').id,
+    opdate = row.dataset.opdate,
+    oproom = row.dataset.oproom,
+    staffname = row.dataset.staffname,
+    qn = row.dataset.qn,
+    oldwaitnum = row.dataset.waitnum,
+    allCases = []
 
-	if (oproom) {
-		allCases = sameDateRoomTableQN(opdateth, oproom, theatre)
-	}
+  if (oproom) {
+    allCases = sameDateRoomTableQNs(tableID, row)
+  }
 
-	let doPostponeCase = function (waitnum, thisdate) {
-		fetchPostponeCase(allCases, waitnum, thisdate, qn).then(response => {
-			let hasData = function () {
-				updateBOOK(response)
-				viewPostponeCase(opdate, thisdate, staffname, qn)
-			}
+  row.dataset.waitnum = Math.ceil(getLargestWaitnum(BOOK, staffname)) + 1
+  doPostponeCase(LARGESTDATE)
+  clearSelection()
 
-			typeof response === "object"
-			? hasData()
-			: Alert ("postponeCase", response)
-		}).catch(error => {})
-	}
+  function doPostponeCase(thisdate) {
+    sqlPostponeCase(allCases, row, thisdate).then(response => {
+      let hasData = function () {
+        updateBOOK(response)
+        if (isSplit()) {
+          locateFound('queuecontainer', 'queuetbl', qn)
+        }
+      }
 
-    clearSelection()
-
-	doPostponeCase(newwaitnum, LARGESTDATE)
-
-/*	UndoManager.add({
-		undo: function() {
-			doPostponeCase(oldwaitnum, opdate)
-		},
-		redo: function() {
-			doPostponeCase(newwaitnum, LARGESTDATE)
-		}
-	})*/
-}
-
-// The second parameter (, 0) ensure a default value if arrayAfter.map is empty
-function getLargestWaitnum(staffname)
-{
-	let dateStaff = BOOK.filter(function(patient) {
-		return patient.staffname === staffname && patient.opdate === LARGESTDATE
-	})
-
-	return Math.max(...dateStaff.map(patient => patient.waitnum), 0)
+      typeof response === "object"
+      ? hasData()
+      : Alert ("postponeCase", response)
+    }).catch(error => {})
+  }
 }

@@ -1,44 +1,44 @@
 
-import { OPDATE, THEATRE, OPROOM, CASENUM, QN } from "../model/const.js"
-import { fetchSaveTheatre } from "../model/savedata.js"
+import { sqlSaveTheatre } from "../model/sqlSaveTheatre.js"
 import { getOpdate } from "../util/date.js"
-import { sameDateRoomTableQN } from "../util/getrows.js"
-import { updateBOOK } from "../util/variables.js"
+import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
+import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { viewOneDay } from "../view/viewOneDay.js"
-import { viewSplit } from "../view/viewSplit.js"
+import { OLDCONTENT } from "../control/edit.js"
 
 export function saveTheatre(pointed, newcontent)
 {
-	let	$cell = $(pointed).closest("tr").find("td"),
-		opdateth = $cell[OPDATE].innerHTML,
-		opdate = getOpdate(opdateth),
-		theatre = $cell[THEATRE].innerHTML,
-		oproom = $cell[OPROOM].innerHTML,
-		casenum = $cell[CASENUM].innerHTML,
-		qn = $cell[QN].innerHTML,
-		allOldCases = [],
-		allNewCases = []
+  let row = pointed.closest('tr'),
+    tableID = row.closest('table').id,
+    opdate = row.dataset.opdate,
+    oproom = row.dataset.oproom,
+    casenum = row.dataset.casenum,
+    qn = row.dataset.qn,
+    allOldCases = [],
+    allNewCases = []
 
-	allOldCases = sameDateRoomTableQN(opdateth, oproom, theatre)
-	allOldCases = allOldCases.filter(e => e !== qn)
+  allOldCases = sameDateRoomTableQNs(tableID, row)
+  allOldCases = allOldCases.filter(e => e !== qn)
 
-	allNewCases = sameDateRoomTableQN(opdateth, oproom, newcontent)
-	if (casenum) {
-		allNewCases.splice(casenum-1, 0, qn)
-	} else {
-		allNewCases.push(qn)
-	}
+  row.dataset.theatre = newcontent
+  allNewCases = sameDateRoomTableQNs(tableID, row)
 
-	fetchSaveTheatre(allOldCases, allNewCases, newcontent, oproom, qn).then(response => {
-		let hasData = function () {
-			updateBOOK(response)
-			viewOneDay(opdate)
-			viewSplit(staffname)
-		}
+  // insert into new theatre/room according to its casenum
+  allNewCases.splice(allNewCases.indexOf(qn), 1)
+  if (casenum) {
+    allNewCases.splice(casenum-1, 0, qn)
+  } else {
+    allNewCases.push(qn)
+  }
+  row.dataset.theatre = OLDCONTENT
 
-		typeof response === "object"
-		? hasData()
-		: Alert ("saveTheatre", response)
-	})
+  sqlSaveTheatre(allOldCases, allNewCases, newcontent, oproom, qn).then(response => {
+    let hasData = function () {
+      updateBOOK(response)
+    }
+
+    typeof response === "object"
+    ? hasData()
+    : Alert ("saveTheatre", response)
+  })
 }

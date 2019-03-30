@@ -1,48 +1,44 @@
 
-import { OPDATE, THEATRE, OPROOM, STAFFNAME, QN } from "../model/const.js"
-import { fetchSaveOpTime } from "../model/savedata.js"
+import { sqlSaveOpTime } from "../model/sqlSaveOpTime.js"
 import { getOpdate } from "../util/date.js"
-import { sameDateRoomBOOKRows } from "../util/getrows.js"
-import { BOOK, updateBOOK } from "../util/variables.js"
+import { sameDateRoomTableRows } from "../util/rowsgetting.js"
+import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { viewOneDay } from "../view/viewOneDay.js"
-import { viewSplit } from "../view/viewSplit.js"
+import { OLDCONTENT } from "../control/edit.js"
 
 export function saveOpTime(pointed, newcontent)
 {
-	let	$cell = $(pointed).closest("tr").find("td"),
-		opdateth = $cell[OPDATE].innerHTML,
-		opdate = getOpdate(opdateth),
-		theatre = $cell[THEATRE].innerHTML,
-		oproom = $cell[OPROOM].innerHTML,
-		staffname = $cell[STAFFNAME].innerHTML,
-		qn = $cell[QN].innerHTML
+  let row = pointed.closest('tr'),
+    tableID = row.closest('table').id,
+    oproom = row.dataset.oproom,
+    qn = row.dataset.qn
 
-	// valid time 00.00 - 23.59 or ""
-	if (newcontent && !/^([0-1][0-9]|2[0-3])\.([0-5][0-9])$/.test(newcontent)) { return }
+  // valid time 00.00 - 23.59 or ""
+  if (newcontent && !/^([0-1][0-9]|2[0-3])\.([0-5][0-9])$/.test(newcontent)) { return }
 
-	let allCases = sameDateRoomBOOKRows(BOOK, opdate, oproom, theatre)
-	allCases.find(e => e.qn === qn).optime = newcontent
-	let timeCases = allCases.filter(e => e.optime !== "")
-	let notimeCases = allCases.filter(e => e.optime === "")
+  let allCases = sameDateRoomTableRows(tableID, row)
 
-	timeCases = timeCases.sort((e1, e2) => {
-					if (e1.optime >= e2.optime) return 1
-					return -1
-				})
-	let timeQNs = Array.from(timeCases, e => e.qn)
-	let notimeQNs = Array.from(notimeCases, e => e.qn)
-	let allQNs = timeQNs.concat(notimeQNs)
+  row.dataset.optime = newcontent
+  let timeCases = allCases.filter(e => e.dataset.optime !== "")
+  let notimeCases = allCases.filter(e => e.dataset.optime === "")
 
-	fetchSaveOpTime(allQNs, newcontent, qn).then(response => {
-		let hasData = function () {
-			updateBOOK(response)
-			viewOneDay(opdate)
-			viewSplit(staffname)
-		}
+  timeCases = timeCases.sort((e1, e2) => {
+    if (e1.dataset.optime >= e2.dataset.optime) return 1
+    return -1
+  })
+  row.dataset.optime = OLDCONTENT
 
-		typeof response === "object"
-		? hasData()
-		: Alert ("saveOpTime", response)
-	})
+  let timeQNs = timeCases.map(e => e.dataset.qn)
+  let notimeQNs = notimeCases.map(e => e.dataset.qn)
+  let allQNs = timeQNs.concat(notimeQNs)
+
+  sqlSaveOpTime(allQNs, oproom, newcontent, qn).then(response => {
+    let hasData = function () {
+      updateBOOK(response)
+    }
+
+    typeof response === "object"
+    ? hasData()
+    : Alert ("saveOpTime", response)
+  })
 }

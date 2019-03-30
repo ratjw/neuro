@@ -1,5 +1,4 @@
 
-import { UndoManager } from "../model/UndoManager.js"
 import { HN } from "../model/const.js"
 import { clearSelection } from "../control/clearSelection.js"
 import { createEditcell } from "../control/edit.js"

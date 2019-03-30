@@ -1,5 +1,12 @@
 
-import { fetchSearchDB } from "../model/search.js"
+/* to do !!!!!!!!!!!!!
+Search Exact Phrases       +
+Exclude a word             -
+Search in sepific column   :
+Forgotten words            *
+*/
+
+import { sqlSearchDB } from "../model/sqlSearchDB.js"
 import { Alert, reposition, menustyle } from "../util/util.js"
 import { viewSearchDB } from "../view/viewSearchDB.js"
 import { clearAllEditing } from "../control/clearAllEditing.js"
@@ -7,9 +14,11 @@ import { clearAllEditing } from "../control/clearAllEditing.js"
 export function searchCases()
 {
   let $dialogInput = $("#dialogInput"),
-    $stafflist = $('#stafflist')
+    $staffsearch = $('#stafflist').clone()
 
   clearAllEditing()
+  $staffsearch.attr('id', 'staffsearch')
+  $staffsearch.css('position', 'fixed')
 
   $dialogInput.dialog({
     title: "Search",
@@ -18,43 +27,42 @@ export function searchCases()
     width: 500,
     height: 250,
     close: function() {
-      $stafflist.hide()
+      $staffsearch.hide()
     }
   })
 
   $dialogInput.off("click").on("click", (event) => {
     let target = event.target
 
-    if ($stafflist.is(":visible")) {
-      $stafflist.hide();
+    if ($staffsearch.is(":visible")) {
+      $staffsearch.hide();
     } else {
       if ($(target).closest('input[name="staffname"]').length) {
-        getSaffName(target)
+        getSaffName(target, $staffsearch)
       }
     }
   })
   .keydown(event => {
-    let keycode = event.which || window.event.keyCode
+    let keycode = event.which || window.Event.keyCode
     if (keycode === 13) { searchDB() }
   })
 }
 
-function getSaffName(pointing)
+function getSaffName(pointing, $staffsearch)
 {
-  let $stafflist = $("#stafflist"),
-    $pointing = $(pointing)
+  let $pointing = $(pointing)
 
-  $stafflist.appendTo($pointing.closest('div')).show()
-  $stafflist.menu({
+  $staffsearch.appendTo($pointing.closest('div')).show()
+  $staffsearch.menu({
     select: function( event, ui ) {
       pointing.value = ui.item.text()
-      $stafflist.hide()
+      $staffsearch.hide()
       event.stopPropagation()
     }
   })
 
-  reposition($stafflist, "left top", "left bottom", $pointing)
-  menustyle($stafflist, $pointing)
+  reposition($staffsearch, "left top", "left bottom", $pointing)
+  menustyle($staffsearch, $pointing)
 }
 
 export function searchDB()
@@ -72,11 +80,11 @@ export function searchDB()
   search += (search && staffname ? ", " : "") + staffname
   search += (search && others ? ", " : "") + others
   if (search) {
-	fetchSearchDB(hn, staffname, others).then(response => {
-		typeof response === "object"
-		? viewSearchDB(response, search)
-		: Alert("Search: " + search, response)
-	}).catch(error => {})
+  sqlSearchDB(hn, staffname, others).then(response => {
+    typeof response === "object"
+    ? viewSearchDB(response, search)
+    : Alert("Search: " + search, response)
+  }).catch(error => {})
   } else {
     Alert("Search: ''", "<br><br>No Result")
   }

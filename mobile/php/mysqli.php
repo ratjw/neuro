@@ -15,7 +15,7 @@ require_once "book.php";
 
 	// click.js (saveRoomTime 2 ways, saveContentQN, saveContentNoQN 2 ways)
 	// equip.js (Checklistequip)
-	// menu.js (changeDate - $datepicker, changeDate - $trNOth, deleteCase)
+	// menu.js (moveCase, deleteCase)
 	// sortable.js (sortable)
 	else if (isset($_POST['sqlReturnbook'])) {
 		echo returnbook($mysqli, $_POST['sqlReturnbook']);
@@ -39,7 +39,7 @@ require_once "book.php";
 		echo returnData($mysqli, $_POST['sqlReturnData']);
 	}
 
-	// start.js (doadddata)
+	// start.js (doAddStaff)
 	else if (isset($_POST['sqlReturnStaff'])) {
 		echo returnStaff($mysqli, $_POST['sqlReturnStaff']);
 	}
@@ -77,6 +77,16 @@ function returnService($mysqli, $sql)
 	}
 }
 
+function returnData($mysqli, $sql)
+{
+	$return = multiquery($mysqli, $sql);
+	if (is_string($return)) {
+		return $return;
+	} else {
+		return json_encode($return);
+	}
+}
+
 function returnStaff($mysqli, $sql)
 {
 	$data = array();
@@ -87,16 +97,6 @@ function returnStaff($mysqli, $sql)
 		$data["STAFF"] = getStaff($mysqli);
 		$data["ONCALL"] = getOncall($mysqli);
 		return json_encode($data);
-	}
-}
-
-function returnData($mysqli, $sql)
-{
-	$return = multiquery($mysqli, $sql);
-	if (is_string($return)) {
-		return $return;
-	} else {
-		return json_encode($return);
 	}
 }
 

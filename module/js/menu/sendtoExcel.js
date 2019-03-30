@@ -1,5 +1,6 @@
 
 import { exportQbookToExcel } from "../util/excel.js"
+import { THEATRE, OPTIME, CASENUM, CONTACT } from "../model/const.js"
 
 export function sendtoExcel()
 {
@@ -8,7 +9,7 @@ export function sendtoExcel()
   let $captureTRs = $capture.find('tr')
   let $selected = $(".selected")
   let row = ""
-  let hide = [1, 3, 4, 12]
+  let hide = [THEATRE, OPTIME, CASENUM, CONTACT]
 
   $captureTRs.slice(1).remove()
 

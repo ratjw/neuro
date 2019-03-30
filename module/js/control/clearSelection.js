@@ -1,7 +1,8 @@
 
 export function clearSelection()
 {
-  $('.selected').removeClass('selected lastselected');
+  $('.selected').removeClass('selected');
+  $('.lastselected').removeClass('lastselected');
   disableOneRowMenu()
   disableExcelLINE()
 }

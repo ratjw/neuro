@@ -1,18 +1,17 @@
 
 import { PACS } from "../get/PACS.js"
-import { showUpload } from "../get/showUpload.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { LARGESTDATE } from "../model/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { ISOdate, thDate, nextdays, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 
-export function pagination($dialog, $tbl, book, search)
+export function pagination($dialog, $maintbl, book, search)
 {
   let  beginday = book[0].opdate,
     lastday = findLastDateInBOOK(book),
     firstday = getPrevMonday(),
-	offset = 0
+  offset = 0
 
   $dialog.dialog({
     title: search,
@@ -76,7 +75,7 @@ export function pagination($dialog, $tbl, book, search)
   })
 
   showOneWeek(book, firstday, 0)
-  $tbl.fixMe($dialog)
+  $maintbl.fixMe($dialog)
 
   //for resizing dialogs in landscape / portrait view
   $(window).on("resize", resizeDialog )
@@ -85,12 +84,6 @@ export function pagination($dialog, $tbl, book, search)
     if (isPACS) {
       PACS(this.innerHTML)
     }
-  })
-  $dialog.find('.upload').on("click", function() {
-    let hn = this.previousElementSibling.innerHTML
-    let patient = this.innerHTML
-
-    showUpload(hn, patient)
   })
 
   function showOneWeek(book, Monday, offset)
@@ -149,7 +142,7 @@ export function pagination($dialog, $tbl, book, search)
       title: search + " : " + Mon + " - " + Sun
     })
     // delete previous table lest it accumulates
-    $tbl.find('tr').slice(1).remove()
+    $maintbl.find('tr').slice(1).remove()
 
     if (Monday) {
       let  $row, row, cells,
@@ -159,7 +152,7 @@ export function pagination($dialog, $tbl, book, search)
       $.each( bookOneWeek, function() {
         while (this.opdate > date) {
           if (nocase) {
-            $row = $('#allcells tr').clone().appendTo($tbl.find('tbody'))
+            $row = $('#allcells tr').clone().appendTo($maintbl.find('tbody'))
             row = $row[0]
             cells = row.cells
             rowDecoration(row, date)
@@ -168,13 +161,13 @@ export function pagination($dialog, $tbl, book, search)
           nocase = true
         }
         $('#allcells tr').clone()
-          .appendTo($tbl.find('tbody'))
+          .appendTo($maintbl.find('tbody'))
             .filldataAllcases(this)
         nocase = false
       })
       date = nextdays(date, 1)
       while (date <= Sunday) {
-        $row = $('#allcells tr').clone().appendTo($tbl.find('tbody'))
+        $row = $('#allcells tr').clone().appendTo($maintbl.find('tbody'))
         row = $row[0]
         cells = row.cells
         rowDecoration(row, date)
@@ -183,7 +176,7 @@ export function pagination($dialog, $tbl, book, search)
     } else {
       $.each( bookOneWeek, function() {
         $('#allcells tr').clone()
-          .appendTo($tbl.find('tbody'))
+          .appendTo($maintbl.find('tbody'))
             .filldataAllcases(this)
       });
     }
@@ -194,7 +187,7 @@ export function pagination($dialog, $tbl, book, search)
       width: winWidth(95),
       height: winHeight(95)
     })
-    winResizeFix($tbl, $dialog)
+    winResizeFix($maintbl, $dialog)
   }
 }
 
@@ -204,17 +197,17 @@ jQuery.fn.extend({
       cells = row.cells,
       date = q.opdate
 
-;	[	putThdate(date),
-		q.staffname,
-		q.hn,
-		q.patient,
-		q.diagnosis,
-		q.treatment,
-		viewEquip(q.equipment),
-		q.admission,
-		q.final,
-		q.contact
-	].forEach((item, i) => { cells[i].innerHTML = item })
+;  [  putThdate(date),
+    q.staffname,
+    q.hn,
+    q.patient,
+    q.diagnosis,
+    q.treatment,
+    viewEquip(q.equipment),
+    q.admission,
+    q.final,
+    q.contact
+  ].forEach((item, i) => { cells[i].innerHTML = item })
 
     rowDecoration(row, date)
   }
@@ -222,8 +215,8 @@ jQuery.fn.extend({
 
 function findLastDateInBOOK(book)
 {
-	let bookq = book.find(e => e.opdate === LARGESTDATE)
-	let q = book.indexOf(bookq)
+  let bookq = book.find(e => e.opdate === LARGESTDATE)
+  let q = book.indexOf(bookq)
 
-	return book[q-1].opdate
+  return book[q-1].opdate
 }

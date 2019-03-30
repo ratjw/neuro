@@ -1,26 +1,31 @@
 
-import { addStaff } from "./addStaff.js"
+import { THEATRE } from "../model/const.js"
+//import { addStaff } from "./addStaff.js"
 import { clicktable } from "./clicktable.js"
-import { exchangeOncall } from "./exchangeOncall.js"
+//import { exchangeOncall } from "./exchangeOncall.js"
 import { clearAllEditing } from "./clearAllEditing.js"
-import { editcellEvent, clearEditcell } from "./edit.js"
+import { editcellEvent, clearEditcell, renewEditcell } from "./edit.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
 import { setClickMenu } from "../menu/setClickMenu.js"
-import { setClickSetting } from "./setClickSetting.js"
+//import { setClickSetting } from "./setClickSetting.js"
 import { setClickService } from "../service/serviceReview.js"
-import { fetchStart } from "../model/update.js"
-import { sortable } from "./sort.js"
+import { sqlStart } from "../model/sqlupdate.js"
+//import { sortable } from "./sort.js"
 import { clearSelection } from "./clearSelection.js"
-import { fillall } from "../view/fill.js"
+import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { START, ISOdate, thDate } from "../util/date.js"
-import { BOOK, updateBOOK } from "../util/variables.js"
+import { BOOK, TIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { htmlStafflist, htmlEquipment, htmldivRecord } from "../view/html.js"
+import { scrolltoToday } from "../view/scrolltoThisCase.js"
+import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
+import { setSERVICE } from "../service/setSERVICE.js"
+import { reViewService } from "../service/showService.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function userStaff() {
-	fetchStart().then(response => {
+	sqlStart().then(response => {
 		typeof response === "object"
 		? success(response)
 		: failed(response)
@@ -31,12 +36,13 @@ export function userStaff() {
 
 // Success return from server
 function success(response) {
-  updateBOOK(response)
 
   // call sortable before render, otherwise it renders very slowly
-  sortable()
-  makeStart()
-  scrolltoToday()
+//  sortable()
+  updateBOOK(response)
+  fillmain()
+  scrolltoToday('maintbl')
+  fillConsults()
 
   // setting up html
   htmlEquipment()
@@ -48,64 +54,20 @@ function success(response) {
   dialogServiceEvent()
   wrapperEvent()
   documentEvent()
-  fillConsults()
   setClickMenu()
 //  setClickSetting()
   setClickService()
-  clearSelection()
   overrideJqueryUI()
   resetTimer()
-
-  setTimeout( makeFinish, 1000)
+//  serverSentEvent()
 }
 
 // *** plan -> offline browsing by service worker ***
 function failed(response) {
-	let title = "Server Error",
-		error = error + "<br><br>Response from server has no data"
+  let title = "Server Error",
+    error = error + "<br><br>Response from server has no data"
 
-	Alert(title, error + "No localStorage backup")
-}
-
-// Display everyday on main table 1 month back, and 10 days ahead
-let makeStart = function() {		
-	// Start with 1st date of last month
-	let	tableID = "tbl",
-		table = document.getElementById(tableID),
-		book = BOOK
-
-	// No case from server
-	if (book.length === 0) { book.push({"opdate" : START}) }
-
-	// Fill until 10 days from now
-	let	end = new Date().setDate(new Date().getDate() + 10),
-		until = ISOdate(new Date(end))
-
-	fillall(book, table, START, until)
-}
-
-// Display everyday on main table 10 days ahead, to 1 year ahead
-let makeFinish = function() {		
-	// Start with 1st date of last month
-	let	tableID = "tbl",
-		table = document.getElementById(tableID),
-		book = BOOK
-
-	// No case from server
-	if (book.length === 0) {
-		book.push({"opdate" : START})
-	}
-
-	// Fill until 2 year from now
-	let	today = new Date(),
-		begin = today.setDate(today.getDate() + 11),
-		start = ISOdate(new Date(begin)),
-		nextyear = today.getFullYear() + 1,
-		month = today.getMonth(),
-		todate = today.getDate(),
-		until = ISOdate((new Date(nextyear, month, todate)))
-
-	fillall(book, table, start, until, table.rows.length-1)
+  Alert(title, error + "No localStorage backup")
 }
 
 function dialogServiceEvent()
@@ -140,16 +102,24 @@ function wrapperEvent()
         clearEditcell()
       }
     }
-    if (target.nodeName === "P") {
-      target = target.closest('td')
-    }
-    else if (target.nodeName === "IMG") {
+
+    // click on Equipment img
+    if (target.nodeName === "IMG") {
       target = target.closest("td")
     }
-    else if (target.nodeName === "TD") {
-      clicktable(event, target)
+
+    if (target.cellIndex === THEATRE) {
+      let maintbl = document.getElementById("maintbl")
+      if (maintbl.querySelectorAll("th")[THEATRE].offsetWidth < 10) {
+        maintbl.classList.add("showColumn2")
+      } else if (target.nodeName === "TH") {
+        maintbl.classList.remove("showColumn2")
+      }
     }
-    else {
+
+    if (target.nodeName === "TD") {
+      clicktable(event, target)
+    } else {
       clearAllEditing()
     }
 
@@ -180,24 +150,9 @@ function documentEvent()
     else if (esc) {
       clearAllEditing()
     }
-    // ctrl+shift+Home to see last entries of local and server
-/*    else if (home && ctrl && shift) {
-      // Merge data to server
-      latestEntry()
-      event.preventDefault()
-    }
-    else if (y && ctrl) {
-      UndoManager.redo()
-      event.preventDefault()
-    }
-    else if (z && ctrl) {
-      UndoManager.undo()
-      event.preventDefault()
-    }
-*/
     resetTimerCounter()
   });
-
+/*
   $(document).contextmenu( event => {
     let target = event.target
     let oncall = /<p[^>]*>.*<\/p>/.test(target.outerHTML)
@@ -212,11 +167,11 @@ function documentEvent()
       event.preventDefault()
     }
   })
-
+*/
   window.addEventListener('resize', () => {
-    $("#tblwrapper").css("height", window.innerHeight - $("#cssmenu").height())
+    $("#mainwrapper").css("height", window.innerHeight - $("#cssmenu").height())
     $("#queuecontainer").css({
-      "height": $("#tblwrapper").height() - $("#titlebar").height()
+      "height": $("#mainwrapper").height() - $("#titlebar").height()
     })
   })
 }
@@ -246,18 +201,6 @@ function doPrevent(evt)
   return doPrevent
 }
 
-function scrolltoToday()
-{
-  let today = new Date(),
-    todate = ISOdate(today),
-    todateth = thDate(todate)
-  $('#tblcontainer').scrollTop(0)
-  let thishead = $("#tbl tr:contains(" + todateth + ")")[0]
-  $('#tblcontainer').animate({
-    scrollTop: thishead.offsetTop
-  }, 300);
-}
-
 // allow the dialog title to contain HTML
 function overrideJqueryUI()
 {
@@ -270,4 +213,47 @@ function overrideJqueryUI()
         }
     }
   }))
+}
+
+function serverSentEvent()
+{
+  let evtSource = new EventSource('./php/sse.php')
+
+  evtSource.onopen = function() {
+    console.log("Connection to server opened.")
+		console.log(evtSource.readyState)
+		console.log(evtSource.url)
+  }
+
+  evtSource.onmessage = function(e) {
+    let data = JSON.parse(e.data)
+    if (data.QTIME > TIMESTAMP) {
+      if (dialogServiceShowing()) {
+        sqlGetServiceOneMonth().then(response => {
+          if (typeof response === "object") {
+            setSERVICE(response)
+            reViewService()
+            renewEditcell()
+            updateBOOK(data)
+          } else {
+            Alert ("getUpdateService", response)
+          }
+        })
+      } else {
+        updateBOOK(data)
+        renewEditcell()
+      }
+    }
+  }
+
+  evtSource.onerror = function() {
+    console.log("EventSource failed.")
+  }
+}
+
+function dialogServiceShowing()
+{
+  let $dialogService = $("#dialogService")
+
+  return $dialogService.hasClass('ui-dialog-content') && $dialogService.dialog('isOpen')
 }

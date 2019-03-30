@@ -65,6 +65,13 @@ export function savePreviousCell() {
 export function editPresentCell(evt, pointing) {
   let column = pointing && pointing.cellIndex
 
+  if (column === OPDATE) {
+    clearEditcell()
+    clearMouseoverTR()
+  } else {
+    clearSelection()
+  }
+
   switch(column)
   {
     case OPDATE: selectRow(evt, pointing); break
@@ -79,11 +86,5 @@ export function editPresentCell(evt, pointing) {
     case TREATMENT: createEditcell(pointing); break
     case EQUIPMENT: getEQUIP(pointing); break
     case CONTACT: createEditcell(pointing); break
-  }
-  if (column === OPDATE) {
-    clearEditcell()
-    clearMouseoverTR()
-  } else {
-    clearSelection()
   }
 }

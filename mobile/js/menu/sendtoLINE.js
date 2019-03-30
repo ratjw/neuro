@@ -1,7 +1,8 @@
 
 import { USER } from "../main.js"
+import { THEATRE, OPTIME, CASENUM, CONTACT } from "../model/const.js"
 
-const LINEBOT	= "line/lineBot.php"
+const LINEBOT  = "line/lineBot.php"
 const LINENOTIFY = "line/lineNotify.php"
 
 export function sendtoLINE()
@@ -25,7 +26,7 @@ export function toLINE()
   let $captureTRs = $capture.find('tr')
   let $selected = $(".selected")
   let row = ""
-  let hide = [1, 3, 4, 12]
+  let hide = [THEATRE, OPTIME, CASENUM, CONTACT]
   let $dialogNotify = $('#dialogNotify')
   let message
 

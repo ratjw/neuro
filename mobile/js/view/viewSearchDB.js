@@ -1,12 +1,11 @@
 
 import { PACS } from "../get/PACS.js"
-import { showUpload } from "../get/showUpload.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { OPDATE } from "../model/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { ISOdate, numDate, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
-import { isPACS } from "../util/variables.js"
+import { isPACS } from "../util/updateBOOK.js"
 import { exportFindToExcel } from "../util/excel.js"
 import { pagination } from "./pagination.js"
 import { scrolltoThisCase } from "./scrolltoThisCase.js"
@@ -77,12 +76,6 @@ function makeDialogFound($dialogFind, $findtbl, found, search)
       PACS(this.innerHTML)
     }
   })
-  $dialogFind.find('.upload').off("click").on("click", function() {
-    let patient = this.innerHTML
-    let hn = this.previousElementSibling.innerHTML
-
-    hn && showUpload(hn, patient)
-  })
 
   //scroll to todate when there many cases
   let today = new Date(),
@@ -99,28 +92,27 @@ function makeDialogFound($dialogFind, $findtbl, found, search)
 }
 
 jQuery.fn.extend({
-	filldataFind : function(q) {
-		let cells = this[0].cells
+  filldataFind : function(q) {
+    let cells = this[0].cells
 
 
-		if (Number(q.deleted)) {
-		  this.addClass("deleted")
-		} else {
-		  rowDecoration(this[0], q.opdate)
-		}
-		q.hn && isPACS && (cells[2].className = "pacs")
-		q.patient && (cells[3].className = "upload")
+    if (Number(q.deleted)) {
+      this.addClass("deleted")
+    } else {
+      rowDecoration(this[0], q.opdate)
+    }
+    q.hn && isPACS && (cells[2].className = "pacs")
 
-;		[	putThdate(q.opdate),
-			q.staffname,
-			q.hn,
-			q.patient,
-			q.diagnosis,
-			q.treatment,
-			viewEquip(q.equipment),
-			q.admission,
-			q.final,
-			q.contact
-		].forEach((item, i) => { cells[i].innerHTML = item })
-	}
+;    [  putThdate(q.opdate),
+      q.staffname,
+      q.hn,
+      q.patient,
+      q.diagnosis,
+      q.treatment,
+      viewEquip(q.equipment),
+      q.admission,
+      q.final,
+      q.contact
+    ].forEach((item, i) => { cells[i].innerHTML = item })
+  }
 })

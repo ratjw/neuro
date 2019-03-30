@@ -17,7 +17,6 @@ import { fillConsults } from "../view/fillConsults.js"
 import { START, ISOdate, thDate } from "../util/date.js"
 import { BOOK, TIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { UndoManager } from "../model/UndoManager.js"
 import { htmlStafflist, htmlEquipment, htmldivRecord } from "../view/html.js"
 import { scrolltoToday } from "../view/scrolltoThisCase.js"
 import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
@@ -58,7 +57,6 @@ function success(response) {
   setClickMenu()
   setClickSetting()
   setClickService()
-  clearSelection()
   overrideJqueryUI()
   resetTimer()
 //  serverSentEvent()
@@ -106,9 +104,8 @@ function wrapperEvent()
       }
     }
 
-    if (target.nodeName === "P") {
-      target = target.closest('td')
-    } else if (target.nodeName === "IMG") {
+    // click on Equipment img
+    if (target.nodeName === "IMG") {
       target = target.closest("td")
     }
 

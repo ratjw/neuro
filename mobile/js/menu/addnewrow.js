@@ -1,38 +1,20 @@
 
-import { UndoManager } from "../model/UndoManager.js"
-import { OPDATE, HN, PATIENT } from "../model/const.js"
+import { HN } from "../model/const.js"
 import { clearSelection } from "../control/clearSelection.js"
 import { createEditcell } from "../control/edit.js"
+import { blankRowData } from "../model/rowdata.js"
 
 export function addnewrow() {
-	let	$selected = $(".selected"),
-		tableID = $selected.closest('table').attr('id'),
-		$row = $selected.closest('tr')
+  let row = document.querySelector(".selected"),
+    tableID = row.closest('table').id,
+    clone = row.cloneNode(true),
+    cells = clone.querySelectorAll("td")
 
-	addrow($row)
-
-/*	UndoManager.add({
-		undo: function() {
-			$row.next().remove()
-		},
-		redo: function() {
-			addrow($row)
-		}
-	})*/
-}
-
-// "tbl" copy title, Date, Room Time
-// "queuetbl" copy title, Date, Room Time, Staff
-export function addrow($row) {
-	let $clone = $row.clone()
-
-	$clone.removeClass("selected")
-		.insertAfter($row)
-			.find("td").eq(HN).removeClass("pacs")
-			.parent().find("td").eq(PATIENT).removeClass("upload")
-			.parent().find("td").eq(OPDATE)
-				.nextAll()
-					.html("")
-	clearSelection()
-	createEditcell($clone.find("td")[HN])
+  cells[HN].classList.remove("pacs")
+  Array.from(clone.querySelectorAll("td:not(:first-child)")).forEach(e => e.innerHTML = "")
+  row.classList.remove("selected")
+  row.after(clone)
+  clearSelection()
+  createEditcell(cells[HN])
+  blankRowData(clone, row.dataset.opdate)
 }

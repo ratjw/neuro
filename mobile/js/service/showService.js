@@ -1,13 +1,14 @@
 
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
-  FINALSV, PROFILESV, ADMITSV, OPDATESV, DISCHARGESV, QNSV
+  FINALSV, PROFILESV, ADMITSV, OPDATESV, DISCHARGESV
 } from "../model/const.js"
 import { POINTER, clearEditcell } from "../control/edit.js"
 import { START, putThdate, putNameAge } from "../util/date.js"
-import { getClass, inPicArea,  winWidth, winHeight, winResizeFix } from "../util/util.js"
-import { isPACS } from "../util/variables.js"
-import { refillall, refillstaffqueue } from "../view/fill.js"
+import { isSplit,  winWidth, winHeight, winResizeFix } from "../util/util.js"
+import { isPACS } from "../util/updateBOOK.js"
+import { fillmain } from "../view/fill.js"
+import { staffqueue } from "../view/staffqueue.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { coloring } from "./coloring.js"
 import { countAllServices } from "./countAllServices.js"
@@ -18,11 +19,13 @@ import { clickDialogService, hideProfile } from "./clickDialogService.js"
 import { showRecord } from "./showRecord.js"
 import { clearSelection } from "../control/clearSelection.js"
 import { profileHandler } from "./profileHandler.js"
+import { hoverPicArea } from "../util/util.js"
 
 export function showService() {
   let $dialogService = $("#dialogService"),
     $servicetbl = $("#servicetbl"),
     $servicecells = $("#servicecells"),
+    clen = $servicecells.find('tr td').length,
     staffname = "",
     scase = 0,
     classname = ""
@@ -50,7 +53,7 @@ export function showService() {
       $servicecells.find("tr").clone()
         .appendTo($servicetbl.find("tbody"))
           .children("td").eq(CASENUMSV)
-            .prop("colSpan", QNSV - CASENUMSV)
+            .prop("colSpan", clen)
               .addClass("serviceStaff")
                 .html(staffname)
                   .siblings().hide()
@@ -68,15 +71,15 @@ export function showService() {
     width: winWidth(95),
     height: winHeight(95),
     close: function() {
-      refillstaffqueue()
-      refillall()
-            fillConsults()
+      if (isSplit()) { staffqueue(titlename.innerHTML) }
+      fillmain()
+      fillConsults()
       $(".ui-dialog:visible").find(".ui-dialog-content").dialog("close")
       $(".fixed").remove()
       hideProfile()
       $(window).off("resize", resizeDialogSV)
       $dialogService.off("click", clickDialogService)
-      if (!!POINTER) {
+      if (POINTER) {
         savePreviousCellService()
       }
       clearEditcell()
@@ -89,7 +92,7 @@ export function showService() {
   }
   countAllServices()
   $servicetbl.fixMe($dialogService)
-  hoverService()
+  hoverPicArea()
   profileHandler()
   $dialogService.on("click", clickDialogService)
 
@@ -102,7 +105,8 @@ export function reViewService() {
   let $servicetbl = $("#servicetbl"),
     $rows = $servicetbl.find("tr"),
     $servicecells = $("#servicecells"),
-    len = $rows.length,
+    rlen = $rows.length,
+    clen = $rows.find('td').length,
     staffname = "",
     i = 0, scase = 0
 
@@ -113,7 +117,7 @@ export function reViewService() {
       i++
       let  $staff = $rows.eq(i).children("td").eq(CASENUMSV)
       if ($staff.prop("colSpan") === 1) {
-        $staff.prop("colSpan", QNSV - CASENUMSV)
+        $staff.prop("colSpan", clen)
           .addClass("serviceStaff")
             .siblings().hide()
       }
@@ -121,25 +125,25 @@ export function reViewService() {
     }
     i++
     scase++
-    if (i === len) {
+    if (i === rlen) {
       $("#servicecells").find("tr").clone()
         .appendTo($("#servicetbl").find("tbody"))
-      len++
+      rlen++
     }
     let  $row = $rows.eq(i)
     let  $cells = $row.children("td")
     if ($cells.eq(CASENUMSV).prop("colSpan") > 1) {
       $cells.eq(CASENUMSV).prop("colSpan", 1)
-        .nextUntil($cells.eq(QNSV)).show()
+        .nextUntil($cells.eq(DISCHARGESV)).show()
     }
     $row.filldataService(this, scase)
   })
-  if (i < (len - 1)) {
+  if (i < (rlen - 1)) {
     $rows.slice(i+1).remove()
   }
   countAllServices()
   $servicetbl.fixMe($("#dialogService"))
-  hoverService()
+  hoverPicArea()
   profileHandler()
 }
 
@@ -149,7 +153,6 @@ jQuery.fn.extend({
       cells = row.cells
 
     if (bookq.hn && isPACS) { cells[HNSV].className = "pacs" }
-    if (bookq.hn) { cells[NAMESV].className = "upload" }
 
     cells[CASENUMSV].innerHTML = scase
     cells[HNSV].innerHTML = bookq.hn
@@ -163,28 +166,8 @@ jQuery.fn.extend({
     cells[ADMITSV].innerHTML = putThdate(bookq.admit)
     cells[OPDATESV].innerHTML = putThdate(bookq.opdate)
     cells[DISCHARGESV].innerHTML = putThdate(bookq.discharge)
-    cells[QNSV].innerHTML = bookq.qn
 
+    row.dataset.qn = bookq.qn
     coloring(row)
   }
 })
-
-// Simulate hover on icon by changing background pics
-function hoverService()
-{
-  let  tdClass = "td.pacs, td.upload",
-    paleClasses = ["pacs", "upload"],
-    boldClasses = ["pacs2", "upload2"]
-
-  $(tdClass)
-    .mousemove(function(event) {
-      if (inPicArea(event, this)) {
-        getClass(this, paleClasses, boldClasses)
-      } else {
-        getClass(this, boldClasses, paleClasses)
-      }
-    })
-    .mouseout(function (event) {
-      getClass(this, boldClasses, paleClasses)
-    })
-}
