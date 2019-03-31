@@ -52,7 +52,7 @@ export function exportQbookToExcel()
       </table>'
   let filename = title + Date.now() + '.xls'
 
-  exportToExcel("capture", title, style, head, filename)    
+  exportToExcel("capture", style, head, filename)    
 }
 
 export function exportServiceToExcel()
@@ -136,7 +136,7 @@ export function exportServiceToExcel()
   month = month.substring(0, month.lastIndexOf("-"))  //use yyyy-mm for filename
   let filename = 'Service Neurosurgery ' + month + '.xls'
 
-  exportToExcel("servicetbl", title, style, head, filename)    
+  exportToExcel("servicetbl", style, head, filename)    
 }
 
 export function exportFindToExcel(search)
@@ -187,7 +187,7 @@ export function exportFindToExcel(search)
       </table>'
   let filename = 'Search ' + search + '.xls'
 
-  exportToExcel("findtbl", title, style, head, filename)    
+  exportToExcel("findtbl", style, head, filename)    
 }
 
 export function exportReportToExcel(title)
@@ -248,10 +248,10 @@ export function exportReportToExcel(title)
       </table>'
   let filename = 'Report ' + title + '.xls'
 
-  exportToExcel("reviewtbl", title, style, head, filename)    
+  exportToExcel("reviewtbl", style, head, filename)    
 }
 
-function exportToExcel(id, title, style, head, filename)
+function exportToExcel(id, style, head, filename)
 {
   if ($("#exceltbl").length) {
     $("#exceltbl").remove()
@@ -281,7 +281,7 @@ function exportToExcel(id, title, style, head, filename)
 
   //remove img in equipment
   $exceltbl.find('img').remove();
-
+/*
   let table = $exceltbl[0].outerHTML
   let htmlstr = `<!DOCTYPE html>
                   <HTML>
@@ -296,11 +296,12 @@ function exportToExcel(id, title, style, head, filename)
   a.href = data_type + ', ' + encodeURIComponent(htmlstr)
   a.download = filename
   a.click()
-/*
-//  var workbook = XLSX.utils.table_to_book(document.getElementById('exceltbl'));
+*/
+///*
+  var workbook = XLSX.utils.table_to_book(document.getElementById('exceltbl'));
 
 //  var htmlstr = document.getElementById('exceltbl').outerHTML;
-  var workbook = XLSX.read(encodeURIComponent(htmlstr), {type:'string'});
+//  var workbook = XLSX.read(htmlstr, {type:'string'});
 
   var workout = XLSX.write(workbook, {bookType: 'xlsx', bookSST: true, type: 'binary'});
 
@@ -312,11 +313,30 @@ function exportToExcel(id, title, style, head, filename)
     for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF
     return buf
   }
-*/
+//*/
 
 /*
   $exceltbl.tableExport({
     formats: ["xlsx", "csv", "txt"]
   })
 */
+}
+
+function tablesToBook(){
+  let tbl1 = document.getElementsByTagName("table")[0]
+  let tbl2 = document.getElementsByTagName("table")[1]
+
+  let worksheet_tmp1 = XLSX.utils.table_to_sheet(tbl1)
+  let worksheet_tmp2 = XLSX.utils.table_to_sheet(tbl2)
+
+  let a = XLSX.utils.sheet_to_json(worksheet_tmp1, { header: 1 })
+  let b = XLSX.utils.sheet_to_json(worksheet_tmp2, { header: 1 })
+
+  a = a.concat(['']).concat(b)
+
+  let worksheet = XLSX.utils.json_to_sheet(a, { skipHeader: true })
+
+  const new_workbook = XLSX.utils.book_new()
+  XLSX.utils.book_append_sheet(new_workbook, worksheet, "worksheet")
+  XLSX.writeFile(new_workbook, 'tmp_file.xls')
 }
