@@ -33,11 +33,9 @@ export function clearTimer() {
   clearTimeout(timer)
 }
 
-// While idling every 10 sec., get updated by itself and another clients
-// 1. Visible editcell
-//   1.1 Editcell changed (update itself and from another client on the way)
-//  1.2 Editcell not changed, check updated from another client
-// 2. Not visible editcell, get update from another client
+// While idling every 10 sec, get updated by itself
+//  1 Editcell changed, update DB
+//  2 Editcell not changed, check timer (idleCounter)
 function updating() {
   if (onChange()) {
     idleCounter = 0
