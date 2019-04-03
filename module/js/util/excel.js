@@ -2,11 +2,12 @@
 export function exportQbookToExcel()
 {
   let title = 'Operative Schedule'
-  let style = '\
+  let style = `\
     <style type="text/css">\
-      #exceltbl {\
-        border-right: solid 1px gray;\
-        border-collapse: collapse;\
+      #exceltbl thead td {\
+        border: none;\
+        font-weight:bold;\
+        font-size:24px;\
       }\
       #exceltbl th {\
         font-size: 16px;\
@@ -20,8 +21,7 @@ export function exportQbookToExcel()
         font-size: 14px;\
         vertical-align: middle;\
         padding-left: 3px;\
-        border-left: solid 1px silver;\
-        border-bottom: solid 1px silver;\
+        border: solid 1px silver;\
       }\
       #exceltbl tr.Sunday { background-color: #FFDDEE; }\
       #exceltbl tr.Monday { background-color: #FFFFE0; }\
@@ -39,17 +39,15 @@ export function exportQbookToExcel()
       #exceltbl td.Fri { background-color: #BBDDF0; }\
       #exceltbl td.Sat { background-color: #CCBBF0; }\
 \
-    </style>'
-  let head = '\
-      <table id="excelhead">\
-      <tr></tr>\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td colspan="4" style="font-weight:bold;font-size:24px">' + title + '</td>\
-      </tr>\
-      <tr></tr>\
-      </table>'
+    </style>`
+  let head = `<thead id="excelhead">
+      <tr></tr>
+      <tr>
+        <td></td><td></td><td></td><td></td>
+        <td colspan="4">${title}</td>
+      </tr>
+      <tr></tr>
+      </thead>`
   let filename = `${title} ${Date.now()}.xls`
 
   exportToExcel("capture", style, head, filename)
@@ -276,17 +274,20 @@ function exportToExcel(id, style, head, filename)
 
   let $exceltbl = $("#exceltbl")
 
-  // make line breaks show in single cell
-  $exceltbl.find('br').attr('style', "mso-data-placement:same-cell");
+  // make line breaks show in single cell "&#10;"
+  $exceltbl.find('br').attr('style', "mso-data-placement:same-cell")
 
-  //remove img in equipment
-  $exceltbl.find('img').remove();
-/*
+  // remove img in equipment
+  $exceltbl.find('img').remove()
+
+  // insert header
+  $exceltbl.find('tbody').before(head)
+
   let table = $exceltbl[0].outerHTML
   let htmlstr = `<!DOCTYPE html>
                   <HTML>
                     <HEAD><meta charset="utf-8"/>${style}</HEAD>
-                    <BODY>${head}${table}</BODY>
+                    <BODY>${table}</BODY>
                   </HTML>`
   let a = document.createElement('a')
   let data_type = 'data:application/vnd.ms-excel'
@@ -296,47 +297,4 @@ function exportToExcel(id, style, head, filename)
   a.href = data_type + ', ' + encodeURIComponent(htmlstr)
   a.download = filename
   a.click()
-*/
-///*
-  var workbook = XLSX.utils.table_to_book(document.getElementById('exceltbl'));
-
-//  var htmlstr = document.getElementById('exceltbl').outerHTML;
-//  var workbook = XLSX.read(htmlstr, {type:'string'});
-
-  var workout = XLSX.write(workbook, {bookType: 'xlsx', bookSST: true, type: 'binary'});
-
-  saveAs(new Blob([s2ab(workout)], {type: "application/octet-stream"}), 'test.xlsx')
-
-  function s2ab(s) {
-    var buf = new ArrayBuffer(s.length)
-    var view = new Uint8Array(buf)
-    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF
-    return buf
-  }
-//*/
-
-/*
-  $exceltbl.tableExport({
-    formats: ["xlsx", "csv", "txt"]
-  })
-*/
-}
-
-function tablesToBook(){
-  let tbl1 = document.getElementsByTagName("table")[0]
-  let tbl2 = document.getElementsByTagName("table")[1]
-
-  let worksheet_tmp1 = XLSX.utils.table_to_sheet(tbl1)
-  let worksheet_tmp2 = XLSX.utils.table_to_sheet(tbl2)
-
-  let a = XLSX.utils.sheet_to_json(worksheet_tmp1, { header: 1 })
-  let b = XLSX.utils.sheet_to_json(worksheet_tmp2, { header: 1 })
-
-  a = a.concat(['']).concat(b)
-
-  let worksheet = XLSX.utils.json_to_sheet(a, { skipHeader: true })
-
-  const new_workbook = XLSX.utils.book_new()
-  XLSX.utils.book_append_sheet(new_workbook, worksheet, "worksheet")
-  XLSX.writeFile(new_workbook, 'tmp_file.xls')
 }
