@@ -2,7 +2,7 @@
 export function exportQbookToExcel()
 {
   let title = 'Operative Schedule'
-  let style = `\
+  let style = '\
     <style type="text/css">\
       #exceltbl thead td {\
         border: none;\
@@ -39,7 +39,7 @@ export function exportQbookToExcel()
       #exceltbl td.Fri { background-color: #BBDDF0; }\
       #exceltbl td.Sat { background-color: #CCBBF0; }\
 \
-    </style>`
+    </style>'
   let head = `<thead id="excelhead">
       <tr></tr>
       <tr>
@@ -102,37 +102,38 @@ export function exportServiceToExcel()
       #exceltbl tr.Dead,\
       #exceltbl td.Dead { background-color: #AAAAAA; }\
     </style>'
-  let head = '\
-      <table id="excelhead">\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td colspan="4" style="font-weight:bold;font-size:24px">' + title + '</td>\
-      </tr>\
-      <tr></tr>\
-      <tr></tr>\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td>Admission : ' + $("#Admission").html() + '</td>\
-        <td>Discharge : ' + $("#Discharge").html() + '</td>\
-        <td>Operation : ' + $("#Operation").html() + '</td>\
-        <td class="Morbidity">Morbidity : ' + $("#Morbidity").html() + '</td>\
-      </tr>\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td class="Readmission">Re-admission : ' + $("#Readmission").html() + '</td>\
-        <td class="Infection">Infection SSI : ' + $("#Infection").html() + '</td>\
-        <td class="Reoperation">Re-operation : ' + $("#Reoperation").html() + '</td>\
-        <td class="Dead">Dead : ' + $("#Dead").html() + '</td>\
-      </tr>\
-      <tr></tr>\
-      <tr></tr>\
-      </table>'
+  let head = `<thead id="excelhead">
+      <tr></tr>
+      <tr>
+        <td></td><td></td><td></td><td></td>
+        <td colspan="4">${title}</td>
+      </tr>
+      <tr></tr>
+      </thead>
+      <tr></tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td>Admission : ${$("#Admission").html()}</td>
+        <td>Discharge : ${$("#Discharge").html()}</td>
+        <td>Operation : ${$("#Operation").html()}</td>
+        <td class="Morbidity">Morbidity : ${$("#Morbidity").html()}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td class="Readmission">Re-admission : ${$("#Readmission").html()}</td>
+        <td class="Infection">Infection SSI : ${$("#Infection").html()}</td>
+        <td class="Reoperation">Re-operation : ${$("#Reoperation").html()}</td>
+        <td class="Dead">Dead : ${$("#Dead").html()}</td>
+      </tr>
+      <tr></tr>
+      <tr></tr>
+      </table>`
+  //use yyyy-mm for filename
   let month = $("#monthstart").val()
-  month = month.substring(0, month.lastIndexOf("-"))  //use yyyy-mm for filename
-let filename = `Service Neurosurgery ${month}.xls`
+  month = month.substring(0, month.lastIndexOf("-"))
+  let filename = `Service Neurosurgery ${month}.xls`
 
   exportToExcel("servicetbl", style, head, filename)
 }
@@ -173,16 +174,14 @@ export function exportFindToExcel(search)
         text-align: center;\
       }\
     </style>'
-  let head = '\
-      <table id="excelhead">\
-      <tr></tr>\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td colspan="4" style="font-weight:bold;font-size:24px">' + title + '</td>\
-      </tr>\
-      <tr></tr>\
-      </table>'
+  let head = `<thead id="excelhead">
+      <tr></tr>
+      <tr>
+        <td></td><td></td><td></td><td></td>
+        <td colspan="4">${title}</td>
+      </tr>
+      <tr></tr>
+      </thead>`
   let filename = `Search ${search}.xls`
 
   exportToExcel("findtbl", style, head, filename)
@@ -236,14 +235,14 @@ export function exportReportToExcel(title)
         text-align: center;\
       }\
     </style>'
-  let head = '\
-      <table id="excelhead">\
-      <tr></tr>\
-      <tr>\
-        <td colspan="9" style="font-weight:bold;font-size:24px">' + title + '</td>\
-      </tr>\
-      <tr></tr>\
-      </table>'
+  let head = `<thead id="excelhead">
+      <tr></tr>
+      <tr>
+        <td></td><td></td><td></td><td></td>
+        <td colspan="9">${title}</td>
+      </tr>
+      <tr></tr>
+      </thead>`
   let filename = `Report ${title}.xls`
 
   exportToExcel("reviewtbl", style, head, filename)
