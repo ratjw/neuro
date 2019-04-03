@@ -1,7 +1,7 @@
 
 export function exportQbookToExcel()
 {
-  let title = 'Qbook Selected '
+  let title = 'Operative Schedule'
   let style = '\
     <style type="text/css">\
       #exceltbl {\
@@ -50,9 +50,9 @@ export function exportQbookToExcel()
       </tr>\
       <tr></tr>\
       </table>'
-  let filename = title + Date.now() + '.xls'
+  let filename = `${title} ${Date.now()}.xls`
 
-  exportToExcel("capture", style, head, filename)    
+  exportToExcel("capture", style, head, filename)
 }
 
 export function exportServiceToExcel()
@@ -134,9 +134,9 @@ export function exportServiceToExcel()
       </table>'
   let month = $("#monthstart").val()
   month = month.substring(0, month.lastIndexOf("-"))  //use yyyy-mm for filename
-  let filename = 'Service Neurosurgery ' + month + '.xls'
+let filename = `Service Neurosurgery ${month}.xls`
 
-  exportToExcel("servicetbl", style, head, filename)    
+  exportToExcel("servicetbl", style, head, filename)
 }
 
 export function exportFindToExcel(search)
@@ -185,9 +185,9 @@ export function exportFindToExcel(search)
       </tr>\
       <tr></tr>\
       </table>'
-  let filename = 'Search ' + search + '.xls'
+  let filename = `Search ${search}.xls`
 
-  exportToExcel("findtbl", style, head, filename)    
+  exportToExcel("findtbl", style, head, filename)
 }
 
 export function exportReportToExcel(title)
@@ -246,9 +246,9 @@ export function exportReportToExcel(title)
       </tr>\
       <tr></tr>\
       </table>'
-  let filename = 'Report ' + title + '.xls'
+  let filename = `Report ${title}.xls`
 
-  exportToExcel("reviewtbl", style, head, filename)    
+  exportToExcel("reviewtbl", style, head, filename)
 }
 
 function exportToExcel(id, style, head, filename)
