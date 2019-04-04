@@ -281,7 +281,7 @@ function exportToExcel(id, style, head, filename)
 
   //remove img in equipment
   $exceltbl.find('img').remove();
-/*
+
   let table = $exceltbl[0].outerHTML
   let htmlstr = `<!DOCTYPE html>
                   <HTML>
@@ -296,47 +296,4 @@ function exportToExcel(id, style, head, filename)
   a.href = data_type + ', ' + encodeURIComponent(htmlstr)
   a.download = filename
   a.click()
-*/
-///*
-  var workbook = XLSX.utils.table_to_book(document.getElementById('exceltbl'));
-
-//  var htmlstr = document.getElementById('exceltbl').outerHTML;
-//  var workbook = XLSX.read(htmlstr, {type:'string'});
-
-  var workout = XLSX.write(workbook, {bookType: 'xlsx', bookSST: true, type: 'binary'});
-
-  saveAs(new Blob([s2ab(workout)], {type: "application/octet-stream"}), 'test.xlsx')
-
-  function s2ab(s) {
-    var buf = new ArrayBuffer(s.length)
-    var view = new Uint8Array(buf)
-    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF
-    return buf
-  }
-//*/
-
-/*
-  $exceltbl.tableExport({
-    formats: ["xlsx", "csv", "txt"]
-  })
-*/
-}
-
-function tablesToBook(){
-  let tbl1 = document.getElementsByTagName("table")[0]
-  let tbl2 = document.getElementsByTagName("table")[1]
-
-  let worksheet_tmp1 = XLSX.utils.table_to_sheet(tbl1)
-  let worksheet_tmp2 = XLSX.utils.table_to_sheet(tbl2)
-
-  let a = XLSX.utils.sheet_to_json(worksheet_tmp1, { header: 1 })
-  let b = XLSX.utils.sheet_to_json(worksheet_tmp2, { header: 1 })
-
-  a = a.concat(['']).concat(b)
-
-  let worksheet = XLSX.utils.json_to_sheet(a, { skipHeader: true })
-
-  const new_workbook = XLSX.utils.book_new()
-  XLSX.utils.book_append_sheet(new_workbook, worksheet, "worksheet")
-  XLSX.writeFile(new_workbook, 'tmp_file.xls')
 }
