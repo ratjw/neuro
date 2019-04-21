@@ -1,30 +1,51 @@
 
-export let splitPane = function () {
-  let scrolledTop = document.getElementById("maincontainer").scrollTop,
-    tohead = findVisibleHead('#maintbl'),
-    menuHeight = $("#cssmenu").height(),
-    titleHeight = $("#titlebar").height()
+export function splitPane(mtable, qtable) {
+  let mcontainer = mtable.closest('div'),
+    qcontainer = qtable.closest('div'),
+    mwrapper = mcontainer.parentElement,
+    qwrapper = qcontainer.parentElement,
+    menuHeight = document.getElementById("cssmenu").offsetHeight,
+    titleHeight = document.getElementById("titlebar").offsetHeight,
+    firstvisiblerow = findFirstVisibleRow(mcontainer, mtable)
 
-  $("#mainwrapper").css({
-    "height": "100%" - menuHeight,
-    "width": "50%"
-  })
-  $("#queuewrapper").show().css({
-    "height": "100%" - menuHeight,
-    "width": "50%"
-  })
-  $("#queuecontainer").css({
-    "height": $("#maincontainer").height() - titleHeight
-  })
+  mwrapper.style.height = '100%' - menuHeight + 'px'
+  mwrapper.style.width = "50%"
 
-  initResize($("#mainwrapper"))
-  $('.ui-resizable-e').css('height', $("#maintbl").css("height"))
+  qwrapper.style.height = '100%' - menuHeight + 'px'
+  qwrapper.style.width = "50%"
 
-  document.getElementById("clickclosequeue").onclick = closequeue
+  qcontainer.style.height = mcontainer.offsetHeight - titleHeight + 'px'
+
+  initResize(mwrapper)
+  document.querySelector('.ui-resizable-e').style.height = mtable.offsetHeight
+  scrollToFirstVisible(mcontainer, firstvisiblerow)
+
+  document.getElementById("clickclosequeue").onclick = function() {
+    qwrapper.style.display = 'none'
+    mwrapper.style.height = "100%" - menuHeight
+    mwrapper.style.width = "100%"
+
+    scrollToFirstVisible(mcontainer, firstvisiblerow)
+  }
 }
 
-let initResize = function ($wrapper) {
-  $wrapper.resizable(
+function findFirstVisibleRow(mcontainer, mtable)
+{
+  let scrolledTop = mcontainer.scrollTop,
+    rows = mtable.querySelectorAll('tr')
+
+  return Array.from(rows).find(e => e.offsetTop > scrolledTop)
+}
+
+function scrollToFirstVisible(mcontainer, firstvisiblerow)
+{
+  $(mcontainer).animate({
+    scrollTop: firstvisiblerow.offsetTop
+  }, 300);
+}
+
+let initResize = function (wrapper) {
+  $(wrapper).resizable(
   {
     autoHide: true,
     handles: 'e',
@@ -53,26 +74,4 @@ let initResize = function ($wrapper) {
       });
     }
   });
-}
-
-function closequeue() {
-  let scrolledTop = document.getElementById("maincontainer").scrollTop,
-    tohead = findVisibleHead('#maintbl')
-  
-  $("#queuewrapper").hide()
-  $("#mainwrapper").css({
-    "height": "100%" - $("#cssmenu").height(),
-    "width": "100%"
-  })
-}
-
-// Find first row on screen to be the target position
-let findVisibleHead = function (table) {
-  let tohead
-
-  $.each($(table + ' tr'), function(i, tr) {
-    tohead = tr
-    return ($(tohead).offset().top < 0)
-  })
-  return tohead
 }

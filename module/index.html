@@ -23,9 +23,9 @@
    <tr>
      <th>Date</th>
      <th>OR</th>
-     <th>ห้อง</th>
+     <th>Rm</th>
      <th>เวลา</th>
-     <th>ลำดับ</th>
+     <th>№</th>
      <th>Staff</th>
      <th>HN</th>
      <th>Patient</th>
@@ -61,6 +61,9 @@
       </li>
      </ul>
     </li>
+    <li id="history">
+     <a id="clickeditHistory">Tracking</a>
+    </li>
     <li id="addrow">
       <a id="clickaddnewrow">Add</a>
     </li>
@@ -77,9 +80,6 @@
     </li>
     <li id="copyCase">
       <a>Copy</a>
-    </li>
-    <li id="history">
-     <a id="clickeditHistory">Tracking</a>
     </li>
     <li id="delete">
      <a>Delete</a>
@@ -140,8 +140,8 @@
 
  <div id="queuewrapper">
   <div id="titlebar">
-  <span id="titlename"></span>
-  <span class="ui-icon ui-icon-closethick" id="clickclosequeue"></span>
+   <span id="titlename"></span>
+   <span class="ui-icon ui-icon-closethick" id="clickclosequeue"></span>
   </div> 
   <div id="queuecontainer">
     <table id="queuetbl">
@@ -187,27 +187,13 @@
 </table>
 
 <div id="dialogNotify">
+  <div class="loader"></div>
   <textarea placeholder="พิมพ์ข้อความ"></textarea>
   <button id="buttonLINE"></button>
 </div>
 
 <div id="dialogService">
-  <div id="servicehead">
-    <div>
-    <span class="item">Admission : <span id="Admission"></span></span>
-    <span class="item">Discharge : <span id="Discharge"></span></span>
-    <span class="item">Operation : <span id="Operation"></span></span>
-    <span class="item Morbidity">Morbidity : <span id="Morbidity"></span></span>
-  </div>
-  <div>
-    <span class="item Readmission">Re-admission : <span id="Readmission"></span></span>
-    <span class="item Infection">Infection SSI : <span id="Infection"></span></span>
-    <span class="item Reoperation">Re-operation : <span id="Reoperation"></span></span>
-    <span class="item Dead">Dead : <span id="Dead"></span></span>
-  </div>
-  </div>
-  <br>
-  <button id="exportService">Export to xls</button>
+  <button id="exportService">Export to Excel</button>
   <button id="reportService">Report to Dept.</button>
   <br>
   <br>
@@ -223,24 +209,15 @@
      <th>Treatment</th>
      <th>Admission Status</th>
      <th>Final Status</th>
-     <th>
-      <img class="imgopen" src="css/pic/general/openpane.png">
-      <img class="imgclose" src="css/pic/general/closepane.png">
-      Profile
-     </th>
+     <th>Profile</th>
      <th>Admit</th>
-     <th>Date</th>
+     <th>Op</th>
      <th>D/C</th>
     </tr>
    </thead>
    <tbody>
    </tbody>
   </table>
-
-  <div id="profileRecord">
-   <div class="divRecord dialogBox">
-   </div>
-  </div>
 </div>
 <!-- dialogService ends here -->
 
@@ -257,7 +234,7 @@
     <td data-title="Final Status"></td>
     <td data-title="Profile"></td>
     <td data-title="Admit"></td>
-    <td data-title="Date"></td>
+    <td data-title="Op"></td>
     <td data-title="D/C"></td>
    </tr>
   </tbody>
@@ -266,6 +243,25 @@
 <div id="dialogReview" class="dialogBox">
  <table id="reviewtbl">
   <thead>
+   <div id="servicehead">
+    <div>
+     <span class="item">Admission : <span id="Admission"></span></span>
+     <span class="item Readmission">Re-admission : <span id="Readmission"></span></span>
+    </div>
+    <div>
+     <span class="item">Operation : <span id="Operation"></span></span>
+     <span class="item Reoperation">Re-operation : <span id="Reoperation"></span></span>
+    </div>
+    <div>
+     <span class="item">Discharge : <span id="Discharge"></span></span>
+     <span class="item Infection">Infection SSI : <span id="Infection"></span></span>
+    </div>
+    <div>
+     <span class="item Morbidity">Morbidity : <span id="Morbidity"></span></span>
+     <span class="item Dead">Dead : <span id="Dead"></span></span>
+    </div>
+   </div>
+   <br>
    <tr>
      <th rowspan="3" class="first">OPERATION</th>
      <th colspan="4">STAFF</th>
@@ -318,15 +314,15 @@
    </tr>
   <tr class="notcount nonsurgical">
      <td>Radiosurgery</td>
-     <td></td><td></td>
+     <td></td>
    </tr>
    <tr class="notcount nonsurgical">
      <td>Endovascular</td>
-     <td></td><td></td>
+     <td></td>
    </tr>
    <tr class="notcount nonsurgical">
      <td><small>Not Operation, Not RS, Not Endovascular</small></td>
-     <td></td><td></td>
+     <td></td>
    </tr>
    <tr id="Total" class="notcount">
      <td>Total Operation</td>
@@ -606,10 +602,9 @@
 
 <div id="dialogEquip" class="dialogBox"></div>
 
-<div id="dialogReadme"></div>
+<div id="dialogRecord" class="dialogBox"></div>
 
-<!-- For IE that not support <a download>, used in Export to Excel -->
-<iframe id="txtArea1"></iframe>
+<div id="dialogReadme"></div>
 
 </BODY>
 </HTML>

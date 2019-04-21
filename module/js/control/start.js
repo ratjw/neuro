@@ -1,23 +1,22 @@
 
 import { THEATRE } from "../model/const.js"
-import { addStaff } from "./addStaff.js"
+//import { addStaff } from "./addStaff.js"
 import { clicktable } from "./clicktable.js"
-import { exchangeOncall } from "./exchangeOncall.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 import { editcellEvent, clearEditcell, renewEditcell } from "./edit.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
 import { setClickMenu } from "../menu/setClickMenu.js"
-import { setClickSetting } from "./setClickSetting.js"
+//import { setClickSetting } from "./setClickSetting.js"
 import { setClickService } from "../service/serviceReview.js"
 import { sqlStart } from "../model/sqlupdate.js"
-import { sortable } from "./sort.js"
-import { clearSelection } from "./clearSelection.js"
+//import { sortable } from "./sort.js"
+import { clearSelection } from "../get/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { START, ISOdate, thDate } from "../util/date.js"
 import { BOOK, TIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { htmlStafflist, htmlEquipment, htmldivRecord } from "../view/html.js"
+import { htmlStafflist, htmlEquipment } from "../view/html.js"
 import { scrolltoToday } from "../view/scrolltoThisCase.js"
 import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
@@ -25,28 +24,28 @@ import { reViewService } from "../service/showService.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function userStaff() {
-  sqlStart().then(response => {
-    typeof response === "object"
-    ? success(response)
-    : failed(response)
-  }).catch(error => {})
+	sqlStart().then(response => {
+		typeof response === "object"
+		? success(response)
+		: failed(response)
+	}).catch(error => {})
 
-  document.oncontextmenu = () => false
+	document.oncontextmenu = () => false
 }
 
 // Success return from server
 function success(response) {
 
   // call sortable before render, otherwise it renders very slowly
-  sortable()
+//  sortable()
   updateBOOK(response)
   fillmain()
   scrolltoToday('maintbl')
   fillConsults()
+  clearSelection()
 
   // setting up html
   htmlEquipment()
-  htmldivRecord()
   htmlStafflist()
 
   // make the document editable
@@ -55,7 +54,7 @@ function success(response) {
   wrapperEvent()
   documentEvent()
   setClickMenu()
-  setClickSetting()
+//  setClickSetting()
   setClickService()
   overrideJqueryUI()
   resetTimer()
@@ -72,9 +71,9 @@ function failed(response) {
 
 function dialogServiceEvent()
 {
-  document.getElementById("dialogService").addEventListener("wheel", resetTimerCounter)
-  
-  document.getElementById("dialogService").addEventListener("mousemove", resetTimerCounter)
+	document.getElementById("dialogService").addEventListener("wheel", resetTimerCounter)
+	
+	document.getElementById("dialogService").addEventListener("mousemove", resetTimerCounter)
 }
 
 function wrapperEvent()
@@ -91,7 +90,7 @@ function wrapperEvent()
     let $stafflist = $('#stafflist')
 
     resetTimerCounter()
-   $(".marker").removeClass("marker")
+    $(".marker").removeClass("marker")
 
     if ($(target).closest('#cssmenu').length) {
       return
@@ -99,7 +98,7 @@ function wrapperEvent()
 
     if ($stafflist.is(":visible")) {
       if (!$(target).closest('#stafflist').length) {
-        $stafflist.hide()
+        $stafflist.hide();
         clearEditcell()
       }
     }
@@ -118,11 +117,7 @@ function wrapperEvent()
       }
     }
 
-    if (target.nodeName === "TD") {
-      clicktable(event, target)
-    } else {
-      clearAllEditing()
-    }
+    clicktable(event, target)
 
     event.stopPropagation()
   })
@@ -133,7 +128,7 @@ function documentEvent()
   // Prevent the Backspace key from navigating back.
   // Esc to cancel everything
   $(document).keydown(event => {
-    let keycode = event.which,
+    let keycode = event.which || window.event.keyCode,
       ctrl = event.ctrlKey,
       shift = event.shiftKey,
       home = keycode === 36,
@@ -152,21 +147,7 @@ function documentEvent()
       clearAllEditing()
     }
     resetTimerCounter()
-  })
-
-  $(document).contextmenu( event => {
-    let target = event.target
-    let oncall = target.dataset.consult
-
-    if (oncall) {
-      if (event.altKey) {
-        addStaff(target)
-      } else {
-        exchangeOncall(target)
-      }
-      event.preventDefault()
-    }
-  })
+  });
 
   window.addEventListener('resize', () => {
     $("#mainwrapper").css("height", window.innerHeight - $("#cssmenu").height())
@@ -207,9 +188,9 @@ function overrideJqueryUI()
   $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
     _title: function(title) {
         if (!this.options.title ) {
-            title.html("&#160;")
+            title.html("&#160;");
         } else {
-            title.html(this.options.title)
+            title.html(this.options.title);
         }
     }
   }))

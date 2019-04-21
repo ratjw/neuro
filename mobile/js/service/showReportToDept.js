@@ -11,7 +11,7 @@ const ROWREPORT = {
   "etc": 8,
   "Radiosurgery": 10,
   "Endovascular": 11,
-  "Conservative": 12
+  "NotDone": 12
 }
 const COLUMNREPORT = {
   "Staff": 1,
@@ -40,19 +40,32 @@ export function showReportToDept(title)
     }]
   })
 
+  $("#servicehead span[id]").each(function() {
+    this.innerHTML = 0
+  })
+
   $("#reviewtbl tr:not('th')").each(function() {
     $.each($(this).find("td:not(:first-child)"), function() {
       this.innerHTML = 0
     })
   })
-  $.each(SERVICE, function() {
-    if (this.operated) { countOpCase(this, this.disease) }
-    if (this.radiosurgery) { countNonOpCase(this, this.radiosurgery) }
-    if (this.endovascular) { countNonOpCase(this, this.endovascular) }
-    if (!this.operated && !this.radiosurgery && !this.endovascular) {
-      countNonOpCase(this, "Conservative")
-    }
+
+  SERVICE.forEach(e => {
+    let profile = JSON.parse(e.profile) || {}
+
+    if (profile.admitted) { countAdmitCase(profile.admitted) }
+    if (profile.operated) { countOpCase(profile.operated) }
+
+    if (e.discharge) { document.querySelector('#Discharge').innerHTML++ }
+    if (profile.infection) { document.querySelector('#Infection').innerHTML++ }
+    if (profile.morbid) { document.querySelector('#Morbidity').innerHTML++ }
+    if (profile.dead) { document.querySelector('#Dead').innerHTML++ }
+
+    if (profile.radiosurgery) { countNonOpCase("Radiosurgery") }
+    if (profile.endovascular) { countNonOpCase("Endovascular") }
+    if (!profile.operated && !profile.radiosurgery && !profile.endovascular) { countNonOpCase("NotDone") }
   })
+
   $("#reviewtbl tr:not('th, .notcount')").each(function(i) {
     $.each($(this).find("td:not(:first-child)"), function(j) {
       sumColumn[j] += Number(this.innerHTML)
@@ -67,28 +80,46 @@ export function showReportToDept(title)
   })
 }
 
-function countOpCase(thisrow, thisitem)
+function countAdmitCase(thisval)
 {
-  let row = ROWREPORT[thisitem],
-    doneby = thisrow.doneby ? thisrow.doneby : "Staff",
-    scale = thisrow.scale ? thisrow.scale : "Major",
-    manner = thisrow.manner ? thisrow.manner : "Elective",
-    column = COLUMNREPORT[doneby]
-         + COLUMNREPORT[scale]
-         + COLUMNREPORT[manner]
-
-  if (row && column) {
-    $("#reviewtbl tr")[row].cells[column].innerHTML++
+  document.querySelector('#Admission').innerHTM++
+  while (thisval > 1) {
+    document.querySelector('#Admission').innerHTML++
+    document.querySelector('#Readmission').innerHTML++
+    thisval--
   }
 }
 
-function countNonOpCase(thisrow, thisitem)
+function countOpCase(operated)
 {
-  let row = ROWREPORT[thisitem],
-    manner = thisrow.manner ? thisrow.manner : "Elective",
-    column = 1 + COLUMNREPORT[manner]
+  let op = operated.length
 
-  if (row && column) {
-    $("#reviewtbl tr")[row].cells[column].innerHTML++
+  document.querySelector('#Operation').innerHTML++
+  while(op > 1) {
+    document.querySelector('#Operation').innerHTML++
+    document.querySelector('#Reoperation').innerHTML++
+    op--
   }
+
+  operated.forEach(e => {
+    let doneby = e.doneby ? e.doneby : "Staff",
+      scale = e.scale ? e.scale : "Major",
+      manner = e.manner ? e.manner : "Elective",
+      row = ROWREPORT[e.disease],
+      column = COLUMNREPORT[doneby]
+             + COLUMNREPORT[scale]
+             + COLUMNREPORT[manner]
+
+    if (row && column) {
+      $("#reviewtbl tr")[row].cells[column].innerHTML++
+    }
+  })
+}
+
+function countNonOpCase(thisval)
+{
+  let row = ROWREPORT[thisval],
+    column = 1
+
+  $("#reviewtbl tr")[row].cells[column].innerHTML++
 }

@@ -55,12 +55,37 @@ td {
 
 /* used in Equipment column */
 td img {
-  height: 25px;
+  height: 23px;
   width: 25px;
 }
 td img.imgpale {
   filter: opacity(30%);
 }
+
+#capture td img {
+  height: 40px;
+  width: 45px;
+  margin: 0px 3px 0px 3px;
+}
+#capture th,
+#capture td {
+  font-size: 22px;
+  height: auto;
+  white-space: nowrap;
+  border: solid 1px gray;
+}
+#capture th:nth-child(1) { width: 3%; }
+#capture th:nth-child(2) { width: 0%; }
+#capture th:nth-child(3) { width: 3%; font-size: 12px; }
+#capture th:nth-child(4) { width: 0%; }
+#capture th:nth-child(5) { width: 0%; }
+#capture th:nth-child(6) { width: 5%; }
+#capture th:nth-child(7) { width: 9%; }
+#capture th:nth-child(8) { width: 10%; }
+#capture th:nth-child(9) { width: 20%; }
+#capture th:nth-child(10) { width: 20%; }
+#capture th:nth-child(11) { width: 30%; }
+#capture th:nth-child(12) { width: 0%; }
 
 td.consult:nth-child(8)::after { 
   color: #999999;
@@ -188,17 +213,13 @@ td.consult:nth-child(8)::after {
 #servicetbl th:nth-child(3) { width: 10%; }
 #servicetbl th:nth-child(4) { width: 15%; }
 #servicetbl th:nth-child(5) { width: 15%; }
-#servicetbl th:nth-child(6) { width: 25%; }
-#servicetbl th:nth-child(7) { width: 25%; }
+#servicetbl th:nth-child(6) { width: 20%; }
+#servicetbl th:nth-child(7) { width: 20%; }
 #servicetbl th:nth-child(8),
-#servicetbl td:nth-child(8),
-#dialogService .fixed th:nth-child(8) { width: 0px; font-size: 0px; }
-#servicetbl.showColumn8 th:nth-child(8),
-#servicetbl.showColumn8 td:nth-child(8),
-#dialogService .fixed.showColumn8 th:nth-child(8) { width: 200px; font-size: 14px; }
+#dialogService .fixed th:nth-child(8) { width: 5%; }
 #servicetbl th:nth-child(9) { width: 40px; }
 #servicetbl th:nth-child(10) { width: 40px; }
-#servicetbl td:nth-child(11) { width: 40px; }
+#servicetbl th:nth-child(11) { width: 40px; }
 
 #servicetbl td.serviceStaff {
   height: 40px;
@@ -255,7 +276,6 @@ td.consult:nth-child(8)::after {
 #findtbl td:nth-child(10) { width: 12%; }
 
 #wrapper,
-#queuewrapper,
 #tblcells,
 #queuetbl th:nth-child(2), #queuetbl td:nth-child(2),
 #queuetbl th:nth-child(3), #queuetbl td:nth-child(3),
@@ -277,7 +297,6 @@ td.consult:nth-child(8)::after {
 #stafflist,
 #editcell,
 #undelete,
-#txtArea1,
 #dialogStaff,
 #scbb option:first-of-type,
 #staffcells,
@@ -286,7 +305,6 @@ td.consult:nth-child(8)::after {
 #holidayInput,
 #capture,
 #dialogNotify,
-.imgclose,
 .ui-datepicker-year {
   display: none;
 }
@@ -417,91 +435,11 @@ tr.Saturday td:first-child::before { content: "เสาร์ "; }
 td.pacs { background-image: url(pic/general/pacs.png); }
 td.pacs2 { background-image: url(pic/general/pacs2.png); }
 
-.Reoperation td:nth-child(5),
-.Reoperation { background-color: #CCCCAA !important; }
-.Readmission td:nth-child(6),
-.Readmission { background-color: #AACCCC !important; } 
-.Infection td:nth-child(7),
-.Infection { background-color: #CCAAAA !important; }
+.Reoperation, .Reoperation td:nth-child(5) { background-color: #CCCCAA !important; }
+.Readmission, .Readmission td:nth-child(6) { background-color: #AACCCC !important; } 
+.Infection, .Infection td:nth-child(7) { background-color: #CCAAAA !important; }
 .Morbidity { background-color: #AAAACC !important; }
 .Dead { background-color: #AAAAAA !important; }
-
-.divRecord {
-  width: 200px;
-}
-
-.divRecord label {
-  display: inline-block;
-}
-
-.divRecord label.border {
-  position: relative;
-  top: -2px;
-  height: 17px;
-  background-color: white;
-  border-radius: 5px;
-  border: 1px solid #19adc4;
-  padding-left: 4px;
-  margin-left: 4px;
-}
-
-/* -webkit: to disable the default appearance of radio button*/
-.divRecord input {
-  height: 17px;
-  border-radius: 5px;
-  border: 1px solid #19adc4;
-  background-color: white;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
-/*no need, if you don't disable default appearance*/
-/*to remove the square border on focus*/
-.divRecord input:focus {
-  outline-color: transparent;
-}
-
-/*no need, if you don't disable default appearance*/
-.divRecord input:checked {
-  background-color: #19adc4;
-}
-
-.divRecord input:checked ~ span {
-  color: white;
-}
-
-.divRecord input[type="number"] {
-  height: 12px;
-  font-size: 12px;
-  position: relative;
-  left: 55px;
-  top: -1px;
-  border: none;
-}
-
-.divRecord label span {
-  display: inline-block;
-  position: relative;
-  font-size: 11px;
-  color: #19adc4;
-  top: -4.5px;
-  width: 0px;
-}
-
-.divRecord label.border span {
-  top: -1px;
-}
-
-.divRecord label input[type="checkbox"] + span {
-  top: -8px;
-}
-
-.divRecord hr {
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #B4E4EC;
-  margin: 3px 10px 0px 5px;
-}
 
 .ui-sortable-helper {
   display: table;
@@ -630,12 +568,6 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 
 #monthpicker { margin-left:5px }
 
-.imgopen,
-.imgclose {
-  float: left;
-  width: 20px;
-}
-
 #editcell { 
   text-align: left; 
   overflow: hidden;
@@ -703,22 +635,26 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
   background-color: Turquoise;
 }
 
+#oproomequip,
+#casenumequip,
+#optimeequip,
+#opdayequip,
+#opdateequip,
+#staffnameequip,
+#hnequip,
+#patientnameequip,
+#ageequip { font-size: 16px; font-weight: bold; }
+
 #dialogEquip {
   font-size: 14px;
 }
 
-#oproom,
-#casenum,
-#optime,
-#opdate,
-#staffname { font-size: 16px; font-weight: bold; }
-
-#dialogEquip input[type=radio] + label,
-#dialogEquip input[type=checkbox] + label {
+#dialogEquip input[type=radio] + span,
+#dialogEquip input[type=checkbox] + span {
   color: #999999;
 }
-#dialogEquip input[type=radio]:checked + label,
-#dialogEquip input[type=checkbox]:checked + label {
+#dialogEquip input[type=radio]:checked + span,
+#dialogEquip input[type=checkbox]:checked + span {
   color: black;
   font-weight: bold;
 }
@@ -731,7 +667,6 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
   font-weight: bold;
 }
 #dialogEquip textarea {
-  width: 500px;
   height: 55px;
   padding: 2px;
   color: blue;
@@ -739,6 +674,88 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 }
 #editedby {
   position: absolute;
+}
+
+#dialogRecord label {
+  display: inline-block;
+}
+
+#dialogRecord label.border {
+  position: relative;
+  height: 20px;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #19adc4;
+  padding-left: 4px;
+  margin-left: 4px;
+}
+
+/* -webkit: to disable the default appearance of radio button*/
+#dialogRecord input {
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid #19adc4;
+  background-color: white;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/*no need, if you don't disable default appearance*/
+/*to remove the square border on focus*/
+#dialogRecord input:focus {
+  outline-color: transparent;
+}
+
+/*no need, if you don't disable default appearance*/
+#dialogRecord input:checked {
+  background-color: #19adc4;
+}
+
+#dialogRecord input:checked ~ span {
+  color: white;
+}
+
+#dialogRecord input[type="number"] {
+  height: 15px;
+  font-size: 14px;
+  position: relative;
+  top: -5px;
+  left: 70px;
+  border: none;
+}
+
+#dialogRecord input[type="button"] {
+  height: 15px;
+  font-size: 14px;
+  position: relative;
+  top: -5px;
+  left: 15px;
+  border: none;
+}
+
+#dialogRecord label span {
+  display: inline-block;
+  position: relative;
+  font-size: 14px;
+  top: -5px;
+  width: 0px;
+}
+
+#dialogRecord label.border span {
+  top: 1px;
+  left: 3px;
+}
+
+#dialogRecord label input[type="checkbox"] + span {
+  top: -8px;
+}
+
+#dialogRecord hr {
+  height: 1px;
+  color: green;
+  border: 0;
+  border-top: 1px solid #B4E4EC;
+  margin: 3px 10px 5px 5px;
 }
 
 #dialogHoliday table td {
@@ -751,14 +768,15 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
   font-size: 14px;
 }
 #buttonLINE {
-  width: 50px;
-  height: 50px;
+  float: right;
+  width: 40px;
+  height: 40px;
   background-image: url(pic/general/message.png);
-  background-size: 50px;
+  background-size: 40px;
   border: 1px solid lightblue;
 }
 #buttonLINE:hover {
-  border: 2px solid lightblue;
+  border: 2px solid Dodgerblue;
 }
 
 #spin {
@@ -766,6 +784,31 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
   width: 35px;
   font-size: 14px;
   margin: 0px;
+}
+
+.loader {
+  display: none;
+  position: absolute;
+  top:5%;
+  left: 50%;
+  border: 7px solid #a3e3f3;
+  border-radius: 50%;
+  border-top: 7px solid #3498db;
+  width: 20px;
+  height: 20px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @media only screen and (max-width: 640px) {
@@ -804,7 +847,7 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
     border: none;
     border-bottom: 1px solid #eee; 
     position: relative;
-    padding-left: 40%; 
+    padding-left: 30%; 
     white-space: normal;
     text-align: left;
     empty-cells: show;

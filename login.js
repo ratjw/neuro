@@ -40,6 +40,7 @@ function login()
 					
 	document.getElementById("browser").value = browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
+	sessionStorage.setItem('device', (isMobile ? 'isMobile' : ''))
 }
 
 function namesix()

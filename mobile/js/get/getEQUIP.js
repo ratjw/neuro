@@ -6,8 +6,25 @@ import { sqlGetEquip, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlGetEqu
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winHeight } from "../util/util.js"
+import { Alert, winHeight, radioHack, deepEqual } from "../util/util.js"
 import { viewEquipJSON } from "../view/viewEquip.js"
+
+const EQUIPITEMS = [
+  "copay",
+  "Position",
+  "Imaging",
+  "อุปกรณ์ยึดผู้ป่วย",
+  "เครื่องตัดกระดูก",
+  "กล้อง",
+  "Retractor",
+  "CUSA",
+  "U/S",
+  "Shunt",
+  "เครื่องมือบริษัท",
+  "อุปกรณ์อื่นๆ",
+  "Monitor",
+  "Notice"
+]
 
 let rowEquip,
   JsonEquip,
@@ -16,8 +33,7 @@ let rowEquip,
 
 export function getEQUIP(pointing)
 {
-  let tableID = pointing.closest('table').id,
-    row = pointing.closest('tr'),
+  let row = pointing.closest('tr'),
     qn = row.dataset.qn,
     height = winHeight(95),
     thisEquip = {
@@ -45,8 +61,7 @@ export function getEQUIP(pointing)
   thisqn = qn
 
   // clear all previous dialog values
-  $dialogEquip.show()
-  $dialogEquip.find('input').val('')
+  $dialogEquip.find('input[type=text]').val('')
   $dialogEquip.find('textarea').val('')
   $dialogEquip.find('input').prop('checked', false)
   $dialogEquip.dialog({
@@ -57,20 +72,19 @@ export function getEQUIP(pointing)
     height: height > 1000 ? 1000 : height
   })
 
-  // If ever filled, show checked equips & texts
-  // .prop("checked", true) shown in radio and checkbox
-  // .val(val) shown in <input text> && <textarea>
-  if ( Object.keys(JsonEquip).length ) {
-    $.each(JsonEquip, function(key, val) {
-      if (val === 'checked') {
-        $("#"+ key).prop("checked", true)
+  if (Object.keys(JsonEquip).length) {
+    Object.entries(JsonEquip).forEach(([key, val]) => {
+      if (val.constructor === Array) {
+        val.forEach(e => {
+          checkMatchValue(key, e)
+        })
       } else {
-        $("#"+ key).val(val)
+        checkMatchValue(key, val)
       }
     })
     showNonEditableEquip()
     getEditedBy(thisqn)
-   } else {
+  } else {
     showEditableEquip()
     $('#editedby').html("")
   }
@@ -78,20 +92,25 @@ export function getEQUIP(pointing)
   clearEditcell()
 }
 
-// hack for click to uncheck a radio input
-function clickRadioInput()
+function checkMatchValue(key, val)
 {
-  $('#dialogEquip label:has(input[type=radio])').off('mousedown').on('mousedown', function(e) {
-    var radios = $(this).find('input[type=radio]')
-    var wasChecked = radios.prop('checked')
+  let dd = document.querySelector(`#dialogEquip div[title='${key}']`)
 
-    radios[0].turnOff = wasChecked
-    radios.prop('checked', !wasChecked)
-  })
-  .off('click').on('click', function(e) {
-    var radios = $(this).find('input[type=radio]')
-    radios.prop('checked', !radios[0].turnOff)
-  })
+  if (dd.querySelector('textarea')) {
+    dd.querySelector('textarea').value = val
+    return
+  }
+
+  for ( let e of dd.querySelectorAll('input')) {
+    if (e.type === 'text') {
+      if (e.value) { continue }
+      e.value = val
+      break
+    } else if (val === e.value) {
+      e.checked = true
+      break
+    }
+  }
 }
 
 function showNonEditableEquip()
@@ -125,11 +144,11 @@ let showEditableEquip = function () {
       text: "Save",
       click: function () {
         if (checkEquip()) {
-          if ($('#copay').val()) {
-            Checklistequip()
+          if ($(`#dialogEquip div[title=copay] input[type=text]`).val()) {
+            checklistEquip()
             showNonEditableEquip()
           } else {
-            Alert("Checklistequip", "<br>ต้องระบุจำนวนเงิน<br>จ่ายไม่ได้เลย = 0")
+            Alert("checklistEquip", "<br>ต้องระบุจำนวนเงิน<br>จ่ายไม่ได้เลย = 0")
           }
         } else {
           cancelAllEquip()
@@ -146,31 +165,14 @@ function disableInput()
   $('#dialogEquip label:has(input[type=radio])').off('mousedown')
   $('#dialogEquip input').prop('disabled', true)
   $('#dialogEquip textarea').prop('disabled', true)
-  $('#clearPosition').off('click')
-  $('#clearShunt').off('click')
 }
 
-// clearPosition : uncheck radio button of Positions
-// clearShunt : uncheck radio button of Shunts
 function enableInput()
 {
+  $('#dialogEquip label:has(input[type=radio])').on('mousedown')
   $('#dialogEquip input').prop('disabled', false)
   $('#dialogEquip textarea').prop('disabled', false)
-  $('#clearPosition').off("click").on("click", clearPosition)
-  $('#clearShunt').off("click").on("click", clearShunt)
-  clickRadioInput()
-}
-
-function clearPosition()
-{
-  $('#dialogEquip input[name=pose]').prop('checked', false)
-}
-
-function clearShunt()
-{
-  $('#dialogEquip input[name=head]').prop('checked', false)
-  $('#dialogEquip input[name=peritoneum]').prop('checked', false)
-  $('#dialogEquip input[name=program]').prop('checked', false)
+  radioHack('#dialogEquip')
 }
 
 function getEditedBy()
@@ -194,7 +196,7 @@ function checkEquip()
 {
   let equip = false
 
-  $('#dialogEquip input:not(#copay), #dialogEquip textarea').each((i, e) => {
+  document.querySelectorAll('#dialogEquip div:not([title=copay]) input, #dialogEquip textarea').forEach(e => {
     if (e.checked) {
       equip = true
       return false
@@ -209,25 +211,30 @@ function checkEquip()
   return equip
 }
 
-let Checklistequip = function () {
+let checklistEquip = function () {
   let equipJSON = {},
     equipment = "",
     sql = ""
 
-  document.querySelectorAll('#dialogEquip input, #dialogEquip textarea').forEach(e => {
-    if (e.checked) {
-      equipJSON[e.id] = "checked"
-    } else if (e.type === "text" || e.type === "textarea") {
-      if (e.value) {
-        equipJSON[e.id] = e.value
+  EQUIPITEMS.forEach(e => {
+    let dd = `#dialogEquip div[title='${e}']`
+    document.querySelectorAll(`${dd} input, ${dd} textarea`).forEach(i => {
+      if (i.checked || ((i.type === 'text') && i.value)) {
+        if (equipJSON[e]) {
+          if (typeof equipJSON[e] === 'string') { equipJSON[e] = equipJSON[e].split() }
+          equipJSON[e].push(i.value)
+        } else {
+          equipJSON[e] = i.value
+        }
+      } else if ((i.type === 'textarea') && i.value) {
+        equipJSON[e] = i.value
       }
-    }
+    })
   })
 
+  if (deepEqual(equipJSON, JsonEquip)) { return }
+
   equipment = JSON.stringify(equipJSON)
-  if (equipment === rowEquip) {
-    return
-  }
 
   // escape the \ (escape) and ' (single quote) for sql string, not for JSON
   equipment = equipment.replace(/\\/g,"\\\\").replace(/'/g,"\\'")
@@ -238,7 +245,7 @@ let Checklistequip = function () {
     }
     let rollback = function () {
       // Error update server
-      Alert("Checklistequip", response)
+      Alert("checklistEquip", response)
 
       // Roll back
       $('#dialogEquip input').val('')

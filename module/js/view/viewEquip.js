@@ -1,8 +1,8 @@
 
 const EQUIPICONS = {
     Fluoroscope: "Fluoroscope",
-    "Navigator_frameless": "Navigator",
-    "Navigator_with-frame": "Navigator",
+    "Navigator frameless": "Navigator",
+    "Navigator with frame": "Navigator",
     Oarm: "Oarm",
     Robotics: "Robotics",
     Microscope: "Microscope",
@@ -55,7 +55,7 @@ export function viewEquipNoImg(equip)
 
 export function viewEquipJSON(equipJSON)
 {
-  if (Object.entries(equipJSON).length) {
+  if (Object.keys(equipJSON).length) {
     return viewEquipText(equipJSON) + "<br>" + viewEquipImage(equipJSON)
   }
   return ""
@@ -67,30 +67,10 @@ function viewEquipText(equipJSON)
     monitor = []
 
   $.each(equipJSON, function(key, value) {
-    if (value === "checked") {
-      if (key in EQUIPICONS) {
-        if (EQUIPICONS[key] === "Monitor") {
-          monitor.push(key)
-        } else {
-          equip.push(key)
-    }
-      } else {
-        equip.push(key)
-    }
-    } else {
-      if (key === "Monitor") {
-        monitor.push(value)
-      } else {
-        equip.push(key + ":" + value)
-      }
-    }
+    equip.push(key + ":" + value)
   })
-
-  // convert to string
-  equip = equip.length ? equip.join('; ') : ''
-  monitor = monitor.length ? "; Monitor:" + monitor.toString() : ''
   
-  return equip + monitor
+  return equip.length ? equip.join('; ') : ''
 }
 
 function viewEquipImage(equipJSON)
@@ -100,11 +80,17 @@ function viewEquipImage(equipJSON)
     equipPics = [],
     img = ""
 
-  $.each(equipJSON, function(key, value) {
-    if (value === "checked") {
-      if (key in EQUIPICONS) {
-        equipPics.push(EQUIPICONS[key])
+  Object.values(equipJSON).forEach(value => {
+    if (typeof value === 'string') {
+      if (value in EQUIPICONS) {
+        equipPics.push(EQUIPICONS[value])
       } 
+    } else {
+      value.forEach(e => {
+        if (e in EQUIPICONS) {
+          equipPics.push(EQUIPICONS[e])
+        } 
+      })
     }
   })
 
@@ -114,11 +100,11 @@ function viewEquipImage(equipJSON)
   // display 6 pics: pale the not-checked ones
   EQUIPICONSHOWN.forEach((item) => {
     if (equipPics.includes(item)) {
-    img += `<img src="css/pic/equip/${item}.jpg"> `
-    equipPics = equipPics.filter(e => e !== item)
-  } else {
-    img += `<img class="imgpale" src="css/pic/equip/${item}.jpg"> `
-  }
+      img += `<img src="css/pic/equip/${item}.jpg"> `
+      equipPics = equipPics.filter(e => e !== item)
+    } else {
+      img += `<img class="imgpale" src="css/pic/equip/${item}.jpg"> `
+    }
   })
   
   return img + equipImg(equipPics)

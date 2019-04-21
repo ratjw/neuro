@@ -1,7 +1,7 @@
 
 import { clearEditcell } from "./edit.js"
 import { clearMouseoverTR } from "../util/util.js"
-import { clearSelection } from "./clearSelection.js"
+import { clearSelection } from "../get/selectRow.js"
 
 export function clearAllEditing()
 {

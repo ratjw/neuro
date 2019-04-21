@@ -6,9 +6,7 @@ import {
   POINTER, OLDCONTENT, getNewcontent, createEditcell, clearEditcell
 } from "./edit.js"
 import { clearMouseoverTR } from "../util/util.js"
-
 import { clearAllEditing } from "./clearAllEditing.js"
-import { clearSelection } from "./clearSelection.js"
 
 import { saveTheatre } from "../save/saveTheatre.js"
 import { saveOpRoom } from "../save/saveOpRoom.js"
@@ -17,7 +15,7 @@ import { saveContent } from "../save/saveContent.js"
 import { saveCaseNum } from "../save/saveCaseNum.js"
 import { saveHN } from "../save/saveHN.js"
 
-import { selectRow } from "../get/selectRow.js"
+import { selectRow, clearSelection } from "../get/selectRow.js"
 import { getTHEATRE } from "../get/getTHEATRE.js"
 import { getROOM } from "../get/getROOM.js"
 import { getOPTIME } from "../get/getOPTIME.js"
@@ -27,14 +25,17 @@ import { getHN } from "../get/getHN.js"
 import { getEQUIP } from "../get/getEQUIP.js"
 
 // Click on main or staff table
-export function clicktable(evt, clickedCell) {
-  if (!!POINTER) {
+export function clicktable(evt, target) {
+  if (POINTER) {
     savePreviousCell()
   }
-  if (!POINTER || POINTER.cellIndex > 7) {
-    editPresentCell(evt, clickedCell)
+  if (((target.nodeName === "TH") && (target.cellIndex === OPDATE))
+    || (target.nodeName === "TD")) {
+    if (!POINTER || POINTER.cellIndex > PATIENT) {
+      editPresentCell(evt, target)
+    }
   } else {
-    clearEditcell()
+    clearAllEditing()
   }
 }
 

@@ -1,7 +1,7 @@
 
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
-  FINALSV, PROFILESV, ADMITSV, OPDATESV, DISCHARGESV
+  FINALSV, PROFILESV, ADMITSV, OPDATESV, DISCHARGESV, RECORDDATA
 } from "../model/const.js"
 import { POINTER, clearEditcell } from "../control/edit.js"
 import { START, putThdate, putNameAge } from "../util/date.js"
@@ -11,15 +11,13 @@ import { fillmain } from "../view/fill.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { coloring } from "./coloring.js"
-import { countAllServices } from "./countAllServices.js"
 import { getAdmitDischargeDate } from "./getAdmitDischargeDate.js"
 import { savePreviousCellService } from "./savePreviousCellService.js"
 import { SERVICE, seteditableSV, serviceFromDate } from "./setSERVICE.js"
-import { clickDialogService, hideProfile } from "./clickDialogService.js"
-import { showRecord } from "./showRecord.js"
-import { clearSelection } from "../control/clearSelection.js"
-import { profileHandler } from "./profileHandler.js"
+import { viewRecord } from "./viewRecord.js"
+import { clearSelection } from "../get/selectRow.js"
 import { hoverPicArea } from "../util/util.js"
+import { clickCellSV } from "./clickCellSV.js"
 
 export function showService() {
   let $dialogService = $("#dialogService"),
@@ -76,9 +74,8 @@ export function showService() {
       fillConsults()
       $(".ui-dialog:visible").find(".ui-dialog-content").dialog("close")
       $(".fixed").remove()
-      hideProfile()
       $(window).off("resize", resizeDialogSV)
-      $dialogService.off("click", clickDialogService)
+      $dialogService.off("click", clickCellSV)
       if (POINTER) {
         savePreviousCellService()
       }
@@ -90,11 +87,9 @@ export function showService() {
   if (/surgery\.rama/.test(location.hostname)) {
     getAdmitDischargeDate()
   }
-  countAllServices()
   $servicetbl.fixMe($dialogService)
   hoverPicArea()
-  profileHandler()
-  $dialogService.on("click", clickDialogService)
+  $dialogService.on("click", clickCellSV)
 
   //for resizing dialogs in landscape / portrait view
   $(window).on("resize", resizeDialogSV)
@@ -138,13 +133,12 @@ export function reViewService() {
     }
     $row.filldataService(this, scase)
   })
+
   if (i < (rlen - 1)) {
     $rows.slice(i+1).remove()
   }
-  countAllServices()
   $servicetbl.fixMe($("#dialogService"))
   hoverPicArea()
-  profileHandler()
 }
 
 jQuery.fn.extend({
@@ -161,13 +155,17 @@ jQuery.fn.extend({
     cells[TREATMENTSV].innerHTML = bookq.treatment
     cells[ADMISSIONSV].innerHTML = bookq.admission
     cells[FINALSV].innerHTML = bookq.final
-    while(cells[PROFILESV].firstChild) cells[PROFILESV].firstChild.remove()
-    cells[PROFILESV].appendChild(showRecord(bookq))
+    cells[PROFILESV].innerHTML = viewRecord(bookq.profile)
     cells[ADMITSV].innerHTML = putThdate(bookq.admit)
     cells[OPDATESV].innerHTML = putThdate(bookq.opdate)
     cells[DISCHARGESV].innerHTML = putThdate(bookq.discharge)
 
+    row.dataset.hn = bookq.hn
+    row.dataset.patient = bookq.patient
+    row.dataset.admit = bookq.admit || ''
+    row.dataset.profile = bookq.profile
     row.dataset.qn = bookq.qn
+
     coloring(row)
   }
 })

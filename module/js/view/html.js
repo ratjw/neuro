@@ -1,5 +1,5 @@
 
-import { EQUIPSHEET, RECORDSHEET } from "../model/const.js"
+import { EQUIPSHEET} from "../model/const.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { STAFF } from "../util/updateBOOK.js"
 
@@ -31,15 +31,16 @@ export function htmlEquipment()
     type = "",
     width = "",
     name = "",
-    id = "",
-    label = ""
+    label = "",
+    id = ""
 
   EQUIPSHEET.forEach(item => {
     type = item[0]
     width = item[1]
     name = item[2]
-    id = item[3]
-    label = item[4]
+    label = item[3]
+    id = item[4]
+
     if (type === "divbegin") {
       equip += `<div title="${name}">`
     } else if (type === "divend") {
@@ -53,16 +54,13 @@ export function htmlEquipment()
     } else if (type === "radio" || type === "checkbox") {
       equip += `<span class="w${width}">
                  <label>
-                   <input type="${type}" name="${name}" id="${id}">${label}</label>
+                   <input type="${type}" name="${name}" value="${label}">
+                   <span>${label}</span></label>
                 </span>`
     } else if (type === "text") {
-      equip += `<span>
-                  <input type="${type}" class="${name}" id="${id}" placeholder="${label}">
-                </span>`
+      equip += `<input type="${type}" class="w${width}" placeholder="${label}">`
     } else if (type === "textarea") {
-      equip += `<span>
-                  <textarea id="${id}" placeholder="${label}"></textarea>
-                </span>`
+      equip += `<textarea class="w${width} placeholder="${label}"></textarea>`
     }
   })
 
@@ -70,43 +68,44 @@ export function htmlEquipment()
 }
 
 // name is the column in Mysql
-// title is the value except Readmission and Reoperation
-export function htmldivRecord()
+// title is the value
+// <span style right: width> to make <span> contained in <input> box
+export function htmlProfile(profile)
 {
   let record = "",
-    labelwidth = "",
-    inputwidth = "",
+    width = "",
     type = "",
     name = "",
-    title = "",
     label = "",
     min = "",
     max = ""
 
-  RECORDSHEET.forEach(item => {
-    labelwidth = item[0]
-    inputwidth = item[1]
-    type = item[2]
-    name = item[3]
-    title = item[4]
-    label = item[5]
-    min = item[6] || ""
-    max = item[7] || ""
+  profile.forEach(item => {
+    type = item[0]
+    width = item[1]
+    name = item[2]
+    label = item[3]
+    min = item[4] || ""
+    max = item[5] || ""
 
-    if (labelwidth === "br") {
+    if (type === "br") {
 			record += `<br>`
-    } else if (labelwidth === "hr") {
+    } else if (type === "hr") {
 			record += `<hr>`
     } else if (type === "number") {
-			record += `<label class="w${labelwidth}">
+			record += `<label>
 				<span>${label}</span>
-				<input class="w${inputwidth}" type="${type}" name="${name}" title="${title}" value="" min="${min}" max="${max}"></label>`
+				<input class="w${width}" type="${type}" name="${name}" value="" min="${min}" max="${max}"></label>`
+    } else if (type === "button") {
+			record += `<label>
+				<span>${label}</span>
+        <input class="w${width}" type="${type}" name="${name}" value=""></label>`
 		} else {
-			record += `<label class="w${labelwidth}">
-				<input class="w${inputwidth}" type="${type}" name="${name}" title="${title}" value="${title}">
-				<span style="right:${inputwidth}px">${label}</span></label>`
+			record += `<label>
+				<input class="w${width}" type="${type}" name="${name}" value="${label}">
+				<span style="right:${width}px">${label.replace(" ", "&nbsp;")}</span></label>`
 		}
   })
 
-  document.querySelector("#profileRecord .divRecord").innerHTML = record
+  return record
 }

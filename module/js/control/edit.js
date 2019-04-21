@@ -240,7 +240,7 @@ export function reCreateEditcell()
   }
 }
 
-// Update module variables
+// Update editing location and content
 // after update from other user while idling
 export function editcellSaveData(pointing, content) {
   POINTER = pointing
