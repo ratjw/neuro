@@ -1,3 +1,4 @@
+
 import {
   DIAGNOSIS, TREATMENT, CONTACT,
   DIAGNOSISSV, TREATMENTSV, ADMISSIONSV, FINALSV, PROFILESV
@@ -8,7 +9,6 @@ import {
 import { clearAllEditing } from "./clearAllEditing.js"
 import { sqlSaveOnChange } from "../model/sqlupdate.js"
 import { sqlSaveOnChangeService } from "../model/sqlservice.js"
-import { saveProfileService } from "../service/savePreviousCellService.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 
@@ -120,7 +120,6 @@ function saveOnChangeService(content)
                 ? "final"
                 : ""
 
-  if (index === PROFILESV) { saveProfileService(POINTER) }
   if (!column) { return false }
 
   sqlSaveOnChangeService(column, content, qn).then(response => {

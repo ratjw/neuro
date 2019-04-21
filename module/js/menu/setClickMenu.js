@@ -12,26 +12,25 @@ import { delCase } from "./delCase.js"
 import { sendtoExcel } from "./sendtoExcel.js"
 import { sendtoLINE, toLINE } from "./sendtoLINE.js"
 
-let onclick = {
+let clickevent = {
   "clicksearchCases": searchCases,
   "clickcaseAll": caseAll,
   "clickallDeletedCases": allDeletedCases,
+  "clickeditHistory": editHistory,
   "clickreadme": readme,
   "addrow": addnewrow,
   "postponecase": postponeCase,
   "moveCase": moveCase,
   "copyCase": copyCase,
-  "clickeditHistory": editHistory,
   "delcase": delCase,
   "clicksendtoExcel": sendtoExcel,
   "clicksendtoLINE": sendtoLINE,
-  "buttonLINE": toLINE,
   "clicksearchDB": searchDB
 }
 
 export function setClickMenu()
 {
-  $.each(onclick, function(key, val) {
-    document.getElementById(key).onclick = val
+  Object.entries(clickevent).forEach(([key, val]) => {
+    document.getElementById(key).addEventListener('click', val)
   })
 }

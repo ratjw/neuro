@@ -20,13 +20,13 @@ export function scrolltoToday(tableID)
   let today = new Date(),
     todate = ISOdate(today),
     table = document.getElementById(tableID),
+    rows = table.querySelectorAll('tr'),
     container = table.closest('div'),
-    thisrow = Array.from(table.querySelectorAll('tr')).find(e => e.dataset.opdate === todate)
+    todayrow = Array.from(rows).find(e => e.dataset.opdate === todate)
 
-  if (thisrow) {
-    container.scrollTop = 0
+  if (todayrow) {
     $(container).animate({
-      scrollTop: thisrow.offsetTop
+      scrollTop: todayrow.offsetTop
     }, 300);
   }
 }

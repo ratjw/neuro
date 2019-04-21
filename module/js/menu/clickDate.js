@@ -1,7 +1,7 @@
 
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
 import { clearMouseoverTR } from "../util/util.js"
-import { clearSelection } from "../control/clearSelection.js"
+import { clearSelection } from "../get/selectRow.js"
 import { domoveCase } from "./domoveCase.js"
 import { docopyCase } from "./docopyCase.js"
 

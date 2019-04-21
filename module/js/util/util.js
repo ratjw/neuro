@@ -239,3 +239,29 @@ export function getLargestWaitnum(book, staffname)
 
   return Math.max(...dateStaff.map(q => q.waitnum), 0)
 }
+
+// hack for click to uncheck a radio input
+export function radioHack(container)
+{
+  $(container + ' label:has(input[type=radio])').on('mousedown', function(e) {
+    var radios = $(this).find('input[type=radio]')
+    var wasChecked = radios.prop('checked')
+
+    radios[0].turnOff = wasChecked
+    radios.prop('checked', !wasChecked)
+  })
+  .on('click', function(e) {
+    var radios = $(this).find('input[type=radio]')
+    radios.prop('checked', !radios[0].turnOff)
+  })
+}
+
+export function deepEqual(x, y)
+{
+  const ok = Object.keys, tx = typeof x, ty = typeof y;
+
+  return x && y && tx === 'object' && tx === ty ? (
+    ok(x).length === ok(y).length &&
+      ok(x).every(key => deepEqual(x[key], y[key]))
+  ) : (x === y);
+}

@@ -1,0 +1,14 @@
+
+mobile is different from module in the followings
+
+index.html
+  add: responsive
+  out: some menu
+
+control/start.js
+  out: some imports, sortable, setClickSetting
+
+menu/setClickMenu.js:
+  out: some menu
+
+mobile misses some files about menu.

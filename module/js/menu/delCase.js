@@ -3,7 +3,7 @@ import { sqlDeleteCase } from "../model/sqlDeleteCase.js"
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { clearSelection } from "../control/clearSelection.js"
+import { clearSelection } from "../get/selectRow.js"
 
 // not actually delete the case but set deleted = 1
 // Remove the row if more than one case on that date, or on staff table

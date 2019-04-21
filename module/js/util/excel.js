@@ -282,6 +282,9 @@ function exportToExcel(id, style, head, filename)
   // insert header
   $exceltbl.find('tbody').before(head)
 
+  //remove img in equipment
+  $exceltbl.find('img').remove();
+
   let table = $exceltbl[0].outerHTML
   let htmlstr = `<!DOCTYPE html>
                   <HTML>

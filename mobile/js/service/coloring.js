@@ -4,16 +4,21 @@ import { COMPLICATION } from "../model/const.js"
 // used when freshly loaded SERVICE from DB only
 // changes after this, must use showInputColor(target)
 export function coloring(row) {
-  let classname = ""
-  let complication = []
+  let profile = JSON.parse(row.dataset.profile)
 
-  COMPLICATION.forEach(e => {
-    complication.push(row.querySelector('input[title="' + e + '"]'))
+  if (!profile) { return }
+
+  Object.values(COMPLICATION).forEach(e => {
+    row.classList.remove(e)
   })
 
-  complication.forEach(e => {
-    if ((e.value > 1) || e.checked) {
-      row.classList.add(e.title)
-    }
+  Object.keys(COMPLICATION).forEach(e => {
+    if (e === 'admitted') {
+      if (Number(profile[e]) < 2) { return }
+    } else if (e === 'operated') {
+      if (profile[e].length < 2) { return }
+    } else if (!profile[e]) { return }
+
+    row.classList.add(COMPLICATION[e])
   })
 }

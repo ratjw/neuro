@@ -1,3 +1,4 @@
+
 import {
   DIAGNOSIS, TREATMENT, CONTACT,
   DIAGNOSISSV, TREATMENTSV, ADMISSIONSV, FINALSV, PROFILESV
@@ -8,7 +9,6 @@ import {
 import { clearAllEditing } from "./clearAllEditing.js"
 import { sqlSaveOnChange } from "../model/sqlupdate.js"
 import { sqlSaveOnChangeService } from "../model/sqlservice.js"
-import { saveProfileService } from "../service/savePreviousCellService.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 
@@ -33,11 +33,9 @@ export function clearTimer() {
   clearTimeout(timer)
 }
 
-// While idling every 10 sec., get updated by itself and another clients
-// 1. Visible editcell
-//   1.1 Editcell changed (update itself and from another client on the way)
-//  1.2 Editcell not changed, check updated from another client
-// 2. Not visible editcell, get update from another client
+// While idling every 10 sec, get updated by itself
+//  1 Editcell changed, update DB
+//  2 Editcell not changed, check timer (idleCounter)
 function updating() {
   if (onChange()) {
     idleCounter = 0
@@ -122,7 +120,6 @@ function saveOnChangeService(content)
                 ? "final"
                 : ""
 
-  if (index === PROFILESV) { saveProfileService(POINTER) }
   if (!column) { return false }
 
   sqlSaveOnChangeService(column, content, qn).then(response => {

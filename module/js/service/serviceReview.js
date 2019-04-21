@@ -16,13 +16,11 @@ function serviceReview() {
     $monthpicker = $("#monthpicker"),
     $monthstart = $("#monthstart"),
     selectedYear = new Date().getFullYear(),
-    BuddhistYear = Number(selectedYear) + 543
+    BuddhistYear = Number(selectedYear) + 543;
 
-  $("#servicehead").hide()
-  $("#servicetbl").hide()
-  $("#exportService").hide()
-  $("#reportService").hide()
-  $(".divRecord").hide()
+  ["#servicehead", "#servicetbl", "#exportService", "#reportService"].forEach(e => 
+    document.querySelector(e).style.display = 'none'
+  )
   
   $dialogService.dialog({
     title: "Service Neurosurgery",

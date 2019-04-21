@@ -1,7 +1,7 @@
 
 export function exportQbookToExcel()
 {
-  let title = 'Qbook Selected '
+  let title = 'Operative Schedule'
   let style = '\
     <style type="text/css">\
       #exceltbl {\
@@ -50,9 +50,9 @@ export function exportQbookToExcel()
       </tr>\
       <tr></tr>\
       </table>'
-  let filename = title + Date.now() + '.xls'
+  let filename = `${title} ${Date.now()}.xls`
 
-  exportToExcel("capture", title, style, head, filename)    
+  exportToExcel("capture", style, head, filename)
 }
 
 export function exportServiceToExcel()
@@ -134,9 +134,9 @@ export function exportServiceToExcel()
       </table>'
   let month = $("#monthstart").val()
   month = month.substring(0, month.lastIndexOf("-"))  //use yyyy-mm for filename
-  let filename = 'Service Neurosurgery ' + month + '.xls'
+let filename = `Service Neurosurgery ${month}.xls`
 
-  exportToExcel("servicetbl", title, style, head, filename)    
+  exportToExcel("servicetbl", style, head, filename)
 }
 
 export function exportFindToExcel(search)
@@ -185,9 +185,9 @@ export function exportFindToExcel(search)
       </tr>\
       <tr></tr>\
       </table>'
-  let filename = 'Search ' + search + '.xls'
+  let filename = `Search ${search}.xls`
 
-  exportToExcel("findtbl", title, style, head, filename)    
+  exportToExcel("findtbl", style, head, filename)
 }
 
 export function exportReportToExcel(title)
@@ -246,12 +246,12 @@ export function exportReportToExcel(title)
       </tr>\
       <tr></tr>\
       </table>'
-  let filename = 'Report ' + title + '.xls'
+  let filename = `Report ${title}.xls`
 
-  exportToExcel("reviewtbl", title, style, head, filename)    
+  exportToExcel("reviewtbl", style, head, filename)
 }
 
-function exportToExcel(id, title, style, head, filename)
+function exportToExcel(id, style, head, filename)
 {
   if ($("#exceltbl").length) {
     $("#exceltbl").remove()
@@ -283,57 +283,17 @@ function exportToExcel(id, title, style, head, filename)
   $exceltbl.find('img').remove();
 
   let table = $exceltbl[0].outerHTML
-  let toExcel = `<!DOCTYPE html>
+  let htmlstr = `<!DOCTYPE html>
                   <HTML>
                     <HEAD><meta charset="utf-8"/>${style}</HEAD>
                     <BODY>${head}${table}</BODY>
                   </HTML>`
-/*
-//  var workbook = XLSX.utils.table_to_book(document.getElementById('exceltbl'));
+  let a = document.createElement('a')
+  let data_type = 'data:application/vnd.ms-excel'
 
-  var htmlstr = document.getElementById('exceltbl').outerHTML;
-  var workbook = XLSX.read(htmlstr, {type:'string'});
-
-  var workout = XLSX.write(workbook, {bookType: 'xlsx', bookSST: true, type: 'binary'});
-
-  saveAs(new Blob([s2ab(workout)], {type: "application/octet-stream"}), 'test.xlsx')
-
-  function s2ab(s) {
-    var buf = new ArrayBuffer(s.length)
-    var view = new Uint8Array(buf)
-    for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF
-    return buf
-  }
-*/
-  let ua = window.navigator.userAgent;
-  let msie = ua.indexOf("MSIE")
-  let edge = ua.indexOf("Edge"); 
-
-  // If Internet Explorer
-  if (msie > 0 || edge > 0 || navigator.userAgent.match(/Trident.*rv\:11\./)) {
-    if (typeof Blob !== "undefined") {
-    //use blobs if we can
-    toExcel = [toExcel];
-    //convert to array
-    let blob1 = new Blob(toExcel, {
-      type: "text/html"
-    });
-    window.navigator.msSaveBlob(blob1, filename);
-    } else {
-    txtArea1.document.open("txt/html", "replace");
-    txtArea1.document.write(toExcel);
-    txtArea1.document.close();
-    txtArea1.focus();
-    sa = txtArea1.document.execCommand("SaveAs", true, filename);
-    return (sa);  //not tested
-    }
-  } else {
-    let a = document.createElement('a');
-    let data_type = 'data:application/vnd.ms-excel'
-    // You need to add this line in FF
-    document.body.appendChild(a);
-    a.href = data_type + ', ' + encodeURIComponent(toExcel);
-    a.download = filename
-    a.click();    //tested with Chrome and FF
-  }
+  // You need to add this line in FF
+  document.body.appendChild(a)
+  a.href = data_type + ', ' + encodeURIComponent(htmlstr)
+  a.download = filename
+  a.click()
 }

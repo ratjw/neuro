@@ -9,31 +9,31 @@ import { fillConsults } from "./fillConsults.js"
 import { scrolltoToday } from "./scrolltoThisCase.js"
 
 export function staffqueue(staffname) {
-  let table = document.getElementById("queuetbl"),
-    refill = (titlename.innerHTML === staffname),
+  let mtable = document.getElementById("maintbl"),
+    qtable = document.getElementById("queuetbl"),
+    refill = (document.getElementById('titlename').innerHTML === staffname),
     book,
     date,
     until
 
-  // Not yet split window
-  if (!isSplit()) { splitPane() }
   document.getElementById('titlename').innerHTML = staffname
+  if (!isSplit()) { splitPane(mtable, qtable) }
 
   if (staffname === "Consults") {
     book = CONSULT
     until = ISOdate(new Date()),
 
-    date = fillDatedCases(table, book)
+    date = fillDatedCases(qtable, book)
 
-    fillBlankDates(table, date, until)
+    fillBlankDates(qtable, date, until)
   } else {
     book = BOOK.filter(e => e.staffname === staffname),
-    fillDatedCases(table, book)
+    fillDatedCases(qtable, book)
     reNumberNodateRows()
   }
 
   fillConsults('queuetbl')
-  if (!table.closest('div').scrollTop && !refill) { scrolltoToday('queuetbl') }
+  if (!qtable.closest('div').scrollTop && !refill) { scrolltoToday('queuetbl') }
   hoverPicArea()
 }
 

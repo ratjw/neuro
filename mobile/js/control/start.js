@@ -2,7 +2,6 @@
 import { THEATRE } from "../model/const.js"
 //import { addStaff } from "./addStaff.js"
 import { clicktable } from "./clicktable.js"
-//import { exchangeOncall } from "./exchangeOncall.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 import { editcellEvent, clearEditcell, renewEditcell } from "./edit.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
@@ -11,13 +10,13 @@ import { setClickMenu } from "../menu/setClickMenu.js"
 import { setClickService } from "../service/serviceReview.js"
 import { sqlStart } from "../model/sqlupdate.js"
 //import { sortable } from "./sort.js"
-import { clearSelection } from "./clearSelection.js"
+import { clearSelection } from "../get/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { START, ISOdate, thDate } from "../util/date.js"
 import { BOOK, TIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { htmlStafflist, htmlEquipment, htmldivRecord } from "../view/html.js"
+import { htmlStafflist, htmlEquipment } from "../view/html.js"
 import { scrolltoToday } from "../view/scrolltoThisCase.js"
 import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
@@ -43,10 +42,10 @@ function success(response) {
   fillmain()
   scrolltoToday('maintbl')
   fillConsults()
+  clearSelection()
 
   // setting up html
   htmlEquipment()
-  htmldivRecord()
   htmlStafflist()
 
   // make the document editable
@@ -96,6 +95,7 @@ function wrapperEvent()
     if ($(target).closest('#cssmenu').length) {
       return
     }
+
     if ($stafflist.is(":visible")) {
       if (!$(target).closest('#stafflist').length) {
         $stafflist.hide();
@@ -117,11 +117,7 @@ function wrapperEvent()
       }
     }
 
-    if (target.nodeName === "TD") {
-      clicktable(event, target)
-    } else {
-      clearAllEditing()
-    }
+    clicktable(event, target)
 
     event.stopPropagation()
   })
@@ -152,22 +148,7 @@ function documentEvent()
     }
     resetTimerCounter()
   });
-/*
-  $(document).contextmenu( event => {
-    let target = event.target
-    let oncall = /<p[^>]*>.*<\/p>/.test(target.outerHTML)
 
-    if (oncall) {
-      if (event.ctrlKey) {
-        exchangeOncall(target)
-      }
-      else if (event.altKey) {
-        addStaff(target)
-      }
-      event.preventDefault()
-    }
-  })
-*/
   window.addEventListener('resize', () => {
     $("#mainwrapper").css("height", window.innerHeight - $("#cssmenu").height())
     $("#queuecontainer").css({

@@ -3,23 +3,26 @@ import { POINTER, clearEditcell } from "../control/edit.js"
 import { savePreviousCellService } from "./savePreviousCellService.js"
 import { editPresentCellService } from "./editPresentCellService.js"
 
-export function clickCellSV(evt, target)
+export function clickCellSV(event)
 {
-  let inCell = target.closest("td"),
-  onNormalCell = (target.nodeName === "TD" && target.colSpan === 1)
+  let target = event.target,
+    inCell = target.closest("td"),
+    onNormalCell = (target.nodeName === "TD" && target.colSpan === 1)
 
+  // Editcell is currently on
   if (POINTER) {
-  if (inCell !== POINTER) {
-    savePreviousCellService()
-    if (onNormalCell) {
-    editPresentCellService(evt, inCell)
-    } else {
-    clearEditcell()
+    // Click on another cell
+    if (inCell !== POINTER) {
+      savePreviousCellService()
+      if (onNormalCell) {
+        editPresentCellService(event, inCell)
+      } else {
+        clearEditcell()
+      }
     }
-  }
   } else {
-  if (onNormalCell) {
-    editPresentCellService(evt, inCell)
-  }
+    if (onNormalCell) {
+      editPresentCellService(event, inCell)
+    }
   }
 }

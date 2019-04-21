@@ -4,7 +4,7 @@ import { sqlPostponeCase } from "../model/sqlPostponeCase.js"
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
 import { BOOK, updateBOOK } from "../util/updateBOOK.js"
 import { Alert, getLargestWaitnum, isSplit } from "../util/util.js"
-import { clearSelection } from "../control/clearSelection.js"
+import { clearSelection } from "../get/selectRow.js"
 import { locateFound } from "../view/scrolltoThisCase.js"
 
 // Undefined date booking has opdate set to LARGESTDATE

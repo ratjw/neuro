@@ -1,8 +1,8 @@
 
 import { PATIENT, LARGESTDATE } from "../model/const.js"
 import { ISOdate, nextdays, numDate, thDate, START } from "../util/date.js"
-import { ONCALL, STAFF } from "../util/updateBOOK.js"
-import {isSplit } from "../util/util.js"
+import { STAFF } from "../util/updateBOOK.js"
+import { isSplit } from "../util/util.js"
 
 // refill after deleted or written over
 export function showStaffOnCall(opdate)
@@ -42,23 +42,4 @@ export function fillConsults(tableID = 'maintbl')
     dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname)
     sindex = (sindex + 1) % slen
   })
-
-  // write substitute oncall
-  ONCALL.forEach(oncall => {
-    dateoncall = oncall.dateoncall
-    Array.from(saturdays).forEach(e => {
-      if (e.dataset.opdate === dateoncall) {
-        dataAttr(e.cells[PATIENT], oncall.staffname)
-      }
-    })
-  })
-}
-
-function findOncallRow(rows, nextrow, tlen, dateoncall)
-{
-  for (let i = nextrow; i < tlen; i++) {
-    if (rows[i].dataset.opdate === dateoncall) {
-      return rows[i]
-    }
-  }
 }
