@@ -10,7 +10,10 @@ const HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT]
 
 export function sendtoLINE()
 {
-  $('#dialogNotify').dialog({
+  let $dialogNotify = $('#dialogNotify'),
+    $textarea = $dialogNotify.find('textarea')
+
+  $dialogNotify.dialog({
     title: `<img src="css/pic/general/linenotify.png" width="40" style="float:left">
             <span style="font-size:20px">Qbook: ${USER}</span>`,
     closeOnEscape: true,
@@ -20,9 +23,13 @@ export function sendtoLINE()
     width: 270,
     height: 300
   })
+  $textarea.one('click', function() {
+    $textarea.removeAttr('onfocus')
+    $textarea.focus()
+  })
   $('#buttonLINE').one('click', function() {
-    $('#dialogNotify .loader').show()
-    setTimeout(toLINE, 10)
+    $dialogNotify.find('.loader').show()
+    setTimeout(toLINE, 100)
   })
 }
 

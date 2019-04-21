@@ -1,5 +1,7 @@
 
-mobile is different from module in the followings
+Equivalent files are the same except mobile files got comment out in some lines.
+
+Mobile files are different from module files in the followings
 
 index.html
   add: responsive
@@ -11,4 +13,11 @@ control/start.js
 menu/setClickMenu.js:
   out: some menu
 
-mobile misses some files about menu.
+Mobile directories miss some files in the followings
+
+control/addStaff.js
+control/inputHoliday.js
+control/setClickSetting.js
+control/sort.js
+
+view/viewAddStaff.js

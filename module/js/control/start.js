@@ -1,15 +1,15 @@
 
 import { THEATRE } from "../model/const.js"
-//import { addStaff } from "./addStaff.js"
+import { addStaff } from "./addStaff.js"
 import { clicktable } from "./clicktable.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 import { editcellEvent, clearEditcell, renewEditcell } from "./edit.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
 import { setClickMenu } from "../menu/setClickMenu.js"
-//import { setClickSetting } from "./setClickSetting.js"
+import { setClickSetting } from "./setClickSetting.js"
 import { setClickService } from "../service/serviceReview.js"
 import { sqlStart } from "../model/sqlupdate.js"
-//import { sortable } from "./sort.js"
+import { sortable } from "./sort.js"
 import { clearSelection } from "../get/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
@@ -37,7 +37,7 @@ export function userStaff() {
 function success(response) {
 
   // call sortable before render, otherwise it renders very slowly
-//  sortable()
+  sortable()
   updateBOOK(response)
   fillmain()
   scrolltoToday('maintbl')
@@ -54,7 +54,7 @@ function success(response) {
   wrapperEvent()
   documentEvent()
   setClickMenu()
-//  setClickSetting()
+  setClickSetting()
   setClickService()
   overrideJqueryUI()
   resetTimer()

@@ -769,10 +769,10 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 }
 #buttonLINE {
   float: right;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   background-image: url(pic/general/message.png);
-  background-size: 40px;
+  background-size: 35px;
   border: 1px solid lightblue;
 }
 #buttonLINE:hover {
@@ -794,8 +794,8 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
   border: 7px solid #a3e3f3;
   border-radius: 50%;
   border-top: 7px solid #3498db;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }
@@ -811,7 +811,7 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
   100% { transform: rotate(360deg); }
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 400px) {
 
   /* Force table to not be like tables anymore */
   table, thead, tbody, tr, th, td { 
