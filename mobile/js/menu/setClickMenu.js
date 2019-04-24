@@ -20,7 +20,7 @@ let clickevent = {
 //  "clickreadme": readme,
 //  "addrow": addnewrow,
 //  "postponecase": postponeCase,
-//  "moveCase": moveCase,
+  "moveCase": moveCase,
 //  "copyCase": copyCase,
 //  "delcase": delCase,
   "clicksendtoExcel": sendtoExcel,

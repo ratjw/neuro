@@ -377,26 +377,28 @@ tr.marker {
 }
 
 @keyframes blink1 { 
-   50% { background-color: skyblue; } 
+   10% { background-color: pink; } 
 }
 
 tr.moveCase {
-  animation: blink1 .5s step-end infinite alternate;
-  background-color: pink !important;
-}
-
-tr.copyCase {
-  animation: blink1 .5s step-end infinite alternate;
-  background-color: lightblue !important;
+  animation: blink1 1s step-end infinite alternate;
 }
 
 @keyframes blink2 { 
-   50% { border-color: royalblue; } 
+   10% { background-color: skyblue; } 
+}
+
+tr.copyCase {
+  animation: blink2 1s step-end infinite alternate;
+}
+
+@keyframes blink3 { 
+   10% { border-color: royalblue; } 
 }
 
 /* mark where move/copy case will be pasted */
 tr.pasteDate {
-  animation: blink2 .5s step-end infinite alternate;
+  animation: blink3 1s step-end infinite alternate;
   border-bottom: solid 3px skyblue;
 }
 
