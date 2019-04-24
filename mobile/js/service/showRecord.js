@@ -6,6 +6,7 @@ import { winHeight, radioHack, deepEqual } from "../util/util.js"
 import { saveService } from './savePreviouscellService.js'
 
 let rowRecord = {},
+  operated,
   pointed
 
 // e.name === column in Mysql
@@ -19,14 +20,13 @@ export function showRecord(pointing)
     qn = row.dataset.qn,
     profile = JSON.parse(row.dataset.profile),
     admitted = profile && profile.admitted,
-    operated = profile && profile.operated,
-    operleng = operated ? operated.length : 0,
     $dialogRecord = $('#dialogRecord'),
     height = winHeight(90)
 
   if (!qn) { return }
 
   rowRecord = profile
+  operated = profile && [...profile.operated] || []
   pointed = pointing
 
   $dialogRecord.html(htmlProfile(RECORDSHEET))
@@ -44,12 +44,10 @@ export function showRecord(pointing)
     }
   })
 
-  if (operated && operated.length) {
-    let i = 0
-    do {
-      $dialogRecord.append(divOperation(operated, i))
-      i++
-    } while (i<operated.length)
+  let i = 0
+  while (i < operated.length) {
+    $dialogRecord.append(divOperation(i))
+    i++
   }
 
   $dialogRecord.dialog({ height: 'auto' })
@@ -66,8 +64,8 @@ export function showRecord(pointing)
         click: function () {
           let op = getLastOp()
           // add another element to operated and reposition the dialog
-          if (op === operleng) {
-            $dialogRecord.append(divOperation(operated, op))
+          if (op === operated.length) {
+            $dialogRecord.append(divOperation(op))
             resizeScroll($dialogRecord, height)
           }
         }
@@ -75,8 +73,9 @@ export function showRecord(pointing)
       {
         text: "Delete Op",
         click: function () {
-          document.querySelector('#dialogRecord').lastElementChild.remove()
+          $dialogRecord.find('div').last().remove()
           resizeScroll($dialogRecord, height)
+          operated.pop()
         }
       },
       {
@@ -100,7 +99,7 @@ function resizeScroll($dialogRecord, height)
 }
 
 // add op to e.name to make it unique
-function divOperation(operated, op)
+function divOperation(op)
 {
   let div = document.createElement("div")
   div.innerHTML = htmlProfile(OPERATION)
@@ -127,29 +126,27 @@ function saveRecord()
 {
   let recordJSON = {
       operated: []
-    },
-    i = 0
+    }
 
-  document.querySelectorAll('#dialogRecord input').forEach(e => {
-    if (e.name === "admitted") {
-      if (e.value) {
-        recordJSON[e.name] = e.value
+  $('#dialogRecord input:not(#dialogRecord div input)').each(function() {
+    if (this.name === "admitted") {
+      if (this.value) {
+        recordJSON[this.name] = this.value
       }
-    } else if (e.type === "checkbox") {
-      if (e.checked) {
-        recordJSON[e.name] = e.value
-      }
-    } else if (/op/.test(e.name)) {
-      if (e.value) {
-        i = e.name.replace('op', '')
-        recordJSON.operated[i] = {}
-        recordJSON.operated[i]['op'] = e.value
-      }
-    } else {
-      if (e.checked) {
-        recordJSON.operated[i][e.name.replace(i, '')] = e.value
+    } else if (this.type === "checkbox") {
+      if (this.checked) {
+        recordJSON[this.name] = this.value
       }
     }
+  })
+
+  $('#dialogRecord div').each((i, div) => {
+    if (!recordJSON.operated[i]) { recordJSON.operated[i] = {} }
+    div.querySelectorAll('input').forEach(e => {
+      if ((e.type === 'button') || e.checked) {
+        recordJSON.operated[i][e.name.replace(i, '')] = e.value
+      }
+    })
   })
 
   if (deepEqual(recordJSON, rowRecord)) { return }

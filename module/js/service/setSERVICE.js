@@ -22,36 +22,39 @@ export function seteditableSV(editable) { editableSV = editable }
 function calcSERVE(service)
 {
   $.each(service, function() {
-    if (!this.radiosurgery && isMatched(RADIOSURGERY, this.treatment)) {
-      this.radiosurgery = "Radiosurgery"
+    let profile = JSON.parse(this.profile) || {},
+      operated = profile.operated
+
+    if (!profile.radiosurgery && isMatched(RADIOSURGERY, this.treatment)) {
+      profile["radiosurgery"] = "Radiosurgery"
     }
 
-    if (!this.endovascular && isMatched(ENDOVASCULAR, this.treatment)) {
-      this.endovascular = "Endovascular"
+    if (!profile.endovascular && isMatched(ENDOVASCULAR, this.treatment)) {
+      profile["endovascular"] = "Endovascular"
     }
-if (this.hn === "5489111")
-  editableSV = editableSV
-    if (!this.disease && this.operated !== "0") {
-      let opwhat = operationFor(this)
 
-      this.disease = opwhat
-      if (opwhat && !this.operated) {
-        this.operated = 1
-      }
+    let opwhat = operationFor(this, profile)
+    if (operated === undefined) {
+      profile.operated = [{
+        "op": opwhat ? 1 : 0,
+        "disease": opwhat
+      }]
     }
+
+    this.profile = JSON.stringify(profile)
   })
 
   return service
 }
 
 // matched NOOPERATION or no other match, return ""
-function operationFor(thisrow)
+function operationFor(thisrow, profile)
 {
   let  Rx = 0, RxNo = 1, Dx = 2, DxNo = 3, 
     opfor = Object.keys(KEYWORDS),
     diagnosis = thisrow.diagnosis,
     treatment = thisrow.treatment,
-    endovascular = thisrow.endovascular === "Endovascular",
+    endovascular = (profile.endovascular === "Endovascular"),
     opwhat = ""
 
   if (isMatched(NOOPERATION, treatment)) { return "" }

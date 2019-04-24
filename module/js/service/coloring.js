@@ -14,7 +14,7 @@ export function coloring(row) {
 
   Object.keys(COMPLICATION).forEach(e => {
     if (e === 'admitted') {
-      if (Number(profile[e]) < 2) { return }
+      if (!profile[e] || (profile[e] < 2)) { return }
     } else if (e === 'operated') {
       if (profile[e].length < 2) { return }
     } else if (!profile[e]) { return }
