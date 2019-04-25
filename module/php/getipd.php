@@ -3,6 +3,10 @@ include "connect.php";
 require_once "book.php";
 require_once "mysqli.php";
 
+const $neuroStaffs = [
+  "004415", "003391", "007841", "008146", "004606", "006599", "006805"
+];
+
 	$from = $_POST["from"];
 	$to = $_POST["to"];
 	$sql = $_POST["sql"];
@@ -24,6 +28,9 @@ require_once "mysqli.php";
 		$qn = $eachcase["qn"];
 
 		$ipd = getipd($hn);
+
+    $staff = $ipd[attender];
+    if (in_array($staff, $neuroStaffs)) { continue; }
 
 		$oldAdmit = $eachcase[admit];
 		$oldDischarge = $eachcase[discharge];
