@@ -771,7 +771,10 @@ function showUpload(hn, patient)
 
 function sendtoLINE()
 {
-  $('#dialogNotify').dialog({
+  let $dialogNotify = $('#dialogNotify'),
+    $textarea = $dialogNotify.find('textarea')
+
+  $dialogNotify.dialog({
     title: '<img src="css/pic/general/linenotify.png" width="40" style="float:left">'
          + '<span style="font-size:20px">Qbook: ' + gv.user + '</span>',
     closeOnEscape: true,
@@ -780,6 +783,14 @@ function sendtoLINE()
     hide: 200,
     width: 270,
     height: 300
+  })
+  $textarea.one('click', function() {
+    $textarea.removeAttr('onfocus')
+    $textarea.focus()
+  })
+  $('#buttonLINE').one('click', function() {
+    $dialogNotify.find('.loader').show()
+    setTimeout(toLINE, 100)
   })
 }
 
@@ -790,7 +801,7 @@ function toLINE()
   var $captureTRs = $capture.find('tr')
   var $selected = $(".selected")
   var row = ""
-  var hide = [1, 3, 4, 12]
+  var HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT, QN]
   var $dialogNotify = $('#dialogNotify')
   var message
 
@@ -799,19 +810,33 @@ function toLINE()
   $dialogNotify.dialog('close')
 
   $captureTRs.slice(1).remove()
-  $capture.show()
   $.each($selected, function() {
     $capture.find("tbody").append($(this).clone())
   })
   $captureTRs = $capture.find('tr')
-  $captureTRs.removeClass('selected lastselected')
+  $captureTRs.removeClass('selected')
+  $captureTRs.removeClass('lastselected')
 
-  hide.forEach(function(i) {
-    $.each($captureTRs, function() {
-      this.cells[i].style.display = 'none'
+  $.each($captureTRs, function() {
+    let cell = this.cells,
+      tr = this,
+      $td = $(tr).find('td')
+
+    HIDE.forEach(function(e) {
+      tr.cells[e].style.display = 'none'
     })
+    if ($td.length) {
+      cell[OPDATE].innerHTML = cell[OPDATE].innerHTML.replace(' ', '<br>')
+      cell[HN].innerHTML += '<br>' + cell[PATIENT].innerHTML.split(" ")[0]
+      cell[DIAGNOSIS].innerHTML = string25(cell[DIAGNOSIS].innerHTML)
+      cell[TREATMENT].innerHTML = string25(cell[TREATMENT].innerHTML)
+      cell[EQUIPMENT].innerHTML = cell[EQUIPMENT].innerHTML.replace(/\<br\>/g, '')
+      equipImage(cell[EQUIPMENT])
+    }
   })
 
+  $capture.show()
+  $capture.width('500')
   html2canvas(capture).then(function(canvas) {
     $.post(LINENOTIFY, {
       'user': gv.user,
@@ -819,33 +844,73 @@ function toLINE()
       'image': canvas.toDataURL('image/png', 1.0)
     })
     $capture.hide()
+    $('#dialogNotify .loader').hide()
+    $dialogNotify.dialog('close')
   })
 }
 
-function sendtoExcel()
+function string25(txt)
 {
-  var capture = document.querySelector("#capture")
-  var $capture = $("#capture")
-  var $captureTRs = $capture.find('tr')
-  var $selected = $(".selected")
-  var row = ""
-  var hide = [1, 3, 4, 12]
+  let result1 = [],
+   result2 = [],
+   result3 = [],
+   result4 = [],
+   endresult = [],
+   temp = '',
+   i = 0
 
-  $captureTRs.slice(1).remove()
-
-  $.each($selected, function() {
-    $capture.find("tbody").append($(this).clone())
+  if (!txt) { return '' }
+  txt = txt.replace(/ {1,}/g, ' ')
+  result1 = txt.split('<br>')
+  result1.forEach(function(e) { return e.trim() })
+  result1.forEach(function(e) {
+    if (e.length > 25) {
+      result2 = e.split(' ')
+      result2.forEach(function(el) {
+        temp += temp ? (' ' + el) : el
+        if (temp.length > 25) {
+          if (temp.length <= 30) {
+            result3.push(temp)
+            temp = ''
+          } else {
+            result4 = temp.match(/(.{1,28})/g)
+            temp = result4.pop()
+            result3.push(...result4)
+          }
+        }
+      })
+      if (temp) { result3.push(temp) }
+      temp = ''
+    }
+    if (result3.length) {
+      result1.splice(result1.indexOf(e), 1, result3.join('<br>'))
+      result3 = []
+    }
   })
-  $captureTRs = $capture.find('tr')
-  $captureTRs.removeClass('selected lastselected')
 
-  hide.forEach(function(i) {
-    $.each($captureTRs, function() {
-      this.cells[i].style.display = 'none'
-    })
+  result1.filter(function(e) { return e })
+  result1 = result1.join('<br>')
+  result1 = result1.split('<br>')
+  while ((i < 2) && (i < result1.length)) {
+    endresult.push(result1[i])
+    i++
+  }
+
+  return endresult.join('<br>')
+}
+
+function equipImage(equip)
+{
+  equip.childNodes.forEach(function(e) {
+    if (e.nodeName === '#text') {
+      e.remove()
+    }
   })
-
-  exportQbookToExcel()
+  equip.querySelectorAll('img').forEach(function(e) {
+    if (e.className === 'imgpale') {
+      e.src = e.src.replace('.jpg', 'pale.jpg')
+    }
+  })
 }
 
 function readme()

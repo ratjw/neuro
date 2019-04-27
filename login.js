@@ -38,7 +38,7 @@ function login()
 							: "es6"
 					: "es5"
 					
-	document.getElementById("browser").value = browser
+	document.getElementById("browser").value = "mobilevpn"//browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
 	sessionStorage.setItem('device', (isMobile ? 'isMobile' : ''))
 }

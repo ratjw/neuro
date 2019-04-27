@@ -511,19 +511,19 @@ function showEquip(equipString)
 {
   if (equipString) {
     return makeEquip(JSON.parse(equipString))
-  } else {
-    return ""
   }
+  return ""
 }
 
 function makeEquip(equipJSON)
 {
-  var equip = "",
-    equipIcons = {
+  var equipPics = [],
+    img = '',
+    EQUIPICONS = {
       Fluoroscope: "Fluoroscope",
-      Navigator_frameless: "Navigator",
-      "Navigator_frame-based": "Navigator",
-      Oarm: "Oarm",
+      "Navigator frameless": "Navigator",
+      "Navigator with frame": "Navigator",
+      "O-arm": "Oarm",
       Robotics: "Robotics",
       Microscope: "Microscope",
       ICG: "Microscope",
@@ -538,31 +538,34 @@ function makeEquip(equipJSON)
       CN6: "Monitor",
       CN7: "Monitor",
       CN8: "Monitor",
+      CN9: "Monitor",
+      CN10: "Monitor",
+      CN11: "Monitor",
+      CN12: "Monitor",
       SSEP: "Monitor",
       EMG: "Monitor",
       MEP: "Monitor"
     },
-    equipPics = []
+    EQUIPICONSHOWN = [
+      "Fluoroscope",
+      "Navigator",
+      "Microscope",
+      "CUSA",
+      "Endoscope",
+      "Monitor"
+    ]
 
   $.each(equipJSON, function(key, value) {
-    var Monitor = /Monitor/.test(equip)
-    if (equip) { equip += ", " }
-    if (value === "checked") {
-      if (key in equipIcons) {
-        equipPics.push(equipIcons[key])
-        if (!Monitor) {
-          equip += "Monitor:"
-        }
-      }
-      equip += key
+    if (typeof value === 'string') {
+      if (value in EQUIPICONS) {
+        equipPics.push(EQUIPICONS[value])
+      } 
     } else {
-      if (key === "Monitor") {
-        if (Monitor) {
-          equip += value
-        }
-      } else {
-        equip += key + ":" + value
-      }
+      $.each(value, function() {
+        if ($.inArray(this, EQUIPICONS) !== -1) {
+          equipPics.push(EQUIPICONS[this])
+        } 
+      })
     }
   })
   // remove duplicated pics
@@ -570,7 +573,17 @@ function makeEquip(equipJSON)
     return equipPics.indexOf(pic) === pos;
   })
 
-  return equip + "<br>" + equipImg(equipPics)
+  // display 6 pics: pale the not-checked ones
+  $.each(EQUIPICONSHOWN, function(i, item) {
+    if ($.inArray(item, equipPics) !== -1) {
+      img += '<img src="css/pic/equip/' + item + '.jpg"> '
+      equipPics = equipPics.filter(function(e) { e !== item })
+    } else {
+      img += '<img class="imgpale" src="css/pic/equip/' + item + '.jpg"> '
+    }
+  })
+
+  return img + equipImg(equipPics)
 }
 
 function equipImg(equipPics)
@@ -655,332 +668,4 @@ function findNextRow(editable, pointing)
     || ($nextcell.get(0).nodeName === "TH"))  //TH row
 
   return $nextcell.get(0)
-}
-
-function exportQbookToExcel()
-{
-  //getting data from our table
-  var data_type = 'data:application/vnd.ms-excel';  //Chrome, FF, not IE
-  var title = 'Qbook Selected '
-  var style = '\
-    <style type="text/css">\
-      #exceltbl {\
-        border-right: solid 1px gray;\
-        border-collapse: collapse;\
-      }\
-      #exceltbl th {\
-        font-size: 16px;\
-        font-weight: bold;\
-        height: 40px;\
-        background-color: #7799AA;\
-        color: white;\
-        border: solid 1px silver;\
-      }\
-      #exceltbl td {\
-        font-size: 14px;\
-        vertical-align: middle;\
-        padding-left: 3px;\
-        border-left: solid 1px silver;\
-        border-bottom: solid 1px silver;\
-      }\
-      #exceltbl tr.Sunday { background-color: #FFDDEE; }\
-      #exceltbl tr.Monday { background-color: #FFFFE0; }\
-      #exceltbl tr.Tuesday { background-color: #FFF0F9; }\
-      #exceltbl tr.Wednesday { background-color: #EEFFEE; }\
-      #exceltbl tr.Thursday { background-color: #FFF7EE; }\
-      #exceltbl tr.Friday { background-color: #E7F7FF; }\
-      #exceltbl tr.Saturday { background-color: #E7E7FF; }\
-\
-      #exceltbl td.Sun { background-color: #F099BB; }\
-      #exceltbl td.Mon { background-color: #F0F0BB; }\
-      #exceltbl td.Tue { background-color: #F0CCEE; }\
-      #exceltbl td.Wed { background-color: #CCF0CC; }\
-      #exceltbl td.Thu { background-color: #F0DDBB; }\
-      #exceltbl td.Fri { background-color: #BBDDF0; }\
-      #exceltbl td.Sat { background-color: #CCBBF0; }\
-\
-    </style>'
-  var head = '\
-      <table id="excelhead">\
-      <tr></tr>\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td colspan="4" style="font-weight:bold;font-size:24px">' + title + '</td>\
-      </tr>\
-      <tr></tr>\
-      </table>'
-  var filename = title + Date.now() + '.xls'
-
-  exportToExcel("capture", data_type, title, style, head, filename)    
-}
-
-function exportServiceToExcel()
-{
-  //getting data from our table
-  var data_type = 'data:application/vnd.ms-excel';  //Chrome, FF, not IE
-  var title = $('#dialogService').dialog( "option", "title" )
-  var style = '\
-    <style type="text/css">\
-      #exceltbl {\
-        border-right: solid 1px gray;\
-        border-collapse: collapse;\
-      }\
-      #exceltbl tr:nth-child(odd) {\
-        background-color: #E0FFE0;\
-      }\
-      #exceltbl th {\
-        font-size: 16px;\
-        font-weight: bold;\
-        height: 40px;\
-        background-color: #7799AA;\
-        color: white;\
-        border: solid 1px silver;\
-      }\
-      #exceltbl td {\
-        font-size: 14px;\
-        vertical-align: middle;\
-        padding-left: 3px;\
-        border-left: solid 1px silver;\
-        border-bottom: solid 1px silver;\
-      }\
-      #excelhead td {\
-        height: 30px; \
-        vertical-align: middle;\
-        font-size: 22px;\
-        text-align: center;\
-      }\
-      #excelhead td.Readmission,\
-      #exceltbl tr.Readmission,\
-      #exceltbl td.Readmission { background-color: #AACCCC; }\
-      #excelhead td.Reoperation,\
-      #exceltbl tr.Reoperation,\
-      #exceltbl td.Reoperation { background-color: #CCCCAA; }\
-      #excelhead td.Infection,\
-      #exceltbl tr.Infection,\
-      #exceltbl td.Infection { background-color: #CCAAAA; }\
-      #excelhead td.Morbidity,\
-      #exceltbl tr.Morbidity,\
-      #exceltbl td.Morbidity { background-color: #AAAACC; }\
-      #excelhead td.Dead,\
-      #exceltbl tr.Dead,\
-      #exceltbl td.Dead { background-color: #AAAAAA; }\
-    </style>'
-  var head = '\
-      <table id="excelhead">\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td colspan="4" style="font-weight:bold;font-size:24px">' + title + '</td>\
-      </tr>\
-      <tr></tr>\
-      <tr></tr>\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td>Admission : ' + $("#Admission").html() + '</td>\
-        <td>Discharge : ' + $("#Discharge").html() + '</td>\
-        <td>Operation : ' + $("#Operation").html() + '</td>\
-        <td class="Morbidity">Morbidity : ' + $("#Morbidity").html() + '</td>\
-      </tr>\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td class="Readmission">Re-admission : ' + $("#Readmission").html() + '</td>\
-        <td class="Infection">Infection SSI : ' + $("#Infection").html() + '</td>\
-        <td class="Reoperation">Re-operation : ' + $("#Reoperation").html() + '</td>\
-        <td class="Dead">Dead : ' + $("#Dead").html() + '</td>\
-      </tr>\
-      <tr></tr>\
-      <tr></tr>\
-      </table>'
-  var month = $("#monthstart").val()
-  month = month.substring(0, month.lastIndexOf("-"))  //use yyyy-mm for filename
-  var filename = 'Service Neurosurgery ' + month + '.xls'
-
-  exportToExcel("servicetbl", data_type, title, style, head, filename)    
-}
-
-function exportFindToExcel(search)
-{
-  // getting data from our table
-  // data_type is for Chrome, FF
-  // IE uses "txt/html", "replace" with blob
-  var data_type = 'data:application/vnd.ms-excel'
-  var title = $('#dialogFind').dialog( "option", "title" )
-  var style = '\
-    <style type="text/css">\
-      #exceltbl {\
-        border-right: solid 1px gray;\
-        border-collapse: collapse;\
-      }\
-      #exceltbl tr:nth-child(odd) {\
-        background-color: #E0FFE0;\
-      }\
-      #exceltbl th {\
-        font-size: 16px;\
-        font-weight: bold;\
-        height: 40px;\
-        background-color: #7799AA;\
-        color: white;\
-        border: solid 1px silver;\
-      }\
-      #exceltbl td {\
-        font-size: 14px;\
-        vertical-align: middle;\
-        padding-left: 3px;\
-        border-left: solid 1px silver;\
-        border-bottom: solid 1px silver;\
-      }\
-      #excelhead td {\
-        height: 30px; \
-        vertical-align: middle;\
-        font-size: 22px;\
-        text-align: center;\
-      }\
-    </style>'
-  var head = '\
-      <table id="excelhead">\
-      <tr></tr>\
-      <tr>\
-        <td></td>\
-        <td></td>\
-        <td colspan="4" style="font-weight:bold;font-size:24px">' + title + '</td>\
-      </tr>\
-      <tr></tr>\
-      </table>'
-  var filename = 'Search ' + search + '.xls'
-
-  exportToExcel("findtbl", data_type, title, style, head, filename)    
-}
-
-function exportReportToExcel(title)
-{
-  // getting data from our table
-  // data_type is for Chrome, FF
-  // IE uses "txt/html", "replace" with blob
-  var data_type = 'data:application/vnd.ms-excel'
-  var style = '\
-    <style type="text/css">\
-      #exceltbl {\
-        border-right: solid 1px gray;\
-        border-collapse: collapse;\
-      }\
-      #exceltbl tr:nth-child(odd) {\
-        background-color: #E0FFE0;\
-      }\
-      #exceltbl th {\
-        font-size: 16px;\
-        font-weight: bold;\
-        height: 40px;\
-        background-color: #7799AA;\
-        color: white;\
-        border: solid 1px silver;\
-      }\
-      #exceltbl td {\
-        font-size: 14px;\
-        text-align: center;\
-        vertical-align: middle;\
-        padding-left: 3px;\
-        border-left: solid 1px silver;\
-        border-bottom: solid 1px silver;\
-      }\
-      #exceltbl td:first-child {\
-        text-align: left;\
-      }\
-      #exceltbl tr.nonsurgical {\
-        background-color: LightGrey;\
-      }\
-      #exceltbl tr#total {\
-        background-color: BurlyWood;\
-      }\
-      #exceltbl tr#grand {\
-        background-color: Turquoise;\
-      }\
-      #excelhead td {\
-        height: 30px; \
-        vertical-align: middle;\
-        font-size: 22px;\
-        text-align: center;\
-      }\
-    </style>'
-  var head = '\
-      <table id="excelhead">\
-      <tr></tr>\
-      <tr>\
-        <td colspan="9" style="font-weight:bold;font-size:24px">' + title + '</td>\
-      </tr>\
-      <tr></tr>\
-      </table>'
-  var filename = 'Report ' + title + '.xls'
-
-  exportToExcel("reviewtbl", data_type, title, style, head, filename)    
-}
-
-function exportToExcel(id, data_type, title, style, head, filename)
-{
-  if ($("#exceltbl").length) {
-    $("#exceltbl").remove()
-  }
-
-  $("#" + id).clone(true).attr("id", "exceltbl").appendTo("body")
-
-  // use only the last class because Excel does not accept multiple classes
-  $.each( $("#exceltbl tr"), function() {
-    var multiclass = this.className.split(" ")
-    if (multiclass.length > 1) {
-      this.className = multiclass[multiclass.length-1]
-    }
-  })
-
-  // remove blank cells in Excel caused by hidden cells
-  $.each( $("#exceltbl tr td, #exceltbl tr th"), function() {
-    if ($(this).css("display") === "none") {
-      $(this).remove()
-    }
-  })
-
-  var $exceltbl = $("#exceltbl")
-
-  // make line breaks show in single cell
-  $exceltbl.find('br').attr('style', "mso-data-placement:same-cell");
-
-  //remove img in equipment
-  $exceltbl.find('img').remove();
-
-  var table = $exceltbl[0].outerHTML
-  var tableToExcel = '<!DOCTYPE html><HTML><HEAD><meta charset="utf-8"/>'
-                    + style + '</HEAD><BODY>'
-      tableToExcel += head + table
-      tableToExcel += '</BODY></HTML>'
-
-  var ua = window.navigator.userAgent;
-  var msie = ua.indexOf("MSIE")
-  var edge = ua.indexOf("Edge"); 
-
-  if (msie > 0 || edge > 0 || navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer
-  {
-    if (typeof Blob !== "undefined") {
-    //use blobs if we can
-    tableToExcel = [tableToExcel];
-    //convert to array
-    var blob1 = new Blob(tableToExcel, {
-      type: "text/html"
-    });
-    window.navigator.msSaveBlob(blob1, filename);
-    } else {
-    txtArea1.document.open("txt/html", "replace");
-    txtArea1.document.write(tableToExcel);
-    txtArea1.document.close();
-    txtArea1.focus();
-    sa = txtArea1.document.execCommand("SaveAs", true, filename);
-    return (sa);  //not tested
-    }
-  } else {
-    var a = document.createElement('a');
-    document.body.appendChild(a);  // You need to add this line in FF
-    a.href = data_type + ', ' + encodeURIComponent(tableToExcel);
-    a.download = filename
-    a.click();    //tested with Chrome and FF
-  }
 }

@@ -72,7 +72,6 @@ function entireMonth(fromDate)
 
 	getServiceOneMonth(fromDate, toDate).then( function (SERVICE) {
 		gv.SERVICE = SERVICE
-		gv.SERVE = calcSERVE()
 		showService(fromDate, toDate)
 	}, function (title, message) {
 		Alert(title, message)
@@ -118,8 +117,6 @@ function sqlOneMonth(fromDate, toDate)
 		  + "ORDER BY s.number,opdate,oproom,casenum,waitnum;";
 }
 
-// gv.SERVE is a copy of gv.SERVICE which also calculates some values at run time
-// namely - diagnosis, treatment, admit
 // All service values are stored in the corresponding table row : $row.data()
 // Operation is determined by operationFor() in JS
 // Admission is updated by getAdmitDischargeDate in PHP
@@ -152,7 +149,7 @@ function showService(fromDate, toDate)
 	$servicetbl.show()
 	gv.editableSV = fromDate >= getStart()
 
-	$.each( gv.SERVE, function() {
+	$.each( gv.SERVICE, function() {
 		if (this.staffname !== staffname) {
 			staffname = this.staffname
 			scase = 0
@@ -250,110 +247,6 @@ function showService(fromDate, toDate)
 	}
 }
 
-function calcSERVE()
-{
-	var gvserve = gv.SERVICE.slice()
-
-	$.each(gvserve, function() {
-		var	treatment = this.treatment
-
-		if (!this.radiosurgery && isMatched(RADIOSURGERY, treatment)) {
-			this.radiosurgery = "Radiosurgery"
-		}
-
-		if (!this.endovascular && isMatched(ENDOVASCULAR, treatment)) {
-			this.endovascular = "Endovascular"
-		}
-
-		// If DB value is blank, calc the value
-		this.disease = this.disease || operationFor(this)
-
-		// "No" from DB or no matched
-		if (this.disease !== "No") {
-			if (!this.operated) { this.operated = "Operation" }
-			if (!this.doneby) { this.doneby = "Staff" }
-			if (!this.scale) { this.scale = "Major" }
-			if (!this.manner) { this.manner = "Elective" }
-		}
-	})
-
-	return gvserve
-}
-
-function operationFor(thisrow)
-{
-	var	KEYWORDS = {
-			"Brain Tumor": [ BRAINTUMORRX, BRAINTUMORRXNO, BRAINTUMORDX, BRAINTUMORDXNO ],
-			"Brain Vascular": [ BRAINVASCULARRX, BRAINVASCULARRXNO, BRAINVASCULARDX, BRAINVASCULARDXNO ],
-			"Trauma": [ TRAUMARX, TRAUMARXNO, TRAUMADX, TRAUMADXNO ],
-			"Spine": [ SPINERX, SPINERXNO, SPINEDX, SPINEDXNO.concat(BRAINDX) ],
-			"CSF related": [ CSFRX, CSFRXNO, CSFDX, CSFDXNO ],
-			"etc": [ ETCRX, ETCRXNO, ETCDX, ETCDXNO ]
-		},
-		Rx = 0, RxNo = 1, Dx = 2, DxNo = 3, 
-		opfor = Object.keys(KEYWORDS),
-		diagnosis = thisrow.diagnosis,
-		treatment = thisrow.treatment,
-		endovascular = thisrow.endovascular === "Endovascular",
-		opwhat
-	// "No" from match NOOPERATION
-	if (isMatched(NOOPERATION, treatment)) { return "No" }
-
-	// "No" from no match
-	opfor = isOpfor(KEYWORDS, opfor, Rx, treatment)
-	if (opfor.length === 0) { opwhat = "No" }
-	else if (opfor.length === 1) { opwhat = opfor[0] }
-	else {
-		opfor = isNotOpfor(KEYWORDS, opfor, RxNo, treatment)
-		if (opfor.length === 1) { opwhat = opfor[0] }
-		else {
-			opfor = isOpfor(KEYWORDS, opfor, Dx, diagnosis)
-			if (opfor.length === 0) { opwhat = "etc" }
-			else if (opfor.length === 1) { opwhat = opfor[0] }
-			else {
-				// in case all cancelled each other out
-				opwhat = opfor[0]
-				opfor = isNotOpfor(KEYWORDS, opfor, DxNo, diagnosis)
-				if (opfor.length > 0) { opwhat = opfor[0] }
-			}
-		}
-	}
-	if (opwhat === "Spine" && endovascular && !isMatched(SPINEOP, treatment)) {
-		opwhat = "No"
-	}
-	return opwhat
-}
-
-function isMatched(keyword, diagtreat)
-{
-	var test = false
-
-	$.each( keyword, function() {
-		return !(test = this.test(diagtreat))
-	})
-	return test
-}
-
-function isOpfor(keyword, opfor, RxDx, diagRx)
-{
-	for (var i=opfor.length-1; i>=0; i--) {
-		if (!isMatched(keyword[opfor[i]][RxDx], diagRx)) {
-			opfor.splice(i, 1)
-		}
-	}
-	return opfor
-}
-
-function isNotOpfor(keyword, opfor, RxDx, diagRx)
-{
-	for (var i=opfor.length-1; i>=0; i--) {
-		if (isMatched(keyword[opfor[i]][RxDx], diagRx)) {
-			opfor.splice(i, 1)
-		}
-	}
-	return opfor
-}
-
 function refillService(fromDate, toDate)
 {
 	var $servicetbl = $("#servicetbl"),
@@ -364,7 +257,7 @@ function refillService(fromDate, toDate)
 		i = 0, scase = 0,
 		classname = ""
 
-	$.each( gv.SERVE, function() {
+	$.each( gv.SERVICE, function() {
 		if (this.staffname !== staffname) {
 			staffname = this.staffname
 			scase = 0
@@ -473,7 +366,6 @@ function getAdmitDischargeDate(fromDate, toDate)
 	{
 		if (typeof response === "object") {
 			updateBOOK(response)
-			gv.SERVE = calcSERVE()
 			fillAdmitDischargeDate()
 		}
 	}
@@ -485,7 +377,7 @@ function fillAdmitDischargeDate()
 		staffname = "",
 		$rows = $("#servicetbl tr")
 
-	$.each( gv.SERVE, function() {
+	$.each( gv.SERVICE, function() {
 		if (this.staffname !== staffname) {
 			staffname = this.staffname
 			i++
@@ -634,16 +526,9 @@ function saveService(pointed, sql)
 		if (typeof response === "object") {
 			updateBOOK(response)
 
-			// other user may add a row
-			var servelen = gv.SERVE.length
-			gv.SERVE = calcSERVE()
-			if (gv.SERVE.length !== servelen) {
-				refillService(fromDate, toDate)
-			}
-
 			// Calc countService of this case only
 			var oldclass = rowi.className
-			var bookq = getBOOKrowByQN(gv.SERVE, qn)
+			var bookq = getBOOKrowByQN(gv.SERVICE, qn)
 			var newclass = countService(bookq, fromDate, toDate)
 			var oldclassArray = oldclass.split(" ")
 			var newclassArray = newclass.split(" ")
@@ -888,7 +773,7 @@ function showReportToDept(title)
 			this.innerHTML = 0
 		})
 	})
-	$.each(gv.SERVE, function() {
+	$.each(gv.SERVICE, function() {
 		if (this.operated) { countOpCase(this, this.disease) }
 		if (this.radiosurgery) { countNonOpCase(this, this.radiosurgery) }
 		if (this.endovascular) { countNonOpCase(this, this.endovascular) }

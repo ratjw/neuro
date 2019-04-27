@@ -1,17 +1,13 @@
 
 function Start()
 {
-//	if ('serviceWorker' in navigator) {
-//		navigator.serviceWorker.register('service-worker.js')
-//	}
-
 	Ajax(MYSQLIPHP, "start=start", loading);
 
 	$("#tblcontainer").show()
+  htmlEquipment()
 	resetTimer()
 
 	$("#tblcontainer").on("click", function (event) {
-		resetTimer();
 		event.stopPropagation()
 		var target = event.target
 		if (target.nodeName !== "TD") { return }
@@ -37,9 +33,6 @@ function Start()
 	function loading(response) {
 		if (typeof response === "object") {
 			updateBOOK(response)
-//		if (/^\d{1,2}$/.test(gv.user)) {
-//			fillForRoom(new Date().ISOdate(), room)
-//		} else {
 			fillupstart();
 			fillConsults()
 		}
@@ -120,13 +113,6 @@ function fillForRoom(opdate, room, qn)
 				class: "silver",
 				click: function () {
 					fillForRoom(opdate.nextdays(+1), room)
-				}
-			},
-			{
-				text: "Print",
-				width: "70",
-				click: function () {
-					printpaper()
 				}
 			}
 		])
@@ -222,8 +208,8 @@ function resetTimer()
 {
 	// gv.timer is just an id, not the clock
 	// poke server every 1000 sec.
-	clearTimeout(gv.timer)
-	gv.timer = setTimeout( updating, 10000)
+//	clearTimeout(gv.timer)
+	gv.timer = setInterval( updating, 10000)
 	gv.idleCounter = 0
 }
 
@@ -263,4 +249,46 @@ function getUpdate()
 			Alert ("getUpdate", response)
 		}
 	}
+}
+
+function htmlEquipment()
+{
+  let equip = "",
+    type = "",
+    width = "",
+    name = "",
+    label = "",
+    id = ""
+
+  EQUIPSHEET.forEach(item => {
+    type = item[0]
+    width = item[1]
+    name = item[2]
+    label = item[3]
+    id = item[4]
+
+    if (type === "divbegin") {
+      equip += `<div title="${name}">`
+    } else if (type === "divend") {
+      equip += `</div>`
+    } else if (type === "span") {
+      equip += `<span class="w${width}" id="${id}">${label}</span>`
+    } else if (type === "spanInSpan") {
+      equip += `<span class="w${width}">${label}<span id="${id}"></span></span>`
+    } else if (type === "br") {
+      equip += `<br>`
+    } else if (type === "radio" || type === "checkbox") {
+      equip += `<span class="w${width}">
+                 <label>
+                   <input type="${type}" name="${name}" value="${label}">
+                   <span>${label}</span></label>
+                </span>`
+    } else if (type === "text") {
+      equip += `<input type="${type}" class="w${width}" placeholder="${label}">`
+    } else if (type === "textarea") {
+      equip += `<textarea class="w${width} placeholder="${label}"></textarea>`
+    }
+  })
+
+  document.getElementById("dialogEquip").innerHTML = equip
 }

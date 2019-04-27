@@ -48,9 +48,37 @@ td {
 
 /* used in Equipment column */
 td img {
-	height: 32px;
-	width: 40px;
+  height: 23px;
+  width: 25px;
 }
+td img.imgpale {
+  filter: opacity(30%);
+}
+
+#capture td img {
+  height: 40px;
+  width: 45px;
+  margin: 0px 3px 0px 3px;
+}
+#capture th,
+#capture td {
+  font-size: 22px;
+  height: auto;
+  white-space: nowrap;
+  border: solid 1px gray;
+}
+#capture th:nth-child(1) { width: 3%; }
+#capture th:nth-child(2) { width: 0%; }
+#capture th:nth-child(3) { width: 3%; font-size: 12px; }
+#capture th:nth-child(4) { width: 0%; }
+#capture th:nth-child(5) { width: 0%; }
+#capture th:nth-child(6) { width: 5%; }
+#capture th:nth-child(7) { width: 9%; }
+#capture th:nth-child(8) { width: 10%; }
+#capture th:nth-child(9) { width: 20%; }
+#capture th:nth-child(10) { width: 20%; }
+#capture th:nth-child(11) { width: 30%; }
+#capture th:nth-child(12) { width: 0%; }
 
 #queuewrapper {
 	float: right;
@@ -115,18 +143,16 @@ td img {
 #tbl td:nth-child(6) { min-width: 40px; width: 3%; }
 #tbl td:nth-child(7) { min-width: 50px; max-width: 50px; }
 #tbl td:nth-child(8) { min-width: 70px; width: 10%; }
-#tbl td:nth-child(9) { width: 20%; }
-#tbl td:nth-child(10) { width: 20%; }
-#tbl td:nth-child(11) { width: 30%; }
-#tbl td:nth-child(12) { width: 20%; }
+#tbl td:nth-child(9) { width: 25%; }
+#tbl td:nth-child(10) { width: 25%; }
+#tbl td:nth-child(11) { width: 25%; }
 
 #queuetbl td:nth-child(6) { min-width: 40px; max-width: 60px; }
 #queuetbl td:nth-child(7) { min-width: 50px; max-width: 50px; }
 #queuetbl td:nth-child(8) { min-width: 70px; width: 10%; }
 #queuetbl td:nth-child(9) { width: 25%; }
 #queuetbl td:nth-child(10) { width: 25%; }
-#queuetbl td:nth-child(11) { width: 20%; }
-#queuetbl td:nth-child(12) { width: 20%; }
+#queuetbl td:nth-child(11) { width: 25%; }
 
 #servicetbl td:nth-child(1) { width: 15px; }
 #servicetbl td:nth-child(2) { width: 50px; }
@@ -191,11 +217,13 @@ td img {
 #tbl th:nth-child(2), #tbl td:nth-child(2),
 #tbl th:nth-child(4), #tbl td:nth-child(4),
 #tbl th:nth-child(5), #tbl td:nth-child(5),
+#tbl th:nth-child(12), #tbl td:nth-child(12),
+#tbl th:nth-child(13), #tbl td:nth-child(13),
 #queuetbl th:nth-child(2), #queuetbl td:nth-child(2),
 #queuetbl th:nth-child(3), #queuetbl td:nth-child(3),
 #queuetbl th:nth-child(4), #queuetbl td:nth-child(4),
 #queuetbl th:nth-child(5), #queuetbl td:nth-child(5),
-#tbl th:nth-child(13), #tbl td:nth-child(13),
+#queuetbl th:nth-child(12), #queuetbl td:nth-child(12),
 #queuetbl th:nth-child(13), #queuetbl td:nth-child(13),
 #servicetbl th:nth-child(12), #servicetbl td:nth-child(12),
 #deletedtbl th:nth-child(10), #deletedtbl td:nth-child(10),
@@ -439,18 +467,12 @@ td.camera2 { background-image: url(pic/general/camera2.png); }
 .textcenter { text-align: center; }
 
 .w20 { width:20px !important; }
-.w22 { width:22px !important; }
 .w30 { width:30px !important; }
 .w40 { width:40px !important; }
 .w50 { width:50px !important; }
-.w55 { width:55px !important; }
 .w60 { width:60px !important; }
-.w65 { width:65px !important; }
 .w70 { width:70px !important; }
-.w73 { width:73px !important; }
-.w77 { width:77px !important; }
 .w80 { width:80px !important; }
-.w85 { width:85px !important; }
 .w90 { width:90px !important; }
 .w100 { width:100px !important; }
 .w110 { width:110px !important; }
@@ -460,10 +482,7 @@ td.camera2 { background-image: url(pic/general/camera2.png); }
 .w160 { width:160px !important; }
 .w170 { width:170px !important; }
 .w200 { width:200px !important; }
-.w215 { width:215px !important; }
-.w350 { width:350px !important; }
 .w500 { width:500px !important; }
-.w540 { width:540px !important; }
 
 .margin0 { margin: 0px; }
 .margintop0 { margin-top: 0px; }
@@ -547,54 +566,7 @@ td.camera2 { background-image: url(pic/general/camera2.png); }
 	box-shadow: 10px 20px 30px slategray;
 }
 
-#postponecase {
-	width: 200px;
-	white-space: nowrap;
-}
-
-#delcase {
-	width: 170px;
-	white-space: nowrap;
-}
-
 #staffmenu { width: 100px; }
-
-#dialogEquip {
-	font-size: 14px;
-	color: black;
-	background-color: white;
-}
-
-#oproom,
-#casenum,
-#optime,
-#opdate,
-#staffname { font-size: 16px; font-weight: bold; }
-
-#dialogEquip input[type=radio] + label,
-#dialogEquip input[type=checkbox] + label {
-	color: #999999;
-}
-#dialogEquip input[type=radio]:checked + label,
-#dialogEquip input[type=checkbox]:checked + label {
-	color: black;
-	font-weight: bold;
-}
-#dialogEquip input[type=text] {
-	border: 0;
-	outline: 0;
-	background: transparent;
-	border-bottom: 1px dashed gray;
-	color: blue;
-	font-weight: bold;
-}
-#dialogEquip textarea {
-	width: 500px;
-	height: 55px;
-	padding: 2px;
-	color: blue;
-	font-weight: bold;
-}
 
 #dialogNotify textarea {
 	height: 190px;
@@ -602,113 +574,15 @@ td.camera2 { background-image: url(pic/general/camera2.png); }
 	font-size: 14px;
 }
 #buttonLINE {
-	width: 50px;
-	height: 50px;
-	background-image: url(pic/general/message.png);
-	background-size: 50px;
-	border: 1px solid lightblue;
+  float: right;
+  width: 35px;
+  height: 35px;
+  background-image: url(pic/general/message.png);
+  background-size: 35px;
+  border: 1px solid lightblue;
 }
 #buttonLINE:hover {
-	border: 2px solid lightblue;
-}
-
-.divRecord {
-	width: 200px;
-}
-
-.divRecord label {
-  display: inline-block;
-}
-
-.divRecord input {
-  height: 17px;
-  border-radius: 5px;
-  border: 1px solid #19adc4;
-  background-color: white;
-  -webkit-appearance: none; /*to disable the default appearance of radio button*/
-  -moz-appearance: none;
-}
-
-.divRecord input:focus { /*no need, if you don't disable default appearance*/
-  outline-color: transparent; /*to remove the square border on focus*/
-}
-
-.divRecord input:checked { /*no need, if you don't disable default appearance*/
-  background-color: #19adc4;
-}
-
-.divRecord input:checked ~ span {
-  color: white;
-}
-
-.divRecord label span {
-  position: relative;
-  font-size: 11px;
-  color: #19adc4;
-  top: -4.5px;
-  width: 0px;
-}
-
-.divRecord label input[type="checkbox"] + span {
-  top: -8px;
-}
-
-.divRecord hr {
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #B4E4EC;
-  margin: 3px 10px 0px 5px;
-}
-
-#reviewtbl {
-	font-weight: bold;
-}
-
-#reviewtbl th.first {
-	width: 150px;
-}
-
-#reviewtbl td {
-	width: 40px;
-	text-align: center;
-}
-
-#reviewtbl td:first-child {
-	text-align: left;
-}
-
-#reviewtbl th.elect {
-	background-color: #33AA77;
-}
-
-#reviewtbl th.emer {
-	background-color: #FF6688;
-}
-
-.nonsurgical td {
-	background-color: LightGray;
-	border-left: solid 1px silver;
-}
-
-#Total {
-	background-color: BurlyWood;
-}
-
-#Grand {
-	background-color: Turquoise;
-}
-
-#dialogReadme {
-	line-height: 150%;
-	font-size: 14px;
-	color: black;
-	background-color: white;
-}
-
-#dialogReadme h3 {
-	padding: 0px;
-	margin: 0px;
-	background-color: yellow;
+  border: 2px solid Dodgerblue;
 }
 
 #spin {
@@ -718,127 +592,22 @@ td.camera2 { background-image: url(pic/general/camera2.png); }
 	margin: 0px;
 }
 
-@media (max-width: 600px) {
-
-	/* Force table to not be like tables anymore */
-	table, thead, tbody, tr, th, td { 
-		display: block;
-	}
-
-	/* Hide table headers (but not display: none;, for accessibility) */
-	th { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-	}
- 
-	tr { border: 1px solid #ccc; }
-
-	#tbl td:first-child,
-	#tbl td:nth-child(2),
-	#tbl td:nth-child(3),
-	#tbl td:nth-child(4),
-	#tbl td:nth-child(5),
-	#tbl td:nth-child(6),
-	#tbl td:nth-child(7),
-	#tbl td:nth-child(8),
-	#tbl td:nth-child(9),
-	#tbl td:nth-child(10),
-	#tbl td:nth-child(11),
-	#tbl td:nth-child(12) { width: auto; }
-
-	td { 
-		/* Behave  like a "row" */
-		height: auto;
-		min-height: 30px;
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 40%; 
-		white-space: normal;
-		text-align: left;
-		empty-cells: show;
-	}
-
-	td:first-child {
-		font-size: 16px;
-	}
-
-	td:before { 
-		/* Now like a table header */
-		position: absolute;
-		/* Top/left values mimic padding */
-		top: 7px;
-		left: 7px;
-		width: 35%; 
-		white-space: nowrap;
-		text-align: left;
-		font-weight: bold;
-	/*
-	Label the data
-	*/
-		content: attr(data-title);
-	}
-
-	td.Sun:before { font-size: 18px; top: 2px; content: "วันอาทิตย์ "; }
-	td.Mon:before { font-size: 18px; top: 2px; content: "วันจันทร์ "; }
-	td.Tue:before { font-size: 18px; top: 2px; content: "วันอังคาร "; }
-	td.Wed:before { font-size: 18px; top: 2px; content: "วันพุธ "; }
-	td.Thu:before { font-size: 18px; top: 2px; content: "วันพฤหัส "; }
-	td.Fri:before { font-size: 18px; top: 2px; content: "วันศุกร์ "; }
-	td.Sat:before { font-size: 18px; top: 2px; content: "วันเสาร์ "; }
-
-	#stafflist {
-		position: relative;
-		font-size: 14px;
-	}
+.loader {
+  display: none;
+  position: absolute;
+  top:5%;
+  left: 50%;
+  border: 5px solid #a3e3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 10px;
+  height: 10px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
 }
 
-@media print { 
-	BODY {
-		overflow: visible;
-	}
-
-	#dialogEquip {
-		font-size: 16px;
-		font-family: sans-serif;
-		background-color: white;
-		border: 0px;
-		margin-top: 50px;
-		margin-left: 50px;
-		padding-left: 0px;
-	}
-
-	.pale {
-		color: #D3D3D3;
-		font-weight: 300;
-	}
-
-	input, input[type=checkbox] { 
-		border: 0px; 
-	}
-
-	input[type=radio] + label {
-		color: #FFFFFF;
-		background-color: white;
-	}
-
-	input[type=radio]:checked + label {
-		color: #000000;
-		border: 2px; 
-	}
-
-	input[type=checkbox] + label {
-		color: #FFFFFF;
-		background-color: white;
-	}
-
-	input[type=checkbox]:checked + label {
-		color: #000000;
-		border: 2px black; 
-	}
-
-	div, span { 
-		display:inline-block; 
-	} 
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }

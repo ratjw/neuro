@@ -46,10 +46,39 @@ td {
 	background-position: right bottom;
 }
 
+/* used in Equipment column */
 td img {
-	 height: 32px;
-	 width: 40;
+  height: 23px;
+  width: 25px;
 }
+td img.imgpale {
+  filter: opacity(30%);
+}
+
+#capture td img {
+  height: 40px;
+  width: 45px;
+  margin: 0px 3px 0px 3px;
+}
+#capture th,
+#capture td {
+  font-size: 22px;
+  height: auto;
+  white-space: nowrap;
+  border: solid 1px gray;
+}
+#capture th:nth-child(1) { width: 3%; }
+#capture th:nth-child(2) { width: 0%; }
+#capture th:nth-child(3) { width: 3%; font-size: 12px; }
+#capture th:nth-child(4) { width: 0%; }
+#capture th:nth-child(5) { width: 0%; }
+#capture th:nth-child(6) { width: 5%; }
+#capture th:nth-child(7) { width: 9%; }
+#capture th:nth-child(8) { width: 10%; }
+#capture th:nth-child(9) { width: 20%; }
+#capture th:nth-child(10) { width: 20%; }
+#capture th:nth-child(11) { width: 30%; }
+#capture th:nth-child(12) { width: 0%; }
 
 #tbl td:first-child,
 #tbl td:nth-child(2),
@@ -80,8 +109,7 @@ td img {
 #tbl td:nth-child(8) { min-width: 70px; width: 10%; }
 #tbl td:nth-child(9) { width: 25%; }
 #tbl td:nth-child(10) { width: 25%; }
-#tbl td:nth-child(11) { width: 20%; }
-#tbl td:nth-child(12) { width: 20%; }
+#tbl td:nth-child(11) { width: 25%; }
 
 #tblcontainer,
 #tblcells,
@@ -173,37 +201,38 @@ td.camera2 { background-image: url(pic/general/camera2.png); }
 
 .floatleft { float: left;}
 .floatright { float: right; }
-.textleft { text-align: left;}
-.textright { text-align: right; }
-.textcenter { text-align: center; }
-.w20 { width:20px; }
-.w22 { width:22px; }
-.w30 { width:30px; }
-.w40 { width:40px; }
-.w50 { width:50px; }
-.w55 { width:55px; }
-.w65 { width:65px; }
-.w70 { width:70px; }
-.w73 { width:73px; }
-.w77 { width:77px; }
-.w80 { width:80px; }
-.w85 { width:85px; }
-.w90 { width:90px; }
-.w100 { width:100px; }
-.w110 { width:110px; }
-.w120 { width:120px; }
-.w140 { width:140px; }
-.w150 { width:150px; }
-.w160 { width:160px; }
-.w170 { width:170px; }
-.w200 { width:200px; }
-.w215 { width:215px; }
-.w350 { width:350px; }
-.w500 { width:500px; }
-.w540 { width:540px; }
 .margin0 { margin: 0px; }
 .margintop0 { margin-top: 0px; }
 .marginright { margin-right: 100px; }
+.textleft { text-align: left;}
+.textright { text-align: right; }
+.textcenter { text-align: center; }
+
+.w10 { width:10px !important; }
+.w20 { width:20px !important; }
+.w30 { width:30px !important; }
+.w40 { width:40px !important; }
+.w50 { width:50px !important; }
+.w55 { width:55px !important; }
+.w60 { width:60px !important; }
+.w65 { width:65px !important; }
+.w70 { width:70px !important; }
+.w75 { width:75px !important; }
+.w80 { width:80px !important; }
+.w85 { width:85px !important; }
+.w90 { width:90px !important; }
+.w100 { width:100px !important; }
+.w110 { width:110px !important; }
+.w120 { width:120px !important; }
+.w140 { width:140px !important; }
+.w150 { width:150px !important; }
+.w160 { width:160px !important; }
+.w170 { width:170px !important; }
+.w200 { width:200px !important; }
+.w215 { width:215px !important; }
+.w350 { width:350px !important; }
+.w500 { width:500px !important; }
+.w540 { width:540px !important; }
 
 #dialogEquip {
 	font-size: 14px;
@@ -219,12 +248,12 @@ td.camera2 { background-image: url(pic/general/camera2.png); }
 #patientname,
 #hn { font-size: 16px; font-weight: bold; }
 
-#dialogEquip input[type=radio] + label,
-#dialogEquip input[type=checkbox] + label {
+#dialogEquip input[type=radio] + span,
+#dialogEquip input[type=checkbox] + span {
 	color: #999999;
 }
-#dialogEquip input[type=radio]:checked + label,
-#dialogEquip input[type=checkbox]:checked + label {
+#dialogEquip input[type=radio]:checked + span,
+#dialogEquip input[type=checkbox]:checked + span {
 	color: black;
 	font-weight: bold;
 }

@@ -11,13 +11,13 @@ function fillEquipTable(book, $row, qn, blankcase)
       "casenumequip": bookq.casenum || "",
       "optimeequip": bookq.optime,
       "opdayequip": NAMEOFDAYTHAI[(new Date(bookq.opdate)).getDay()],
-      "opdateequip": putThdate(bookq.opdate),
+      "opdatethequip": putThdate(bookq.opdate),
       "staffnameequip": bookq.staffname,
       "hnequip": bookq.hn,
       "patientnameequip": bookq.patient,
       "ageequip": putAgeOpdate(bookq.dob, bookq.opdate),
-      "diagnosisequip": bookq.diagnosis,
-      "treatmentequip": bookq.treatment
+      "diagnosisequip": bookq.diagnosis.split(' ').slice(0,6).join(' '),
+      "treatmentequip": bookq.treatment.split(' ').slice(0,6).join(' ')
     }
 
   $.each(profile, function(key, val) {
@@ -39,17 +39,9 @@ function fillEquipTable(book, $row, qn, blankcase)
     open: function(event, ui) {
       //disable default autofocus on text input
       $("input").blur()
-    },
-    close: function(event, ui) {
-      if (/^\d{1,2}$/.test(gv.user)) {
-        history.back()
-      }
     }
   })
 
-  // If ever filled, show checked equips & texts
-  // .prop("checked", true) : radio and checkbox
-  // .val(val) : <input text> && <textarea>
   if ( Object.keys(JsonEquip).length ) {
     Object.entries(JsonEquip).forEach(([key, val]) => {
       if (val.constructor === Array) {
@@ -64,15 +56,17 @@ function fillEquipTable(book, $row, qn, blankcase)
   showNonEditableEquip()
 
   $dialogEquip.find("div").each(function() {
-    this.style.display = "none" 
+    this.style.display = "none"
   })
+
   $dialogEquip.find("input").each(function() {
-    if (this.checked || this.value) {
-      $(this).closest("div").css("display", "block")
+    if (this.checked || (this.type === 'text' && this.value)) {
+      this.closest("div").style.display = "block"
     }
   })
+
   if ($dialogEquip.find("textarea").val()) {
-    $dialogEquip.find("textarea").closest("div").css("display", "block")
+    $dialogEquip.find("textarea").closest("div").show()
   }
 }
 
@@ -99,16 +93,6 @@ function checkMatchValue(key, val)
 
 function showNonEditableEquip()
 {
-  $('#dialogEquip').dialog("option", "buttons", [
-    {
-      text: "Print",
-      width: "100",
-      click: function () {
-        printpaper()
-      }
-    }
-  ])
-
   $('#dialogEquip input').on("click", function() { return false })
   $('#dialogEquip input[type=text]').prop('disabled', true)
   $('#dialogEquip textarea').prop('disabled', true)

@@ -187,7 +187,6 @@ function holiday(date)
 		holidayname = "",
 		Mon = (dayofweek === 1),
 		Tue = (dayofweek === 2),
-		Wed = (dayofweek === 3),
 		holiday = $.grep(gv.HOLIDAY, function(day) {
 			return day.holidate === date
 		})[0]
@@ -228,7 +227,7 @@ function holiday(date)
 		break
 	case "04-16":
 	case "04-17":
-		if (Mon || Tue || Wed)
+		if (Mon || Tue)
 			holidayname = "Songkransub"
 		break
 	case "07-28":

@@ -35,7 +35,7 @@ function fillupfinish()
 	fillall(book, table, start, until, table.rows.length-1)
 }
 
-function fillall(book, table, start, until)
+function fillall(book, table, start, until, last)
 {
 	var tbody = table.getElementsByTagName("tbody")[0],
 		rows = table.rows,
@@ -52,7 +52,8 @@ function fillall(book, table, start, until)
 	}
 
 	//i for rows in table (with head as the first row)
-	var i = 0
+  //finishing i continue from the previous last row
+  var i = last || 0
 	var blen = book.length
 
 	for (q; q < blen; q++)

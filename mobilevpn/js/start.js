@@ -434,7 +434,6 @@ function getUpdate()
       updateBOOK(response)
       if ($("#dialogService").hasClass('ui-dialog-content')
         && $("#dialogService").dialog('isOpen')) {
-        gv.SERVE = calcSERVE()
         refillService(fromDate, toDate)
       }
       refillall()
@@ -529,111 +528,4 @@ function callbacksaveOnChange(response)
   if (typeof response === "object") {
     updateBOOK(response)
   }
-}
-
-function addStaff()
-{
-  var scbb = document.getElementById("scbb")  var $dialogStaff = $("#dialogStaff")  var $stafftbl = $("#stafftbl")
-
-  for (var each=0; each<SPECIALTY.length; each++) {
-    scbb.innerHTML += "<option value=" + SPECIALTY[each]+ ">"
-            + SPECIALTY[each] + "</option>"
-  }
-
-  clearval()
-  $stafftbl.find('tr').slice(3).remove()
-
-  $.each( gv.STAFF, function(i, item) {
-    $('#staffcells tr').clone()
-      .appendTo($stafftbl.find('tbody'))
-        .filldataStaff(i, item)
-  });
-
-  $dialogStaff.dialog({
-    title: "Subspecialty Staff",
-    closeOnEscape: true,
-    modal: true,
-    show: 200,
-    hide: 200,
-    width: 600,
-    height: 400
-  })
-}
-
-jQuery.fn.extend({
-  filldataStaff : function(i, q) {
-    var cells = this[0].cells    var data = [
-        "<a href=\"javascript:getval('" + i + "')\">"
-        + q.staffname + "</a>",
-        q.specialty,
-        q.startoncall
-      ]
-
-    dataforEachCell(cells, data)
-  }
-})
-
-function getval(each)
-{  
-  document.getElementById("sname").value = gv.STAFF[each].staffname;
-  document.getElementById("scbb").value = gv.STAFF[each].specialty;
-  document.getElementById("sdate").value = gv.STAFF[each].startoncall; 
-  document.getElementById("shidden").value = gv.STAFF[each].number;
-}
-
-function clearval()
-{  
-  document.getElementById("sname").value = ""
-  document.getElementById("scbb").value = ""
-  document.getElementById("sdate").value = ""
-  document.getElementById("shidden").value = ""
-}
-
-function doadddata()
-{
-  var vname = document.getElementById("sname").value  var vspecialty = document.getElementById("scbb").value  var vdate = document.getElementById("sdate").value  var vnum = Math.max.apply(Math, gv.STAFF.map(function(staff) { return staff.number })) + 1  var sql = "sqlReturnStaff="
-      + "INSERT INTO staff (number,staffname,specialty) VALUES("
-      + vnum + ",'"+ vname  +"','"+ vspecialty
-      + "');"
-
-  Ajax(MYSQLIPHP, sql, callbackdodata);
-}
-
-function doupdatedata()
-{
-  if (confirm("ต้องการแก้ไขข้อมูลนี้หรือไม่")) {
-    var vname = document.getElementById("sname").value    var vspecialty = document.getElementById("scbb").value    var vdate = document.getElementById("sdate").value    var vshidden = document.getElementById("shidden").value    var sql = "sqlReturnStaff=UPDATE staff SET "
-        + ", staffname='" + vname
-        + "', specialty='" + vspecialty
-        + "' WHERE number=" + vshidden
-        + ";"
-
-    Ajax(MYSQLIPHP, sql, callbackdodata);
-  }
-} // end of function doupdatedata
-
-function dodeletedata()
-{
-  if (confirm("ต้องการลบข้อมูลนี้หรือไม่")) {
-    var vshidden = document.getElementById("shidden").value    var sql = "sqlReturnStaff=DELETE FROM staff WHERE number=" + vshidden + ";"
-
-    Ajax(MYSQLIPHP, sql, callbackdodata);
-  }
-}
-
-function callbackdodata(response)
-{
-  if (typeof response === "object") {
-    showAddStaff(response)
-  } else {
-    alert(response)
-  }
-}
-
-function showAddStaff(response)
-{
-  gv.STAFF = response.STAFF
-  setStafflist()
-  fillConsults()
-  addStaff()
 }

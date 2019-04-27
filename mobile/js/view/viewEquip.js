@@ -3,7 +3,7 @@ const EQUIPICONS = {
     Fluoroscope: "Fluoroscope",
     "Navigator frameless": "Navigator",
     "Navigator with frame": "Navigator",
-    Oarm: "Oarm",
+    "O-arm": "Oarm",
     Robotics: "Robotics",
     Microscope: "Microscope",
     ICG: "Microscope",
@@ -63,8 +63,7 @@ export function viewEquipJSON(equipJSON)
 
 function viewEquipText(equipJSON)
 {
-  let equip = [],
-    monitor = []
+  let equip = []
 
   $.each(equipJSON, function(key, value) {
     equip.push(key + ":" + value)
@@ -75,9 +74,7 @@ function viewEquipText(equipJSON)
 
 function viewEquipImage(equipJSON)
 {
-  let equip = [],
-    monitor = [],
-    equipPics = [],
+  let equipPics = [],
     img = ""
 
   Object.values(equipJSON).forEach(value => {

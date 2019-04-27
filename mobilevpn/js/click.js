@@ -872,7 +872,7 @@ function storePresentCell(evt, pointing)
 			createEditcell(pointing)
 			break
 		case EQUIPMENT:
-			getEQUIP(pointing)
+//			getEQUIP(pointing)
 			break
 	}
 	clearSelection()
@@ -880,41 +880,55 @@ function storePresentCell(evt, pointing)
 
 function selectRow(event, target)
 {
-  var $target = $(target).closest("tr"),
-      $targetTRs = $(target).closest("table").find("tr"),
-      $allTRs = $("tr")
+  let $table = $(target).closest("table"),
+    $rows = $table.find("tr"),
+    $row = $(target).closest("tr"),
+    $allRows = $("tr")
 
   if (event.ctrlKey) {
-    $targetTRs.removeClass("lastselected")
-    $target.addClass("selected lastselected")
-    disableOneRowMenu()
+    if (!/selected/.test($row.attr('class'))) {
+      $rows.removeClass("beginselected")
+      $row.addClass("selected beginselected")
+    }
   } else if (event.shiftKey) {
-    $targetTRs.not(".lastselected").removeClass("selected")
-    shiftSelect($target)
-    disableOneRowMenu()
+    $rows.not(".beginselected").removeClass("selected")
+    shiftSelect($row)
   } else {
-    $allTRs.removeClass("selected lastselected")
-    $target.addClass("selected lastselected")
+    if (/selected/.test($row.attr('class'))) {
+      $row.removeClass("selected beginselected")
+    } else {
+      $rows.removeClass("beginselected")
+      $row.addClass("selected beginselected")
+    }
+  }
+
+  let selects = $table.find('.selected').length
+  if (selects === 0) {
+    disableExcelLINE()
+  }
+  if (selects === 1) {
     oneRowMenu()
+  } else {
+    disableOneRowMenu()
   }
 }
 
-function shiftSelect($target)
+function shiftSelect($row)
 {
-  var $lastselected = $(".lastselected").closest("tr"),
-      lastIndex = $lastselected.index(),
-      targetIndex = $target.index(),
+  let $beginselected = $(".beginselected").closest("tr"),
+      beginIndex = $beginselected.index(),
+      targetIndex = $row.index(),
       $select = {}
 
-  if (targetIndex > lastIndex) {
-    $select = $target.prevUntil('.lastselected')
-  } else if (targetIndex < lastIndex) {
-    $select = $target.nextUntil('.lastselected')
+  if (targetIndex > beginIndex) {
+    $select = $row.prevUntil('.beginselected')
+  } else if (targetIndex < beginIndex) {
+    $select = $row.nextUntil('.beginselected')
   } else {
     return
   }
   $select.addClass("selected")
-  $target.addClass("selected")
+  $row.addClass("selected")
 }
 
 function clearSelection()
