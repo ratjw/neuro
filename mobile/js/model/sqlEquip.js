@@ -2,7 +2,7 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 
-export function sqlGetEquip(qn)  {
+export function sqlGetEditedBy(qn)  {
 
   let sql = `sqlReturnData=SELECT editor,editdatetime  FROM bookhistory WHERE qn=${qn} AND equipment <> '' ORDER BY editdatetime DESC;`
 

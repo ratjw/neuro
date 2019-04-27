@@ -2,7 +2,7 @@
 import { EQUIPMENT, NAMEOFDAYTHAI } from "../model/const.js"
 import { clearEditcell } from "../control/edit.js"
 import { USER } from "../main.js"
-import { sqlGetEquip, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlGetEquip.js"
+import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEquip.js"
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
@@ -46,8 +46,8 @@ export function getEQUIP(pointing)
       hnequip: row.dataset.hn,
       patientnameequip: row.dataset.patient,
       ageequip: putAgeOpdate(row.dataset.dob, row.dataset.opdate),
-      diagnosisequip: row.dataset.diagnosis,
-      treatmentequip: row.dataset.treatment
+      diagnosisequip: row.dataset.diagnosis.split(' ').slice(0,6).join(' '),
+      treatmentequip: row.dataset.treatment.split(' ').slice(0,6).join(' ')
     }
 
   if (!qn) { return }
@@ -177,7 +177,7 @@ function enableInput()
 
 function getEditedBy()
 {
-  sqlGetEquip(thisqn).then(response => {
+  sqlGetEditedBy(thisqn).then(response => {
     let hasData = function () {
       let Editedby = ""
       $.each(response, function(key, val) {
