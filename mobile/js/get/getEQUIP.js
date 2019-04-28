@@ -60,10 +60,6 @@ export function getEQUIP(pointing)
   JsonEquip = rowEquip? JSON.parse(rowEquip) : {}
   thisqn = qn
 
-  // clear all previous dialog values
-  $dialogEquip.find('input[type=text]').val('')
-  $dialogEquip.find('textarea').val('')
-  $dialogEquip.find('input').prop('checked', false)
   $dialogEquip.dialog({
     title: "เครื่องมือผ่าตัด",
     closeOnEscape: true,
@@ -71,6 +67,18 @@ export function getEQUIP(pointing)
     width: 700,
     height: height > 1000 ? 1000 : height
   })
+
+  fillEquip($dialogEquip, JsonEquip)
+
+  clearEditcell()
+}
+
+function fillEquip($dialogEquip, JsonEquip)
+{
+  // clear all previous dialog values
+  $dialogEquip.find('input[type=text]').val('')
+  $dialogEquip.find('textarea').val('')
+  $dialogEquip.find('input').prop('checked', false)
 
   if (Object.keys(JsonEquip).length) {
     Object.entries(JsonEquip).forEach(([key, val]) => {
@@ -88,8 +96,6 @@ export function getEQUIP(pointing)
     showEditableEquip()
     $('#editedby').html("")
   }
-
-  clearEditcell()
 }
 
 function checkMatchValue(key, val)
@@ -239,41 +245,31 @@ let checklistEquip = function () {
   // escape the \ (escape) and ' (single quote) for sql string, not for JSON
   equipment = equipment.replace(/\\/g,"\\\\").replace(/'/g,"\\'")
   sqlSaveEquip(equipment, thisqn).then(response => {
-    let showup = function () {
+    if (typeof response === "object") {
       updateBOOK(response)
       $dialogEquip.dialog('close')
-    }
-    let rollback = function () {
+    } else {
       // Error update server
       Alert("checklistEquip", response)
 
       // Roll back
-      $('#dialogEquip input').val('')
-      $('#dialogEquip textarea').val('')
-      rowEquip &&
-        Object.entries(JSON.parse(rowEquip)).forEach(([key, val]) => {
-          val === 'checked'
-          ? document.getElementById("#"+ key).checked = true
-          : document.getElementById("#"+ key).value = val
-        });
-    };
-
-    typeof response === "object" ? showup() : rollback()
+      fillEquip($dialogEquip, JsonEquip)
+    }
   }).catch(error => {})
 }
 
 function cancelAllEquip()
 {
   sqlCancelAllEquip(thisqn).then(response => {
-    let hasData = function () {
+    if (typeof response === "object") {
       updateBOOK(response)
-      delelteAllEquip()
+      $dialogEquip.dialog('close')
+    } else {
+      Alert("cancelAllEquip", response)
+
+      // Roll back
+      fillEquip($dialogEquip, JsonEquip)
     }
-
-    typeof response === "object"
-    ? hasData()
-    : restoreAllEquip(response, rowEquip, JsonEquip)
-
   }).catch(error => {})
 }
 
@@ -282,24 +278,4 @@ function delelteAllEquip()
   let $row = getTableRowByQN("maintbl", thisqn)
 
   $row.find("td").eq(EQUIPMENT).html('')
-}
-
-function restoreAllEquip(response, rowEquip, JsonEquip)
-{
-  // Error update server
-  // Roll back. If old form has equips, fill checked & texts
-  // prop("checked", true) : radio and checkbox
-  // .val(val) : <input text> && <textarea>
-  Alert("cancelAllEquip", response)
-  $('#dialogEquip input').val('')
-  $('#dialogEquip textarea').val('')
-  if ( rowEquip ) {
-    $.each(JsonEquip, function(key, val) {
-      if (val === 'checked') {
-        $("#"+ key).prop("checked", true)
-      } else {
-        $("#"+ key).val(val)
-      }
-    })
-  }
 }
