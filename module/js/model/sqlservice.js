@@ -21,21 +21,13 @@ export function sqlGetServiceOneMonth() {
 }
 
 export function sqlGetIPD() {
-  let sql = `from=${serviceFromDate}&to=${serviceToDate}&sql=` + sqlOneMonth()
+  let sql = `from=${serviceFromDate}&to=${serviceToDate}&sql=${sqlOneMonth()}`
 
   return postData(GETIPD, sql)
 }
 
 export function sqlSaveService(pointed, column, content, qn) {
-  let sql = "sqlReturnService="
-  
-  if (column) {
-    sql += sqlItem(column, content, qn)
-  } else {
-    sql += sqlRecord(pointed, content, qn)
-  }
-
-  sql  += sqlOneMonth()
+  let sql = `sqlReturnService=${sqlItem(column, content, qn)}${sqlOneMonth()}`
 
   return postData(MYSQLIPHP, sql);
 }
@@ -55,20 +47,6 @@ function sqlOneMonth()
             AND waitnum<>0
             AND hn
           ORDER BY s.number,opdate,oproom,casenum,waitnum;`
-}
-
-function sqlRecord(pointing, setRecord, qn)
-{
-  let sql = ""
-
-  $.each(setRecord, function(column, content) {
-    if (column === "disease" && content === "") {
-      sql += sqlDefaults(qn)      
-    }
-    sql += sqlItem(column, content, qn)
-  })
-
-  return sql
 }
 
 function sqlColumn(column, content, qn)

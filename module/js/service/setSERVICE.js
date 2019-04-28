@@ -22,7 +22,7 @@ export function seteditableSV(editable) { editableSV = editable }
 function calcSERVE(service)
 {
   $.each(service, function() {
-    let profile = JSON.parse(this.profile) || {},
+    let profile = this.profile ? JSON.parse(this.profile) : {},
       operated = profile.operated
 
     if (!profile.radiosurgery && isMatched(RADIOSURGERY, this.treatment)) {
