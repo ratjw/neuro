@@ -29,11 +29,8 @@ export function clicktable(evt, target) {
   if (POINTER) {
     savePreviousCell()
   }
-  if (((target.nodeName === "TH") && (target.cellIndex === OPDATE))
-    || (target.nodeName === "TD")) {
-    if (!POINTER || POINTER.cellIndex > PATIENT) {
-      editPresentCell(evt, target)
-    }
+  if ((target.nodeName === "TD") && (!POINTER || POINTER.cellIndex > PATIENT)) {
+    editPresentCell(evt, target)
   } else {
     clearAllEditing()
   }

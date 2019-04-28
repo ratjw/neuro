@@ -33,7 +33,7 @@
   `admit` date DEFAULT NULL,                    *\ web service via SOAP
   `discharge` date DEFAULT NULL,                */ GetEncounterDetailByMRNENCTYPE($hn, "IMP")
                                                      in getipd.php used by getAdmitDischargeDate
-  `profile` JSON {
+  `profile` varchar(1000) NOT NULL DEFAULT '' {
     `admitted`: "", "0" "1", "2", ...,
                                                   * "" = IND
                                                   * "0"= user-defined no admission
