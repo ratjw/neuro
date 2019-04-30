@@ -28,41 +28,32 @@
   `treatment` varchar(1000) NOT NULL DEFAULT '',
   `admission` varchar(5000) NOT NULL DEFAULT '',
   `final` varchar(5000) NOT NULL DEFAULT '',
-  `equipment` varchar(2000) NOT NULL DEFAULT '',
+  `equipment` JSON,
+  `profile` JSON {
+    `admitted`: "0" "1", "2", ...,               * "0"= user-defined no admission
+                                                  * "1"
+                                                  * "2"... Readmission
+    `radiosurgery`: ,                             * "Radiosurgery"
+    `endovascular`: ,                             * "Endovascular"
+    `infection`: ,                                * "Infection"             UDO
+    `morbid`: ,                                   * "Morbidity"             UDO
+    `dead`: ,                                     * "Dead"                  UDO
+    `operated`: [{
+      `op`: NULL, "1", "2", ...,                 * "0" = user-defined no operation
+                                                  * "1"
+                                                  * "2"... Reoperation
+      `doneby`: ,                                 * "Staff", "Resident"     UDO
+      `manner`: ,                                 * "Elective", "Emergency" UDO
+      `scale`: ,                                  * "Major", "Minor"        UDO
+      `disease`:                                  * "Brain Tumor", "Brain Vascular",
+                                                    "CSF related", "Trauma", "Spine", "etc"
+                                                    (run-time calc by operationFor)
+    }]
+  },
   `contact` varchar(1000) NOT NULL DEFAULT '',
   `admit` date DEFAULT NULL,                    *\ web service via SOAP
   `discharge` date DEFAULT NULL,                */ GetEncounterDetailByMRNENCTYPE($hn, "IMP")
                                                      in getipd.php used by getAdmitDischargeDate
-  `profile` varchar(1000) NOT NULL DEFAULT '' {
-    `admitted`: "", "0" "1", "2", ...,
-                                                  * "" = IND
-                                                  * "0"= user-defined no admission
-                                                  * "1"
-                                                  * "2"... Readmission
-    `radiosurgery`: "", "no", "Radiosurgery",
-                                                  * "" = IND
-                                                  * "no" = user-defined no radiosurgery
-    `endovascular`: * "", "no", "Endovascular",
-                                                  * "" = IND
-                                                  * "no" = user-defined no endovascular
-    `infection`: ,                                * "", "Infection"             UDO
-    `morbid`: ,                                   * "", "Morbidity"             UDO
-    `dead`: ,                                     * "", "Dead"                  UDO
-    `operated`: [{
-      `op`: "", "0" "1", "2", ...,
-                                                  * "" = IND
-                                                  * "0"= user-defined no operation
-                                                  * "1"
-                                                  * "2"... Reoperation
-      `doneby`: ,                                 * "", "Staff", "Resident"     UDO
-      `manner`: ,                                 * "", "Elective", "Emergency" UDO
-      `scale`: ,                                  * "", "Major", "Minor"        UDO
-      `disease`:                                  * "", "Brain Tumor", "Brain Vascular",
-                                                    "CSF related", "Trauma", "Spine", "etc"
-                                                    (run-time calc by operationFor)
-                                                    "" = IND
-    }]
-  },
   `qn` int(10) unsigned NOT NULL AUTO_INCREMENT,   * Booking entry ID number 
   `editor` varchar(10) NOT NULL DEFAULT '',       * user ID
   PRIMARY KEY (`qn`),
