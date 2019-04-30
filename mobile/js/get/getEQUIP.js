@@ -65,7 +65,7 @@ export function getEQUIP(pointing)
     closeOnEscape: true,
     modal: true,
     width: 700,
-    height: height > 1000 ? 1000 : height
+    height: height > 1800 ? 1800 : height
   })
 
   fillEquip($dialogEquip, JsonEquip)
@@ -80,7 +80,7 @@ function fillEquip($dialogEquip, JsonEquip)
   $dialogEquip.find('textarea').val('')
   $dialogEquip.find('input').prop('checked', false)
 
-  if (Object.keys(JsonEquip).length) {
+  if (JsonEquip) {
     Object.entries(JsonEquip).forEach(([key, val]) => {
       if (val.constructor === Array) {
         val.forEach(e => {
