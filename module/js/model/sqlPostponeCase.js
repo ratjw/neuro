@@ -8,8 +8,8 @@ export function sqlPostponeCase(allCases, row, thisdate) {
     oproom = row.dataset.oproom,
     qn = row.dataset.qn,
     sql = `sqlReturnbook=UPDATE book SET opdate='${thisdate}',
-        waitnum=${waitnum},theatre='',oproom=null,casenum=null,
-        optime='',editor='${USER}' WHERE qn=${qn};`
+        waitnum=${waitnum},theatre='',oproom=null,optime='',casenum=null,
+        admit=null,discharge=null,editor='${USER}' WHERE qn=${qn};`
 
   if (allCases.length && oproom) {
     sql += updateCasenum(allCases.filter(e => e !== qn))

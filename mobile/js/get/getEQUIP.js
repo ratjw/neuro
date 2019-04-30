@@ -102,6 +102,7 @@ function checkMatchValue(key, val)
 {
   let dd = document.querySelector(`#dialogEquip div[title='${key}']`)
 
+  if (!dd) { return }
   if (dd.querySelector('textarea')) {
     dd.querySelector('textarea').value = val
     return
@@ -263,7 +264,7 @@ function cancelAllEquip()
   sqlCancelAllEquip(thisqn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
-      $dialogEquip.dialog('close')
+      delelteAllEquip()
     } else {
       Alert("cancelAllEquip", response)
 

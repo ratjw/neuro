@@ -3,7 +3,7 @@ include "connect.php";
 require_once "book.php";
 require_once "mysqli.php";
 
-const $neuroStaffs = [
+$neuroStaffs = [
   "004415", "003391", "007841", "008146", "004606", "006599", "006805"
 ];
 
@@ -30,7 +30,7 @@ const $neuroStaffs = [
 		$ipd = getipd($hn);
 
     $staff = $ipd[attender];
-    if (in_array($staff, $neuroStaffs)) { continue; }
+    if (!in_array($staff, $neuroStaffs)) { continue; }
 
 		$oldAdmit = $eachcase[admit];
 		$oldDischarge = $eachcase[discharge];

@@ -75,7 +75,9 @@ export function showRecord(pointing)
         click: function () {
           $dialogRecord.find('div').last().remove()
           resizeScroll($dialogRecord, height)
-          operated.pop()
+          if (operated.length > $dialogRecord.find('div').length) {
+            operated.pop()
+          }
         }
       },
       {

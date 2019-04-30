@@ -13,6 +13,8 @@ export function sqlMover(waitnum, opdate, theatre, oproom, casenum, qn)
         oproom=null,
         optime='',
         casenum=null,
+        admit=null,
+        discharge=null,
         editor='${USER}'
         WHERE qn=${qn};`
   } else {
@@ -22,6 +24,8 @@ export function sqlMover(waitnum, opdate, theatre, oproom, casenum, qn)
         theatre='${theatre}',
         oproom=${oproom},
         casenum=${casenum},
+        admit=null,
+        discharge=null,
         editor='${USER}'
         WHERE qn=${qn};`
   }

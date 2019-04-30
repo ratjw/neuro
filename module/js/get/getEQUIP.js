@@ -102,6 +102,7 @@ function checkMatchValue(key, val)
 {
   let dd = document.querySelector(`#dialogEquip div[title='${key}']`)
 
+  if (!dd) { return }
   if (dd.querySelector('textarea')) {
     dd.querySelector('textarea').value = val
     return

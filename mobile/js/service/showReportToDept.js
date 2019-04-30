@@ -53,7 +53,7 @@ export function showReportToDept(title)
   SERVICE.forEach(e => {
     let profile = JSON.parse(e.profile) || {}
 
-    if (profile.admitted) { countAdmitCase(profile.admitted) }
+    countAdmitCase(e, profile.admitted)
     if (profile.operated) { countOpCase(profile.operated) }
 
     if (e.discharge) { document.querySelector('#Discharge').innerHTML++ }
@@ -80,13 +80,15 @@ export function showReportToDept(title)
   })
 }
 
-function countAdmitCase(thisval)
+function countAdmitCase(e, admitted)
 {
-  document.querySelector('#Admission').innerHTM++
-  while (thisval > 1) {
+  if (e.admit) {
+    document.querySelector('#Admission').innerHTML++
+  }
+  while (admitted > 1) {
     document.querySelector('#Admission').innerHTML++
     document.querySelector('#Readmission').innerHTML++
-    thisval--
+    admitted--
   }
 }
 

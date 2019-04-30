@@ -9,13 +9,13 @@ export function viewRecord(profile)
 
   Object.entries(profileJSON).forEach(([key, val]) => {
     if (key === "admitted") {
-      if (val) {
+      if (val > 1) {
         profiles.push(`${key}:${val}`)
       }
     } else if (key === "operated") {
       profileJSON[key].forEach(e => {
-        let op = Object.values(e).map(e => e)
-        profiles.push(`op(${op.join(', ')})`)
+        let op = Object.values(e).map(e => e).filter(e => e)
+        if (op.length) { profiles.push(`op(${op.join(', ')})`) }
       })
     } else {
       profiles.push(val)

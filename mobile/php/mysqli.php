@@ -49,7 +49,6 @@ function start($mysqli)
 	$data = array();
 	$data = book($mysqli);
 	$data["STAFF"] = getStaff($mysqli);
-	$data["ONCALL"] = getOncall($mysqli);
 	$data["HOLIDAY"] = getHoliday($mysqli);
 	return json_encode($data);
 }
@@ -95,7 +94,6 @@ function returnStaff($mysqli, $sql)
 		return $return;
 	} else {
 		$data["STAFF"] = getStaff($mysqli);
-		$data["ONCALL"] = getOncall($mysqli);
 		return json_encode($data);
 	}
 }
@@ -103,21 +101,6 @@ function returnStaff($mysqli, $sql)
 function getStaff($mysqli)
 {
 	$sql = "SELECT * FROM staff ORDER BY number;";
-	return multiquery($mysqli, $sql);
-}
-
-function getOncall($mysqli)
-{
-	$sql = "SELECT o.*
-			FROM oncall o
-			INNER JOIN
-				(SELECT dateoncall, MAX(edittime) AS MaxEditTime
-				FROM oncall
-				GROUP BY dateoncall) groupOncall 
-			ON o.dateoncall = groupOncall.dateoncall 
-			AND o.edittime = groupOncall.MaxEditTime
-			WHERE o.dateoncall > CURDATE()
-			ORDER BY o.dateoncall;";
 	return multiquery($mysqli, $sql);
 }
 

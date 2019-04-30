@@ -13,12 +13,13 @@ export function coloring(row) {
   })
 
   Object.keys(COMPLICATION).forEach(e => {
-    if (e === 'admitted') {
-      if (!profile[e] || (profile[e] < 2)) { return }
-    } else if (e === 'operated') {
-      if (profile[e].length < 2) { return }
-    } else if (!profile[e]) { return }
-
-    row.classList.add(COMPLICATION[e])
+    if (profile[e]) {
+      if (e === 'admitted') {
+        if (profile[e] < 2) { return }
+      } else if (e === 'operated') {
+        if (profile[e].length < 2) { return }
+      }
+      row.classList.add(COMPLICATION[e])
+    }
   })
 }
