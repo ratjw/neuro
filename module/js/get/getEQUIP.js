@@ -70,7 +70,7 @@ export function getEQUIP(pointing)
     title: "เครื่องมือผ่าตัด",
     closeOnEscape: true,
     modal: true,
-    width: 650,
+    width: 600,
     height: winHeight(95),
     clse: function() {
       $(window).off("resize", resizeDialogEquip)

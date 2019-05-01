@@ -33,18 +33,18 @@
     `admitted`: "0" "1", "2", ...,               * "0"= user-defined no admission
                                                   * "1"
                                                   * "2"... Readmission
+    `doneby`: ,                                   * "Staff", "Resident"     UDO
+    `manner`: ,                                   * "Elective", "Emergency" UDO
+    `scale`: ,                                    * "Major", "Minor"        UDO
     `radiosurgery`: ,                             * "Radiosurgery"
     `endovascular`: ,                             * "Endovascular"
     `infection`: ,                                * "Infection"             UDO
     `morbid`: ,                                   * "Morbidity"             UDO
     `dead`: ,                                     * "Dead"                  UDO
     `operated`: [{
-      `op`: NULL, "1", "2", ...,                 * "0" = user-defined no operation
+      `op`: NULL, "1", "2", ...,                 * [] = user-defined no operation
                                                   * "1"
                                                   * "2"... Reoperation
-      `doneby`: ,                                 * "Staff", "Resident"     UDO
-      `manner`: ,                                 * "Elective", "Emergency" UDO
-      `scale`: ,                                  * "Major", "Minor"        UDO
       `disease`:                                  * "Brain Tumor", "Brain Vascular",
                                                     "CSF related", "Trauma", "Spine", "etc"
                                                     (run-time calc by operationFor)

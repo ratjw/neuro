@@ -71,9 +71,9 @@ export function saveService(pointed, column, newcontent) {
       let newlen = SERVICE.length
       if (oldlen !== newlen) {
         reViewService()
-      } else {
-        let bookq = getBOOKrowByQN(SERVICE, qn)
-        row.dataset.profile = bookq.profile
+      } else if (pointed.cellIndex === PROFILESV) {
+        pointed.innerHTML = viewRecord(newcontent)
+        row.dataset.profile = newcontent
         coloring(row)
       }
     } else {

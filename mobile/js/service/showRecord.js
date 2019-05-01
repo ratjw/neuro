@@ -21,7 +21,7 @@ export function showRecord(pointing)
     profile = JSON.parse(row.dataset.profile),
     admitted = profile && profile.admitted,
     $dialogRecord = $('#dialogRecord'),
-    height = winHeight(90)
+    maxHeight = winHeight(90)
 
   if (!qn) { return }
 
@@ -57,7 +57,7 @@ export function showRecord(pointing)
     closeOnEscape: true,
     modal: true,
     width: 340,
-    height: ($dialogRecord.height() > height) ? height : 'auto',
+    height: ($dialogRecord.height() > maxHeight) ? height : 'auto',
     buttons: [
       {
         text: "Add Op",
@@ -66,7 +66,7 @@ export function showRecord(pointing)
           // add another element to operated and reposition the dialog
           if (op === operated.length) {
             $dialogRecord.append(divOperation(op))
-            resizeScroll($dialogRecord, height)
+            resizeScroll($dialogRecord, maxHeight)
           }
         }
       },
@@ -74,7 +74,7 @@ export function showRecord(pointing)
         text: "Delete Op",
         click: function () {
           $dialogRecord.find('div').last().remove()
-          resizeScroll($dialogRecord, height)
+          resizeScroll($dialogRecord, maxHeight)
           if (operated.length > $dialogRecord.find('div').length) {
             operated.pop()
           }
@@ -93,10 +93,10 @@ export function showRecord(pointing)
   radioHack('#dialogRecord')
 }
 
-function resizeScroll($dialogRecord, height)
+function resizeScroll($dialogRecord, maxHeight)
 {
   $dialogRecord.dialog({ height: 'auto' })
-  $dialogRecord.dialog({ height: ($dialogRecord.height() > height) ? height : 'auto' })
+  $dialogRecord.dialog({ height: ($dialogRecord.height() > maxHeight) ? height : 'auto' })
   $dialogRecord.scrollTop($dialogRecord.height())
 }
 
@@ -135,7 +135,7 @@ function saveRecord()
       if (this.value) {
         recordJSON[this.name] = this.value
       }
-    } else if (this.type === "checkbox") {
+    } else {
       if (this.checked) {
         recordJSON[this.name] = this.value
       }

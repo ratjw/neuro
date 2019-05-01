@@ -70,7 +70,7 @@ export function getEQUIP(pointing)
     title: "เครื่องมือผ่าตัด",
     closeOnEscape: true,
     modal: true,
-    width: 650,
+    width: 600,
     height: winHeight(95),
     clse: function() {
       $(window).off("resize", resizeDialogEquip)
@@ -80,10 +80,6 @@ export function getEQUIP(pointing)
   fillEquip($dialogEquip, JsonEquip)
 
   clearEditcell()
-    $dialogEquip.dialog({
-      width: winWidth(95),
-      height: winHeight(95)
-    })
 
   //for resizing dialogs in landscape / portrait view
   $(window).on("resize", resizeDialogEquip)
