@@ -3,7 +3,7 @@ import { RECORDSHEET, OPERATION } from "../model/const.js"
 import { editableSV } from "./setSERVICE.js"
 import { htmlProfile } from '../view/html.js'
 import { winHeight, radioHack, deepEqual } from "../util/util.js"
-import { saveService } from './savePreviouscellService.js'
+import { saveService } from './savePreviousCellService.js'
 
 let rowRecord = {},
   operated,

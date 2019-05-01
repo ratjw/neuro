@@ -532,15 +532,13 @@ td.pacs2 { background-image: url(pic/general/pacs2.png); }
 .w100 { width:100px !important; }
 .w110 { width:110px !important; }
 .w120 { width:120px !important; }
-.w140 { width:140px !important; }
+.w130 { width:130px !important; }
 .w150 { width:150px !important; }
-.w160 { width:160px !important; }
 .w170 { width:170px !important; }
 .w200 { width:200px !important; }
-.w215 { width:215px !important; }
 .w350 { width:350px !important; }
+.w400 { width:400px !important; }
 .w500 { width:500px !important; }
-.w540 { width:540px !important; }
 
 .monthbut { color:white !important; background-color: #00AAFF !important; }
 .yearbut { color:white !important; background-color: #0077BB !important; }

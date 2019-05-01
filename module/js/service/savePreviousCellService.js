@@ -73,7 +73,6 @@ export function saveService(pointed, column, newcontent) {
         reViewService()
       } else {
         let bookq = getBOOKrowByQN(SERVICE, qn)
-        pointed.innerHTML = viewRecord(bookq.profile)
         row.dataset.profile = bookq.profile
         coloring(row)
       }

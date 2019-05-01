@@ -6,8 +6,8 @@ import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEqu
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winHeight, radioHack, deepEqual } from "../util/util.js"
 import { viewEquipJSON } from "../view/viewEquip.js"
+import { Alert, winWidth, winHeight, radioHack, deepEqual } from "../util/util.js"
 
 const EQUIPITEMS = [
   "copay",
@@ -35,7 +35,6 @@ export function getEQUIP(pointing)
 {
   let row = pointing.closest('tr'),
     qn = row.dataset.qn,
-    height = winHeight(95),
     thisEquip = {
       oproomequip: row.dataset.oproom || "",
       casenumequip: row.dataset.casenum || "",
@@ -49,6 +48,13 @@ export function getEQUIP(pointing)
       diagnosisequip: row.dataset.diagnosis.split(' ').slice(0,6).join(' '),
       treatmentequip: row.dataset.treatment.split(' ').slice(0,6).join(' ')
     }
+
+  let resizeDialogEquip = () => {
+    $dialogEquip.dialog({
+      width: winWidth(95),
+      height: winHeight(95)
+    })
+  }
 
   if (!qn) { return }
 
@@ -64,13 +70,23 @@ export function getEQUIP(pointing)
     title: "เครื่องมือผ่าตัด",
     closeOnEscape: true,
     modal: true,
-    width: 700,
-    height: height > 1800 ? 1800 : height
+    width: 650,
+    height: winHeight(95),
+    clse: function() {
+      $(window).off("resize", resizeDialogEquip)
+    }
   })
 
   fillEquip($dialogEquip, JsonEquip)
 
   clearEditcell()
+    $dialogEquip.dialog({
+      width: winWidth(95),
+      height: winHeight(95)
+    })
+
+  //for resizing dialogs in landscape / portrait view
+  $(window).on("resize", resizeDialogEquip)
 }
 
 function fillEquip($dialogEquip, JsonEquip)
@@ -125,7 +141,6 @@ function showNonEditableEquip()
   $dialogEquip.dialog("option", "buttons", [
     {
       text: "ยกเลิกทุกรายการ",
-      style: "margin-right:450px",
       click: function () {
         if (confirm("ลบออกทั้งหมด")) {
           cancelAllEquip()
