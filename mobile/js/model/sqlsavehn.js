@@ -49,9 +49,16 @@ function sqlInsertHN(tableID, pointed, waiting, wanting)
     // store waitnum in row waitnum
     waitnum = calcWaitnum(opdate, row.previousElementSibling, row.nextElementSibling)
 
-  return `INSERT INTO book
+  return dob 
+  ? `INSERT INTO book
     (waitnum,opdate,hn,patient,dob,staffname,diagnosis,treatment,contact,editor)
     VALUES (${waitnum},'${opdate}','${hn}','${patient}','${dob}',
+    '${wanting.staffname || staffname}','${URIcomponent(wanting.diagnosis)}',
+    '${URIcomponent(wanting.treatment)}','${URIcomponent(wanting.contact)}',
+    '${USER}');`
+  : `INSERT INTO book
+    (waitnum,opdate,hn,patient,dob,staffname,diagnosis,treatment,contact,editor)
+    VALUES (${waitnum},'${opdate}','${hn}','${patient}',null,
     '${wanting.staffname || staffname}','${URIcomponent(wanting.diagnosis)}',
     '${URIcomponent(wanting.treatment)}','${URIcomponent(wanting.contact)}',
     '${USER}');`

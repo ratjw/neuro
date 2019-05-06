@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="css/css.css" rel="stylesheet">
+<link href="css/dialog.css" rel="stylesheet">
 <link href="css/menu.css" rel="stylesheet">
 <link href="css/jquery-ui.min.css" rel="stylesheet">
 
@@ -265,6 +266,7 @@
    <tr>
      <th rowspan="3" class="first">OPERATION</th>
      <th colspan="4">STAFF</th>
+     <th colspan="4">FELLOW</th>
      <th colspan="4">RESIDENT</th>
    </tr>
    <tr>
@@ -272,8 +274,12 @@
      <th colspan="2">MINOR</th>
      <th colspan="2">MAJOR</th>
      <th colspan="2">MINOR</th>
+     <th colspan="2">MAJOR</th>
+     <th colspan="2">MINOR</th>
    </tr>
    <tr>
+     <th class="elect">Elect</th><th class="emer">Emer</th>
+     <th class="elect">Elect</th><th class="emer">Emer</th>
      <th class="elect">Elect</th><th class="emer">Emer</th>
      <th class="elect">Elect</th><th class="emer">Emer</th>
      <th class="elect">Elect</th><th class="emer">Emer</th>
@@ -283,54 +289,76 @@
   <tbody>
    <tr>
      <td>Brain tumor</td>
-     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
    <tr>
      <td>Brain Vascular</td>
-     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
    <tr>
      <td>CSF related</td>
-     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
    <tr>
      <td>Trauma</td>
-     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
    <tr>
      <td>Spine++</td>
-     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
    <tr>
      <td><b>etc.</b>
-    <small>(Lesionectomy, Tracheostomy, MVD, Change Batt., Sural n. Bx)</small>
-   </td>
-     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
-   </tr>
-   <tr class="notcount">
-   <th colspan="9">
-    Non-surgical <small>(not included in total operation)</small>
-   </th>
-   </tr>
-  <tr class="notcount nonsurgical">
-     <td>Radiosurgery</td>
-     <td></td>
-   </tr>
-   <tr class="notcount nonsurgical">
-     <td>Endovascular</td>
-     <td></td>
-   </tr>
-   <tr class="notcount nonsurgical">
-     <td><small>Not Operation, Not RS, Not Endovascular</small></td>
-     <td></td>
+      <small>
+       (Lesionectomy, Tracheostomy, MVD, Change Batt, N. Bx)
+      </small>
+     </td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
    <tr id="Total" class="notcount">
      <td>Total Operation</td>
-     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
    <tr id="Grand" class="notcount">
      <td>Grand Total</td>
-     <td colspan="2"></td><td colspan="2"></td><td colspan="2"></td><td colspan="2">
+     <td colspan="2"></td><td colspan="2"></td>
+     <td colspan="2"></td><td colspan="2"></td>
+     <td colspan="2"></td><td colspan="2"></td>
+   </tr>
+   <tr>
+     <th colspan="9">Non-surgical</th>
+   </tr>
+   <tr>
+     <th rowspan="2" class="first">TREATMENT</th>
+     <th colspan="4">Staff Neuro</th>
+     <th colspan="4">Staff Radio</th>
+     <th colspan="4">Fellow Neuro</th>
+     <th colspan="4">Fellow Radio</th>
+   </tr>
+   <tr>
+     <th class="elect">Elect</th><th class="emer">Emer</th>
+     <th class="elect">Elect</th><th class="emer">Emer</th>
+     <th class="elect">Elect</th><th class="emer">Emer</th>
+     <th class="elect">Elect</th><th class="emer">Emer</th>
+   </tr>
+   <tr class="notcount nonsurgical">
+     <td>Radiosurgery</td>
+     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+   </tr>
+   <tr class="notcount nonsurgical">
+     <td>Endovascular</td>
+     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+   </tr>
+   <tr class="notcount nonsurgical">
+     <td><small>Not Operation, Not RS, Not Endovascular</small></td>
+     <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
   </tbody>
  </table>
@@ -422,16 +450,16 @@
  <table id="alltbl">
   <thead>
    <tr>
-  <th>Date</th>
-  <th>Staff</th>
-  <th>HN</th>
-  <th>Patient</th>
-  <th>Diagnosis</th>
-  <th>Treatment</th>
-  <th>Equipment</th>
-  <th>Admission Status</th>
-  <th>Final Status</th>
-  <th>Contact</th>
+    <th>Date</th>
+    <th>Staff</th>
+    <th>HN</th>
+    <th>Patient</th>
+    <th>Diagnosis</th>
+    <th>Treatment</th>
+    <th>Equipment</th>
+    <th>Admission Status</th>
+    <th>Final Status</th>
+    <th>Contact</th>
    </tr>
   </thead>
   <tbody>

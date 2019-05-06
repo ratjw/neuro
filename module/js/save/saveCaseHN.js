@@ -32,9 +32,6 @@ let  wanting = {...waiting},
     $moveto = $("#moveto").next(),
     tblcells = $("#tblcells tr").html()
 
-  // disregard if it's staffoncall
-  if (/(<([^>]+)>)/i.test(staffname)) { staffname = "" }
-
   // May have other columns before, thus has some values already
   wanting.opdate = opdate
   wanting.patient = patient

@@ -90,16 +90,22 @@ export function htmlProfile(profile)
 
     if (type === "br") {
 			record += `<br>`
-    } else if (type === "hr") {
-			record += `<hr>`
+     } else if (type === "button") {
+			record += `<button class="${width}" name="${name}">${label}</button>`
+   } else if (type === "hr") {
+			record += `<hr class="${width}">`
     } else if (type === "number") {
 			record += `<label>
 				<span>${label}</span>
 				<input class="w${width}" type="${type}" name="${name}" value="" min="${min}" max="${max}"></label>`
+    } else if (type === "divbegin") {
+			record += `<div id="${name}"><span>${label}</span><br></div>`
+    } else if (type === "divend") {
+      record += `</div>`
+    } else if (type === "span") {
+			record += `<span class="w${width}">${label}</span>`
     } else if (type === "button") {
-			record += `<label>
-				<span>${label}</span>
-        <input class="w${width}" type="${type}" name="${name}" value=""></label>`
+			record += `<input class="w${width}" type="${type}" name="${name}" value="">`
 		} else {
 			record += `<label>
 				<input class="w${width}" type="${type}" name="${name}" value="${label}">

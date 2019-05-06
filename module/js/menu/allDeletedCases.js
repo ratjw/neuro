@@ -16,7 +16,7 @@ export function allDeletedCases()
   }).catch(error => {})
 }
 
-export function toUndelete(thisdate, deleted) 
+export function toUndelete(thisdate) 
 {
   reposition($("#undelete"), "left center", "left center", thisdate)
 

@@ -15,7 +15,17 @@ export function viewRecord(profile)
     } else if (key === "operated") {
       profileJSON[key].forEach(e => {
         let op = Object.values(e).map(e => e).filter(e => e)
-        if (op.length) { profiles.push(`op(${op.join(', ')})`) }
+        if (op.length) { profiles.push(`Op(${op.join(', ')})`) }
+      })
+    } else if (key === "radiosurg") {
+      profileJSON[key].forEach(e => {
+        let op = Object.values(e).map(e => e).filter(e => e)
+        if (op.length) { profiles.push(`RS(${op.join(', ')})`) }
+      })
+    } else if (key === "endovasc") {
+      profileJSON[key].forEach(e => {
+        let op = Object.values(e).map(e => e).filter(e => e)
+        if (op.length) { profiles.push(`Endo(${op.join(', ')})`) }
       })
     } else {
       profiles.push(val)

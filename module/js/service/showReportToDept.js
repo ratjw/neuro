@@ -9,28 +9,33 @@ const ROWREPORT = {
   "Trauma": 6,
   "Spine": 7,
   "etc": 8,
-  "Radiosurgery": 10,
-  "Endovascular": 11,
-  "NotDone": 12
+  "Radiosurgery": 14,
+  "Endovascular": 15,
+  "NotDone": 16
 }
 const COLUMNREPORT = {
   "Staff": 1,
-  "Resident": 5,
+  "Fellow": 5,
+  "Resident": 9,
   "Major": 0,
   "Minor": 2,
+  "Staff Neuro": 1,
+  "Staff Radio": 3,
+  "Fellow Neuro": 5,
+  "Fellow Radio": 7,
   "Elective": 0,
   "Emergency": 1
 }
 
 export function showReportToDept(title)
 {
-  let sumColumn = [0, 0, 0, 0, 0, 0, 0, 0]
+  let sumColumn = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
   $("#dialogReview").dialog({
     title: title,
     closeOnEscape: true,
     modal: true,
-    width: 550,
+    width: 700,
     buttons: [{
       text: "Export to Excel",
       click: function() {
@@ -55,6 +60,8 @@ export function showReportToDept(title)
 
     countAdmitCase(e, profile.admitted)
     if (profile.operated) { countOpCase(profile.operated) }
+    if (profile.radiosurg) { countRadioCase(profile.radiosurg) }
+    if (profile.endovasc) { countEndoCase(profile.endovasc) }
 
     if (e.discharge) { document.querySelector('#Discharge').innerHTML++ }
     if (profile.infection) { document.querySelector('#Infection').innerHTML++ }
@@ -63,7 +70,11 @@ export function showReportToDept(title)
 
     if (profile.radiosurgery) { countNonOpCase("Radiosurgery") }
     if (profile.endovascular) { countNonOpCase("Endovascular") }
-    if (!profile.operated && !profile.radiosurgery && !profile.endovascular) { countNonOpCase("NotDone") }
+    if (!profile.operated
+     && !profile.radiosurgery
+     && !profile.endovascular) {
+       countNonOpCase("NotDone")
+    }
   })
 
   $("#reviewtbl tr:not('th, .notcount')").each(function(i) {
@@ -82,11 +93,11 @@ export function showReportToDept(title)
 
 function countAdmitCase(e, admitted)
 {
-  if (e.admit) {
-    document.querySelector('#Admission').innerHTML++
-  }
+  let admit = document.querySelector('#Admission')
+
+  admit.innerHTML = Number(admit.innerHTML) + Number(admitted)
+
   while (admitted > 1) {
-    document.querySelector('#Admission').innerHTML++
     document.querySelector('#Readmission').innerHTML++
     admitted--
   }
@@ -104,13 +115,35 @@ function countOpCase(operated)
   }
 
   operated.forEach(e => {
-    let doneby = e.doneby ? e.doneby : "Staff",
-      scale = e.scale ? e.scale : "Major",
-      manner = e.manner ? e.manner : "Elective",
-      row = ROWREPORT[e.disease],
-      column = COLUMNREPORT[doneby]
-             + COLUMNREPORT[scale]
-             + COLUMNREPORT[manner]
+    let row = ROWREPORT[e.disease],
+      column = COLUMNREPORT[e.doneby]
+             + COLUMNREPORT[e.scale]
+             + COLUMNREPORT[e.manner]
+
+    if (row && column) {
+      $("#reviewtbl tr")[row].cells[column].innerHTML++
+    }
+  })
+}
+
+function countRadioCase(radiosurg)
+{
+  radiosurg.forEach(e => {
+    let row = ROWREPORT["Radiosurgery"],
+      column = COLUMNREPORT[e.radiodoneby]
+
+    if (row && column) {
+      $("#reviewtbl tr")[row].cells[column].innerHTML++
+    }
+  })
+}
+
+function countEndoCase(endovasc)
+{
+  endovasc.forEach(e => {
+    let row = ROWREPORT["Endovascular"],
+      column = COLUMNREPORT[e.endodoneby]
+             + COLUMNREPORT[e.endomanner]
 
     if (row && column) {
       $("#reviewtbl tr")[row].cells[column].innerHTML++

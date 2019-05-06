@@ -74,7 +74,7 @@ require_once "book.php";
 								END,
 					hn = '$hn', 
 					patient = '$initial_name$first_name $last_name',
-					dob = CASE WHEN $dob <> '' THEN '$dob' ELSE dob END,
+					dob = CASE WHEN $dob IS NOT NULL THEN '$dob' ELSE dob END,
 					gender = '$gender', 
 					diagnosis = CASE WHEN diagnosis = ''
 									 THEN '$diagnosis'
@@ -90,7 +90,7 @@ require_once "book.php";
 								END,
 					editor = '$editor' 
 				WHERE qn = $qn;";
-	} else {
+	} else if ($dob) {
 		//new row, insert waitnum, opdate and others if any
 		$sql = "INSERT INTO book (
 					waitnum, 
@@ -111,6 +111,32 @@ require_once "book.php";
 					'$hn', 
 					'$initial_name$first_name $last_name', 
 					'$dob', 
+					'$gender', 
+					'$diagnosis',
+					'$treatment',
+					'$contact',
+					'$editor');";
+	} else {
+		//new row, insert waitnum, opdate and others if any
+		$sql = "INSERT INTO book (
+					waitnum, 
+					opdate, 
+					staffname, 
+					hn, 
+					patient, 
+					dob, 
+					gender,
+					diagnosis,
+					treatment,
+					contact,
+					editor) 
+				VALUES (
+					$waitnum, 
+					'$opdate', 
+					'$staffname', 
+					'$hn', 
+					'$initial_name$first_name $last_name', 
+					 null, 
 					'$gender', 
 					'$diagnosis',
 					'$treatment',

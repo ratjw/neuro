@@ -1,13 +1,18 @@
 
-import { RECORDSHEET, OPERATION } from "../model/const.js"
+import { RECORDSHEET, OPERATION, RADIOSURG, ENDOVASC } from "../model/const.js"
 import { editableSV } from "./setSERVICE.js"
 import { htmlProfile } from '../view/html.js'
 import { winHeight, radioHack, deepEqual } from "../util/util.js"
 import { saveService } from './savePreviousCellService.js'
 
-let rowRecord = {},
+let $dialogRecord = $('#dialogRecord'),
+  maxHeight = winHeight(90),
+  rowRecord = {},
   operated,
+  radiosurg,
+  endovasc,
   pointed
+  
 
 // e.name === column in Mysql
 // e.value === value of this item
@@ -19,14 +24,14 @@ export function showRecord(pointing)
     patient = row.dataset.patient,
     qn = row.dataset.qn,
     profile = JSON.parse(row.dataset.profile),
-    admitted = profile && profile.admitted,
-    $dialogRecord = $('#dialogRecord'),
-    maxHeight = winHeight(90)
+    admitted = profile && profile.admitted
 
   if (!qn) { return }
 
   rowRecord = profile
-  operated = profile && [...profile.operated] || []
+  operated = profile && profile.operated && [...profile.operated] || []
+  radiosurg = profile && profile.radiosurg && [...profile.radiosurg] || []
+  endovasc = profile && profile.endovasc && [...profile.endovasc] || []
   pointed = pointing
 
   $dialogRecord.html(htmlProfile(RECORDSHEET))
@@ -44,11 +49,9 @@ export function showRecord(pointing)
     }
   })
 
-  let i = 0
-  while (i < operated.length) {
-    $dialogRecord.append(divOperation(i))
-    i++
-  }
+  appendProcedure('operated', OPERATION, operated)
+  appendProcedure('radiosurg', RADIOSURG, radiosurg)
+  appendProcedure('endovasc', ENDOVASC, endovasc)
 
   $dialogRecord.dialog({ height: 'auto' })
 
@@ -56,30 +59,9 @@ export function showRecord(pointing)
     title: `${hn} ${patient}`,
     closeOnEscape: true,
     modal: true,
-    width: 340,
-    height: ($dialogRecord.height() > maxHeight) ? height : 'auto',
+    width: 400,
+    height: ($dialogRecord.height() > maxHeight) ? maxHeight : 'auto',
     buttons: [
-      {
-        text: "Add Op",
-        click: function () {
-          let op = getLastOp()
-          // add another element to operated and reposition the dialog
-          if (op === operated.length) {
-            $dialogRecord.append(divOperation(op))
-            resizeScroll($dialogRecord, maxHeight)
-          }
-        }
-      },
-      {
-        text: "Delete Op",
-        click: function () {
-          $dialogRecord.find('div').last().remove()
-          resizeScroll($dialogRecord, maxHeight)
-          if (operated.length > $dialogRecord.find('div').length) {
-            operated.pop()
-          }
-        }
-      },
       {
         text: "Save",
         click: function () {
@@ -91,33 +73,75 @@ export function showRecord(pointing)
   })
 
   radioHack('#dialogRecord')
+  clickAddDel()
 }
 
-function resizeScroll($dialogRecord, maxHeight)
+function clickAddDel()
+{
+  $dialogRecord.find('button').off('click').on('click', function() {
+    if (this.innerHTML === '+') {
+      if (/Operation/.test(this.name)) {
+        addProcedure(divProcedure, '#operated', OPERATION, operated)
+      } else if (/Radiosurgery/.test(this.name)) {
+        addProcedure(divProcedure, '#radiosurg', RADIOSURG, radiosurg)
+      } else if (/Endovascular/.test(this.name)) {
+        addProcedure(divProcedure, '#endovasc', ENDOVASC, endovasc)
+      }
+    } else if (this.innerHTML === '-') {
+      delProcedure(this, )
+    }
+  }) 
+}
+
+// add a procedure, reposition the dialog, and renew click button
+function addProcedure(func, id, proc, item) {
+  let i = $(id).find('div:last input')[0].name.replace(/\D/g, '')
+
+  $(id).append(func(proc, item, ++i))
+  resizeScroll()
+  clickAddDel()
+}
+
+function delProcedure(that, ) {
+  that.closest('div').remove()
+  resizeScroll()
+  clickAddDel()
+}
+
+function resizeScroll()
 {
   $dialogRecord.dialog({ height: 'auto' })
-  $dialogRecord.dialog({ height: ($dialogRecord.height() > maxHeight) ? height : 'auto' })
+  $dialogRecord.dialog({
+    height: ($dialogRecord.height() > maxHeight) ? maxHeight : 'auto'
+  })
   $dialogRecord.scrollTop($dialogRecord.height())
 }
 
+function appendProcedure(id, proc, item)
+{
+  let i = 0,
+    el = document.getElementById(id)
+
+  while (i < item.length) {
+    el.appendChild(divProcedure(proc, item, i))
+    i++
+  }
+}
+
 // add op to e.name to make it unique
-function divOperation(op)
+function divProcedure(procedure, item, i)
 {
   let div = document.createElement("div")
-  div.innerHTML = htmlProfile(OPERATION)
+  div.innerHTML = htmlProfile(procedure)
 
   let inputs = div.querySelectorAll("input"),
     inputname = ''
 
   Array.from(inputs).forEach(e => {
     inputname = e.name
-    e.name = e.name + op
-    if (inputname === "op") {
-      e.value = Number(op) + 1
-    } else {
-      if (operated && operated[op]) {
-        e.checked = (e.value === (operated[op][inputname]))
-      }
+    e.name = e.name + i
+    if (item && item[i]) {
+      e.checked = (e.value === (item[i][inputname]))
     }
   })
 
@@ -127,7 +151,9 @@ function divOperation(op)
 function saveRecord()
 {
   let recordJSON = {
-      operated: []
+      operated: [],
+      radiosurg: [],
+      endovasc: []
     }
 
   $('#dialogRecord input:not(#dialogRecord div input)').each(function() {
@@ -142,7 +168,7 @@ function saveRecord()
     }
   })
 
-  $('#dialogRecord div').each((i, div) => {
+  $('#operated div').each((i, div) => {
     if (!recordJSON.operated[i]) { recordJSON.operated[i] = {} }
     div.querySelectorAll('input').forEach(e => {
       if ((e.type === 'button') || e.checked) {
@@ -151,6 +177,27 @@ function saveRecord()
     })
   })
 
+  $('#radiosurg div').each((i, div) => {
+    if (!recordJSON.radiosurg[i]) { recordJSON.radiosurg[i] = {} }
+    div.querySelectorAll('input').forEach(e => {
+      if ((e.type === 'button') || e.checked) {
+        recordJSON.radiosurg[i][e.name.replace(i, '')] = e.value
+      }
+    })
+  })
+
+  $('#endovasc div').each((i, div) => {
+    if (!recordJSON.endovasc[i]) { recordJSON.endovasc[i] = {} }
+    div.querySelectorAll('input').forEach(e => {
+      if ((e.type === 'button') || e.checked) {
+        recordJSON.endovasc[i][e.name.replace(i, '')] = e.value
+      }
+    })
+  })
+
+  if (!recordJSON.radiosurg.length) { delete recordJSON.radiosurg }
+  if (!recordJSON.endovasc.length) { delete recordJSON.endovasc }
+
   if (deepEqual(recordJSON, rowRecord)) { return }
 
   saveService(pointed, "profile", JSON.stringify(recordJSON))
@@ -158,7 +205,7 @@ function saveRecord()
 
 function getLastOp()
 {
-  let inputop = document.querySelectorAll("#dialogRecord input")
+  let inputop = document.querySelectorAll("#operated input")
 
   inputop = Array.from(inputop).filter(e => /op/.test(e.name))
 

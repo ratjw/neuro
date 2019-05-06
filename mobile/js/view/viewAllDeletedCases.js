@@ -6,7 +6,7 @@ import { toUndelete } from "../menu/allDeletedCases.js"
 import { setRowData } from "../model/rowdata.js"
 
 // Make dialog box dialogAllDeleted containing historytbl
-export function viewAllDeletedCases(deleted) {
+export function viewAllDeletedCases(deletedCases) {
   let $deletedtbl = $('#deletedtbl'),
     $deletedtr = $('#deletedcells tr')
 
@@ -14,7 +14,7 @@ export function viewAllDeletedCases(deleted) {
   $deletedtbl.find('tr').slice(1).remove()
 
   // display the first 20
-  $.each( deleted, function(i) {
+  $.each( deletedCases, function(i) {
     $deletedtr.clone()
       .appendTo($deletedtbl.find('tbody'))
         .filldataAllDeleted(this)
@@ -49,7 +49,7 @@ export function viewAllDeletedCases(deleted) {
 
   // display the rest
   setTimeout(function() {
-    $.each( deleted, function(i) {
+    $.each( deletedCases, function(i) {
       if (i < 21) return
       $deletedtr.clone()
         .appendTo($deletedtbl.find('tbody'))
@@ -63,7 +63,7 @@ export function viewAllDeletedCases(deleted) {
     $undelete.hide()
     $undelete.off("click").on("click", () => $undelete.hide() )
     $(".toUndelete").off("click").on("click", function () {
-      toUndelete(this, deleted)
+      toUndelete(this)
     })
   }, 100)
 }

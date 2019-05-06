@@ -2,44 +2,22 @@
 include "connect.php";
 require_once "book.php";
 
-	// start.js (start)
-	// xstart.js (start)
 	if (isset($_POST['start'])) {
 		echo start($mysqli);
 	}
-	// xstart.js (getUpdate)
 	else if (isset($_POST['nosqlReturnbook']))
 	{
 		echo json_encode(book($mysqli));
 	}
-
-	// click.js (saveRoomTime 2 ways, saveContentQN, saveContentNoQN 2 ways)
-	// equip.js (Checklistequip)
-	// menu.js (moveCase, deleteCase)
-	// sortable.js (sortable)
 	else if (isset($_POST['sqlReturnbook'])) {
 		echo returnbook($mysqli, $_POST['sqlReturnbook']);
 	}
-
-	// service.js (saveScontent)
-	// start.js (getUpdate)
-	// This also gets BOOK
 	else if (isset($_POST['sqlReturnService'])) {
 		echo returnService($mysqli, $_POST['sqlReturnService']);
 	}
-
-	// click.js (changeOncall)
-	// equip.js (getEditedBy)
-	// history.js (editHistory, deletedCases, allCases, sqlFind)
-	// service.js (getServiceOneMonth)
-	// start.js (updating)
-	// xequip.js (getEditedBy)
-	// xstart.js (updating)
 	else if (isset($_POST['sqlReturnData'])) {
 		echo returnData($mysqli, $_POST['sqlReturnData']);
 	}
-
-	// start.js (doAddStaff)
 	else if (isset($_POST['sqlReturnStaff'])) {
 		echo returnStaff($mysqli, $_POST['sqlReturnStaff']);
 	}
@@ -114,9 +92,10 @@ function multiquery($mysqli, $sql)
 {
 	$rowi = array();
 	$data = array();
-	if ($mysqli->multi_query(urldecode($sql))) {
+	if ($mysqli->multi_query($sql)) {
 		do {
-			// This will be skipped when no result, but no error (success INSERT, UPDATE)
+			// This will be skipped when no result, but no error
+      // (success INSERT, UPDATE)
 			if ($result = $mysqli->store_result()) {
 				while ($rowi = $result->fetch_assoc()) {
 					$data[] = $rowi;

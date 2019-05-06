@@ -266,7 +266,7 @@ EQUIPSHEET = [
   ["br", "", "", "", ""],
   ["br", "", "", "", ""],
   ["divbegin", "", "", "", ""],
-  ["span", "350", "", "", ""],
+  ["span", "250", "", "", ""],
   ["span", "70", "", " Edited by ", ""],
   ["span", "", "", "", "editedby"],
   ["divend", "", "", "", ""],
@@ -292,42 +292,68 @@ RECORDDATA = {
 // [type, width, name, label, min, max]
 RECORDSHEET = [
   ["number", "30", "admitted", "Admission", "0", "9"],
-  ["hr", "", "", "", ""],
-  ["checkbox", "100", "radiosurgery", "Radiosurgery"],
-  ["checkbox", "100", "endovascular", "Endovascular"],
-  ["hr", "", "", "", ""],
-  ["checkbox", "70", "infection", "Infection"],
-  ["checkbox", "70", "morbid", "Morbidity"],
-  ["checkbox", "50", "dead", "Dead"]
+  ["hr", "solid", "", ""],
+  ["button", "10 floatright", "addOperation", "+"],
+  ["divbegin", "", "operated", "Operation"],
+  ["divend", "", "", ""],
+  ["hr", "solid", "", ""],
+  ["button", "10 floatright", "addRadiosurgery", "+"],
+  ["divbegin", "", "radiosurg", "Radiosurgery"],
+  ["divend", "", "", ""],
+  ["hr", "solid", "", ""],
+  ["button", "10 floatright", "addEndovascular", "+"],
+  ["divbegin", "", "endovasc", "Endovascular"],
+  ["divend", "", "", ""],
+  ["hr", "solid", "", ""],
+  ["checkbox", "100", "infection", "Infection"],
+  ["checkbox", "100", "morbid", "Morbidity"],
+  ["checkbox", "100", "dead", "Dead"]
 ],
 OPERATION = [
-  ["hr", "", "", ""],
-  ["button", "10", "op", "Op"],
+  ["hr", "dashed", "", ""],
+  ["button", "10 floatright", "delproc", "-"],
+  ["radio", "100", "doneby", "Staff"],
+  ["radio", "100", "doneby", "Fellow"],
+  ["radio", "100", "doneby", "Resident"],
   ["br", "", "", ""],
-  ["radio", "70", "doneby", "Staff"],
-  ["radio", "70", "doneby", "Resident"],
+  ["radio", "100", "manner", "Elective"],
+  ["radio", "100", "manner", "Emergency"],
   ["br", "", "", ""],
-  ["radio", "70", "manner", "Elective"],
-  ["radio", "80", "manner", "Emergency"],
+  ["radio", "100", "scale", "Major"],
+  ["radio", "100", "scale", "Minor"],
   ["br", "", "", ""],
-  ["radio", "70", "scale", "Major"],
-  ["radio", "70", "scale", "Minor"],
+  ["radio", "100", "disease", "Brain Tumor"],
+  ["radio", "100", "disease", "Trauma"],
+  ["radio", "100", "disease", "Spine"],
   ["br", "", "", ""],
-  ["radio", "110", "disease", "Brain Tumor"],
-  ["radio", "70", "disease", "Trauma"],
-  ["radio", "70", "disease", "Spine"],
-  ["br", "", "", ""],
-  ["radio", "110", "disease", "Brain Vascular"],
+  ["radio", "100", "disease", "Brain Vascular"],
   ["radio", "100", "disease", "CSF related"],
-  ["radio", "40", "disease", "etc"]
+  ["radio", "100", "disease", "etc"]
+],
+RADIOSURG = [
+  ["hr", "dashed", "", ""],
+  ["button", "10 floatright", "delproc", "-"],
+  ["radio", "100", "radiodoneby", "Staff Neuro"],
+  ["radio", "100", "radiodoneby", "Staff Radio"]
+],
+ENDOVASC = [
+  ["hr", "dashed", "", "", ""],
+  ["button", "10 floatright", "delproc", "-"],
+  ["radio", "100", "endodoneby", "Staff Neuro"],
+  ["radio", "100", "endodoneby", "Fellow Neuro"],
+  ["radio", "100", "endodoneby", "Staff Radio"],
+  ["br", "", "", ""],
+  ["radio", "100", "endomanner", "Elective"],
+  ["radio", "100", "endomanner", "Emergency"]
 ],
 
-//===========================================================================================
-// Keyword constants for program to guess the disease in Service Review from disease and treatment
+//=============================================================================
+// Keyword constants to guess the disease using disease and treatment
 
 BRAINDX = [
-  /\bbrain\b/i, /basal ganglion/i, /basal.*gg/i, /bgg/i, /cavernous/i, /cerebell/i, 
-  /cranio/i, /\bCNS\b/i, /convexity/i, /\bCPA?\b/i, /cliv[aou]/i,
+  /\bbrain\b/i, /basal ganglion/i, /basal.*gg/i, /bgg/i,
+  /cavernous/i, /cerebell/i, /cranio/i,
+  /\bCNS\b/i, /convexity/i, /\bCPA?\b/i, /cliv[aou]/i,
   /facial/i, /front/i, /fal[cx]/i, /\bF\-?P\b/i, /jugular/i,
   /pariet/i, /planum/i, /pitui/i, /pineal/i, /petro/i, 
   /occipit/i, /sella/i, /sphenoid/i, /sagittal/i, /\bSSS\b/i,
@@ -336,13 +362,14 @@ BRAINDX = [
   /tuberculum/i, /vestibul/i
 ],
 BRAINTUMORDX = [
-  /^((?!cavernoma|hematoma|osteo|zyg).)*oma/i, /\bCA\b/i, /CPA/i, /crani[oe]/i,
-  /Cushing/i, /cyst\b/i,
+  /^((?!cavernoma|hematoma|osteo|zyg).)*oma/i, /\bCA\b/i, /CPA/i,
+  /crani[oe]/i, /Cushing/i, /cyst\b/i,
   /DNET/i, /GBM/i, /lesion/i, /mass/i, /metas/i, /\bNFP?A\b/i,
   /\bPA\b/i, /pituitary apoplexy/i, /tumou?r/i
 ],
 BRAINVASCULARDX = [
-  /aneurysm/i, /AVM/i, /AVF/i, /basal ganglion|\bbg|cerebellar hemorrhage/i,
+  /aneurysm/i, /AVM/i, /AVF/i,
+  /basal ganglion|\bbg|cerebellar hemorrhage/i,
   /cavernoma/i, /emboli/i, /ha?ematoma/i, /ha?emorrh/i, /HT?ICH/i,
   /\bICH\b/i, /infarct/i, /ischemi/i, /(\bICA\b|MCA|VBA).*stenosis/i,
   /\bM1\b|\bM2\b|MCA/i, /moya moya/i, /\bSAH\b/i, /stroke/i,
@@ -362,7 +389,9 @@ SPINEDX = [
   /degenerat/i, /dislocat/i,
   /HNP/i, /lamin[eo]/i, /listhesis/i, /lumb[ao]/i,/lesion/i,
   /mass/i, /metas/i,  /myel/i,
-  /odontoid/i, /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i, /thora/i
+  /odontoid/i,
+  /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i,
+  /thora/i
 ],
 ETCDX = [
   /abscess/i, /chiari/i, /convulsi/i, /\bCTS\b/i, /cubital/i,
@@ -373,7 +402,8 @@ ETCDX = [
 ],
 
 BRAINTUMORDXNO = [
-  /aneurysm/i, /AVM/i, /AVF/i, /basal ganglion|\bbg|cerebellar hemorrhage/i,
+  /aneurysm/i, /AVM/i, /AVF/i,
+  /basal ganglion|\bbg|cerebellar hemorrhage/i,
   /cavernoma/i, /emboli/i, /ha?ematoma/i, /HT?ICH/i,
   /\bICH\b/i, /infarct/i, /ischemi/i, /(ICA|MCA|VBA).*stenosis/i,
   /M1|M2|MCA occlusion/i, /moya moya/i, /\bSAH\b/i, /stroke/i,
@@ -386,10 +416,13 @@ BRAINTUMORDXNO = [
   /Fx|fracture/i, /lacerat/i,
   /\bC?SDH\b/i, /trauma/i,
 
-  /cervical/i, /cord/i, /\bCSM\b/i, /^((?!mri|mri|MRI?).)*[CTLS] ?[\d]/,
+  /cervical/i, /cord/i,
+  /\bCSM\b/i, /^((?!mri|mri|MRI?).)*[CTLS] ?[\d]/,
   /dislocat/i, /neck/i,
   /HNP/i, /lamin[eo]/i, /listhesis/i, /lumb[ao]/i, /myel/i,
-  /odontoid/i, /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i, /thora/i,
+  /odontoid/i,
+  /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i,
+  /thora/i,
 
   /abscess/i, /chiari/i, /\bCTS\b/i, /cubital/i,
   /dysplasia/i, /hemifacial/i,
@@ -411,10 +444,13 @@ BRAINVASCULARDXNO = [
   /Fx|fracture/i, /lacerat/i,
   /\bC?SDH\b/i, /subdural ha?ematoma/i, /trauma/i,
 
-  /cervical/i, /cord/i, /\bCSM\b/i, /^((?!mri|mri|MRI?).)*[CTLS] ?[\d]/,
+  /cervical/i, /cord/i,
+  /\bCSM\b/i, /^((?!mri|mri|MRI?).)*[CTLS] ?[\d]/,
   /degenerat/i, /dislocat/i,
   /HNP/i, /lamin[eo]/i, /listhesis/i, /lumb[ao]/i, /myel/i,
-  /odontoid/i, /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i, /thora/i,
+  /odontoid/i,
+  /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i,
+  /thora/i,
 
   /abscess/i, /chiari/i, /convulsi/i, /\bCTS\b/i, /cubital/i,
   /dysplasia/i, /epilepsy/i, /hemifacial/i,
@@ -433,7 +469,8 @@ CSFDXNO = [
   /cord/i, /\bCSM\b/i,
   /degenerat/i, /dislocat/i,
   /HNP/i, /listhesis/i,
-  /odontoid/i, /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i,
+  /odontoid/i,
+  /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i,
 
   /abscess/i, /\bCTS\b/i, /cubital/i,
   /dysplasia/i, /hemifacial/i,
@@ -496,12 +533,16 @@ ETCDXNO = [
   /assault/i, /\bEDH\b/i, /contusion/i, /injury/i,
 
   /HNP/i, /lamin[eo]/i, /listhesis/i, /lumb[ao]/i, /myel/i,
-  /odontoid/i, /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i, /thora/i
+  /odontoid/i,
+  /sacr[ao]/i, /scoliosis/i, /spin[aeo]/i, /spondylo/i,
+  /thora/i
 ],
 
 BRAINTUMORRX = [
-  /approa/i, /biopsy/i, /\bbx\b/i, /crani[oe]c?tomy/i, /\bETS\b/i, /trans.*remov/i,
-  /TSP/i, /TSS/i, /transnasal/i, /transsphenoid/i, /transventric/i, /tumou?r/i
+  /approa/i, /biopsy/i, /\bbx\b/i,
+  /crani[oe]c?tomy/i, /\bETS\b/i,
+  /trans.*remov/i, /TSP/i, /TSS/i, /transnasal/i,
+  /transsphenoid/i, /transventric/i, /tumou?r/i
 ],
 BRAINVASCULARRX = [
   /anast/i, /bypass/i, /(clot|hematoma).*(remov|irrigat|evacuat)/i,
@@ -515,7 +556,8 @@ CSFRX = [
   /(\bV\-?P|\bL\-?P|periton|subgaleal).*shunt/i,
 ],
 TRAUMARX = [
-  /debridement/i, /(clot|hematoma).*(remov|irrigat|evacuat)/i, /trauma/i
+  /debridement/i, /(clot|hematoma).*(remov|irrigat|evacuat)/i,
+  /trauma/i
 ],
 SPINERX = [
   /ACDF/i, /ALIF/i, /biopsy/i, /\bbx\b/i,
@@ -673,10 +715,12 @@ ENDOVASCULAR = [
 ],
 
 KEYWORDS = {
-  "Brain Tumor": [ BRAINTUMORRX, BRAINTUMORRXNO, BRAINTUMORDX, BRAINTUMORDXNO ],
-  "Brain Vascular": [ BRAINVASCULARRX, BRAINVASCULARRXNO, BRAINVASCULARDX, BRAINVASCULARDXNO ],
-  "Trauma": [ TRAUMARX, TRAUMARXNO, TRAUMADX, TRAUMADXNO ],
-  "Spine": [ SPINERX, SPINERXNO, SPINEDX, SPINEDXNO.concat(BRAINDX) ],
-  "CSF related": [ CSFRX, CSFRXNO, CSFDX, CSFDXNO ],
-  "etc": [ ETCRX, ETCRXNO, ETCDX, ETCDXNO ]
+  "Brain Tumor": [BRAINTUMORRX, BRAINTUMORRXNO, BRAINTUMORDX, BRAINTUMORDXNO],
+  "Brain Vascular": [
+    BRAINVASCULARRX, BRAINVASCULARRXNO, BRAINVASCULARDX, BRAINVASCULARDXNO
+  ],
+  "Trauma": [TRAUMARX, TRAUMARXNO, TRAUMADX, TRAUMADXNO],
+  "Spine": [SPINERX, SPINERXNO, SPINEDX, SPINEDXNO.concat(BRAINDX)],
+  "CSF related": [CSFRX, CSFRXNO, CSFDX, CSFDXNO],
+  "etc": [ETCRX, ETCRXNO, ETCDX, ETCDXNO]
 }
