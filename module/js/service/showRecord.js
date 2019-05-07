@@ -39,11 +39,7 @@ export function showRecord(pointing)
   let inputs = $dialogRecord.find("input")
   Array.from(inputs).forEach(e => {
     if (e.name === "admitted") {
-      e.value = admitted
-                ? admitted
-                : row.dataset.admit
-                  ? 1
-                  : 0
+      e.value = admitted ? admitted : 0
     } else {
       e.checked = (e.value === (profile && profile[e.name]))
     }

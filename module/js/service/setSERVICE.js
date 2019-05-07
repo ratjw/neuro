@@ -22,8 +22,11 @@ export function seteditableSV(editable) { editableSV = editable }
 function calcSERVE(service)
 {
   $.each(service, function() {
-    let profile = JSON.parse(this.profile) || {},
-      operated = profile.operated
+    let profile = JSON.parse(this.profile) || {}
+
+    if (!profile.admitted && this.admit) {
+      profile["admitted"] = this.admit
+    }
 
     if (!profile.radiosurg && isMatched(RADIOSURGERY, this.treatment)) {
       profile["radiosurg"] = [{}]
@@ -34,7 +37,7 @@ function calcSERVE(service)
     }
 
     let opwhat = operationFor(this, profile)
-    if ((operated === undefined) && opwhat) {
+    if (!profile.operated && opwhat) {
       profile.operated = [{"disease": opwhat}]
     }
     if (!Object.keys(profile).length) { profile = null }
