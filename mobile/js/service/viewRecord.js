@@ -3,7 +3,8 @@
 export function viewRecord(profile)
 {
   let profileJSON = JSON.parse(profile),
-    profiles = []
+    profiles = [],
+    str = ''
 
   if (!profileJSON) { return "" }
 
@@ -14,18 +15,15 @@ export function viewRecord(profile)
       }
     } else if (key === "operated") {
       profileJSON[key].forEach(e => {
-        let op = Object.values(e).map(e => e).filter(e => e)
-        if (op.length) { profiles.push(`Op(${op.join(', ')})`) }
+        profiles.push(`Op(${procString(e)})`)
       })
     } else if (key === "radiosurg") {
       profileJSON[key].forEach(e => {
-        let op = Object.values(e).map(e => e).filter(e => e)
-        if (op.length) { profiles.push(`RS(${op.join(', ')})`) }
+        profiles.push(`RS(${procString(e)})`)
       })
     } else if (key === "endovasc") {
       profileJSON[key].forEach(e => {
-        let op = Object.values(e).map(e => e).filter(e => e)
-        if (op.length) { profiles.push(`Endo(${op.join(', ')})`) }
+        profiles.push(`Endo(${procString(e)})`)
       })
     } else {
       profiles.push(val)
@@ -33,4 +31,14 @@ export function viewRecord(profile)
   })
 
   return profiles.length ? profiles.join('; ') : ''
+}
+
+function procString(procedure)
+{
+  let str = '',
+    op = Object.values(procedure).map(e => e).filter(e => e)
+
+  if (op.length) { str = op.join(', ') }
+
+  return str
 }

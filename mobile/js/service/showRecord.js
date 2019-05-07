@@ -39,11 +39,7 @@ export function showRecord(pointing)
   let inputs = $dialogRecord.find("input")
   Array.from(inputs).forEach(e => {
     if (e.name === "admitted") {
-      e.value = admitted
-                ? admitted
-                : row.dataset.admit
-                  ? 1
-                  : 0
+      e.value = admitted ? admitted : 0
     } else {
       e.checked = (e.value === (profile && profile[e.name]))
     }
@@ -76,6 +72,17 @@ export function showRecord(pointing)
   clickAddDel()
 }
 
+function appendProcedure(id, proc, item)
+{
+  let i = 0,
+    el = document.getElementById(id)
+
+  while (i < item.length) {
+    el.appendChild(divProcedure(proc, item, i))
+    i++
+  }
+}
+
 function clickAddDel()
 {
   $dialogRecord.find('button').off('click').on('click', function() {
@@ -95,7 +102,12 @@ function clickAddDel()
 
 // add a procedure, reposition the dialog, and renew click button
 function addProcedure(func, id, proc, item) {
-  let i = $(id).find('div:last input')[0].name.replace(/\D/g, '')
+  let div = $(id).find('div'),
+    i = 0
+
+  if (div.length) {
+    i = div.last().find('input')[0].name.replace(/\D/g, '')
+  }
 
   $(id).append(func(proc, item, ++i))
   resizeScroll()
@@ -115,17 +127,6 @@ function resizeScroll()
     height: ($dialogRecord.height() > maxHeight) ? maxHeight : 'auto'
   })
   $dialogRecord.scrollTop($dialogRecord.height())
-}
-
-function appendProcedure(id, proc, item)
-{
-  let i = 0,
-    el = document.getElementById(id)
-
-  while (i < item.length) {
-    el.appendChild(divProcedure(proc, item, i))
-    i++
-  }
 }
 
 // add op to e.name to make it unique

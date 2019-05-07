@@ -91,15 +91,16 @@ export function showReportToDept(title)
   })
 }
 
-function countAdmitCase(e, admitted)
+function countAdmitCase(e, admits)
 {
-  let admit = document.querySelector('#Admission')
+  let admit = document.querySelector('#Admission'),
+    readmit = document.querySelector('#Readmission')
 
-  admit.innerHTML = Number(admit.innerHTML) + Number(admitted)
+  admit.innerHTML = Number(admit.innerHTML) + (admits ? Number(admits) : 0)
 
-  while (admitted > 1) {
-    document.querySelector('#Readmission').innerHTML++
-    admitted--
+  while (admits > 1) {
+    readmit.innerHTML++
+    admits--
   }
 }
 
