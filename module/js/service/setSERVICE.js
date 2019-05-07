@@ -25,20 +25,17 @@ function calcSERVE(service)
     let profile = JSON.parse(this.profile) || {},
       operated = profile.operated
 
-    if (!profile.radiosurgery && isMatched(RADIOSURGERY, this.treatment)) {
-      profile["radiosurgery"] = "Radiosurgery"
+    if (!profile.radiosurg && isMatched(RADIOSURGERY, this.treatment)) {
+      profile["radiosurg"] = [{}]
     }
 
-    if (!profile.endovascular && isMatched(ENDOVASCULAR, this.treatment)) {
-      profile["endovascular"] = "Endovascular"
+    if (!profile.endovasc && isMatched(ENDOVASCULAR, this.treatment)) {
+      profile["endovasc"] = [{}]
     }
 
     let opwhat = operationFor(this, profile)
     if ((operated === undefined) && opwhat) {
-      profile.operated = [{
-        "op": 1,
-        "disease": opwhat
-      }]
+      profile.operated = [{"disease": opwhat}]
     }
     if (!Object.keys(profile).length) { profile = null }
 
