@@ -25,7 +25,7 @@ function calcSERVE(service)
     let profile = JSON.parse(this.profile) || {}
 
     if (!profile.admitted && this.admit) {
-      profile["admitted"] = this.admit
+      profile["admitted"] = 1
     }
 
     if (!profile.radiosurg && isMatched(RADIOSURGERY, this.treatment)) {
