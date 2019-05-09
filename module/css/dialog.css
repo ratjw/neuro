@@ -334,6 +334,10 @@
   margin: 10px 50px 10px 10px;
 }
 
+#dialogRecord button {
+  border-radius: 25%;
+}
+
 #dialogHoliday table td {
   padding: 0 10px;
 }

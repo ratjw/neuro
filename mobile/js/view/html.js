@@ -90,9 +90,9 @@ export function htmlProfile(profile)
 
     if (type === "br") {
 			record += `<br>`
-     } else if (type === "button") {
+    } else if (type === "button") {
 			record += `<button class="${width}" name="${name}">${label}</button>`
-   } else if (type === "hr") {
+    } else if (type === "hr") {
 			record += `<hr class="${width}">`
     } else if (type === "number") {
 			record += `<label>
@@ -104,9 +104,7 @@ export function htmlProfile(profile)
       record += `</div>`
     } else if (type === "span") {
 			record += `<span class="w${width}">${label}</span>`
-    } else if (type === "button") {
-			record += `<input class="w${width}" type="${type}" name="${name}" value="">`
-		} else {
+		} else if (type === "checkbox" || type === "radio") {
 			record += `<label>
 				<input class="w${width}" type="${type}" name="${name}" value="${label}">
 				<span style="right:${width}px">${label.replace(" ", "&nbsp;")}</span></label>`

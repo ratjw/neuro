@@ -243,14 +243,15 @@ export function getLargestWaitnum(book, staffname)
 // hack for click to uncheck a radio input
 export function radioHack(container)
 {
-  $(container + ' label:has(input[type=radio])').on('mousedown', function(e) {
+  $(container + ' label:has(input[type=radio])').off('mousedown click')
+  .on('mousedown', function() {
     var radios = $(this).find('input[type=radio]')
     var wasChecked = radios.prop('checked')
 
     radios[0].turnOff = wasChecked
     radios.prop('checked', !wasChecked)
   })
-  .on('click', function(e) {
+  .on('click', function() {
     var radios = $(this).find('input[type=radio]')
     radios.prop('checked', !radios[0].turnOff)
   })

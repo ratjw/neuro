@@ -95,7 +95,7 @@ function clickAddDel()
         addProcedure(divProcedure, '#endovasc', ENDOVASC, endovasc)
       }
     } else if (this.innerHTML === '-') {
-      delProcedure(this, )
+      delProcedure(this)
     }
   }) 
 }
@@ -107,14 +107,16 @@ function addProcedure(func, id, proc, item) {
 
   if (div.length) {
     i = div.last().find('input')[0].name.replace(/\D/g, '')
+    i++
   }
 
-  $(id).append(func(proc, item, ++i))
+  $(id).append(func(proc, item, i))
   resizeScroll()
+  radioHack(id)
   clickAddDel()
 }
 
-function delProcedure(that, ) {
+function delProcedure(that) {
   that.closest('div').remove()
   resizeScroll()
   clickAddDel()
@@ -169,32 +171,9 @@ function saveRecord()
     }
   })
 
-  $('#operated div').each((i, div) => {
-    if (!recordJSON.operated[i]) { recordJSON.operated[i] = {} }
-    div.querySelectorAll('input').forEach(e => {
-      if ((e.type === 'button') || e.checked) {
-        recordJSON.operated[i][e.name.replace(i, '')] = e.value
-      }
-    })
-  })
-
-  $('#radiosurg div').each((i, div) => {
-    if (!recordJSON.radiosurg[i]) { recordJSON.radiosurg[i] = {} }
-    div.querySelectorAll('input').forEach(e => {
-      if ((e.type === 'button') || e.checked) {
-        recordJSON.radiosurg[i][e.name.replace(i, '')] = e.value
-      }
-    })
-  })
-
-  $('#endovasc div').each((i, div) => {
-    if (!recordJSON.endovasc[i]) { recordJSON.endovasc[i] = {} }
-    div.querySelectorAll('input').forEach(e => {
-      if ((e.type === 'button') || e.checked) {
-        recordJSON.endovasc[i][e.name.replace(i, '')] = e.value
-      }
-    })
-  })
+  saveProcedure('#operated', recordJSON.operated)
+  saveProcedure('#radiosurg', recordJSON.radiosurg)
+  saveProcedure('#endovasc', recordJSON.endovasc)
 
   if (!recordJSON.radiosurg.length) { delete recordJSON.radiosurg }
   if (!recordJSON.endovasc.length) { delete recordJSON.endovasc }
@@ -204,11 +183,14 @@ function saveRecord()
   saveService(pointed, "profile", JSON.stringify(recordJSON))
 }
 
-function getLastOp()
+function saveProcedure(id, procedure)
 {
-  let inputop = document.querySelectorAll("#operated input")
-
-  inputop = Array.from(inputop).filter(e => /op/.test(e.name))
-
-  return inputop.length
+  $(id + ' div').each((i, div) => {
+    if (!procedure[i]) { procedure[i] = {} }
+    div.querySelectorAll('input').forEach(e => {
+      if ((e.type === 'button') || e.checked) {
+        procedure[i][e.name.replace(i, '')] = e.value
+      }
+    })
+  })
 }

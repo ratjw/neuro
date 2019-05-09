@@ -97,7 +97,7 @@ jQuery.fn.extend({
 
 
     if (Number(q.deleted)) {
-      this.addClass("deleted")
+      this.addClass("deletedcase")
     } else {
       rowDecoration(this[0], q.opdate)
     }

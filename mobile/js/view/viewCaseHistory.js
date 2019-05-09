@@ -53,7 +53,7 @@ jQuery.fn.extend({
     let cells = this[0].cells
 
     // add colors for deleted and undeleted rows
-    if (q.action === 'delete') { this.addClass("deleted") }
+    if (q.action === 'delete') { this.addClass("deletedcase") }
     if (q.action === 'undelete') { this.addClass("undelete") }
 
 ;    [  putThdate(q.opdate) || "",
