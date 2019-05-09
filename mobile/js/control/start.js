@@ -59,6 +59,7 @@ function success(response) {
   overrideJqueryUI()
   resetTimer()
 //  serverSentEvent()
+  scaleViewport()
 }
 
 // *** plan -> offline browsing by service worker ***
@@ -237,4 +238,13 @@ function dialogServiceShowing()
   let $dialogService = $("#dialogService")
 
   return $dialogService.hasClass('ui-dialog-content') && $dialogService.dialog('isOpen')
+}
+
+function scaleViewport()
+{
+  var siteWidth = 1280
+  var scale = screen.width / siteWidth
+
+  document.querySelector('meta[name="viewport"]')
+    .setAttribute('content', 'width='+siteWidth+', initial-scale='+scale+'')
 }

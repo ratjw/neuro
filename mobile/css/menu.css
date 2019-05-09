@@ -122,14 +122,3 @@
     background-image: none;
   }
 }
-/* Make sure they show even if hidden in mobile view by JS */
-@media (min-width: 600px) {
-  #cssmenu > ul > li.collapsed {
-    display: inline-block !important;
-    *display: inline;
-    zoom: 1;
-  }
-  #cssmenu > ul ul li.collapsed {
-    display: block !important;
-  }
-}

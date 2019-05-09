@@ -21,13 +21,13 @@ export function staffqueue(staffname) {
 
   if (staffname === "Consults") {
     book = CONSULT
-    until = ISOdate(new Date()),
+    until = ISOdate(new Date())
 
     date = fillDatedCases(qtable, book)
 
     fillBlankDates(qtable, date, until)
   } else {
-    book = BOOK.filter(e => e.staffname === staffname),
+    book = BOOK.filter(e => e.staffname === staffname)
     fillDatedCases(qtable, book)
     reNumberNodateRows()
   }

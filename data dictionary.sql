@@ -30,35 +30,38 @@
   `final` varchar(5000) NOT NULL DEFAULT '',
   `equipment` JSON,
   `profile` JSON {
-    `admitted`: "0" "1", "2", ...,               * "0"= user-defined no admission
-                                                  * "1"
-                                                  * "2"... Readmission
-    `doneby`: ,                                   * "Staff", "Resident"     UDO
-    `manner`: ,                                   * "Elective", "Emergency" UDO
-    `scale`: ,                                    * "Major", "Minor"        UDO
-    `radiosurgery`: ,                             * "Radiosurgery"
-    `endovascular`: ,                             * "Endovascular"
-    `infection`: ,                                * "Infection"             UDO
-    `morbid`: ,                                   * "Morbidity"             UDO
-    `dead`: ,                                     * "Dead"                  UDO
+    `admitted`: "0" "1", "2", ...,             * "0"= user-defined no admission
+                                                * "1"
+                                                * "2"... Readmission
+    `infection`: ,                              * "Infection"             UDO
+    `morbid`: ,                                 * "Morbidity"             UDO
+    `dead`: ,                                   * "Dead"                  UDO
     `operated`: [{
-      `op`: NULL, "1", "2", ...,                 * [] = user-defined no operation
-                                                  * "1"
-                                                  * "2"... Reoperation
-      `disease`:                                  * "Brain Tumor", "Brain Vascular",
-                                                    "CSF related", "Trauma", "Spine", "etc"
-                                                    (run-time calc by operationFor)
+      `doneby`: ,                               * "Staff", "Fellow", "Resident" UDO
+      `manner`: ,                               * "Elective", "Emergency" UDO
+      `scale`: ,                                * "Major", "Minor"        UDO
+      `disease`:                                * "Brain Tumor", "Brain Vascular",
+                                                  "CSF related", "Trauma",
+                                                  "Spine", "etc"
+                                                  (run-time calc by operationFor)
+    }],
+    `radiosurg`: [{
+      `radiodoneby`:                            * "Staff", "Resident"     UDO
+    }],
+    `endovasc`: [{
+      `endodoneby`: ,                           * "Staff", "Resident"     UDO
+      `endomanner`: ,                           * "Elective", "Emergency" UDO
     }]
   },
   `contact` varchar(1000) NOT NULL DEFAULT '',
-  `admit` date DEFAULT NULL,                    *\ web service via SOAP
-  `discharge` date DEFAULT NULL,                */ GetEncounterDetailByMRNENCTYPE($hn, "IMP")
+  `admit` date DEFAULT NULL,           *\ web service via SOAP
+  `discharge` date DEFAULT NULL,       */ GetEncounterDetailByMRNENCTYPE($hn, "IMP")
                                                      in getipd.php used by getAdmitDischargeDate
   `qn` int(10) unsigned NOT NULL AUTO_INCREMENT,   * Booking entry ID number 
   `editor` varchar(10) NOT NULL DEFAULT '',       * user ID
   PRIMARY KEY (`qn`),
   KEY `opdate` (`opdate`),
-  KEY `hn` (`hn`)                                   * used for search, and repeated hn entry
+  KEY `hn` (`hn`)                           * used for search, and repeated hn entry
 ) ENGINE=InnoDB AUTO_INCREMENT=4848 DEFAULT CHARSET=utf8 |
 
 * keep track of book entry with editdatetime and user ID

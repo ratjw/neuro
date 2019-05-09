@@ -24,11 +24,6 @@ export function isStaffname(staffname)
   return $('#titlename').html() === staffname
 }
 
-export function isOnStaffnameTbl(tableID)
-{  
-  return (tableID === "queuetbl") && !isConsults()
-}
-
 // The Consults table is beeing shown
 export function isConsults()
 {  

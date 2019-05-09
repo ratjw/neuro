@@ -11,6 +11,7 @@ export function splitPane(mtable, qtable) {
   mwrapper.style.height = '100%' - menuHeight + 'px'
   mwrapper.style.width = "50%"
 
+  qwrapper.style.display = "block"
   qwrapper.style.height = '100%' - menuHeight + 'px'
   qwrapper.style.width = "50%"
 
@@ -29,12 +30,13 @@ export function splitPane(mtable, qtable) {
   }
 }
 
+// e.offsetTop > scrolledTop - 2 :: to make sure if the decimal was rounded
 function findFirstVisibleRow(mcontainer, mtable)
 {
   let scrolledTop = mcontainer.scrollTop,
     rows = mtable.querySelectorAll('tr')
 
-  return Array.from(rows).find(e => e.offsetTop > scrolledTop)
+  return Array.from(rows).find(e => e.offsetTop > scrolledTop - 2)
 }
 
 function scrollToFirstVisible(mcontainer, firstvisiblerow)

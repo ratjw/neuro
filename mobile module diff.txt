@@ -6,6 +6,7 @@ index.html
   out: some menu
 
 control/start.js
+  add: scaleViewport()
   out: some imports, sortable, setClickSetting
 
 menu/setClickMenu.js:
