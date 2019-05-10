@@ -4,7 +4,7 @@ import { USER } from "../main.js"
 import { URIcomponent } from "../util/util.js"
 import { serviceFromDate, serviceToDate } from "../service/setSERVICE.js"
 
-const GETIPD  = "php/getipd.php"
+const GETIPD = "php/getipd.php"
 
 export function sqlSaveOnChangeService(column, content, qn)
 {

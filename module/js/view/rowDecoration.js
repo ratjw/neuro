@@ -4,7 +4,7 @@ import { putThdate } from "../util/date.js"
 import { holiday } from "./holiday.js"
 
 // for row, and 1st column colors
-const NAMEOFDAYFULL  = ["Sunday", "Monday", "Tuesday",
+const NAMEOFDAYFULL = ["Sunday", "Monday", "Tuesday",
   "Wednesday", "Thursday", "Friday", "Saturday"
 ]
 

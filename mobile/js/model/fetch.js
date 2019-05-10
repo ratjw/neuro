@@ -1,5 +1,5 @@
 
-export const MYSQLIPHP  = "php/mysqli.php"
+export const MYSQLIPHP = "php/mysqli.php"
 
 export async function postData(url = ``, data) {
     const response = await fetch(url, {

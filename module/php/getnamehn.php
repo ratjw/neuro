@@ -44,26 +44,20 @@ require_once "book.php";
 
 		extract($resultz);
 	}
+
 	//Find last entry of patient with this hn
-	$sql = "SELECT MAX(qn) FROM book WHERE hn = '$hn' AND deleted=0;";
+	$sql = "SELECT staffname,diagnosis,treatment,contact
+          FROM book
+          WHERE hn = '$hn' AND deleted=0 AND opdate<CURDATE()
+          ORDER BY opdate DESC;";
 	$query = $mysqli->query ($sql);
 	if ($query) {
-		$getqn = $query->fetch_row();
-		$oldqn = $getqn[0];
-		if ($oldqn) {
-			$sql = "SELECT staffname,diagnosis,treatment,contact 
-					FROM book 
-					WHERE qn = $oldqn;";
-			$query = $mysqli->query ($sql);
-			if ($query) {
-				$oldpatient = $query->fetch_assoc();
-				$staffname = $staffname ? $staffname : $oldpatient["staffname"];
-				$diagnosis = $diagnosis ? $diagnosis : $oldpatient["diagnosis"];
-				$treatment = $treatment ? $treatment : $oldpatient["treatment"];
-				$contact = $contact ? $contact : $oldpatient["contact"];
-			}
-		}
-	}
+    $oldpatient = $query->fetch_assoc();
+    $staffname = $staffname ? $staffname : $oldpatient["staffname"];
+    $diagnosis = $diagnosis ? $diagnosis : $oldpatient["diagnosis"];
+    $treatment = $treatment ? $treatment : $oldpatient["treatment"];
+    $contact = $contact ? $contact : $oldpatient["contact"];
+  }
 
 	if ($qn) {
 		//existing row, ignore waitnum

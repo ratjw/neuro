@@ -4,9 +4,8 @@ import { USER } from "../main.js"
 import { calcWaitnum, defaultWaitnum } from "../util/calcWaitnum.js"
 import { getOpdate } from "../util/date.js"
 import { URIcomponent, getTitlename } from "../util/util.js"
-import { BOOK } from "../util/updateBOOK.js"
 
-const GETNAMEHN  = "php/getnamehn.php"
+const GETNAMEHN = "php/getnamehn.php"
 
 export function sqlMoveCaseHN(pointed, waiting, wanting)
 {
@@ -83,39 +82,19 @@ function sqlUpdateHN(tableID, qn, waiting, wanting)
     WHERE qn=${qn};`
 }
 
-// ** to do ** search hn from DB
+// GETNAMEHN will get hn from DB if existed
 export function sqlGetNameHN(pointed, content)
 {
-  let tableID = pointed.closest('table').id,
-    oldcase = BOOK.reverse().find(q => q.hn === content),
-    oldstaffname = tableID === 'queuetbl' ? getTitlename(tableID) : '',
-    olddiagnosis = '',
-    oldtreatment = '',
-    oldcontact = ''
-
-  if (oldcase) {
-    oldstaffname = oldcase.staffname || oldstaffname
-    olddiagnosis = oldcase.diagnosis
-    oldtreatment = oldcase.treatment
-    oldcontact = oldcase.contact
-  }
-
   let row = pointed.closest('tr'),
     opdate = row.dataset.opdate,
     qn = row.dataset.qn,
-    staffname = row.dataset.staffname || oldstaffname,
-    diagnosis = row.dataset.diagnosis || olddiagnosis,
-    treatment = row.dataset.treatment || oldtreatment,
-    contact = row.dataset.contact || oldcontact,
-    waitnum = defaultWaitnum(row),
+    staffname = row.dataset.staffname,
+    diagnosis = row.dataset.diagnosis,
+    treatment = row.dataset.treatment,
+    contact = row.dataset.contact,
     prevrow = row.previousElementSibling,
-    nextrow = row.nextElementSibling
-
-  // if new case, calculate waitnum
-  // store waitnum in row waitnum
-  if (!qn) {
-    waitnum = calcWaitnum(opdate, prevrow, nextrow)
-  }
+    nextrow = row.nextElementSibling,
+    waitnum = row.dataset.waitnum || calcWaitnum(opdate, prevrow, nextrow)
 
   let sql = `hn=${content}&waitnum=${waitnum}&opdate=${opdate}&staffname=${staffname}&diagnosis=${diagnosis}&treatment=${treatment}&contact=${contact}&qn=${qn}&editor=${USER}`
 

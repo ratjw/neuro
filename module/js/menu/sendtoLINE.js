@@ -4,7 +4,7 @@ import {
   OPDATE, THEATRE, OPTIME, CASENUM, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT
 } from "../model/const.js"
 
-const LINEBOT  = "line/lineBot.php"
+const LINEBOT = "line/lineBot.php"
 const LINENOTIFY = "line/lineNotify.php"
 const HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT]
 

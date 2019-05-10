@@ -97,7 +97,7 @@ export function htmlProfile(profile)
     } else if (type === "number") {
 			record += `<label>
 				<span>${label}</span>
-				<input class="w${width}" type="${type}" name="${name}" value="" min="${min}" max="${max}"></label>`
+				<input class="w${width}" type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}"></label>`
     } else if (type === "divbegin") {
 			record += `<div id="${name}"><span>${label}</span><br></div>`
     } else if (type === "divend") {

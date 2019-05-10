@@ -313,8 +313,8 @@ export function clearEditcell() {
 // TRIM excess spaces at begin, mid, end
 // remove html tags except <br>
 let getHtmlText = function (cell) {
-  let HTMLTRIM    = /^(\s*<[^>]*>)*\s*|\s*(<[^>]*>\s*)*$/g,
-    HTMLNOBR    = /(<((?!br)[^>]+)>)/ig
+  let HTMLTRIM = /^(\s*<[^>]*>)*\s*|\s*(<[^>]*>\s*)*$/g,
+    HTMLNOBR = /(<((?!br)[^>]+)>)/ig
 
   return cell && cell.innerHTML.replace(HTMLTRIM, '').replace(HTMLNOBR, '')
 }

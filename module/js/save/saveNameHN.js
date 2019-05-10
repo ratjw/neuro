@@ -7,16 +7,13 @@ import { reCreateEditcell } from "../control/edit.js"
 export function saveNameHN(pointed, content)
 {
   sqlGetNameHN(pointed, content).then(response => {
-    let hasData = function () {
+    if (typeof response === "object") {
       updateBOOK(response)
       reCreateEditcell()
-    }
-    let noData = function () {
+    } else {
       Alert("saveNameHN", response)
       pointed.innerHTML = ""
       // unsuccessful entry
-    };
-
-    typeof response === "object" ? hasData() : noData()
+    }
   }).catch(error => { })
 }
