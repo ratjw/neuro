@@ -141,9 +141,8 @@ td.consult:nth-child(8)::after {
 #queuetbl td:nth-child(7),
 #queuetbl td:nth-child(8),
 #servicetbl td:nth-child(2),
+#servicetbl td:nth-child(8),
 #servicetbl td:nth-child(9),
-#servicetbl td:nth-child(10),
-#servicetbl td:nth-child(11),
 #deletedtbl td:nth-child(1),
 #deletedtbl td:nth-child(2),
 #deletedtbl td:nth-child(3),
@@ -207,17 +206,15 @@ td.consult:nth-child(8)::after {
   margin-left: 25px;
 }
 
-#servicetbl th:nth-child(1) { width: 15px; }
-#servicetbl th:nth-child(2) { width: 50px; }
+#servicetbl th:nth-child(1) { width: 1%; }
+#servicetbl th:nth-child(2) { width: 2%; }
 #servicetbl th:nth-child(3) { width: 10%; }
-#servicetbl th:nth-child(4) { width: 15%; }
-#servicetbl th:nth-child(5) { width: 15%; }
-#servicetbl th:nth-child(6) { width: 20%; }
-#servicetbl th:nth-child(7) { width: 20%; }
-#servicetbl th:nth-child(8) { width: 10%; }
-#servicetbl th:nth-child(9) { width: 40px; }
-#servicetbl th:nth-child(10) { width: 40px; }
-#servicetbl th:nth-child(11) { width: 40px; }
+#servicetbl th:nth-child(4) { width: 20%; }
+#servicetbl th:nth-child(5) { width: 25%; }
+#servicetbl th:nth-child(6) { width: 25%; }
+#servicetbl th:nth-child(7) { width: 15%; }
+#servicetbl th:nth-child(8) { width: 1%; }
+#servicetbl th:nth-child(9) { width: 1%; }
 
 #servicetbl td.serviceStaff {
   height: 40px;

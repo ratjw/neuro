@@ -23,7 +23,7 @@ export function viewRecord(profile)
       })
     } else if (key === "endovasc") {
       profileJSON[key].forEach(e => {
-        profiles.push(`Endo(${procString(e)})`)
+        profiles.push(`ET(${procString(e)})`)
       })
     } else {
       profiles.push(val)

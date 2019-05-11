@@ -24,10 +24,8 @@ DIAGNOSISSV = 3,
 TREATMENTSV = 4,
 ADMISSIONSV = 5,
 FINALSV     = 6,
-PROFILESV   = 7,
-ADMITSV     = 8,
-OPDATESV    = 9,
-DISCHARGESV = 10,
+ADMITSV     = 7,
+DISCHARGESV = 8,
 
 NAMEOFDAYTHAI = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์"],
 THAIMONTH   = ["มค.", "กพ.", "มีค.", "เมย.", "พค.", "มิย.", "กค.", "สค.", "กย.", "ตค.", "พย.", "ธค."],
@@ -311,7 +309,9 @@ RECORDSHEET = [
 ],
 OPERATION = [
   ["hr", "dashed", "", ""],
-  ["button", "10 floatright", "delproc", "-"],
+  ["textarea", "", "procedure", ""],
+  ["button", "10", "delproc", "-"],
+  ["br", "", "", ""],
   ["radio", "100", "doneby", "Staff"],
   ["radio", "100", "doneby", "Fellow"],
   ["radio", "100", "doneby", "Resident"],
@@ -332,19 +332,24 @@ OPERATION = [
 ],
 RADIOSURG = [
   ["hr", "dashed", "", ""],
-  ["button", "10 floatright", "delproc", "-"],
-  ["radio", "100", "radiodoneby", "Staff Neuro"],
-  ["radio", "100", "radiodoneby", "Staff Radio"]
+  ["textarea", "", "procedure", ""],
+  ["button", "10", "delproc", "-"],
+  ["br", "", "", ""],
+  ["radio", "100", "doneby", "Staff Neuro"],
+  ["radio", "100", "doneby", "Staff Radio"],
+  ["span", "120", "", ""]
 ],
 ENDOVASC = [
   ["hr", "dashed", "", "", ""],
-  ["button", "10 floatright", "delproc", "-"],
-  ["radio", "100", "endodoneby", "Staff Neuro"],
-  ["radio", "100", "endodoneby", "Fellow Neuro"],
-  ["radio", "100", "endodoneby", "Staff Radio"],
+  ["textarea", "", "procedure", ""],
+  ["button", "10", "delproc", "-"],
   ["br", "", "", ""],
-  ["radio", "100", "endomanner", "Elective"],
-  ["radio", "100", "endomanner", "Emergency"]
+  ["radio", "100", "doneby", "Staff Neuro"],
+  ["radio", "100", "doneby", "Fellow Neuro"],
+  ["radio", "100", "doneby", "Staff Radio"],
+  ["br", "", "", ""],
+  ["radio", "100", "manner", "Elective"],
+  ["radio", "100", "manner", "Emergency"]
 ],
 
 //=============================================================================

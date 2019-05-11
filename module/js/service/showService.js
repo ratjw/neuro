@@ -1,7 +1,7 @@
 
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
-  FINALSV, PROFILESV, ADMITSV, OPDATESV, DISCHARGESV, RECORDDATA
+  FINALSV, ADMITSV, DISCHARGESV, RECORDDATA
 } from "../model/const.js"
 import { POINTER, clearEditcell } from "../control/edit.js"
 import { START, putThdate, putNameAge } from "../util/date.js"
@@ -152,12 +152,10 @@ jQuery.fn.extend({
     cells[HNSV].innerHTML = bookq.hn
     cells[NAMESV].innerHTML = putNameAge(bookq)
     cells[DIAGNOSISSV].innerHTML = bookq.diagnosis
-    cells[TREATMENTSV].innerHTML = bookq.treatment
+    cells[TREATMENTSV].innerHTML = viewRecord(bookq.profile)
     cells[ADMISSIONSV].innerHTML = bookq.admission
     cells[FINALSV].innerHTML = bookq.final
-    cells[PROFILESV].innerHTML = viewRecord(bookq.profile)
     cells[ADMITSV].innerHTML = putThdate(bookq.admit)
-    cells[OPDATESV].innerHTML = putThdate(bookq.opdate)
     cells[DISCHARGESV].innerHTML = putThdate(bookq.discharge)
 
     row.dataset.hn = bookq.hn

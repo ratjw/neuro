@@ -4,10 +4,10 @@ import { LARGESTDATE } from "../model/const.js"
 // necessary when passing to http, not when export to excel
 export function URIcomponent(content) {
   if (/\W/.test(content)) {
-    content = content.replace(/\s+$/,'')
-    content = content.replace(/\"/g, "&#34;")  // double quotes
-    content = content.replace(/\'/g, "&#39;")  // single quotes
-    content = content.replace(/%/g, "&#37;")   // per cent, mysql: like "%...%"
+    content = content.trim()
+    content = content.replace(/"/g, '\"')  // double quotes
+    content = content.replace(/'/g, "&#39;")  // single quotes
+    content = content.replace(/%/g, "\%")   // per cent, mysql: like "%...%"
     content = content.replace(/\\/g, "\\\\")
     content = encodeURIComponent(content)
   }

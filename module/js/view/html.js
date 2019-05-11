@@ -103,7 +103,9 @@ export function htmlProfile(profile)
     } else if (type === "divend") {
       record += `</div>`
     } else if (type === "span") {
-			record += `<span class="w${width}">${label}</span>`
+			record += `<span class="w${width}"></span>`
+    } else if (type === "textarea") {
+			record += `<textarea name="${name}"></textarea>`
 		} else if (type === "checkbox" || type === "radio") {
 			record += `<label>
 				<input class="w${width}" type="${type}" name="${name}" value="${label}">
