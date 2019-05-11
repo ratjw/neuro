@@ -160,6 +160,7 @@ jQuery.fn.extend({
 
     row.dataset.hn = bookq.hn
     row.dataset.patient = bookq.patient
+    row.dataset.treatment = bookq.treatment
     row.dataset.admit = bookq.admit || ''
     row.dataset.profile = bookq.profile
     row.dataset.qn = bookq.qn

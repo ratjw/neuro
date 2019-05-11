@@ -8,6 +8,7 @@ import { saveService } from './savePreviousCellService.js'
 let $dialogRecord = $('#dialogRecord'),
   maxHeight = winHeight(90),
   rowRecord = {},
+  treatment,
   operated,
   radiosurg,
   endovasc,
@@ -22,6 +23,7 @@ export function showRecord(pointing)
   let row = pointing.closest('tr'),
     hn = row.dataset.hn,
     patient = row.dataset.patient,
+    treatment = row.dataset.treatment,
     qn = row.dataset.qn,
     profile = JSON.parse(row.dataset.profile),
     admitted = profile && profile.admitted
@@ -78,6 +80,9 @@ function appendProcedure(id, proc, item, suffix)
     el = document.querySelector(id)
 
   while (i < item.length) {
+    if (i === 0) {
+      item.procedure = treatment
+    }
     el.appendChild(divProcedure(proc, item, suffix, i))
     i++
   }
@@ -143,11 +148,12 @@ function divProcedure(procedure, item, suffix, i)
   Array.from(inputs).forEach(e => {
     inputname = e.name
     e.name = e.name + suffix + i
-    if (e.type === 'textarea') {
-      e.value = item[i][inputname]
-    }
     if (item && item[i]) {
-      e.checked = (e.value === (item[i][inputname]))
+      if (e.type === 'textarea') {
+        e.value = item[i][inputname]
+      } else {
+        e.checked = (e.value === (item[i][inputname]))
+      }
     }
   })
 
