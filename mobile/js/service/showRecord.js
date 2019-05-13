@@ -159,6 +159,7 @@ function divProcedure(procedure, item, suffix, i)
           $(e).datepicker("setDate", new Date(opdate))
         } else {
           e.value = item[i][inputname]
+          $(e).datepicker("setDate", new Date(numDate(e.value)))
         }
       } else if (e.type === 'textarea') {
         if ((i === 0) && !e.value && !usedTreatment()) {

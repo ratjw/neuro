@@ -42,7 +42,11 @@ export function viewRecord(profile, thopdate, treatment)
     }
   })
 
-  treatments = treatments.length ? treatments.join('<br>') : thopdate + ' ' + treatment
+  treatments = treatments.length
+             ? treatments.join('<br>')
+             : profileJSON.operated && profileJSON.operated.length
+             ? thopdate + ' ' + treatment
+             : treatment
   profiles = profiles.length ? profiles.join('<br>') : ''
 
   return treatments + '<br><br>' + profiles
