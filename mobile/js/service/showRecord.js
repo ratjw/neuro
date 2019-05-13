@@ -178,9 +178,9 @@ function divProcedure(procedure, item, suffix, i)
 
 function usedTreatment()
 {
-  return (rowRecord.operated && rowRecord.operated[0] && rowRecord.operated[0].procedure)
-    || (rowRecord.radiosurg && rowRecord.radiosurg[0] && rowRecord.radiosurg[0].procedure)
-    || (rowRecord.endovasc && rowRecord.endovasc[0] && rowRecord.endovasc[0].procedure)
+  let txtarea = $dialogRecord.find("textarea")
+
+  return Array.from(txtarea).some(e => !!e.value)
 }
 
 function saveRecord()
