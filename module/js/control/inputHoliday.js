@@ -1,6 +1,6 @@
 
 import { DIAGNOSIS, THAIMONTH } from "../model/const.js"
-import { numDate, putThdate } from "../util/date.js"
+import { numDate, putThdate, datepicker } from "../util/date.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { HOLIDAY, setHOLIDAY } from "../util/updateBOOK.js"
 import { holiday } from "../view/holiday.js"
@@ -55,56 +55,13 @@ export function inputHoliday()
     }
   })
 
-  let $buttonHoliday = $("#buttonHoliday")
-  $buttonHoliday.hide()
-
-  // select date by calendar
-  $holidateth.datepicker({
-    autoSize: true,
-    dateFormat: "dd M yy",
-    monthNames: [ "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", 
-            "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" ],
-    // use Short names to be consistent with the month converted by numDate()
-    monthNamesShort: THAIMONTH,
-    yearSuffix: new Date().getFullYear() +  543,
-    beforeShow: function (input, inst) {
-      if (inst.selectedYear) {
-        // prevent using Buddhist year from <input>
-        $(this).datepicker("setDate",
-          new Date(inst.currentYear, inst.currentMonth, inst.currentDay))
-      } else {
-        $(this).datepicker("setDate", new Date())
-      }
-      $holidateth.one("click", function() {
-        if (input.value) {
-          $holidateth.val(input.value.slice(0, -4) + (inst.selectedYear + 543))
-        }
-      })
-    },
-    onChangeMonthYear: function (year, month, inst) {
-      $(this).datepicker("setDate",
-        new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay))
-      inst.settings.yearSuffix = inst.selectedYear + 543
-      $holidateth.val($holidateth.val().slice(0, -4) + (inst.selectedYear + 543))
-    },
-    onSelect: function (input, inst) {
-      $holidateth.val(input.slice(0, -4) + (inst.selectedYear + 543))
-      if ($holidayname.val()) {
-        $buttonHoliday.show()
-      }
-    }
-  })
+  datepicker($holidateth)
 
   // option holidays Eng: Thai
   $.each(HOLIDAYENGTHAI, function(key, val) {
     holidaylist += `<option value="${key}">${val}</option>`
   })
   $holidayname.html(holidaylist)
-  $holidayname.change(function() {
-    if ($holidateth.val()) {
-      $buttonHoliday.show()
-    }
-  })
 }
 
 function fillHoliday($holidaytbl)

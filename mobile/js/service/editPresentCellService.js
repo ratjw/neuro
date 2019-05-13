@@ -1,7 +1,7 @@
 
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
-  FINALSV, PROFILESV, ADMITSV, OPDATESV, DISCHARGESV
+  FINALSV, ADMITSV, DISCHARGESV
 } from "../model/const.js"
 import { clearEditcell, createEditcell } from "../control/edit.js"
 import { isPACS } from "../util/updateBOOK.js"
@@ -21,12 +21,10 @@ export function editPresentCellService(evt, pointing) {
     case HNSV: getHNSV(evt, pointing); break
     case NAMESV: clearEditcell(); break
     case DIAGNOSISSV:
-    case TREATMENTSV:
     case ADMISSIONSV:
     case FINALSV: editableSV && createEditcell(pointing); break
-    case PROFILESV: showRecord(pointing); break
+    case TREATMENTSV: clearEditcell(); showRecord(pointing); break
     case ADMITSV:
-    case OPDATESV:
     case DISCHARGESV: clearEditcell(); break
   }
 }

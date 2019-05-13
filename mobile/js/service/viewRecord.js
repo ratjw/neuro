@@ -1,10 +1,10 @@
 
 // Add all profiles in one string to show in 1 cell
-export function viewRecord(profile)
+export function viewRecord(profile, thopdate, treatment)
 {
   let profileJSON = JSON.parse(profile),
-    profiles = [],
-    str = ''
+    treatments = [],
+    profiles = []
 
   if (!profileJSON) { return "" }
 
@@ -14,31 +14,47 @@ export function viewRecord(profile)
         profiles.push(`${key}:${val}`)
       }
     } else if (key === "operated") {
-      profileJSON[key].forEach(e => {
-        profiles.push(`Op(${procString(e)})`)
+      profileJSON[key].forEach((e, i) => {
+        let op = e.opdate || '',
+          pro = e.procedure || '',
+          sp = (op && pro) ? ' ' : '',
+          rx = op + sp + pro
+
+        rx && treatments.push(rx)
+        delete e.opdate
+        delete e.procedure
+        profiles.push(`Op${i+1} (${procString(e)})`)
       })
     } else if (key === "radiosurg") {
-      profileJSON[key].forEach(e => {
-        profiles.push(`RS(${procString(e)})`)
+      profileJSON[key].forEach((e, i) => {
+        e.procedure && treatments.push(e.procedure)
+        delete e.procedure
+        profiles.push(`RS${i+1} (${procString(e)})`)
       })
     } else if (key === "endovasc") {
-      profileJSON[key].forEach(e => {
-        profiles.push(`Endo(${procString(e)})`)
+      profileJSON[key].forEach((e, i) => {
+        e.procedure && treatments.push(e.procedure)
+        delete e.procedure
+        profiles.push(`ET${i+1} (${procString(e)})`)
       })
     } else {
       profiles.push(val)
     }
   })
 
-  return profiles.length ? profiles.join('; ') : ''
+  treatments = treatments.length ? treatments.join('<br>') : thopdate + ' ' + treatment
+  profiles = profiles.length ? profiles.join('<br>') : ''
+
+  return treatments + '<br><br>' + profiles
 }
 
-function procString(procedure)
+function procString(proc)
 {
   let str = '',
-    op = Object.values(procedure).map(e => e).filter(e => e)
+    arr = []
 
-  if (op.length) { str = op.join(', ') }
+  arr = Object.values(proc).map(e => e).filter(e => e)
+  if (arr.length) { str = arr.join(', ') }
 
   return str
 }

@@ -4,7 +4,7 @@ import {
   FINALSV, ADMITSV, DISCHARGESV, RECORDDATA
 } from "../model/const.js"
 import { POINTER, clearEditcell } from "../control/edit.js"
-import { START, putThdate, putNameAge } from "../util/date.js"
+import { START, thDate, putThdate, putNameAge } from "../util/date.js"
 import { isSplit,  winWidth, winHeight, winResizeFix } from "../util/util.js"
 import { isPACS } from "../util/updateBOOK.js"
 import { fillmain } from "../view/fill.js"
@@ -142,28 +142,29 @@ export function reViewService() {
 }
 
 jQuery.fn.extend({
-  filldataService : function(bookq, scase) {
+  filldataService : function(q, scase) {
     let  row = this[0],
       cells = row.cells
 
-    if (bookq.hn && isPACS) { cells[HNSV].className = "pacs" }
+    if (q.hn && isPACS) { cells[HNSV].className = "pacs" }
 
     cells[CASENUMSV].innerHTML = scase
-    cells[HNSV].innerHTML = bookq.hn
-    cells[NAMESV].innerHTML = putNameAge(bookq)
-    cells[DIAGNOSISSV].innerHTML = bookq.diagnosis
-    cells[TREATMENTSV].innerHTML = viewRecord(bookq.profile)
-    cells[ADMISSIONSV].innerHTML = bookq.admission
-    cells[FINALSV].innerHTML = bookq.final
-    cells[ADMITSV].innerHTML = putThdate(bookq.admit)
-    cells[DISCHARGESV].innerHTML = putThdate(bookq.discharge)
+    cells[HNSV].innerHTML = q.hn
+    cells[NAMESV].innerHTML = putNameAge(q)
+    cells[DIAGNOSISSV].innerHTML = q.diagnosis
+    cells[TREATMENTSV].innerHTML = viewRecord(q.profile, thDate(q.opdate), q.treatment)
+    cells[ADMISSIONSV].innerHTML = q.admission
+    cells[FINALSV].innerHTML = q.final
+    cells[ADMITSV].innerHTML = putThdate(q.admit)
+    cells[DISCHARGESV].innerHTML = putThdate(q.discharge)
 
-    row.dataset.hn = bookq.hn
-    row.dataset.patient = bookq.patient
-    row.dataset.treatment = bookq.treatment
-    row.dataset.admit = bookq.admit || ''
-    row.dataset.profile = bookq.profile
-    row.dataset.qn = bookq.qn
+    row.dataset.opdate = q.opdate
+    row.dataset.hn = q.hn
+    row.dataset.patient = q.patient
+    row.dataset.treatment = q.treatment
+    row.dataset.admit = q.admit || ''
+    row.dataset.profile = q.profile
+    row.dataset.qn = q.qn
 
     coloring(row)
   }

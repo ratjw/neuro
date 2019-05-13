@@ -1,6 +1,6 @@
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
-  FINALSV, PROFILESV, ADMITSV, OPDATESV, DISCHARGESV
+  FINALSV, ADMITSV, DISCHARGESV
 } from "../model/const.js"
 import { POINTER, OLDCONTENT, getNewcontent } from "../control/edit.js"
 import { sqlSaveService } from "../model/sqlservice.js"
@@ -27,18 +27,14 @@ export function savePreviousCellService() {
     case DIAGNOSISSV:
       saveContentService(POINTER, "diagnosis", newcontent)
       break
-    case TREATMENTSV:
-      saveContentService(POINTER, "treatment", newcontent)
-      break
     case ADMISSIONSV:
       saveContentService(POINTER, "admission", newcontent)
       break
     case FINALSV:
       saveContentService(POINTER, "final", newcontent)
       break
-    case PROFILESV:
+    case TREATMENTSV:
     case ADMITSV:
-    case OPDATESV:
     case DISCHARGESV:
       break
   }
@@ -71,9 +67,10 @@ export function saveService(pointed, column, newcontent) {
       let newlen = SERVICE.length
       if (oldlen !== newlen) {
         reViewService()
-      } else if (pointed.cellIndex === PROFILESV) {
-        pointed.innerHTML = viewRecord(newcontent)
-        row.dataset.profile = newcontent
+      } else if (pointed.cellIndex === TREATMENTSV) {
+        let serviceq = getBOOKrowByQN(SERVICE, qn)
+        pointed.innerHTML = viewRecord(serviceq.profile)
+        row.dataset.profile = serviceq.profile
         coloring(row)
       }
     } else {

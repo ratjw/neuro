@@ -1,6 +1,6 @@
 
 // Add all profiles in one string to show in 1 cell
-export function viewRecord(profile)
+export function viewRecord(profile, thopdate, treatment)
 {
   let profileJSON = JSON.parse(profile),
     treatments = [],
@@ -15,28 +15,37 @@ export function viewRecord(profile)
       }
     } else if (key === "operated") {
       profileJSON[key].forEach((e, i) => {
-        treatments.push(e.procedure || '')
-        profiles.push(`Op${i+1}(${procString(e)})`)
+        let op = e.opdate || '',
+          pro = e.procedure || '',
+          sp = (op && pro) ? ' ' : '',
+          rx = op + sp + pro
+
+        rx && treatments.push(rx)
+        delete e.opdate
+        delete e.procedure
+        profiles.push(`Op${i+1} (${procString(e)})`)
       })
     } else if (key === "radiosurg") {
       profileJSON[key].forEach((e, i) => {
-        treatments.push(e.procedure || '')
-        profiles.push(`RS${i+1}(${procString(e)})`)
+        e.procedure && treatments.push(e.procedure)
+        delete e.procedure
+        profiles.push(`RS${i+1} (${procString(e)})`)
       })
     } else if (key === "endovasc") {
       profileJSON[key].forEach((e, i) => {
-        treatments.push(e.procedure || '')
-        profiles.push(`ET${i+1}(${procString(e)})`)
+        e.procedure && treatments.push(e.procedure)
+        delete e.procedure
+        profiles.push(`ET${i+1} (${procString(e)})`)
       })
     } else {
       profiles.push(val)
     }
   })
 
-  treatments = treatments.length ? treatments.join('<br>') : ''
+  treatments = treatments.length ? treatments.join('<br>') : thopdate + ' ' + treatment
   profiles = profiles.length ? profiles.join('<br>') : ''
 
-  return treatments ? (treatments + '<br><br>' + profiles) : profiles
+  return treatments + '<br><br>' + profiles
 }
 
 function procString(proc)
@@ -44,10 +53,7 @@ function procString(proc)
   let str = '',
     arr = []
 
-  delete proc.procedure
-
   arr = Object.values(proc).map(e => e).filter(e => e)
-
   if (arr.length) { str = arr.join(', ') }
 
   return str

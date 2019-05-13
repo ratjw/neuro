@@ -121,15 +121,15 @@ export function pagination($dialog, $maintbl, book, search)
 
   function getBookOneWeek(book, Monday, Sunday)
   {
-    return $.grep(book, function(bookq) {
-      return bookq.opdate >= Monday && bookq.opdate <= Sunday
+    return $.grep(book, function(q) {
+      return q.opdate >= Monday && q.opdate <= Sunday
     })
   }
 
   function getBookNoDate(book)
   {
-    return $.grep(book, function(bookq) {
-      return bookq.opdate === LARGESTDATE
+    return $.grep(book, function(q) {
+      return q.opdate === LARGESTDATE
     })
   }
 
@@ -215,8 +215,7 @@ jQuery.fn.extend({
 
 function findLastDateInBOOK(book)
 {
-  let bookq = book.find(e => e.opdate === LARGESTDATE)
-  let q = book.indexOf(bookq)
+  let q = book.find(e => e.opdate === LARGESTDATE)
 
-  return book[q-1].opdate
+  return book[book.indexOf(q) - 1].opdate
 }

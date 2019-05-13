@@ -95,15 +95,18 @@ export function htmlProfile(profile)
     } else if (type === "hr") {
 			record += `<hr class="${width}">`
     } else if (type === "number") {
-			record += `<label>
-				<span>${label}</span>
-				<input class="w${width}" type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}"></label>`
+			record += `<span class="bold">${label}</span>
+				<input class="w${width}" type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}">`
     } else if (type === "divbegin") {
-			record += `<div id="${name}"><span>${label}</span><br></div>`
+			record += `<div class="${width}" id="${name}"><span class="bold">${label}</span><br>`
     } else if (type === "divend") {
       record += `</div>`
-    } else if (type === "span") {
-			record += `<span class="w${width}">${label}</span>`
+    } else if (type === "div") {
+			record += `<div id="${name}"></div>`
+    } else if (type === "text") {
+			record += `<input class="w${width}" type="${type}" name="${name}" id="${label}"`
+    } else if (type === "textarea") {
+			record += `<textarea class="${width}" name="${name}" placeholder="${label}"></textarea>`
 		} else if (type === "checkbox" || type === "radio") {
 			record += `<label>
 				<input class="w${width}" type="${type}" name="${name}" value="${label}">

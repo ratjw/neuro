@@ -124,17 +124,17 @@ let  wanting = {...waiting},
 }
 
 jQuery.fn.extend({
-  filldataWaiting : function(bookq) {
+  filldataWaiting : function(q) {
     let  row = this[0],
       cells = row.cells
 
-    rowDecoration(row, bookq.opdate)
+    rowDecoration(row, q.opdate)
 
-    cells[STAFFNAME].innerHTML = bookq.staffname
-    cells[HN].innerHTML = bookq.hn
-    cells[PATIENT].innerHTML = putNameAge(bookq)
-    cells[DIAGNOSIS].innerHTML = bookq.diagnosis
-    cells[TREATMENT].innerHTML = bookq.treatment
-    cells[CONTACT].innerHTML = bookq.contact
+    cells[STAFFNAME].innerHTML = q.staffname
+    cells[HN].innerHTML = q.hn
+    cells[PATIENT].innerHTML = putNameAge(q)
+    cells[DIAGNOSIS].innerHTML = q.diagnosis
+    cells[TREATMENT].innerHTML = q.treatment
+    cells[CONTACT].innerHTML = q.contact
   }
 })

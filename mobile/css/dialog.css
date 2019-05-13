@@ -1,5 +1,4 @@
 
-
 .Reoperation, .Reoperation td:nth-child(5) { background-color: #CCCCAA !important; }
 .Readmission, .Readmission td:nth-child(6) { background-color: #AACCCC !important; } 
 .Infection, .Infection td:nth-child(7) { background-color: #CCAAAA !important; }
@@ -77,6 +76,8 @@
 .textleft { text-align: left;}
 .textright { text-align: right; }
 .textcenter { text-align: center; }
+.bold { font-weight: bold; }
+.large { font-size: large !important; }
 .inline { display: inline-block; }
 
 .w10 { width:10px !important; }
@@ -249,14 +250,18 @@
   color: blue;
   font-weight: bold;
 }
-#editedby {
-  position: absolute;
-}
+#editedby { position: absolute; }
 
-#dialogRecord label {
-  display: inline-block;
+#dialogRecord {
+  white-space: nowrap;
+  background-color: lightblue;
+  scrollbar-width: none;
 }
-
+#dialogRecord div {
+  background-color: white;
+  padding-top: 10px;
+}
+#dialogRecord label { display: inline-block; }
 #dialogRecord label.border {
   position: relative;
   height: 20px;
@@ -266,7 +271,6 @@
   padding-left: 4px;
   margin-left: 4px;
 }
-
 #dialogRecord label span {
   display: inline-block;
   position: relative;
@@ -274,18 +278,21 @@
   top: -5px;
   width: 0px;
 }
-
 #dialogRecord label.border span {
   top: 1px;
   left: 3px;
 }
-
-#dialogRecord label input[type="checkbox"] + span {
-  top: -8px;
+#dialogRecord label input[type="checkbox"] {
+  height: 25px;
 }
-
+#dialogRecord label input[type="checkbox"] + span {
+  top: -10px;
+  font-size: 16px;
+  text-align: center;
+}
 /* -webkit: to disable the default appearance of radio button*/
-#dialogRecord input {
+#dialogRecord input[type="checkbox"],
+#dialogRecord input[type="radio"] {
   height: 20px;
   border-radius: 5px;
   border: 1px solid #19adc4;
@@ -293,49 +300,50 @@
   -webkit-appearance: none;
   -moz-appearance: none;
 }
-
 /*no need, if you don't disable default appearance*/
 /*to remove the square border on focus*/
-#dialogRecord input:focus {
+#dialogRecord input[type="checkbox"]:focus,
+#dialogRecord input[type="radio"]:focus {
   outline-color: transparent;
 }
-
 /*no need, if you don't disable default appearance*/
-#dialogRecord input:checked {
+#dialogRecord input[type="checkbox"]:checked,
+#dialogRecord input[type="radio"]:checked {
   background-color: #19adc4;
 }
-
 #dialogRecord input:checked ~ span {
   color: white;
 }
-
-#dialogRecord input[type="number"] {
-  height: 15px;
-  font-size: 14px;
-  position: relative;
-  top: -5px;
-  left: 70px;
-  border: none;
-}
-
 #dialogRecord input[type="text"] {
-  border: none;
+  position: relative;
+  top: 5px;
+  height: 25px;
+  width: 250px;
+  border: 1px solid lightblue;
+  margin-left: 5px;
 }
-
-#dialogRecord hr.solid {
-  border: 0;
-  border-top: 1px solid #19adc4;
-  margin: 10px 10px 10px 0px;
+#dialogRecord hr.outer {
+  border: 1px solid #19adc4;
+  margin: 10px 0px 10px 0px;
 }
-
-#dialogRecord hr.dashed {
-  border: 0;
-  border-top: 1px dashed #19adc4;
-  margin: 10px 50px 10px 10px;
+#dialogRecord hr.inner {
+  border: 1px solid lightblue;
+  margin: 0px 0px 10px 0px;
 }
-
 #dialogRecord button {
+  height: 25px;
+  width: 30px;
   border-radius: 25%;
+}
+#dialogRecord textarea {
+  width: 320px;
+  height: 55px;
+  border: 1px solid lightblue;
+  margin-left: 5px;
+}
+#dialogRecord textarea.smallarea {
+  width: 250px;
+  height: 40px;
 }
 
 #dialogHoliday table td {

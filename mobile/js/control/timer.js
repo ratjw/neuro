@@ -1,7 +1,7 @@
 
 import {
   DIAGNOSIS, TREATMENT, CONTACT,
-  DIAGNOSISSV, TREATMENTSV, ADMISSIONSV, FINALSV, PROFILESV
+  DIAGNOSISSV, TREATMENTSV, ADMISSIONSV, FINALSV
 } from "../model/const.js"
 import {
   POINTER, OLDCONTENT, getNewcontent, editcellLocation, renewEditcell

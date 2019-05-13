@@ -1,13 +1,16 @@
 
-import { RECORDSHEET, OPERATION, RADIOSURG, ENDOVASC } from "../model/const.js"
+import { RECORDSHEET, OPERATION, RADIOSURG, ENDOVASC, THAIMONTH } from "../model/const.js"
 import { editableSV } from "./setSERVICE.js"
 import { htmlProfile } from '../view/html.js'
-import { winHeight, radioHack, deepEqual } from "../util/util.js"
+import { URIcomponent, winHeight, radioHack, deepEqual } from "../util/util.js"
+import { numDate, thDate, datepicker } from '../util/date.js'
 import { saveService } from './savePreviousCellService.js'
 
 let $dialogRecord = $('#dialogRecord'),
   maxHeight = winHeight(90),
   rowRecord = {},
+  opdate,
+  treatment,
   operated,
   radiosurg,
   endovasc,
@@ -32,6 +35,8 @@ export function showRecord(pointing)
   operated = profile && profile.operated && [...profile.operated] || []
   radiosurg = profile && profile.radiosurg && [...profile.radiosurg] || []
   endovasc = profile && profile.endovasc && [...profile.endovasc] || []
+  opdate = row.dataset.opdate
+  treatment = row.dataset.treatment
   pointed = pointing
 
   $dialogRecord.html(htmlProfile(RECORDSHEET))
@@ -45,9 +50,9 @@ export function showRecord(pointing)
     }
   })
 
-  appendProcedure('operated', OPERATION, operated)
-  appendProcedure('radiosurg', RADIOSURG, radiosurg)
-  appendProcedure('endovasc', ENDOVASC, endovasc)
+  appendProcedure('#operated', OPERATION, operated, 'Op')
+  appendProcedure('#radiosurg', RADIOSURG, radiosurg, 'RS')
+  appendProcedure('#endovasc', ENDOVASC, endovasc, 'ET')
 
   $dialogRecord.dialog({ height: 'auto' })
 
@@ -55,7 +60,7 @@ export function showRecord(pointing)
     title: `${hn} ${patient}`,
     closeOnEscape: true,
     modal: true,
-    width: 400,
+    width: 'auto',
     height: ($dialogRecord.height() > maxHeight) ? maxHeight : 'auto',
     buttons: [
       {
@@ -72,13 +77,13 @@ export function showRecord(pointing)
   clickAddDel()
 }
 
-function appendProcedure(id, proc, item)
+function appendProcedure(id, proc, item, suffix)
 {
   let i = 0,
-    el = document.getElementById(id)
+    el = document.querySelector(id)
 
   while (i < item.length) {
-    el.appendChild(divProcedure(proc, item, i))
+    el.appendChild(divProcedure(proc, item, suffix, i))
     i++
   }
 }
@@ -88,11 +93,11 @@ function clickAddDel()
   $dialogRecord.find('button').off('click').on('click', function() {
     if (this.innerHTML === '+') {
       if (/Operation/.test(this.name)) {
-        addProcedure(divProcedure, '#operated', OPERATION, operated)
+        addProcedure(divProcedure, '#operated', OPERATION, operated, 'Op')
       } else if (/Radiosurgery/.test(this.name)) {
-        addProcedure(divProcedure, '#radiosurg', RADIOSURG, radiosurg)
+        addProcedure(divProcedure, '#radiosurg', RADIOSURG, radiosurg, 'RS')
       } else if (/Endovascular/.test(this.name)) {
-        addProcedure(divProcedure, '#endovasc', ENDOVASC, endovasc)
+        addProcedure(divProcedure, '#endovasc', ENDOVASC, endovasc, 'ET')
       }
     } else if (this.innerHTML === '-') {
       delProcedure(this)
@@ -101,7 +106,7 @@ function clickAddDel()
 }
 
 // add a procedure, reposition the dialog, and renew click button
-function addProcedure(func, id, proc, item) {
+function addProcedure(func, id, proc, item, suffix) {
   let div = $(id).find('div'),
     i = 0
 
@@ -110,7 +115,7 @@ function addProcedure(func, id, proc, item) {
     i++
   }
 
-  $(id).append(func(proc, item, i))
+  $(id).append(func(proc, item, suffix, i))
   resizeScroll()
   radioHack(id)
   clickAddDel()
@@ -124,7 +129,7 @@ function delProcedure(that) {
 
 function resizeScroll()
 {
-  $dialogRecord.dialog({ height: 'auto' })
+  $dialogRecord.dialog({ height: 'auto', width: 'auto' })
   $dialogRecord.dialog({
     height: ($dialogRecord.height() > maxHeight) ? maxHeight : 'auto'
   })
@@ -132,23 +137,49 @@ function resizeScroll()
 }
 
 // add op to e.name to make it unique
-function divProcedure(procedure, item, i)
+function divProcedure(procedure, item, suffix, i)
 {
   let div = document.createElement("div")
   div.innerHTML = htmlProfile(procedure)
 
-  let inputs = div.querySelectorAll("input"),
+  let inputs = div.querySelectorAll("textarea, input"),
     inputname = ''
 
   Array.from(inputs).forEach(e => {
     inputname = e.name
-    e.name = e.name + i
+    e.name = e.name + suffix + i
+    if (e.id === 'opdatepicker') {
+      e.id = 'opdatepicker' + suffix + i
+      datepicker($(e))
+    }
     if (item && item[i]) {
-      e.checked = (e.value === (item[i][inputname]))
+      if (inputname === 'opdate') {
+        if ((i === 0) && !item[i][inputname]) {
+          e.value = thDate(opdate)
+          $(e).datepicker("setDate", new Date(opdate))
+        } else {
+          e.value = item[i][inputname]
+        }
+      } else if (e.type === 'textarea') {
+        if ((i === 0) && !e.value && !usedTreatment()) {
+          e.value = treatment
+        } else {
+          e.value = item[i][inputname]
+        }
+      } else {
+        e.checked = (e.value === (item[i][inputname]))
+      }
     }
   })
 
   return div  
+}
+
+function usedTreatment()
+{
+  return (rowRecord.operated && rowRecord.operated[0] && rowRecord.operated[0].procedure)
+    || (rowRecord.radiosurg && rowRecord.radiosurg[0] && rowRecord.radiosurg[0].procedure)
+    || (rowRecord.endovasc && rowRecord.endovasc[0] && rowRecord.endovasc[0].procedure)
 }
 
 function saveRecord()
@@ -171,25 +202,28 @@ function saveRecord()
     }
   })
 
-  saveProcedure('#operated', recordJSON.operated)
-  saveProcedure('#radiosurg', recordJSON.radiosurg)
-  saveProcedure('#endovasc', recordJSON.endovasc)
+  saveProcedure('#operated', recordJSON.operated, 'Op')
+  saveProcedure('#radiosurg', recordJSON.radiosurg, 'RS')
+  saveProcedure('#endovasc', recordJSON.endovasc, 'ET')
 
   if (!recordJSON.radiosurg.length) { delete recordJSON.radiosurg }
   if (!recordJSON.endovasc.length) { delete recordJSON.endovasc }
 
   if (deepEqual(recordJSON, rowRecord)) { return }
 
-  saveService(pointed, "profile", JSON.stringify(recordJSON))
+  let content = JSON.stringify(recordJSON)
+    content = URIcomponent(content)
+
+  saveService(pointed, "profile", content)
 }
 
-function saveProcedure(id, procedure)
+function saveProcedure(id, procedure, suffix)
 {
   $(id + ' div').each((i, div) => {
     if (!procedure[i]) { procedure[i] = {} }
-    div.querySelectorAll('input').forEach(e => {
-      if ((e.type === 'button') || e.checked) {
-        procedure[i][e.name.replace(i, '')] = e.value
+    div.querySelectorAll('input, textarea').forEach(e => {
+      if ((e.type === 'text') || (e.type === 'textarea') || e.checked) {
+        procedure[i][e.name.replace(suffix + i, '')] = e.value
       }
     })
   })
