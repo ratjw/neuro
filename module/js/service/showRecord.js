@@ -162,7 +162,7 @@ function divProcedure(procedure, item, suffix, i)
           e.value = item[i][inputname]
         }
       } else if (e.type === 'textarea') {
-        if ((i === 0) && !e.value && !usedTreatment()) {
+        if ((i === 0) && !(item[i] && item[i].procedure) && !usedTreatment()) {
           e.value = treatment
         } else {
           e.value = item[i][inputname]
@@ -178,7 +178,7 @@ function divProcedure(procedure, item, suffix, i)
 
 function usedTreatment()
 {
-  let txtarea = $dialogRecord.find("textarea")
+  let txtarea = $dialogRecord.find('textarea')
 
   return Array.from(txtarea).some(e => !!e.value)
 }
