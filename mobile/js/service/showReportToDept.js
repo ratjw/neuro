@@ -108,7 +108,7 @@ function countOpCase(operated)
 {
   let op = operated.length
 
-  document.querySelector('#Operation').innerHTML++
+  op && document.querySelector('#Operation').innerHTML++
   while(op > 1) {
     document.querySelector('#Operation').innerHTML++
     document.querySelector('#Reoperation').innerHTML++
