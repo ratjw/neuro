@@ -28,15 +28,15 @@ function login()
 							: false
 	var browser = /rvpn/.test(window.origin)
 				? isMobile
-					? "mobilevpn"
-					: "es5"
+					? "mobilevpn/mobilevpn.html"
+					: "es5/es5.html"
 				: checkES6()
 					? isMobile
-						? "mobile"
+						? "module/mobile.html"
 						: module
-							? "module"
-							: "es6"
-					: "es5"
+							? "module/desktop.html"
+							: "es6/es6.html"
+					: "es5/es5.html"
 					
 	document.getElementById("browser").value = browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
@@ -57,9 +57,8 @@ function checkES6() {
     if (typeof fetch === "undefined") return false
     if (typeof find === "undefined") return false
     try {
-        eval("class Foo {}")
-        eval("var bar = async (x) => x+1")
-		eval('"foo".includes("foo")')
+      eval("var bar = async (x) => x+1")
+      eval('"foo".includes("foo")')
     } catch (e) { return false }
 
     return true

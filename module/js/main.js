@@ -1,5 +1,6 @@
 
-import { userStaff } from "./control/start.js"
+import { userDesktop } from "./control/startDesktop.js"
+import { userMobile } from "./control/startMobile.js"
 import { Alert } from "./util/util.js"
 
 // from login.js
@@ -11,5 +12,7 @@ document.getElementById("mainwrapper").style.height = window.innerHeight
   - document.getElementById("cssmenu").style.height
 
 ;/^\d{6}$/.test(USER)
-? userStaff()
+? isMobile
+  ? userMobile()
+  : userDesktop()
 : Alert("Alert!", "Invalid userid")

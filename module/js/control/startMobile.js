@@ -1,15 +1,15 @@
 
 import { THEATRE } from "../model/const.js"
-import { addStaff } from "./addStaff.js"
+//import { addStaff } from "./addStaff.js"
 import { clicktable } from "./clicktable.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 import { editcellEvent, clearEditcell, renewEditcell } from "./edit.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
-import { setClickMenu } from "../menu/setClickMenu.js"
-import { setClickSetting } from "./setClickSetting.js"
+import { setClickMenu } from "../menu/setClickMobileMenu.js"
+//import { setClickSetting } from "./setClickSetting.js"
 import { setClickService } from "../service/serviceReview.js"
 import { sqlStart } from "../model/sqlupdate.js"
-import { sortable } from "./sort.js"
+//import { sortable } from "./sort.js"
 import { clearSelection } from "../get/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
@@ -23,7 +23,7 @@ import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
 
 // For staff & residents with login id / password from Get_staff_detail
-export function userStaff() {
+export function userMobile() {
 	sqlStart().then(response => {
 		typeof response === "object"
 		? success(response)
@@ -37,7 +37,7 @@ export function userStaff() {
 function success(response) {
 
   // call sortable before render, otherwise it renders very slowly
-  sortable()
+//  sortable()
   updateBOOK(response)
   fillmain()
   scrolltoToday('maintbl')
@@ -54,11 +54,12 @@ function success(response) {
   wrapperEvent()
   documentEvent()
   setClickMenu()
-  setClickSetting()
+//  setClickSetting()
   setClickService()
   overrideJqueryUI()
   resetTimer()
 //  serverSentEvent()
+  scaleViewport()
 }
 
 // *** plan -> offline browsing by service worker ***
@@ -237,4 +238,13 @@ function dialogServiceShowing()
   let $dialogService = $("#dialogService")
 
   return $dialogService.hasClass('ui-dialog-content') && $dialogService.dialog('isOpen')
+}
+
+function scaleViewport()
+{
+  var siteWidth = 1280
+  var scale = screen.width / siteWidth
+
+  document.querySelector('meta[name="viewport"]')
+    .setAttribute('content', 'width=' + siteWidth + ', initial-scale=' + scale)
 }

@@ -37,6 +37,8 @@
     `morbid`: ,                                 * "Morbidity"             UDO
     `dead`: ,                                   * "Dead"                  UDO
     `operated`: [{
+      `opdate`                                  * Thai calendar
+      `procedure`                              * textarea from treatment
       `doneby`: ,                               * "Staff", "Fellow", "Resident" UDO
       `manner`: ,                               * "Elective", "Emergency" UDO
       `scale`: ,                                * "Major", "Minor"        UDO

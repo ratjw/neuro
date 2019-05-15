@@ -5,8 +5,8 @@
 		$browser = !empty($_POST['browser']) ? $_POST['browser'] : '';
 
 		$location = "location:";
-		$browserDoctor = $location . $browser;
-		$browserNurse = $location . "nurse";
+		$browserDoctor = "$location $browser";
+		$browserNurse = "$location nurse/nurse.html";
 
 		$servername = "surgery.rama.mahidol.ac.th";
 		$wsdl="http://appcenter/webservice/patientservice.wsdl";

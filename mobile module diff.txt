@@ -1,22 +1,31 @@
 
-Mobile files are different from module files in the followings
+Mobile files are different from desktop files in the followings:
 
-index.html
+desktop.html -> mobile.html
   add: responsive
-  out: some menu
+  comment out: some menu
 
-control/start.js
-  add: scaleViewport()
-  out: some imports, sortable, setClickSetting
+css/
+  desktop.css -> mobile.css
+  desktopmenu.css -> mobilemenu.css
 
-menu/setClickMenu.js:
-  out: some menu
+control/
+  startDesktop.js -> startMobile.js
+                      add: scaleViewport()
+                      out: some imports, sortable, setClickSetting
 
-Mobile directories miss some files in the followings
+menu/
+  setClickDesktopMenu.js -> setClickMobileMenu.js
+                              out: some menu
+_________________________________________________
 
-  control/addStaff.js
-  control/inputHoliday.js
-  control/setClickSetting.js
-  control/sort.js
+Mobile part don't need the following files:
 
-  view/viewAddStaff.js
+  control/
+    addStaff.js
+    inputHoliday.js
+    setClickSetting.js
+    sort.js
+
+  view/
+    viewAddStaff.js

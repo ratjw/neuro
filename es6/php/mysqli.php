@@ -49,7 +49,6 @@ function start($mysqli)
 	$data = array();
 	$data = book($mysqli);
 	$data["STAFF"] = getStaff($mysqli);
-	$data["ONCALL"] = getOncall($mysqli);
 	$data["HOLIDAY"] = getHoliday($mysqli);
 	return json_encode($data);
 }
@@ -85,7 +84,6 @@ function returnStaff($mysqli, $sql)
 		return $return;
 	} else {
 		$data["STAFF"] = getStaff($mysqli);
-		$data["ONCALL"] = getOncall($mysqli);
 		return json_encode($data);
 	}
 }

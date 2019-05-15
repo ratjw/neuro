@@ -18,14 +18,14 @@ function book($mysqli)
 	$staff = array();
 
 	$sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
-				patient,dob,diagnosis,treatment,equipment,contact,qn,editor
-			FROM book 
-			WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
-				AND deleted = 0 AND waitnum > 0
-			ORDER BY opdate,theatre,oproom is null,oproom,casenum,
-				IF(oproom, optime, null),waitnum;";
-			// The one with no oproom will be the last, sorted by ASC
-			// If no oproom, then will not sort on optime
+            patient,dob,diagnosis,treatment,equipment,contact,qn,editor
+          FROM book 
+          WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
+            AND deleted = 0 AND waitnum > 0
+          ORDER BY opdate,theatre,oproom is null,oproom,casenum,
+            IF(oproom, optime, null),waitnum;";
+          // The one with no oproom will be the last, sorted by ASC
+          // If no oproom, then will not sort on optime
 
 	if (!$result = $mysqli->query ($sql)) {
 		return $mysqli->error;
@@ -35,13 +35,13 @@ function book($mysqli)
 	}
 
 	$sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
-				patient,dob,diagnosis,treatment,equipment,contact,qn,editor
-			FROM book 
-			WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
-				AND deleted = 0 AND waitnum < 0
-			ORDER BY opdate,waitnum DESC;";
-			// Consult cases have negative waitnum.
-			// Greater waitnum (less negative) are placed first, sorted by DESC
+            patient,dob,diagnosis,treatment,equipment,contact,qn,editor
+          FROM book 
+          WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
+            AND deleted = 0 AND waitnum < 0
+          ORDER BY opdate,waitnum DESC;";
+          // Consult cases have negative waitnum.
+          // Greater waitnum (less negative) are placed first, sorted by DESC
 
 	if (!$result = $mysqli->query ($sql)) {
 		return $mysqli->error;

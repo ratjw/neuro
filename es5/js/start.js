@@ -4,7 +4,7 @@ $(function ()
   var response = sessionStorage.getItem("userid")
 
   if (/^\d{6}$/.test(response)) {
-    Ajax(MYSQLIPHP, "start=start", loading);
+    Ajax(MYSQLIPHP, "start=", loading);
 
     gv.user = response
     gv.isPACS = !gv.isMobile && /10.6./.test(window.location)
