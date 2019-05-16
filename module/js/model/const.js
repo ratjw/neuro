@@ -712,7 +712,7 @@ ETCRXNO = [
 
 NOOPERATION = [
   /adjust.*pressure/i, /advice.*surg[ery|ical]/i,
-  /conservative/i, /observe/i, /\boff OR/
+  /conservative/i, /observe/i, /\boff OR/, /standby/i
 ],
 RADIOSURGERY = [
   /conformal radiotherapy/i, /CRT/i, /Cyber ?Knife/i,

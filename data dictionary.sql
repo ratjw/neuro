@@ -30,29 +30,29 @@
   `final` varchar(5000) NOT NULL DEFAULT '',
   `equipment` JSON,
   `profile` JSON {
-    `admitted`: "0" "1", "2", ...,             * "0"= user-defined no admission
-                                                * "1"
-                                                * "2"... Readmission
-    `infection`: ,                              * "Infection"             UDO
-    `morbid`: ,                                 * "Morbidity"             UDO
-    `dead`: ,                                   * "Dead"                  UDO
+    `admitted`: "0" "1", "2", ...,     * "0"= user-defined no admission
+                                        * "1"
+                                        * "2"... Readmission
+    `infection`: ,                      * "Infection"             UDO
+    `morbid`: ,                         * "Morbidity"             UDO
+    `dead`: ,                           * "Dead"                  UDO
     `operated`: [{
-      `opdate`                                  * Thai calendar
-      `procedure`                              * textarea from treatment
-      `doneby`: ,                               * "Staff", "Fellow", "Resident" UDO
-      `manner`: ,                               * "Elective", "Emergency" UDO
-      `scale`: ,                                * "Major", "Minor"        UDO
-      `disease`:                                * "Brain Tumor", "Brain Vascular",
+      `opdate`                          * Thai calendar
+      `procedure`                      * textarea from treatment
+      `doneby`: ,                       * "Staff", "Fellow", "Resident" UDO
+      `manner`: ,                       * "Elective", "Emergency" UDO
+      `scale`: ,                        * "Major", "Minor"        UDO
+      `disease`:                        * "Brain Tumor", "Brain Vascular",
                                                   "CSF related", "Trauma",
                                                   "Spine", "etc"
                                                   (run-time calc by operationFor)
     }],
     `radiosurg`: [{
-      `radiodoneby`:                            * "Staff", "Resident"     UDO
+      `doneby`:                         * "Staff", "Resident"     UDO
     }],
     `endovasc`: [{
-      `endodoneby`: ,                           * "Staff", "Resident"     UDO
-      `endomanner`: ,                           * "Elective", "Emergency" UDO
+      `doneby`: ,                       * "Staff", "Resident"     UDO
+      `manner`: ,                       * "Elective", "Emergency" UDO
     }]
   },
   `contact` varchar(1000) NOT NULL DEFAULT '',
