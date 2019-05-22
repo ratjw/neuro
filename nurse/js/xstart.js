@@ -74,6 +74,8 @@ function fillForRoom(opdate, room, qn)
 			showFind($("#tblcontainer"), row)
 		}
 
+	showCase()
+
 	function showButtons() {
 		$('#dialogEquip').dialog("option", "buttons", [
 			{
@@ -117,8 +119,6 @@ function fillForRoom(opdate, room, qn)
 			}
 		])
 	}
-
-	showCase()
 }
 
 function updateBOOK(result)

@@ -1075,7 +1075,8 @@ function getEQUIP(pointing)
 		qn = $row.find("td")[QN].innerHTML
 
 	if (qn) {
-		fillEquipTable(book, $row, qn)
+    alert("Please use newer version to checklist equipments")
+//		fillEquipTable(book, $row, qn)
 	}
 }
 
