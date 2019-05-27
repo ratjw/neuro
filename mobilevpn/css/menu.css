@@ -10,14 +10,7 @@
   background: #ffffff;
   border: 1px solid #ece6e8;
   border-bottom: 3px solid #d9ced2;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
-  -o-border-radius: 2px;
   border-radius: 2px;
-}
-#cssmenu > ul li.narrow {
-  display: none;
-  /* Hide for large screens */
 }
 #cssmenu > ul li {
   display: inline-block;
@@ -91,19 +84,19 @@
   #cssmenu > ul {
     width: 100%;
   }
-  #cssmenu > ul li.narrow {
-    display: block;
+  #cssmenu > ul li {
+    display: none;
   }
-  #cssmenu > ul li.narrow a {
-    background: url('images/menu.png') no-repeat;
-    background-position: 95% -35%;
+  #cssmenu > ul li.narrow {
+    display: inline-block;
+  }
+  #cssmenu > ul li.narrow.hassub a {
+    background: url('images/caret.png') no-repeat;
+    background-position: 100% -100%;
   }
   #cssmenu > ul li.narrow a:hover {
     background-color: #d80041;
-    background-position: 95% 135%;
-  }
-  #cssmenu > ul li {
-    display: none;
+    background-position: 100% -100%;
   }
   #cssmenu > ul li.right {
     float: none;
@@ -112,8 +105,8 @@
     position: relative;
   }
   #cssmenu > ul li ul {
-    display: block;
-    position: static;
+    display: none;
+    position: absolute;
     width: 100%;
     background: #ffffff;
     border: 0 none;
@@ -123,20 +116,9 @@
   }
   #cssmenu > ul li ul li a span {
     display: block;
-    padding-left: 24px;
+    padding-left: 7px;
   }
   #cssmenu > ul li > a {
     background-image: none;
-  }
-}
-/* Make sure they show even if hidden in mobile view by JS */
-@media (min-width: 600px) {
-  #cssmenu > ul > li.collapsed {
-    display: inline-block !important;
-    *display: inline;
-    zoom: 1;
-  }
-  #cssmenu > ul ul li.collapsed {
-    display: block !important;
   }
 }

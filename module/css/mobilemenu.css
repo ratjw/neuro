@@ -88,7 +88,7 @@
     display: none;
   }
   #cssmenu > ul li.narrow {
-    display: inline-block;;
+    display: inline-block;
   }
   #cssmenu > ul li.narrow.hassub a {
     background: url('images/caret.png') no-repeat;

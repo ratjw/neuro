@@ -18,25 +18,25 @@ function login()
 	var Edge = ua.match(/Edge\/(.*)$/)
 	var Safari = ua.match(/Safari\/(.*)$/)
 	var module = (Chrome && Chrome.length > 1)
-				? Chrome[1] >= "61"
-				: (Firefox && Firefox.length > 1)
-					? Firefox[1] >= "60"
-					: (Edge && Edge.length > 1)
-						? Edge[1] >= "16"
-						: (Safari && Safari.length > 1)
-							? Safari[1] >= "10.1"
-							: false
+              ? Chrome[1] >= "61"
+              : (Firefox && Firefox.length > 1)
+                ? Firefox[1] >= "60"
+                : (Edge && Edge.length > 1)
+                  ? Edge[1] >= "16"
+                  : (Safari && Safari.length > 1)
+                    ? Safari[1] >= "10.1"
+                    : false
 	var browser = /rvpn/.test(window.origin)
-				? isMobile
-					? "mobilevpn/mobilevpn.html"
-					: "es5/es5.html"
-				: checkES6()
-					? isMobile
-						? "module/mobile.html"
-						: module
-							? "module/desktop.html"
-							: "es6/es6.html"
-					: "es5/es5.html"
+              ? isMobile
+                ? "mobilevpn/mobilevpn.html"
+                : "es5/es5.html"
+              : checkES6()
+                ? isMobile
+                  ? "module/mobile.html"
+                  : module
+                    ? "module/desktop.html"
+                    : "es6/es6.html"
+                : "es5/es5.html"
 					
 	document.getElementById("browser").value = browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
