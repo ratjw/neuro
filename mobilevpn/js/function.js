@@ -320,8 +320,6 @@ function findLastDateInBOOK(book)
 // main table (#tbl) only
 function sameDateRoomTableQN(opdateth, room, theatre)
 {
-  if (!room) { return [] }
-
   var sameRoom = $('#tbl tr').filter(function() {
     return this.cells[OPDATE].innerHTML === opdateth
       && this.cells[THEATRE].innerHTML === theatre
@@ -330,7 +328,7 @@ function sameDateRoomTableQN(opdateth, room, theatre)
   $.each(sameRoom, function(i) {
     sameRoom[i] = this.cells[QN].innerHTML
   })
-  return $.makeArray(sameRoom)
+  return $.makeArray(sameRoom).filter(function(e) { return e })
 }
 
 function sameDateRoomBookQN(book, opdate, room)
@@ -344,6 +342,34 @@ function sameDateRoomBookQN(book, opdate, room)
     sameRoom[i] = this.qn
   })
   return sameRoom
+}
+
+function updateCasenum(allCases)
+{
+	var sql = ""
+	for (var i=0; i<allCases.length; i++) {
+		sql += sqlCaseNum(i + 1, allCases[i])
+	}
+	return sql
+}
+
+function sqlCaseNum(casenum, qn)
+{	
+	return "UPDATE book SET "
+		+  "casenum=" + casenum
+		+  ",editor='" + gv.user
+		+  "' WHERE qn="+ qn + ";";
+}
+
+function sqlMover(waitnum, opdate, oproom, casenum, qn)
+{
+	return "UPDATE book SET "
+		+  "waitnum=" + waitnum
+		+  ", opdate='" + opdate
+		+  "',oproom=" + oproom
+		+  ",casenum=" + casenum
+		+  ",editor='" + gv.user
+		+  "' WHERE qn="+ qn + ";";
 }
 
 // for main table (#tbl) only

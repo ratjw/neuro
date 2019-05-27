@@ -99,7 +99,7 @@ function deletedCases()
           + "FROM book b INNER JOIN bookhistory bh ON b.qn = bh.qn "
           + "WHERE b.deleted > 0 AND b.opdate>DATE_ADD(NOW(), INTERVAL -3 MONTH) AND bh.action = 'delete' "
 		  + "GROUP BY b.qn "
-          + "ORDER BY a.editdatetime DESC;"
+          + "ORDER BY editdatetime DESC;"
 
   Ajax(MYSQLIPHP, sql, callbackdeletedCases)
 

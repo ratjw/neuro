@@ -25,6 +25,14 @@ function oneRowMenu()
 
 	enable(qn, "#history")
 
+	var Delete = qn || (prevDate === opdateth)
+	if (Delete) {
+		$("#delcase").html("<b>Confirm delete </b><br>" + patient)
+	}
+	enable(Delete, "#delete")
+
+	enable(true, "#EXCEL")
+
 	enable(true, "#LINE")
 }
 
