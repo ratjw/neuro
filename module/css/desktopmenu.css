@@ -12,10 +12,6 @@
   border-bottom: 3px solid #d9ced2;
   border-radius: 2px;
 }
-#cssmenu > ul li#responsive-tab {
-  display: none;
-  /* Hide for large screens */
-}
 #cssmenu > ul li {
   display: inline-block;
   position: relative;

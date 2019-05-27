@@ -9,18 +9,22 @@ export function viewOneDay(table, opdate, opdateBOOKrows) {
 
   let opdateTblRows = getTableRowsByDate(table.id, opdate),
     bookRows = opdateBOOKrows.length,
-    row, cells, clone
+    tblRows = opdateTblRows.length,
+    row,
+    clone
 
   if (bookRows) {
-    while (opdateTblRows.length > bookRows) {
-      table.deleteRow(opdateTblRows[0].rowIndex)
+    while (tblRows > bookRows) {
+      table.deleteRow(opdateTblRows[tblRows-1].rowIndex)
       opdateTblRows = getTableRowsByDate(table.id, opdate)
+      tblRows = opdateTblRows.length
     }
-    while (opdateTblRows.length < bookRows) {
-      clone = opdateTblRows[0].cloneNode(true)
+    while (tblRows < bookRows) {
+      clone = opdateTblRows[tblRows-1].cloneNode(true)
       clone.dataset.opdate = opdate
-      opdateTblRows[0].after(clone)
+      opdateTblRows[tblRows-1].after(clone)
       opdateTblRows = getTableRowsByDate(table.id, opdate)
+      tblRows = opdateTblRows.length
     }
     opdateBOOKrows.forEach((e, i) => {
       row = opdateTblRows[i]
@@ -28,11 +32,12 @@ export function viewOneDay(table, opdate, opdateBOOKrows) {
       fillOldrowData(row, e)
     })
   } else {
-    while (opdateTblRows.length > 1) {
-      table.deleteRow(opdateTblRows[0].rowIndex)
+    while (tblRows > 1) {
+      table.deleteRow(opdateTblRows[tblRows-1].rowIndex)
       opdateTblRows = getTableRowsByDate(table.id, opdate)
+      tblRows = opdateTblRows.length
     }
-    row = opdateTblRows[0]
+    row = opdateTblRows[tblRows-1]
     if (row && row.dataset.qn) {
       unfillOldrowData(row, opdate)
     }

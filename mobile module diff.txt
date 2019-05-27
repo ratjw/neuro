@@ -2,7 +2,7 @@
 Mobile files are different from desktop files in the followings:
 
 desktop.html -> mobile.html
-  add: responsive
+  add: narrow
   comment out: some menu
 
 css/

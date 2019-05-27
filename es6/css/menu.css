@@ -12,7 +12,7 @@
   border-bottom: 3px solid #d9ced2;
   border-radius: 2px;
 }
-#cssmenu > ul li#responsive-tab {
+#cssmenu > ul li#narrow {
   display: none;
   /* Hide for large screens */
 }
@@ -88,14 +88,14 @@
   #cssmenu > ul {
     width: 100%;
   }
-  #cssmenu > ul li#responsive-tab {
+  #cssmenu > ul li.narrow {
     display: block;
   }
-  #cssmenu > ul li#responsive-tab a {
+  #cssmenu > ul li.narrow a {
     background: url('images/menu.png') no-repeat;
     background-position: 95% -35%;
   }
-  #cssmenu > ul li#responsive-tab a:hover {
+  #cssmenu > ul li.narrow a:hover {
     background-color: #d80041;
     background-position: 95% 135%;
   }

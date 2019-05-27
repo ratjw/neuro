@@ -87,14 +87,14 @@
   #cssmenu > ul li {
     display: none;
   }
-  #cssmenu > ul li.responsive {
+  #cssmenu > ul li.narrow {
     display: inline-block;;
   }
-  #cssmenu > ul li.responsive.hassub a {
+  #cssmenu > ul li.narrow.hassub a {
     background: url('images/caret.png') no-repeat;
     background-position: 100% -100%;
   }
-  #cssmenu > ul li.responsive a:hover {
+  #cssmenu > ul li.narrow a:hover {
     background-color: #d80041;
     background-position: 100% -100%;
   }
