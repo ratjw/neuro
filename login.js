@@ -22,7 +22,7 @@ function login()
               : (Firefox && Firefox.length > 1)
                 ? Firefox[1] >= "60"
                 : (Edge && Edge.length > 1)
-                  ? Edge[1] >= "16"
+                  ? Edge[1] >= "26"
                   : (Safari && Safari.length > 1)
                     ? Safari[1] >= "10.1"
                     : false
@@ -30,17 +30,15 @@ function login()
               ? isMobile
                 ? "mobilevpn/mobilevpn.html"
                 : "es5/es5.html"
-              : checkES6()
+              : module
                 ? isMobile
                   ? "module/mobile.html"
-                  : module
-                    ? "module/desktop.html"
-                    : "es6/es6.html"
+                  : "module/desktop.html"
                 : "es5/es5.html"
 					
 	document.getElementById("browser").value = browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
-	sessionStorage.setItem('device', (isMobile ? 'isMobile' : ''))
+	sessionStorage.setItem('isMobile', isMobile)
 }
 
 function namesix()
@@ -50,16 +48,4 @@ function namesix()
 		sessionStorage.setItem('userid', userid)
 		document.getElementById("pwd").focus()
 	}
-}
-
-// vpn not run ES6
-function checkES6() {
-    if (typeof fetch === "undefined") return false
-    if (typeof find === "undefined") return false
-    try {
-      eval("var bar = async (x) => x+1")
-      eval('"foo".includes("foo")')
-    } catch (e) { return false }
-
-    return true
 }

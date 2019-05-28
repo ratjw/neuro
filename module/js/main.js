@@ -5,7 +5,7 @@ import { Alert } from "./util/util.js"
 
 // from login.js
 export const USER = sessionStorage.getItem("userid")
-export const isMobile = sessionStorage.getItem("device")
+export const isMobile = sessionStorage.getItem("isMobile") === 'true'
 
 document.getElementById("wrapper").style.display = "block"
 document.getElementById("mainwrapper").style.height = window.innerHeight

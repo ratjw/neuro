@@ -209,7 +209,6 @@ function filldata(bookq, row)
 
 	row.title = bookq.waitnum
 	if (bookq.hn && gv.isPACS) { cells[HN].className = "pacs" }
-	if (bookq.patient && gv.isMobile) { cells[PATIENT].className = "camera" }
 
 	cells[THEATRE].innerHTML = bookq.theatre
 	cells[OPROOM].innerHTML = bookq.oproom || ""
@@ -312,7 +311,6 @@ jQuery.fn.extend({
 		addColor(this, bookq.opdate)
 		$cells[OPDATE].className = dayName(NAMEOFDAYABBR, bookq.opdate)
 		$cells[HN].className = (bookq.hn && gv.isPACS)? "pacs" : ""
-		$cells[PATIENT].className = (bookq.patient && gv.isMobile)? "camera" : ""
 
 		$cells[OPDATE].innerHTML = putThdate(bookq.opdate)
 		$cells[OPROOM].innerHTML = bookq.oproom || ""
