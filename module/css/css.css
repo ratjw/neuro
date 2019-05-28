@@ -353,33 +353,20 @@ tr#moveto td {
 
 /* mark the row of fillEquipTable, tracking, find, and pasted row after moveCase */
 tr.marker {
-  border: solid 3px skyblue !important;
-}
-
-@keyframes blink1 { 
-   10% { background-color: pink; } 
+  border: solid 2px skyblue !important;
 }
 
 tr.moveCase {
-  animation: blink1 1s step-end infinite alternate;
-}
-
-@keyframes blink2 { 
-   10% { background-color: skyblue; } 
+  border: dashed 2px red !important;
 }
 
 tr.copyCase {
-  animation: blink2 1s step-end infinite alternate;
-}
-
-@keyframes blink3 { 
-   10% { border-color: royalblue; } 
+  border: dashed 2px blue !important;
 }
 
 /* mark where move/copy case will be pasted */
 tr.pasteDate {
-  animation: blink3 1s step-end infinite alternate;
-  border-bottom: solid 3px skyblue;
+  border-bottom: dashed 2px green;
 }
 
 tr.selected {

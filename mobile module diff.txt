@@ -5,9 +5,10 @@ desktop.html -> mobile.html
   add: narrow
   comment out: some menu
 
-css/
-  desktop.css -> mobile.css
-  desktopmenu.css -> mobilemenu.css
+css/menu.css
+  add @media (max-width: 600px) {
+    mobilemenu.css
+  }
 
 control/
   startDesktop.js -> startMobile.js
@@ -17,6 +18,11 @@ control/
 menu/
   setClickDesktopMenu.js -> setClickMobileMenu.js
                               out: some menu
+
+view/
+  fillConsults()
+    if (isMobile) { return }
+
 _________________________________________________
 
 Mobile part don't need the following files:

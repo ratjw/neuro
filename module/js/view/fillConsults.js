@@ -1,4 +1,5 @@
 
+import { isMobile } from "../main.js"
 import { PATIENT, LARGESTDATE } from "../model/const.js"
 import { ISOdate, nextdays, numDate, thDate, START } from "../util/date.js"
 import { STAFF } from "../util/updateBOOK.js"
@@ -10,12 +11,6 @@ export function showStaffOnCall(opdate)
   if (new Date(opdate).getDay() === 6) {
     fillConsults()
   }
-}
-
-export function dataAttr(pointing, staffname)
-{
-  pointing.dataset.consult = staffname
-  pointing.classList.add("consult")
 }
 
 // The staff who has latest startoncall date, is to start
@@ -32,6 +27,8 @@ export function fillConsults(tableID = 'maintbl')
     staffstart = start.staffname,
     sindex = staffoncall.findIndex(e => e.staffname === staffstart)
 
+  if (isMobile) { return }
+
   // find first date to begin
   while (dateoncall < firstsat) {
     dateoncall = nextdays(dateoncall, 7)
@@ -42,4 +39,10 @@ export function fillConsults(tableID = 'maintbl')
     dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname)
     sindex = (sindex + 1) % slen
   })
+}
+
+function dataAttr(pointing, staffname)
+{
+  pointing.dataset.consult = staffname
+  pointing.classList.add("consult")
 }
