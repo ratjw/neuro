@@ -1,6 +1,6 @@
 
 import { createEditcell, clearEditcell } from "../control/edit.js"
-import { isPACS } from "../util/updateBOOK.js"
+import { isPACS } from "../main.js"
 import { inPicArea } from "../util/util.js"
 import { PACS } from "./PACS.js"
 

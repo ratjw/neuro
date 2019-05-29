@@ -191,7 +191,7 @@ function showService(fromDate, toDate)
 //	if (/surgery\.rama/.test(location.hostname)) {
 //		getAdmitDischargeDate(fromDate, toDate)
 //	}
-	countAllServices()
+//	countAllServices()
 	$servicetbl.fixMe($dialogService)
 	hoverService()
 
@@ -307,7 +307,7 @@ jQuery.fn.extend({
 		cells[TREATMENTSV].innerHTML = bookq.treatment
 		cells[ADMISSIONSV].innerHTML = bookq.admission
 		cells[FINALSV].innerHTML = bookq.final
-		cells[PROFILESV].appendChild(showRecord(bookq))
+//		cells[PROFILESV].appendChild(showRecord(bookq))
 		cells[ADMITSV].innerHTML = putThdate(bookq.admit)
 		cells[OPDATESV].innerHTML = putThdate(bookq.opdate)
 		cells[DISCHARGESV].innerHTML = putThdate(bookq.discharge)

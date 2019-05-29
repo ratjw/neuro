@@ -952,12 +952,7 @@ function exportToExcel(id, data_type, title, style, head, filename)
       tableToExcel += head + table
       tableToExcel += '</BODY></HTML>'
 
-  var ua = window.navigator.userAgent;
-  var msie = ua.indexOf("MSIE")
-  var edge = ua.indexOf("Edge"); 
-
-  if (msie > 0 || edge > 0 || navigator.userAgent.match(/Trident.*rv\:11\./)) // If Internet Explorer
-  {
+  if (msie()) {
     if (typeof Blob !== "undefined") {
     //use blobs if we can
     tableToExcel = [tableToExcel];
@@ -981,4 +976,14 @@ function exportToExcel(id, data_type, title, style, head, filename)
     a.download = filename
     a.click();    //tested with Chrome and FF
   }
+}
+
+function msie()
+{
+  var ua = window.navigator.userAgent
+  var msie = ua.indexOf("MSIE")
+  var edge = ua.indexOf("Edge") 
+  var IE = !!navigator.userAgent.match(/Trident.*rv\:11\./)
+
+  return msie >= 0 || edge >= 0 || IE
 }

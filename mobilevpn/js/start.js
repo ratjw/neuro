@@ -7,7 +7,6 @@ $(function ()
     Ajax(MYSQLIPHP, "start=start", loading);
 
     gv.user = response
-    gv.isPACS = gv.isMobile && /10.6./.test(window.location)
     $("#wrapper").show()
     $("#tblwrapper").css("height", window.innerHeight - $("#cssmenu").height())
   }
@@ -401,7 +400,7 @@ function updating()
         refillall()
       }
       // idling (59+1)*10 = 10 minutes, logout
-      else if (gv.idleCounter > 59 && gv.isMobile) {
+      else if (gv.idleCounter > 59) {
         history.back()
         gv.idleCounter = 0
         // may not successfully access the history

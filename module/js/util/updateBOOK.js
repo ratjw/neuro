@@ -10,8 +10,6 @@ import { renewEditcell } from "../control/edit.js"
 // HOLIDAY is for Buddhist holiday entry of every year
 // TIMESTAMP is the last time access from this client to the server
 
-export const isPACS = /module/.test(window.location) && (/surgery\.rama/.test(location.hostname))
-
 export let BOOK = [],
   CONSULT = [],
   STAFF = [],

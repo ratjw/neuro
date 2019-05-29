@@ -6,7 +6,7 @@ import {
 import { POINTER, clearEditcell } from "../control/edit.js"
 import { START, thDate, putThdate, putNameAge } from "../util/date.js"
 import { isSplit,  winWidth, winHeight, winResizeFix } from "../util/util.js"
-import { isPACS } from "../util/updateBOOK.js"
+import { isPACS } from "../main.js"
 import { fillmain } from "../view/fill.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { fillConsults } from "../view/fillConsults.js"

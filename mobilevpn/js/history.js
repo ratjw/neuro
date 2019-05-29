@@ -727,8 +727,6 @@ jQuery.fn.extend({
       rowDecoration(row, q.opdate)
     }
     q.hn && gv.isPACS && (cells[2].className = "pacs")
-    q.patient && gv.isMobile && (cells[3].className = "camera")
-
     dataforEachCell(cells, data)
   }
 })
@@ -736,37 +734,12 @@ jQuery.fn.extend({
 function PACS(hn)
 { 
   var pacs = 'http://synapse/explore.asp?path=/All Patients/InternalPatientUID='+hn
-  var sql = 'PAC=http://synapse/explore.asp'
   var ua = window.navigator.userAgent;
   var msie = ua.indexOf("MSIE")
   var edge = ua.indexOf("Edge")
   var IE = !!navigator.userAgent.match(/Trident.*rv\:11\./)
-  var data_type = 'data:application/vnd.ms-internet explorer'
 
-  if (msie > 0 || edge > 0 || IE) { // If Internet Explorer
-    open(pacs);
-  } else {
-    var html = '<!DOCTYPE html><HTML><HEAD><script>function opener(){window.open("'
-    html += pacs + '", "_self")}</script><body onload="opener()"></body></HEAD></HTML>'
-    var a = document.createElement('a');
-    document.body.appendChild(a);  // You need to add this line in FF
-    a.href = data_type + ', ' + encodeURIComponent(html);
-    a.download = "index.html"
-    a.click();    //to test with Chrome and FF
-  }
-}
-
-function showUpload(hn, patient)
-{
-  var win = gv.uploadWindow
-  if (hn) {
-    if (win && !win.closed) {
-      win.close();
-    }
-    gv.uploadWindow = win = window.open("Upload", "_blank")
-    win.hnName = {"hn": hn, "patient": patient}
-    //hnName is a pre-defined variable in child window (Upload)
-  }
+  if (msie >= 0 || edge >= 0 || IE) { open(pacs) }
 }
 
 function sendtoLINE()

@@ -1,6 +1,16 @@
 
 import { LARGESTDATE } from "../model/const.js"
 
+export function msie()
+{
+  let ua = window.navigator.userAgent,
+    msie = ua.indexOf("MSIE"),
+    edge = ua.indexOf("Edge"),
+    IE = navigator.userAgent.match(/Trident.*rv\:11\./)
+
+  return msie >= 0 || edge >=0 || IE
+}
+
 // necessary when passing to http, not when export to excel
 export function URIcomponent(content) {
   if (/\W/.test(content)) {

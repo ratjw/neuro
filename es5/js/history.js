@@ -738,38 +738,9 @@ function winHeight(percent)
 
 function PACS(hn)
 { 
-  let pacs = 'http://synapse/explore.asp?path=/All Patients/InternalPatientUID='+hn
-  let sql = 'PAC=http://synapse/explore.asp'
-  let ua = window.navigator.userAgent;
-  let msie = ua.indexOf("MSIE")
-  let edge = ua.indexOf("Edge")
-  let IE = !!navigator.userAgent.match(/Trident.*rv\:11\./)
-  let data_type = 'data:application/vnd.ms-internet explorer'
+  var pacs = 'http://synapse/explore.asp?path=/All Patients/InternalPatientUID='+hn
 
-  if (msie > 0 || edge > 0 || IE) { // If Internet Explorer
-    open(pacs);
-  } else {
-    let html = '<!DOCTYPE html><HTML><HEAD><script>function opener(){window.open("'
-    html += pacs + '", "_self")}</script><body onload="opener()"></body></HEAD></HTML>'
-    let a = document.createElement('a');
-    document.body.appendChild(a);  // You need to add this line in FF
-    a.href = data_type + ', ' + encodeURIComponent(html);
-    a.download = "index.html"
-    a.click();    //to test with Chrome and FF
-  }
-}
-
-function showUpload(hn, patient)
-{
-  let win = gv.showUpload
-  if (hn) {
-    if (win && !win.closed) {
-      win.close();
-    }
-    gv.showUpload = win = window.open("../Upload", "_blank")
-    win.hnName = {"hn": hn, "patient": patient}
-    //hnName is a pre-defined variable in child window (Upload)
-  }
+  if (msie()) { open(pacs) }
 }
 
 function sendtoLINE()

@@ -4,7 +4,7 @@ import {
   FINALSV, ADMITSV, DISCHARGESV
 } from "../model/const.js"
 import { clearEditcell, createEditcell } from "../control/edit.js"
-import { isPACS } from "../util/updateBOOK.js"
+import { isPACS } from "../main.js"
 import { inPicArea } from "../util/util.js"
 import { editableSV } from "./setSERVICE.js"
 import { PACS } from "../get/PACS.js"

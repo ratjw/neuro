@@ -12,8 +12,8 @@ var gv = {
   uploadWindow: null,
   timer: {},
   idleCounter: 0,
-  isMobile: false,
-  isPACS: true,
+  isMobile: true,
+  isPACS: false,
   editableSV: true
 },
 

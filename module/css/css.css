@@ -353,15 +353,15 @@ tr#moveto td {
 
 /* mark the row of fillEquipTable, tracking, find, and pasted row after moveCase */
 tr.marker {
-  border: solid 2px skyblue !important;
+  border: solid 2px skyblue;
 }
 
 tr.moveCase {
-  border: dashed 2px red !important;
+  border: dashed 2px red;
 }
 
 tr.copyCase {
-  border: dashed 2px blue !important;
+  border: dashed 2px blue;
 }
 
 /* mark where move/copy case will be pasted */
@@ -370,7 +370,7 @@ tr.pasteDate {
 }
 
 tr.selected {
-  border: solid 2px #0099FF !important;
+  border: solid 2px #0099FF;
 }
 
 tr.selected td {
