@@ -15,7 +15,7 @@ export function holiday(date)
     Tue = dayofweek === 2,
 
   // Thai official holiday & Compensation
-  Thai = {
+  govHoliday = {
     "12-31": "Yearend",
     "01-01": "Newyear",
     "01-02": (Mon || Tue) && "Yearendsub",
@@ -46,8 +46,9 @@ export function holiday(date)
     "12-10": "Constitution",
     "12-11": Mon && "Constitutionsub",
     "12-12": Mon && "Constitutionsub"
-  },
-  govHoliday = Thai[monthdate]
+  }
 
-  return govHoliday && `url('css/pic/holiday/${govHoliday}.png')`
+  if (govHoliday[monthdate]) {
+    return `url('css/pic/holiday/${govHoliday}.png')`
+  }
 }

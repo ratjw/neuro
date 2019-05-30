@@ -1,7 +1,5 @@
 function login()
 {
-    "use strict";
-
 	// Ridirect to https
 //	if (window.location.protocol === "http:" && window.location.hostname !== "localhost") {
 //		window.location = "https://" + window.host
@@ -17,12 +15,12 @@ function login()
 	var Firefox = ua.match(/Firefox\/(.*)$/)
 	var Edge = ua.match(/Edge\/(.*)$/)
 	var Safari = ua.match(/Safari\/(.*)$/)
-	var module = (Chrome && Chrome.length > 1)
-              ? Chrome[1] >= "61"
-              : (Firefox && Firefox.length > 1)
-                ? Firefox[1] >= "60"
-                : (Edge && Edge.length > 1)
-                  ? Edge[1] >= "26"
+	var module = (Edge && Edge.length > 1)
+              ? false
+              : (Chrome && Chrome.length > 1)
+                ? Chrome[1] >= "61"
+                : (Firefox && Firefox.length > 1)
+                  ? Firefox[1] >= "60"
                   : (Safari && Safari.length > 1)
                     ? Safari[1] >= "10.1"
                     : false

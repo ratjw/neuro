@@ -7,6 +7,7 @@ $(function ()
     Ajax(MYSQLIPHP, "start=", loading);
 
     gv.user = response
+    gv.isPACS = !gv.isMobile && /10.6./.test(window.location) && msie()
     $("#wrapper").show()
     $("#tblwrapper").css("height", window.innerHeight - $("#cssmenu").height())
   }

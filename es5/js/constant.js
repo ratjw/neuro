@@ -13,7 +13,7 @@ var gv = {
 	timer: {},
 	idleCounter: 0,
 	isMobile: false,
-  isPACS = !gv.isMobile && /10.6./.test(window.location) && msie(),
+  isPACS: true,
 	editableSV: true
 },
 

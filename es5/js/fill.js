@@ -409,86 +409,89 @@ function holiday(date)
 
 	switch (monthdate)
 	{
-	case "12-31":
-		holidayname = "Yearend"
-		break
-	case "01-01":
-		holidayname = "Newyear"
-		break
-	case "01-02":
-		if (Mon || Tue)
-			holidayname = "Yearendsub"
-		break
-	case "01-03":
-		if (Mon || Tue)
-			holidayname = "Newyearsub"
-		break
-	case "04-06":
-		holidayname = "Chakri"
-		break
-	case "04-07":
-	case "04-08":
-		if (Mon)
-			holidayname = "Chakrisub"
-		break
-	case "04-13":
-	case "04-14":
-	case "04-15":
-		holidayname = "Songkran"
-		break
-	case "04-16":
-	case "04-17":
-		if (Mon || Tue || Wed)
-			holidayname = "Songkransub"
-		break
-	case "07-28":
-		holidayname = "King10"
-		break
-	case "07-29":
-	case "07-30":
-		if (Mon)
-			holidayname = "King10sub"
-		break
-	case "08-12":
-		holidayname = "Queen"
-		break
-	case "08-13":
-	case "08-14":
-		if (Mon)
-			holidayname = "Queensub"
-		break
-	case "10-13":
-		holidayname = "King09"
-		break
-	case "10-14":
-	case "10-15":
-		if (Mon)
-			holidayname = "King09sub"
-		break
-	case "10-23":
-		holidayname = "Piya"
-		break
-	case "10-24":
-	case "10-25":
-		if (Mon)
-			holidayname = "Piyasub"
-		break
-	case "12-05":
-		holidayname = "King9"
-		break
-	case "12-06":
-	case "12-07":
-		if (Mon)
-			holidayname = "King9sub"
-		break
-	case "12-10":
-		holidayname = "Constitution"
-		break
-	case "12-11":
-	case "12-12":
-		if (Mon)
-			holidayname = "Constitutionsub"
-		break
+    case "12-31":
+      holidayname = "Yearend"
+      break
+    case "01-01":
+      holidayname = "Newyear"
+      break
+    case "01-02":
+      if (Mon || Tue)
+        holidayname = "Yearendsub"
+      break
+    case "01-03":
+      if (Mon || Tue)
+        holidayname = "Newyearsub"
+      break
+    case "04-06":
+      holidayname = "Chakri"
+      break
+    case "04-07":
+    case "04-08":
+      if (Mon)
+        holidayname = "Chakrisub"
+      break
+    case "04-13":
+    case "04-14":
+    case "04-15":
+      holidayname = "Songkran"
+      break
+    case "04-16":
+    case "04-17":
+      if (Mon || Tue || Wed)
+        holidayname = "Songkransub"
+      break
+    case "07-28":
+      holidayname = "King10"
+      break
+    case "07-29":
+    case "07-30":
+      if (Mon)
+        holidayname = "King10sub"
+      break
+    case "08-12":
+      holidayname = "Queen"
+      break
+    case "08-13":
+    case "08-14":
+      if (Mon)
+        holidayname = "Queensub"
+      break
+    case "10-13":
+      holidayname = "King09"
+      break
+    case "10-14":
+    case "10-15":
+      if (Mon)
+        holidayname = "King09sub"
+      break
+    case "10-23":
+      holidayname = "Piya"
+      break
+    case "10-24":
+    case "10-25":
+      if (Mon)
+        holidayname = "Piyasub"
+      break
+    case "12-05":
+      holidayname = "King9"
+      break
+    case "12-06":
+    case "12-07":
+      if (Mon)
+        holidayname = "King9sub"
+      break
+    case "12-10":
+      holidayname = "Constitution"
+      break
+    case "12-11":
+    case "12-12":
+      if (Mon)
+        holidayname = "Constitutionsub"
+      break
 	}
-	return "url('css/pic/holiday/" + holidayname +".png')"
+
+  if (holidayname) {
+    return "url('css/pic/holiday/" + holidayname +".png')"
+  }
 }
