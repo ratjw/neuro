@@ -37,7 +37,7 @@ LARGESTDATE		= "9999-12-31",
 	timer: {},
 	idleCounter: 0,
 	isMobile: false,
-	isPACS: true
+	isPACS: false
 },
 
 // ["type", "width", "name", "label", "id"]

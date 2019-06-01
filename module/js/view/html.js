@@ -60,7 +60,7 @@ export function htmlEquipment()
     } else if (type === "text") {
       equip += `<input type="${type}" class="w${width}" placeholder="${label}">`
     } else if (type === "textarea") {
-      equip += `<textarea class="w${width} placeholder="${label}"></textarea>`
+      equip += `<textarea class="w${width}" placeholder="${label}"></textarea>`
     }
   })
 
