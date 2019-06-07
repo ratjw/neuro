@@ -315,7 +315,7 @@ OPERATION = [
   ["br", "", "", ""],
   ["br", "", "", ""],
   ["br", "", "", ""],
-  ["textarea", "", "procedure", "procedure"],
+  ["div", "320", "procedure", "procedure"],
   ["br", "", "", ""],
   ["radio", "100", "doneby", "Staff"],
   ["radio", "100", "doneby", "Fellow"],
@@ -338,7 +338,7 @@ OPERATION = [
 RADIOSURG = [
   ["hr", "inner", "", ""],
   ["button", "10 floatright large", "delproc", "-"],
-  ["textarea", "smallarea", "procedure", "procedure"],
+  ["div", "smallarea", "procedure", "procedure"],
   ["br", "", "", ""],
   ["br", "", "", ""],
   ["radio", "100", "doneby", "Staff Neuro"],
@@ -348,7 +348,7 @@ RADIOSURG = [
 ENDOVASC = [
   ["hr", "inner", "", "", ""],
   ["button", "10 floatright large", "delproc", "-"],
-  ["textarea", "smallarea", "procedure", "procedure"],
+  ["div", "smallarea", "procedure", "procedure"],
   ["br", "", "", ""],
   ["br", "", "", ""],
   ["radio", "100", "doneby", "Staff Neuro"],

@@ -101,6 +101,7 @@
 .w170 { width:170px !important; }
 .w200 { width:200px !important; }
 .w250 { width:250px !important; }
+.w320 { width:320px !important; }
 .w400 { width:400px !important; }
 .w500 { width:500px !important; }
 
@@ -335,13 +336,13 @@
   width: 30px;
   border-radius: 25%;
 }
-#dialogRecord textarea {
+#dialogRecord div {
   width: 320px;
   height: 55px;
   border: 1px solid lightblue;
   margin-left: 5px;
 }
-#dialogRecord textarea.smallarea {
+#dialogRecord div.smallarea {
   width: 250px;
   height: 40px;
 }
