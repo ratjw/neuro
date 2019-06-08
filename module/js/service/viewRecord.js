@@ -7,7 +7,7 @@ export function viewRecord(profile, thopdate, treatment)
     profiles = [],
     procstr
 
-  if (!profileJSON) { return "" }
+  if (!profileJSON) { return treatment }
 
   Object.entries(profileJSON).forEach(([key, val]) => {
     if (key === "admitted") {
@@ -16,10 +16,10 @@ export function viewRecord(profile, thopdate, treatment)
       }
     } else if (key === "operated") {
       profileJSON[key].forEach((e, i) => {
-        let op = e.opdate || '',
-          pro = e.procedure || '',
-          sp = (op && pro) ? ' ' : '',
-          rx = op + sp + pro
+        let opdate = e.opdate || '',
+          proc = e.procedure || '',
+          space = (opdate && proc) ? ' ' : '',
+          rx = opdate + space + proc
 
         rx && treatments.push(rx)
         delete e.opdate
