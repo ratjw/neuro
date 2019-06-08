@@ -69,7 +69,7 @@ export function saveService(pointed, column, newcontent) {
         reViewService()
       } else if (pointed.cellIndex === TREATMENTSV) {
         let serviceq = getBOOKrowByQN(SERVICE, qn)
-        pointed.innerHTML = viewRecord(serviceq.profile)
+        pointed.innerHTML = viewRecord(serviceq.profile) || row.dataset.treatment
         row.dataset.profile = serviceq.profile
         coloring(row)
       }

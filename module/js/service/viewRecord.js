@@ -4,7 +4,8 @@ export function viewRecord(profile, thopdate, treatment)
 {
   let profileJSON = JSON.parse(profile),
     treatments = [],
-    profiles = []
+    profiles = [],
+    procstr
 
   if (!profileJSON) { return "" }
 
@@ -23,19 +24,28 @@ export function viewRecord(profile, thopdate, treatment)
         rx && treatments.push(rx)
         delete e.opdate
         delete e.procedure
-        profiles.push(`Op${i+1} (${procString(e)})`)
+        procstr = procString(e)
+        if (procstr) {
+          profiles.push(`Op${i+1} (${procstr})`)
+        }
       })
     } else if (key === "radiosurg") {
       profileJSON[key].forEach((e, i) => {
         e.procedure && treatments.push(e.procedure)
         delete e.procedure
-        profiles.push(`RS${i+1} (${procString(e)})`)
+        procstr = procString(e)
+        if (procstr) {
+          profiles.push(`RS${i+1} (${procstr})`)
+        }
       })
     } else if (key === "endovasc") {
       profileJSON[key].forEach((e, i) => {
         e.procedure && treatments.push(e.procedure)
         delete e.procedure
-        profiles.push(`ET${i+1} (${procString(e)})`)
+        procstr = procString(e)
+        if (procstr) {
+          profiles.push(`ET${i+1} (${procstr})`)
+        }
       })
     } else {
       profiles.push(val)
@@ -45,11 +55,13 @@ export function viewRecord(profile, thopdate, treatment)
   treatments = treatments.length
              ? treatments.join('<br>')
              : profileJSON.operated && profileJSON.operated.length
-             ? thopdate + ' ' + treatment
-             : treatment
+               ? thopdate + ' ' + treatment
+               : treatment
   profiles = profiles.length ? profiles.join('<br>') : ''
 
-  return treatments + '<br><br>' + profiles
+  return treatments
+          ? treatments + '<br><br>' + profiles
+          : profiles
 }
 
 function procString(proc)
