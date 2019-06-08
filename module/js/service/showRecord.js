@@ -142,7 +142,7 @@ function divProcedure(procedure, item, suffix, i)
   let div = document.createElement("div")
   div.innerHTML = htmlProfile(procedure)
 
-  let inputs = div.querySelectorAll("div, input"),
+  let inputs = div.querySelectorAll("div.textarea, input"),
     inputname = ''
 
   Array.from(inputs).forEach(e => {
@@ -161,11 +161,11 @@ function divProcedure(procedure, item, suffix, i)
           $(e).datepicker("setDate", new Date(numDate(item[i][inputname])))
           e.value = item[i][inputname]
         }
-      } else if (e.type === 'div') {
+      } else if (e.className === 'textarea') {
         if ((i === 0) && !(item[i] && item[i].procedure) && !usedTreatment()) {
-          e.value = treatment
+          e.innerHTML = treatment
         } else {
-          e.value = item[i][inputname]
+          e.innerHTML = item[i][inputname]
         }
       } else {
         e.checked = (e.value === (item[i][inputname]))
@@ -178,9 +178,9 @@ function divProcedure(procedure, item, suffix, i)
 
 function usedTreatment()
 {
-  let txtarea = $dialogRecord.find('div')
+  let txtarea = $dialogRecord.find('div.textarea')
 
-  return Array.from(txtarea).some(e => !!e.value)
+  return Array.from(txtarea).some(e => !!e.innerHTML)
 }
 
 function saveRecord()
@@ -220,12 +220,14 @@ function saveRecord()
 
 function saveProcedure(id, procedure, suffix)
 {
-  $(id + ' div').each((i, div) => {
+  $(id + ' div:not(.textarea)').each((i, div) => {
     if (!procedure[i]) { procedure[i] = {} }
-    div.querySelectorAll('input, div').forEach(e => {
-      if ((e.type === 'text') || (e.type === 'div') || e.checked) {
+    div.querySelectorAll('input').forEach(e => {
+      if ((e.type === 'text') || e.checked) {
         procedure[i][e.name.replace(suffix + i, '')] = e.value
       }
     })
+    let txtarea = div.querySelector('.textarea')
+    procedure[i][txtarea.name.replace(suffix + i, '')] = txtarea.innerHTML
   })
 }

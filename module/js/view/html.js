@@ -91,22 +91,20 @@ export function htmlProfile(profile)
     if (type === "br") {
 			record += `<br>`
     } else if (type === "button") {
-			record += `<button class="w${width}" name="${name}">${label}</button>`
+			record += `<button name="${name}">${label}</button>`
     } else if (type === "hr") {
 			record += `<hr class="${width}">`
     } else if (type === "number") {
 			record += `<span class="bold">${label}</span>
 				<input class="w${width}" type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}">`
     } else if (type === "divbegin") {
-			record += `<div class="w${width}" id="${name}"><span class="bold">${label}</span><br>`
+			record += `<div id="${name}"><span class="bold">${label}</span><br>`
     } else if (type === "divend") {
       record += `</div>`
     } else if (type === "div") {
-			record += `<div class="${width}" id="${name}" contenteditable="true"></div>`
+			record += `<div class="${width}" name="${name}" contenteditable="true"></div>`
     } else if (type === "text") {
 			record += `<input class="w${width}" type="${type}" name="${name}" id="${label}"`
-    } else if (type === "textarea") {
-			record += `<textarea class="w${width}" name="${name}" placeholder="${label}"></textarea>`
 		} else if (type === "checkbox" || type === "radio") {
 			record += `<label>
 				<input class="w${width}" type="${type}" name="${name}" value="${label}">

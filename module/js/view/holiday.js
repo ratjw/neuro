@@ -49,6 +49,6 @@ export function holiday(date)
   }
 
   if (govHoliday[monthdate]) {
-    return `url('css/pic/holiday/${govHoliday}.png')`
+    return `url('css/pic/holiday/${govHoliday[monthdate]}.png')`
   }
 }

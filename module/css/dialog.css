@@ -77,7 +77,6 @@
 .textright { text-align: right; }
 .textcenter { text-align: center; }
 .bold { font-weight: bold; }
-.large { font-size: large !important; }
 .inline { display: inline-block; }
 
 .w10 { width:10px !important; }
@@ -332,19 +331,20 @@
   margin: 0px 0px 10px 0px;
 }
 #dialogRecord button {
+  float: right;
+  font-size: 20px;
   height: 25px;
   width: 30px;
   border-radius: 25%;
+  line-height: 20px;
 }
-#dialogRecord div {
-  width: 320px;
-  height: 55px;
+#dialogRecord div.textarea {
+  width:350px !important;
+  height: 60px;
+  overflow: auto;
+  white-space:normal;
   border: 1px solid lightblue;
   margin-left: 5px;
-}
-#dialogRecord div.smallarea {
-  width: 250px;
-  height: 40px;
 }
 
 #dialogHoliday table td {
