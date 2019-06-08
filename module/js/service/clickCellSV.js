@@ -7,7 +7,7 @@ export function clickCellSV(event)
 {
   let target = event.target,
     inCell = target.closest("td"),
-    onNormalCell = (target.nodeName === "TD" && target.colSpan === 1)
+    onNormalCell = (inCell && inCell.nodeName === "TD" && inCell.colSpan === 1)
 
   // Editcell is currently on
   if (POINTER) {

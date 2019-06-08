@@ -5,16 +5,15 @@ import { htmlProfile } from '../view/html.js'
 import { URIcomponent, winHeight, radioHack, deepEqual } from "../util/util.js"
 import { numDate, thDate, datepicker } from '../util/date.js'
 import { saveService } from './savePreviousCellService.js'
+import { saveRecord } from './saveRecord.js'
 
 let $dialogRecord = $('#dialogRecord'),
   maxHeight = winHeight(90),
-  rowRecord = {},
   opdate,
   treatment,
   operated,
   radiosurg,
-  endovasc,
-  pointed
+  endovasc
   
 
 // e.name === column in Mysql
@@ -31,13 +30,11 @@ export function showRecord(pointing)
 
   if (!qn) { return }
 
-  rowRecord = profile
   operated = profile && profile.operated && [...profile.operated] || []
   radiosurg = profile && profile.radiosurg && [...profile.radiosurg] || []
   endovasc = profile && profile.endovasc && [...profile.endovasc] || []
   opdate = row.dataset.opdate
   treatment = row.dataset.treatment
-  pointed = pointing
 
   $dialogRecord.html(htmlProfile(RECORDSHEET))
 
@@ -66,7 +63,7 @@ export function showRecord(pointing)
       {
         text: "Save",
         click: function () {
-          saveRecord()
+          saveRecord(pointing, profile)
           $dialogRecord.dialog('close')
         }
       }
@@ -165,7 +162,7 @@ function divProcedure(procedure, item, suffix, i)
         if ((i === 0) && !(item[i] && item[i].procedure) && !usedTreatment()) {
           e.innerHTML = treatment
         } else {
-          e.innerHTML = item[i][inputname]
+          e.innerHTML = item[i].procedure
         }
       } else {
         e.checked = (e.value === (item[i][inputname]))
@@ -181,53 +178,4 @@ function usedTreatment()
   let txtarea = $dialogRecord.find('div.textarea')
 
   return Array.from(txtarea).some(e => !!e.innerHTML)
-}
-
-function saveRecord()
-{
-  let recordJSON = {
-      operated: [],
-      radiosurg: [],
-      endovasc: []
-    }
-
-  $('#dialogRecord input:not(#dialogRecord div input)').each(function() {
-    if (this.name === "admitted") {
-      if (this.value) {
-        recordJSON[this.name] = this.value
-      }
-    } else {
-      if (this.checked) {
-        recordJSON[this.name] = this.value
-      }
-    }
-  })
-
-  saveProcedure('#operated', recordJSON.operated, 'Op')
-  saveProcedure('#radiosurg', recordJSON.radiosurg, 'RS')
-  saveProcedure('#endovasc', recordJSON.endovasc, 'ET')
-
-  if (!recordJSON.radiosurg.length) { delete recordJSON.radiosurg }
-  if (!recordJSON.endovasc.length) { delete recordJSON.endovasc }
-
-  if (deepEqual(recordJSON, rowRecord)) { return }
-
-  let content = JSON.stringify(recordJSON)
-    content = URIcomponent(content)
-
-  saveService(pointed, "profile", content)
-}
-
-function saveProcedure(id, procedure, suffix)
-{
-  $(id + ' div:not(.textarea)').each((i, div) => {
-    if (!procedure[i]) { procedure[i] = {} }
-    div.querySelectorAll('input').forEach(e => {
-      if ((e.type === 'text') || e.checked) {
-        procedure[i][e.name.replace(suffix + i, '')] = e.value
-      }
-    })
-    let txtarea = div.querySelector('.textarea')
-    procedure[i][txtarea.name.replace(suffix + i, '')] = txtarea.innerHTML
-  })
 }
