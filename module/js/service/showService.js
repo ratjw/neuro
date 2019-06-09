@@ -1,7 +1,7 @@
 
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
-  FINALSV, ADMITSV, DISCHARGESV, RECORDDATA
+  FINALSV, ADMITSV, DISCHARGESV
 } from "../model/const.js"
 import { POINTER, clearEditcell } from "../control/edit.js"
 import { START, thDate, putThdate, putNameAge } from "../util/date.js"
@@ -14,7 +14,7 @@ import { coloring } from "./coloring.js"
 import { getAdmitDischargeDate } from "./getAdmitDischargeDate.js"
 import { savePreviousCellService } from "./savePreviousCellService.js"
 import { SERVICE, seteditableSV, serviceFromDate } from "./setSERVICE.js"
-import { viewRecord } from "./viewRecord.js"
+import { viewProfile } from "./viewProfile.js"
 import { clearSelection } from "../get/selectRow.js"
 import { hoverPicArea } from "../util/util.js"
 import { clickCellSV } from "./clickCellSV.js"
@@ -144,15 +144,14 @@ export function reViewService() {
 jQuery.fn.extend({
   filldataService : function(q, scase) {
     let  row = this[0],
-      cells = row.cells
-
-    if (q.hn && isPACS) { cells[HNSV].className = "pacs" }
+      cells = row.cells,
+      opdateth = thDate(q.opdate)
 
     cells[CASENUMSV].innerHTML = scase
     cells[HNSV].innerHTML = q.hn
     cells[NAMESV].innerHTML = putNameAge(q)
     cells[DIAGNOSISSV].innerHTML = q.diagnosis
-    cells[TREATMENTSV].innerHTML = viewRecord(q.profile, thDate(q.opdate), q.treatment)
+    cells[TREATMENTSV].innerHTML = viewProfile(q.profile, opdateth, q.treatment)
     cells[ADMISSIONSV].innerHTML = q.admission
     cells[FINALSV].innerHTML = q.final
     cells[ADMITSV].innerHTML = putThdate(q.admit)

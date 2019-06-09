@@ -7,10 +7,11 @@ import { sqlSaveService } from "../model/sqlservice.js"
 import { getBOOKrowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { URIcomponent, Alert } from "../util/util.js"
+import { thDate } from "../util/date.js"
 import { reViewService } from "./showService.js"
 import { coloring } from "./coloring.js"
 import { setSERVICE, SERVICE } from "./setSERVICE.js"
-import { viewRecord } from './viewRecord.js'
+import { viewProfile } from './viewProfile.js'
 export function savePreviousCellService() {
   let newcontent = getNewcontent()
 
@@ -41,8 +42,8 @@ export function savePreviousCellService() {
 }
 
 //column matches column name in MYSQL
-let saveContentService = function (pointed, column, content) {
-
+export function saveContentService(pointed, column, content)
+{
   // Not refillService because it may make next cell back to old value
   // when fast entry, due to slow return from Ajax of previous input
   pointed.innerHTML = content || ''
@@ -57,7 +58,7 @@ export function saveService(pointed, column, newcontent) {
   let row = pointed.closest("tr"),
     qn = row.dataset.qn
 
-  sqlSaveService(pointed, column, newcontent, qn).then(response => {
+  sqlSaveService(column, newcontent, qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
 
@@ -68,8 +69,11 @@ export function saveService(pointed, column, newcontent) {
       if (oldlen !== newlen) {
         reViewService()
       } else if (pointed.cellIndex === TREATMENTSV) {
-        let serviceq = getBOOKrowByQN(SERVICE, qn)
-        pointed.innerHTML = viewRecord(serviceq.profile) || row.dataset.treatment
+        let serviceq = getBOOKrowByQN(SERVICE, qn),
+          treatment = serviceq.treatment,
+          opdateth = thDate(serviceq.opdate)
+        pointed.innerHTML = viewProfile(serviceq.profile, opdateth, treatment)
+        row.dataset.treatment = serviceq.treatment
         row.dataset.profile = serviceq.profile
         coloring(row)
       }

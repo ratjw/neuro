@@ -1,13 +1,13 @@
 
-import { RECORDSHEET, OPERATION, RADIOSURG, ENDOVASC, THAIMONTH } from "../model/const.js"
+import { PROFILESHEET, OPERATION, RADIOSURG, ENDOVASC, THAIMONTH } from "../model/const.js"
 import { editableSV } from "./setSERVICE.js"
 import { htmlProfile } from '../view/html.js'
 import { URIcomponent, winHeight, radioHack, deepEqual } from "../util/util.js"
 import { numDate, thDate, datepicker } from '../util/date.js'
 import { saveService } from './savePreviousCellService.js'
-import { saveRecord } from './saveRecord.js'
+import { saveProfile } from './saveProfile.js'
 
-let $dialogRecord = $('#dialogRecord'),
+let $dialogProfile = $('#dialogProfile'),
   maxHeight = winHeight(90),
   opdate,
   treatment,
@@ -19,7 +19,7 @@ let $dialogRecord = $('#dialogRecord'),
 // e.name === column in Mysql
 // e.value === value of this item
 // JSON.parse('null') = null
-export function showRecord(pointing)
+export function showProfile(pointing)
 {
   let row = pointing.closest('tr'),
     hn = row.dataset.hn,
@@ -36,9 +36,9 @@ export function showRecord(pointing)
   opdate = row.dataset.opdate
   treatment = row.dataset.treatment
 
-  $dialogRecord.html(htmlProfile(RECORDSHEET))
+  $dialogProfile.html(htmlProfile(PROFILESHEET))
 
-  let inputs = $dialogRecord.find("input")
+  let inputs = $dialogProfile.find("input")
   Array.from(inputs).forEach(e => {
     if (e.name === "admitted") {
       e.value = admitted ? admitted : 0
@@ -51,26 +51,33 @@ export function showRecord(pointing)
   appendProcedure('#radiosurg', RADIOSURG, radiosurg, 'RS')
   appendProcedure('#endovasc', ENDOVASC, endovasc, 'ET')
 
-  $dialogRecord.dialog({ height: 'auto' })
+  let operateddiv = $('#operated div').length,
+    radiosurgdiv = $('#radiosurg div').length,
+    endovascdiv = $('#endovasc div').length
 
-  $dialogRecord.dialog({
+  if (!operateddiv && !radiosurgdiv && !endovascdiv) {
+    $dialogProfile.find('div.treatdiv').html(treatment).show()
+  }
+
+  $dialogProfile.dialog({ height: 'auto' })
+  $dialogProfile.dialog({
     title: `${hn} ${patient}`,
     closeOnEscape: true,
     modal: true,
     width: 'auto',
-    height: ($dialogRecord.height() > maxHeight) ? maxHeight : 'auto',
+    height: ($dialogProfile.height() > maxHeight) ? maxHeight : 'auto',
     buttons: [
       {
         text: "Save",
         click: function () {
-          saveRecord(pointing, profile)
-          $dialogRecord.dialog('close')
+          saveProfile(pointing, profile)
+          $dialogProfile.dialog('close')
         }
       }
     ]
   })
 
-  radioHack('#dialogRecord')
+  radioHack('#dialogProfile')
   clickAddDel()
 }
 
@@ -87,7 +94,7 @@ function appendProcedure(id, proc, item, suffix)
 
 function clickAddDel()
 {
-  $dialogRecord.find('button').off('click').on('click', function() {
+  $dialogProfile.find('button').off('click').on('click', function() {
     if (this.innerHTML === '+') {
       if (/Operation/.test(this.name)) {
         addProcedure(divProcedure, '#operated', OPERATION, operated, 'Op')
@@ -126,11 +133,11 @@ function delProcedure(that) {
 
 function resizeScroll()
 {
-  $dialogRecord.dialog({ height: 'auto', width: 'auto' })
-  $dialogRecord.dialog({
-    height: ($dialogRecord.height() > maxHeight) ? maxHeight : 'auto'
+  $dialogProfile.dialog({ height: 'auto', width: 'auto' })
+  $dialogProfile.dialog({
+    height: ($dialogProfile.height() > maxHeight) ? maxHeight : 'auto'
   })
-  $dialogRecord.scrollTop($dialogRecord.height())
+  $dialogProfile.scrollTop($dialogProfile.height())
 }
 
 // add op to e.name to make it unique
@@ -139,7 +146,7 @@ function divProcedure(procedure, item, suffix, i)
   let div = document.createElement("div")
   div.innerHTML = htmlProfile(procedure)
 
-  let inputs = div.querySelectorAll("div.textarea, input"),
+  let inputs = div.querySelectorAll("div.textdiv, input"),
     inputname = ''
 
   Array.from(inputs).forEach(e => {
@@ -158,7 +165,7 @@ function divProcedure(procedure, item, suffix, i)
           $(e).datepicker("setDate", new Date(numDate(item[i][inputname])))
           e.value = item[i][inputname]
         }
-      } else if (e.className === 'textarea') {
+      } else if (e.className === 'textdiv') {
         if ((i === 0) && !(item[i] && item[i].procedure) && !usedTreatment()) {
           e.innerHTML = treatment
         } else {
@@ -175,7 +182,7 @@ function divProcedure(procedure, item, suffix, i)
 
 function usedTreatment()
 {
-  let txtarea = $dialogRecord.find('div.textarea')
+  let txtarea = $dialogProfile.find('div.textdiv')
 
   return Array.from(txtarea).some(e => !!e.innerHTML)
 }

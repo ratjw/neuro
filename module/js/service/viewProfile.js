@@ -1,18 +1,18 @@
 
 // Add all profiles in one string to show in 1 cell
-export function viewRecord(profile, thopdate, treatment)
+export function viewProfile(profile, opdateth, treatment)
 {
   let profileJSON = JSON.parse(profile),
-    treatments = [],
-    profiles = [],
+    treatmentstr = [],
+    profilestr = [],
     procstr
 
-  if (!profileJSON) { return treatment }
+  if (!profileJSON) { return '' }
 
   Object.entries(profileJSON).forEach(([key, val]) => {
     if (key === "admitted") {
       if (val > 1) {
-        profiles.push(`${key}:${val}`)
+        profilestr.push(`${key}:${val}`)
       }
     } else if (key === "operated") {
       profileJSON[key].forEach((e, i) => {
@@ -21,47 +21,49 @@ export function viewRecord(profile, thopdate, treatment)
           space = (opdate && proc) ? ' ' : '',
           rx = opdate + space + proc
 
-        rx && treatments.push(rx)
+        rx && treatmentstr.push(rx)
         delete e.opdate
         delete e.procedure
         procstr = procString(e)
         if (procstr) {
-          profiles.push(`Op${i+1} (${procstr})`)
+          profilestr.push(`Op${i+1} (${procstr})`)
         }
       })
     } else if (key === "radiosurg") {
       profileJSON[key].forEach((e, i) => {
-        e.procedure && treatments.push(e.procedure)
+        e.procedure && treatmentstr.push(e.procedure)
         delete e.procedure
         procstr = procString(e)
         if (procstr) {
-          profiles.push(`RS${i+1} (${procstr})`)
+          profilestr.push(`RS${i+1} (${procstr})`)
         }
       })
     } else if (key === "endovasc") {
       profileJSON[key].forEach((e, i) => {
-        e.procedure && treatments.push(e.procedure)
+        e.procedure && treatmentstr.push(e.procedure)
         delete e.procedure
         procstr = procString(e)
         if (procstr) {
-          profiles.push(`ET${i+1} (${procstr})`)
+          profilestr.push(`ET${i+1} (${procstr})`)
         }
       })
     } else {
-      profiles.push(val)
+      profilestr.push(val)
     }
   })
 
-  treatments = treatments.length
-             ? treatments.join('<br>')
+  treatmentstr = treatmentstr.length
+             ? treatmentstr.join('<br>')
              : profileJSON.operated && profileJSON.operated.length
-               ? thopdate + ' ' + treatment
+               ? opdateth + ' ' + treatment
                : treatment
-  profiles = profiles.length ? profiles.join('<br>') : ''
+  profilestr = profilestr.length ? profilestr.join('<br>') : ''
 
-  return treatments
-          ? treatments + '<br><br>' + profiles
-          : profiles
+  return treatmentstr
+          ? profilestr
+            ? treatmentstr + '<br><br>' + profilestr
+            : treatmentstr
+          : profilestr
 }
 
 function procString(proc)

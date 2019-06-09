@@ -271,25 +271,10 @@ EQUIPSHEET = [
   ["br", "", "", "", ""]
 ],
 
-RECORDDATA = {
-  'admitted': '',     // "", "0" "1", "2", ...
-  'radiosurgery': '', // "", "no", "Radiosurgery"
-  'endovascular': '', // "", "no", "Endovascular"
-  'infection': '',    // "", "Infection"             UDO (User-Defined Only)
-  'morbid': '',       // "", "Morbidity"             UDO
-  'dead': '',         // "", "Dead"                  UDO
-  'operated': [{
-    'op': '',         // "", "0" "1", "2", ...
-    'doneby': '',     // "", "Staff", "Resident"     UDO
-    'manner': '',     // "", "Elective", "Emergency" UDO
-    'scale': '',      // "", "Major", "Minor"        UDO
-    'disease': ''     // "", "Brain Tumor", "Brain Vascular" ...
-  }]
-},
-
 // [type, width, name, label, min, max]
-RECORDSHEET = [
+PROFILESHEET = [
   ["number", "30", "admitted", "Admission", "0", "9"],
+  ["div", "treatdiv", "", ""],
   ["hr", "outer", "", ""],
   ["button", "", "addOperation", "+"],
   ["divbegin", "", "operated", "Operation"],
@@ -311,11 +296,11 @@ RECORDSHEET = [
 OPERATION = [
   ["hr", "inner", "", ""],
   ["button", "", "delproc", "-"],
-  ["text", "100 opdatepicker", "opdate", "opdatepicker"],
+  ["text", "100", "opdateth", "opdatepicker"],
   ["br", "", "", ""],
   ["br", "", "", ""],
   ["br", "", "", ""],
-  ["div", "textarea", "", ""],
+  ["div", "textdiv", "", ""],
   ["br", "", "", ""],
   ["radio", "100", "doneby", "Staff"],
   ["radio", "100", "doneby", "Fellow"],
@@ -340,7 +325,7 @@ RADIOSURG = [
   ["button", "", "delproc", "-"],
   ["br", "", "", ""],
   ["br", "", "", ""],
-  ["div", "textarea", "", ""],
+  ["div", "textdiv", "", ""],
   ["br", "", "", ""],
   ["radio", "100", "doneby", "Staff Neuro"],
   ["radio", "100", "doneby", "Staff Radio"],
@@ -351,7 +336,7 @@ ENDOVASC = [
   ["button", "30 ", "delproc", "-"],
   ["br", "", "", ""],
   ["br", "", "", ""],
-  ["div", "textarea", "", ""],
+  ["div", "textdiv", "", ""],
   ["br", "", "", ""],
   ["radio", "100", "doneby", "Staff Neuro"],
   ["radio", "100", "doneby", "Fellow Neuro"],

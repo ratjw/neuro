@@ -8,7 +8,7 @@ import { isPACS } from "../main.js"
 import { inPicArea } from "../util/util.js"
 import { editableSV } from "./setSERVICE.js"
 import { PACS } from "../get/PACS.js"
-import { showRecord } from "./showRecord.js"
+import { showProfile } from "./showProfile.js"
 
 // Set up editcell for keyin
 // redirect click to openPACS or file upload
@@ -23,7 +23,7 @@ export function editPresentCellService(evt, pointing) {
     case DIAGNOSISSV:
     case ADMISSIONSV:
     case FINALSV: editableSV && createEditcell(pointing); break
-    case TREATMENTSV: clearEditcell(); showRecord(pointing); break
+    case TREATMENTSV: clearEditcell(); showProfile(pointing); break
     case ADMITSV:
     case DISCHARGESV: clearEditcell(); break
   }

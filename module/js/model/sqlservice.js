@@ -26,7 +26,7 @@ export function sqlGetIPD() {
   return postData(GETIPD, sql)
 }
 
-export function sqlSaveService(pointed, column, content, qn) {
+export function sqlSaveService(column, content, qn) {
   let sql = `sqlReturnService=${sqlItem(column, content, qn)}${sqlOneMonth()}`
 
   return postData(MYSQLIPHP, sql);

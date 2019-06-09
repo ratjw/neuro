@@ -1,8 +1,8 @@
 
 import { URIcomponent, winHeight, deepEqual } from "../util/util.js"
-import { saveService } from './savePreviousCellService.js'
+import { saveContentService, saveService } from './savePreviousCellService.js'
 
-export function saveRecord(pointing, profileJSON)
+export function saveProfile(pointing, profileJSON)
 {
   let recordJSON = {
       operated: [],
@@ -10,7 +10,12 @@ export function saveRecord(pointing, profileJSON)
       endovasc: []
     }
 
-  $('#dialogRecord input:not(#dialogRecord div input)').each(function() {
+  let treatdiv = $('#dialogProfile div.treatdiv').html()
+  if (treatdiv) {
+    saveContentService(pointing, 'treatment', treatdiv)
+  }
+
+  $('#dialogProfile input:not(#dialogProfile div input)').each(function() {
     if (this.name === "admitted") {
       if (this.value) {
         recordJSON[this.name] = this.value
@@ -39,14 +44,14 @@ export function saveRecord(pointing, profileJSON)
 
 function saveProcedure(id, procedure, suffix)
 {
-  $(id + ' > div:not(.textarea)').each((i, div) => {
+  $(id + ' > div:not(.textdiv)').each((i, div) => {
     if (!procedure[i]) { procedure[i] = {} }
     div.querySelectorAll('input').forEach(e => {
       if ((e.type === 'text') || e.checked) {
         procedure[i][e.name.replace(suffix + i, '')] = e.value
       }
     })
-    let txtarea = div.querySelector('.textarea')
+    let txtarea = div.querySelector('.textdiv')
     if (txtarea) {
       procedure[i].procedure = txtarea.innerHTML
     }
