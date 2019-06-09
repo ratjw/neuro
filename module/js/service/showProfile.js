@@ -79,6 +79,8 @@ export function showProfile(pointing)
 
   radioHack('#dialogProfile')
   clickAddDel()
+  $dialogProfile.find("input").focus()
+  // make it respond to closeOnEscape
 }
 
 function appendProcedure(id, proc, item, suffix)
@@ -157,7 +159,7 @@ function divProcedure(procedure, item, suffix, i)
       datepicker($(e))
     }
     if (item && item[i]) {
-      if (inputname === 'opdate') {
+      if (inputname === 'opdateth') {
         if ((i === 0) && !item[i][inputname]) {
           $(e).datepicker("setDate", new Date(opdate))
           e.value = thDate(opdate)

@@ -1,29 +1,29 @@
 
 import { winWidth, winHeight } from "../util/util.js"
-import { oneMonth } from "./oneMonth.js"
+import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
+import { showService } from "./showService.js"
+import { setSERVICE, setfromDate, settoDate } from "./setSERVICE.js"
+import { showReportToDept } from "./showReportToDept.js"
+import { exportServiceToExcel } from "../util/excel.js"
+import { Alert } from "../util/util.js"
 
-export function setClickService()
-{
-  document.getElementById("clickserviceReview").onclick = serviceReview
-}
-
-// Includes all serviced cases, operated or not (consulted)
-// Then count complications and morbid/mortal
-// Button click Export to Excel
+// Includes all serviced cases, attended or consulted
 // PHP Getipd retrieves admit/discharge dates
-function serviceReview() {
+// new Date(yyyy, mm+1, 0) is
+// the day before 1st date of next month = last date of this month
+export function serviceReview(begin) {
   let  $dialogService = $("#dialogService"),
+    date = new Date(begin),
+    end = new Date(date.getFullYear(), date.getMonth()+1, 0),
     $monthpicker = $("#monthpicker"),
-    $monthstart = $("#monthstart"),
-    selectedYear = new Date().getFullYear(),
-    BuddhistYear = Number(selectedYear) + 543;
-
-  ["#servicehead", "#servicetbl", "#exportService", "#reportService"].forEach(e => 
-    document.querySelector(e).style.display = 'none'
-  )
+    $exportService = $("#exportService"),
+    $reportService = $("#reportService"),
+    inputval = $monthpicker.val(),
+    titledate = inputval.slice(0, -4) + (Number(inputval.slice(-4)) + 543),
+    title = "Service Neurosurgery เดือน " + titledate
   
   $dialogService.dialog({
-    title: "Service Neurosurgery",
+    title: title,
     closeOnEscape: true,
     closeText: "Save and Close",
     modal: true,
@@ -31,25 +31,25 @@ function serviceReview() {
     height: winHeight(95)
   })
 
-  $monthpicker.show()
-  $monthpicker.datepicker({
-    altField: $monthstart,
-    altFormat: "yy-mm-dd",
-    autoSize: true,
-    dateFormat: "MM yy",
-    monthNames: [ "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", 
-            "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" ],
-    yearSuffix: new Date().getFullYear() +  543,
-    onChangeMonthYear: function (year, month, inst) {
-      $(this).datepicker("setDate", new Date(inst.selectedYear, inst.selectedMonth, 1))
-      inst.settings.yearSuffix = inst.selectedYear + 543
-    },
-    beforeShow: function (input, obj) {
-      $(".ui-datepicker-calendar").hide()
-    }
-  }).datepicker("setDate", new Date(new Date().getFullYear(), new Date().getMonth(), 1))
+  setfromDate(begin)
+  settoDate($.datepicker.formatDate("yy-mm-dd", end))
 
-  $dialogService.off("click").on("click", ".ui-datepicker-title", function() {
-    oneMonth($monthstart.val())
+  sqlGetServiceOneMonth().then(response => {
+    if (typeof response === "object") {
+      setSERVICE(response)
+      showService()
+    } else {
+      Alert("getServiceOneMonth", response)
+    }
+  }).catch(error => {})
+
+  $exportService.on("click", event => {
+    event.preventDefault()
+    exportServiceToExcel()
+  })
+
+  $reportService.on("click", event => {
+    event.preventDefault()
+    showReportToDept(title)
   })
 }

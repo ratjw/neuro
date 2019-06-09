@@ -7,7 +7,7 @@ export function viewProfile(profile, opdateth, treatment)
     profilestr = [],
     procstr
 
-  if (!profileJSON) { return '' }
+  if (!profileJSON) { return treatment }
 
   Object.entries(profileJSON).forEach(([key, val]) => {
     if (key === "admitted") {
@@ -63,7 +63,7 @@ export function viewProfile(profile, opdateth, treatment)
           ? profilestr
             ? treatmentstr + '<br><br>' + profilestr
             : treatmentstr
-          : profilestr
+          : profilestr || treatment
 }
 
 function procString(proc)
