@@ -70,8 +70,8 @@ export function saveService(pointed, column, newcontent) {
         reViewService()
       } else if (pointed.cellIndex === TREATMENTSV) {
         let serviceq = getBOOKrowByQN(SERVICE, qn),
-          treatment = serviceq.treatment,
-          opdateth = thDate(serviceq.opdate)
+          opdateth = thDate(serviceq.opdate),
+          treatment = serviceq.treatment
         pointed.innerHTML = viewProfile(serviceq.profile, opdateth, treatment)
         row.dataset.treatment = serviceq.treatment
         row.dataset.profile = serviceq.profile

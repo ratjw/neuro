@@ -79,7 +79,7 @@ export function showProfile(pointing)
 
   radioHack('#dialogProfile')
   clickAddDel()
-  $dialogProfile.find("input").focus()
+  $dialogProfile.find("div").focus()
   // make it respond to closeOnEscape
 }
 
