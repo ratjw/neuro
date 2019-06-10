@@ -131,7 +131,7 @@ function countRadioCase(radiosurg)
 {
   radiosurg.forEach(e => {
     let row = ROWREPORT["Radiosurgery"],
-      column = COLUMNREPORT[e.radiodoneby]
+      column = COLUMNREPORT[e.doneby]
 
     if (row && column) {
       $("#reviewtbl tr")[row].cells[column].innerHTML++
@@ -143,8 +143,8 @@ function countEndoCase(endovasc)
 {
   endovasc.forEach(e => {
     let row = ROWREPORT["Endovascular"],
-      column = COLUMNREPORT[e.endodoneby]
-             + COLUMNREPORT[e.endomanner]
+      column = COLUMNREPORT[e.doneby]
+             + COLUMNREPORT[e.manner]
 
     if (row && column) {
       $("#reviewtbl tr")[row].cells[column].innerHTML++
