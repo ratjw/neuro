@@ -51,9 +51,9 @@ export function showProfile(pointing)
   appendProcedure('#radiosurg', RADIOSURG, radiosurg, 'RS')
   appendProcedure('#endovasc', ENDOVASC, endovasc, 'ET')
 
-  let operateddiv = $('#operated div').length,
-    radiosurgdiv = $('#radiosurg div').length,
-    endovascdiv = $('#endovasc div').length
+  let operateddiv = $('#operated div.textdiv').html(),
+    radiosurgdiv = $('#radiosurg div.textdiv').html(),
+    endovascdiv = $('#endovasc div.textdiv').html()
 
   if (!operateddiv && !radiosurgdiv && !endovascdiv) {
     $dialogProfile.find('div.treatdiv').html(treatment).show()
@@ -113,7 +113,7 @@ function clickAddDel()
 
 // add a procedure, reposition the dialog, and renew click button
 function addProcedure(func, id, proc, item, suffix) {
-  let div = $(id).find('div'),
+  let div = $(id + ' > div'),
     i = 0
 
   if (div.length) {

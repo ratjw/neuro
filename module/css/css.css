@@ -215,7 +215,6 @@ td.consult:nth-child(8)::after {
 #servicetbl th:nth-child(7) { width: 15%; }
 #servicetbl th:nth-child(8) { width: 1%; }
 #servicetbl th:nth-child(9) { width: 1%; }
-
 #servicetbl td.serviceStaff {
   height: 40px;
   font-weight: bold;
@@ -223,6 +222,10 @@ td.consult:nth-child(8)::after {
   text-align: left;
   padding-left: 10px;
   background-color: #DDFFFF;
+}
+#servicetbl div.profile {
+  font-size: 10px;
+  color: red;
 }
 
 #historytbl th:nth-child(1) { width: 5%; }

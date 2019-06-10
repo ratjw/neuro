@@ -345,6 +345,7 @@
 #dialogProfile div.textdiv {
   width: 350px !important;
   height: auto;
+  min-height: 20px;
   overflow: auto;
   white-space: normal;
   border: 1px solid lightblue;
