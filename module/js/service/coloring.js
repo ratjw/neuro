@@ -16,8 +16,8 @@ export function coloring(row) {
     if (profile[e]) {
       if (e === 'admitted') {
         if (profile[e] < 2) { return }
-      } else if (e === 'operated') {
-        if (profile[e].length < 2) { return }
+//      } else if (e === 'operated') {
+//        if (profile[e].length < 2) { return }
       }
       row.classList.add(COMPLICATION[e])
     }

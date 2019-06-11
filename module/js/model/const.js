@@ -33,7 +33,7 @@ LARGESTDATE = "9999-12-31",
 
 COMPLICATION = {
   admitted: "Readmission",
-  operated: "Reoperation",
+//  operated: "Reoperation",
   infection: "Infection",
   morbid: "Morbidity",
   dead: "Dead"

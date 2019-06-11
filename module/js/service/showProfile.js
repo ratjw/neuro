@@ -7,13 +7,13 @@ import { numDate, thDate, datepicker } from '../util/date.js'
 import { saveService } from './savePreviousCellService.js'
 import { saveProfile } from './saveProfile.js'
 
-let $dialogProfile = $('#dialogProfile'),
-  maxHeight = winHeight(90),
-  opdate,
-  treatment,
-  operated,
-  radiosurg,
-  endovasc
+let _$dialogProfile = $('#dialogProfile'),
+  _maxHeight = winHeight(90),
+  _opdate,
+  _treatment,
+  _operated,
+  _radiosurg,
+  _endovasc
   
 
 // e.name === column in Mysql
@@ -30,15 +30,15 @@ export function showProfile(pointing)
 
   if (!qn) { return }
 
-  operated = profile && profile.operated && [...profile.operated] || []
-  radiosurg = profile && profile.radiosurg && [...profile.radiosurg] || []
-  endovasc = profile && profile.endovasc && [...profile.endovasc] || []
-  opdate = row.dataset.opdate
-  treatment = row.dataset.treatment
+  _opdate = row.dataset.opdate
+  _treatment = row.dataset.treatment
+  _operated = profile && profile.operated && [...profile.operated] || []
+  _radiosurg = profile && profile.radiosurg && [...profile.radiosurg] || []
+  _endovasc = profile && profile.endovasc && [...profile.endovasc] || []
 
-  $dialogProfile.html(htmlProfile(PROFILESHEET))
+  _$dialogProfile.html(htmlProfile(PROFILESHEET))
 
-  let inputs = $dialogProfile.find("input")
+  let inputs = _$dialogProfile.find("input")
   Array.from(inputs).forEach(e => {
     if (e.name === "admitted") {
       e.value = admitted ? admitted : 0
@@ -47,31 +47,25 @@ export function showProfile(pointing)
     }
   })
 
-  appendProcedure('#operated', OPERATION, operated, 'Op')
-  appendProcedure('#radiosurg', RADIOSURG, radiosurg, 'RS')
-  appendProcedure('#endovasc', ENDOVASC, endovasc, 'ET')
+  appendProcedure('#operated', OPERATION, _operated, 'Op')
+  appendProcedure('#radiosurg', RADIOSURG, _radiosurg, 'RS')
+  appendProcedure('#endovasc', ENDOVASC, _endovasc, 'ET')
 
-  let operateddiv = $('#operated div.textdiv').html(),
-    radiosurgdiv = $('#radiosurg div.textdiv').html(),
-    endovascdiv = $('#endovasc div.textdiv').html()
+  showTreatment()
 
-  if (!operateddiv && !radiosurgdiv && !endovascdiv) {
-    $dialogProfile.find('div.treatdiv').html(treatment).show()
-  }
-
-  $dialogProfile.dialog({ height: 'auto' })
-  $dialogProfile.dialog({
+  _$dialogProfile.dialog({ height: 'auto' })
+  _$dialogProfile.dialog({
     title: `${hn} ${patient}`,
     closeOnEscape: true,
     modal: true,
     width: 'auto',
-    height: ($dialogProfile.height() > maxHeight) ? maxHeight : 'auto',
+    height: ($dialogProfile.height() > _maxHeight) ? _maxHeight : 'auto',
     buttons: [
       {
         text: "Save",
         click: function () {
           saveProfile(pointing, profile)
-          $dialogProfile.dialog('close')
+          _$dialogProfile.dialog('close')
         }
       }
     ]
@@ -79,7 +73,7 @@ export function showProfile(pointing)
 
   radioHack('#dialogProfile')
   clickAddDel()
-  $dialogProfile.find("div").focus()
+  _$dialogProfile.find("div").focus()
   // make it respond to closeOnEscape
 }
 
@@ -94,16 +88,27 @@ function appendProcedure(id, proc, item, suffix)
   }
 }
 
+function showTreatment()
+{
+  let operateddiv = $('#operated div.textdiv').html(),
+    radiosurgdiv = $('#radiosurg div.textdiv').html(),
+    endovascdiv = $('#endovasc div.textdiv').html()
+
+  if (!operateddiv && !radiosurgdiv && !endovascdiv) {
+    _$dialogProfile.find('div.treatdiv').html(_treatment).show()
+  }
+}
+
 function clickAddDel()
 {
-  $dialogProfile.find('button').off('click').on('click', function() {
+  _$dialogProfile.find('button').off('click').on('click', function() {
     if (this.innerHTML === '+') {
       if (/Operation/.test(this.name)) {
-        addProcedure(divProcedure, '#operated', OPERATION, operated, 'Op')
+        addProcedure(divProcedure, '#operated', OPERATION, _operated, 'Op')
       } else if (/Radiosurgery/.test(this.name)) {
-        addProcedure(divProcedure, '#radiosurg', RADIOSURG, radiosurg, 'RS')
+        addProcedure(divProcedure, '#radiosurg', RADIOSURG, _radiosurg, 'RS')
       } else if (/Endovascular/.test(this.name)) {
-        addProcedure(divProcedure, '#endovasc', ENDOVASC, endovasc, 'ET')
+        addProcedure(divProcedure, '#endovasc', ENDOVASC, _endovasc, 'ET')
       }
     } else if (this.innerHTML === '-') {
       delProcedure(this)
@@ -129,17 +134,18 @@ function addProcedure(func, id, proc, item, suffix) {
 
 function delProcedure(that) {
   that.closest('div').remove()
+  showTreatment()
   resizeScroll()
   clickAddDel()
 }
 
 function resizeScroll()
 {
-  $dialogProfile.dialog({ height: 'auto', width: 'auto' })
-  $dialogProfile.dialog({
-    height: ($dialogProfile.height() > maxHeight) ? maxHeight : 'auto'
+  _$dialogProfile.dialog({ height: 'auto', width: 'auto' })
+  _$dialogProfile.dialog({
+    height: ($dialogProfile.height() > _maxHeight) ? _maxHeight : 'auto'
   })
-  $dialogProfile.scrollTop($dialogProfile.height())
+  _$dialogProfile.scrollTop($dialogProfile.height())
 }
 
 // add op to e.name to make it unique
@@ -161,15 +167,15 @@ function divProcedure(procedure, item, suffix, i)
     if (item && item[i]) {
       if (inputname === 'opdateth') {
         if ((i === 0) && !item[i][inputname]) {
-          $(e).datepicker("setDate", new Date(opdate))
-          e.value = thDate(opdate)
+          $(e).datepicker("setDate", new Date(_opdate))
+          e.value = thDate(_opdate)
         } else {
           $(e).datepicker("setDate", new Date(numDate(item[i][inputname])))
           e.value = item[i][inputname]
         }
       } else if (e.className === 'textdiv') {
         if ((i === 0) && !(item[i] && item[i].procedure) && !usedTreatment()) {
-          e.innerHTML = treatment
+          e.innerHTML = _treatment
         } else {
           e.innerHTML = item[i].procedure
         }
@@ -184,7 +190,7 @@ function divProcedure(procedure, item, suffix, i)
 
 function usedTreatment()
 {
-  let txtarea = $dialogProfile.find('div.textdiv')
+  let txtarea = _$dialogProfile.find('div.textdiv')
 
   return Array.from(txtarea).some(e => !!e.innerHTML)
 }

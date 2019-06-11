@@ -308,6 +308,14 @@ td.consult:nth-child(8)::after {
   display: none;
 }
 
+#monthpicker .ui-datepicker-prev:hover,
+#monthpicker .ui-datepicker-next:hover,
+#monthpicker .ui-datepicker-title:hover
+{
+  background-color: white;
+  border: solid 1px #0099FF !important;
+}
+
 #editcell { 
   text-align: left; 
   overflow: hidden;
