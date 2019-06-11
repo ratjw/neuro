@@ -59,7 +59,7 @@ export function showProfile(pointing)
     closeOnEscape: true,
     modal: true,
     width: 'auto',
-    height: ($dialogProfile.height() > _maxHeight) ? _maxHeight : 'auto',
+    height: (_$dialogProfile.height() > _maxHeight) ? _maxHeight : 'auto',
     buttons: [
       {
         text: "Save",
@@ -143,9 +143,9 @@ function resizeScroll()
 {
   _$dialogProfile.dialog({ height: 'auto', width: 'auto' })
   _$dialogProfile.dialog({
-    height: ($dialogProfile.height() > _maxHeight) ? _maxHeight : 'auto'
+    height: (_$dialogProfile.height() > _maxHeight) ? _maxHeight : 'auto'
   })
-  _$dialogProfile.scrollTop($dialogProfile.height())
+  _$dialogProfile.scrollTop(_$dialogProfile.height())
 }
 
 // add op to e.name to make it unique
