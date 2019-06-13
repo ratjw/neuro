@@ -2,7 +2,7 @@
 import { savePreviousCell, editPresentCell } from "./clicktable.js"
 import {
   PATIENT, DIAGNOSIS, TREATMENT, CONTACT,
-  DIAGNOSISSV, TREATMENTSV, ADMISSIONSV, FINALSV
+  DIAGNOSISSV, ADMISSIONSV, FINALSV
 } from "../model/const.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
@@ -11,7 +11,7 @@ import { savePreviousCellService } from "../service/savePreviousCellService.js"
 import { editPresentCellService } from "../service/editPresentCellService.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 
-const EDITABLESV = [DIAGNOSISSV, TREATMENTSV, ADMISSIONSV, FINALSV]
+const EDITABLESV = [DIAGNOSISSV, ADMISSIONSV, FINALSV]
 const EDITABLETBL = [DIAGNOSIS, TREATMENT, CONTACT]
 
 // the current position

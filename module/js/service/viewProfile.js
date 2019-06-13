@@ -18,7 +18,7 @@ export function viewProfile(profile, thopdate, treatment)
         let opdateth = e.opdateth || '',
           proc = e.procedure || '',
           space = (opdateth && proc) ? ' ' : '',
-          rx = opdateth + space + proc
+          rx = '<b>' + opdateth + '</b>' + space + proc
 
         rx && treatmentstr.push(rx)
         if (complete) {

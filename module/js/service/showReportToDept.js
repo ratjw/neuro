@@ -106,14 +106,9 @@ function countAdmitCase(e, admits)
 
 function countOpCase(operated)
 {
-  let op = operated.length
+  let op = document.querySelector('#Operation')
 
-  op && document.querySelector('#Operation').innerHTML++
-  while(op > 1) {
-    document.querySelector('#Operation').innerHTML++
-    document.querySelector('#Reoperation').innerHTML++
-    op--
-  }
+  op.innerHTML = Number(op.innerHTML) + operated.length
 
   operated.forEach(e => {
     let row = ROWREPORT[e.disease],

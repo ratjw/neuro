@@ -3,21 +3,11 @@ import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
   FINALSV, ADMITSV, DISCHARGESV
 } from "../model/const.js"
-import { POINTER, clearEditcell } from "../control/edit.js"
-import { START, thDate, putThdate, putNameAge } from "../util/date.js"
-import { isSplit,  winWidth, winHeight, winResizeFix } from "../util/util.js"
-import { isPACS } from "../main.js"
-import { fillmain } from "../view/fill.js"
-import { staffqueue } from "../view/staffqueue.js"
-import { fillConsults } from "../view/fillConsults.js"
 import { coloring } from "./coloring.js"
 import { getAdmitDischargeDate } from "./getAdmitDischargeDate.js"
-import { savePreviousCellService } from "./savePreviousCellService.js"
 import { SERVICE, seteditableSV, serviceFromDate } from "./setSERVICE.js"
 import { viewProfile } from "./viewProfile.js"
-import { clearSelection } from "../get/selectRow.js"
-import { hoverPicArea } from "../util/util.js"
-import { clickCellSV } from "./clickCellSV.js"
+import { START, thDate, putThdate, putNameAge } from "../util/date.js"
 
 export function showService() {
   let $dialogService = $("#dialogService"),
@@ -27,17 +17,6 @@ export function showService() {
     staffname = "",
     scase = 0,
     classname = ""
-
-  let resizeDialogSV = () => {
-    $dialogService.dialog({
-      width: winWidth(95),
-      height: winHeight(95)
-    })
-    winResizeFix($servicetbl, $dialogService)
-  }
-
-  $("#monthpicker").hide()
-  $("#servicehead").show()
 
   //delete previous servicetbl lest it accumulates
   $servicetbl.find("tr").slice(1).remove()
@@ -62,37 +41,9 @@ export function showService() {
         .filldataService(this, scase)
   })
 
-  // close: it is necessary NOT to close the non-visible jQuery dialogs,
-  // because these may not have yet been initialized (which results in an error)
-  $dialogService.dialog({
-    hide: 200,
-    width: winWidth(95),
-    height: winHeight(95),
-    close: function() {
-      if (isSplit()) { staffqueue(titlename.innerHTML) }
-      fillmain()
-      fillConsults()
-      $(".ui-dialog:visible").find(".ui-dialog-content").dialog("close")
-      $(".fixed").remove()
-      $(window).off("resize", resizeDialogSV)
-      $dialogService.off("click", clickCellSV)
-      if (POINTER) {
-        savePreviousCellService()
-      }
-      clearEditcell()
-      clearSelection()
-    }
-  })
-
   if (/surgery\.rama/.test(location.hostname)) {
     getAdmitDischargeDate()
   }
-  $servicetbl.fixMe($dialogService)
-  hoverPicArea()
-  $dialogService.on("click", clickCellSV)
-
-  //for resizing dialogs in landscape / portrait view
-  $(window).on("resize", resizeDialogSV)
 }
 
 // Use existing DOM table to refresh when editing
@@ -138,7 +89,6 @@ export function reViewService() {
     $rows.slice(i+1).remove()
   }
   $servicetbl.fixMe($("#dialogService"))
-  hoverPicArea()
 }
 
 jQuery.fn.extend({
