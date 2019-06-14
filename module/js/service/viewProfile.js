@@ -12,13 +12,13 @@ export function viewProfile(profile, thopdate, treatment)
 
   if (!profileJSON) { return treatment }
 
-  Object.entries(profileJSON).forEach(([key, val]) => {
+  Object.keys(profileJSON).forEach(key => {
     if (key === "operated") {
       profileJSON[key].forEach((e, i) => {
-        let opdateth = e.opdateth || '',
+        let opdateth = e.opdateth ? ('<b>' + e.opdateth + '</b>') : '',
           proc = e.procedure || '',
           space = (opdateth && proc) ? ' ' : '',
-          rx = '<b>' + opdateth + '</b>' + space + proc
+          rx = opdateth + space + proc
 
         rx && treatmentstr.push(rx)
         if (complete) {
@@ -52,7 +52,8 @@ export function viewProfile(profile, thopdate, treatment)
     if (complete) {
       return treatmentstr
     } else {
-      return `${treatmentstr}<br><br><div class="profile">Incomplete profile</div>`
+      let style = 'style = "font-size:10px; color:red;"'
+      return `${treatmentstr}<br><br><div ${style}>Incomplete profile</div>`
     }
   } else {
     return treatment

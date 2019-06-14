@@ -174,7 +174,7 @@ function divProcedure(procedure, item, suffix, i)
           e.value = item[i][inputname]
         }
       } else if (e.className === 'textdiv') {
-        if ((i === 0) && !(item[i] && item[i].procedure) && !usedTreatment()) {
+        if ((i === 0) && (item[i] && item[i].procedure === undefined) && !usedTreatment()) {
           e.innerHTML = _treatment
         } else {
           e.innerHTML = item[i].procedure

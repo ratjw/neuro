@@ -223,10 +223,6 @@ td.consult:nth-child(8)::after {
   padding-left: 10px;
   background-color: #DDFFFF;
 }
-#servicetbl div.profile {
-  font-size: 10px;
-  color: red;
-}
 
 #historytbl th:nth-child(1) { width: 5%; }
 #historytbl th:nth-child(2) { width: 10px; }

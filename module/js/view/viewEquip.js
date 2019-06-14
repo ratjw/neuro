@@ -39,20 +39,13 @@ const EQUIPICONSHOWN = [
 // Add all equipments in one string to show in 1 cell
 export function viewEquip(equip)
 {
-  return equip ? viewEquipJSON(JSON.parse(equip)) : ""
-}
+  if (!equip) { return '' }
 
-export function viewEquipNoImg(equip)
-{
-  return equip ? viewEquipText(JSON.parse(equip)) : ""
-}
+  let equipJSON = JSON.parse(equip)
 
-export function viewEquipJSON(equipJSON)
-{
-  if (Object.keys(equipJSON).length) {
-    return viewEquipText(equipJSON) + "<br>" + viewEquipImage(equipJSON)
-  }
-  return ""
+  if (!Object.keys(equipJSON).length) { return '' }
+
+  return viewEquipText(equipJSON) + "<br>" + viewEquipImage(equipJSON)
 }
 
 function viewEquipText(equipJSON)

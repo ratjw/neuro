@@ -6,7 +6,7 @@ import {
 import { putNameAge } from "../util/date.js"
 import { isPACS } from "../main.js"
 import { rowDecoration } from "./rowDecoration.js"
-import { viewEquip, viewEquipNoImg } from "./viewEquip.js"
+import { viewEquip } from "./viewEquip.js"
 import { setRowData, blankRowData } from "../model/rowdata.js"
 import { hoverPicArea } from "../util/util.js"
 

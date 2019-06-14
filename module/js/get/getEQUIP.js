@@ -6,7 +6,6 @@ import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEqu
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { viewEquipJSON } from "../view/viewEquip.js"
 import { Alert, winWidth, winHeight, radioHack, deepEqual } from "../util/util.js"
 
 const EQUIPITEMS = [
@@ -156,7 +155,8 @@ function showNonEditableEquip()
 
 // having any equip must have copay. if no copay, ->alert
 // having no equip, cancel copay
-let showEditableEquip = function () {
+function showEditableEquip()
+{
   $dialogEquip.dialog("option", "buttons", [
     {
       text: "Save",
@@ -212,24 +212,17 @@ function getEditedBy()
 
 function checkEquip()
 {
-  let equip = false
-
-  document.querySelectorAll('#dialogEquip div:not([title=copay]) input, #dialogEquip textarea').forEach(e => {
-    if (e.checked) {
-      equip = true
-      return false
-    } else if (e.type === "text" || e.type === "textarea") {
-      if (e.value) {
-        equip = true
-        return false
-      }
+  return Array.from(document.querySelectorAll('#dialogEquip input, #dialogEquip textarea')).some(e => {
+    if (e.type === "text" || e.type === "textarea") {
+      return e.value
+    } else {
+      return e.checked
     }
   })
-
-  return equip
 }
 
-let checklistEquip = function () {
+function checklistEquip()
+{
   let equipJSON = {},
     equipment = "",
     sql = ""
