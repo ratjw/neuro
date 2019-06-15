@@ -329,7 +329,6 @@ RADIOSURG = [
   ["br", "", "", ""],
   ["radio", "100", "doneby", "Staff Neuro"],
   ["radio", "100", "doneby", "Staff Radio"],
-  ["span", "120", "", ""]
 ],
 ENDOVASC = [
   ["hr", "inner", "", "", ""],
