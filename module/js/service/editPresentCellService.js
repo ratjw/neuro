@@ -20,11 +20,11 @@ export function editPresentCellService(evt, pointing) {
     case CASENUMSV: break
     case HNSV: getHNSV(evt, pointing); break
     case NAMESV: clearEditcell(); break
-    case DIAGNOSISSV:
-    case ADMISSIONSV:
-    case FINALSV: editableSV && createEditcell(pointing); break
+    case DIAGNOSISSV: editableSV && createEditcell(pointing); break
     case TREATMENTSV: clearEditcell(); showProfile(pointing); break
-    case ADMITSV:
+    case ADMISSIONSV: editableSV && createEditcell(pointing); break
+    case FINALSV: editableSV && createEditcell(pointing); break
+    case ADMITSV: clearEditcell(); break
     case DISCHARGESV: clearEditcell(); break
   }
 }

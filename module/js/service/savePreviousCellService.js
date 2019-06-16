@@ -21,23 +21,15 @@ export function savePreviousCellService() {
 
   switch(POINTER.cellIndex)
   {
-    case CASENUMSV:
-    case HNSV:
-    case NAMESV:
-      break
-    case DIAGNOSISSV:
-      saveContentService(POINTER, "diagnosis", newcontent)
-      break
-    case ADMISSIONSV:
-      saveContentService(POINTER, "admission", newcontent)
-      break
-    case FINALSV:
-      saveContentService(POINTER, "final", newcontent)
-      break
-    case TREATMENTSV:
-    case ADMITSV:
-    case DISCHARGESV:
-      break
+    case CASENUMSV: break
+    case HNSV: break
+    case NAMESV: break
+    case DIAGNOSISSV: saveContentService(POINTER, "diagnosis", newcontent); break
+    case ADMISSIONSV: saveContentService(POINTER, "admission", newcontent); break
+    case FINALSV: saveContentService(POINTER, "final", newcontent); break
+    case TREATMENTSV: break
+    case ADMITSV: break
+    case DISCHARGESV: break
   }
 }
 
