@@ -296,7 +296,7 @@ PROFILESHEET = [
 OPERATION = [
   ["hr", "inner", "", ""],
   ["button", "", "delproc", "-"],
-  ["text", "100", "opdateth", "opdatepicker"],
+  ["text", "100", "opdateth", ""],
   ["br", "", "", ""],
   ["br", "", "", ""],
   ["br", "", "", ""],

@@ -160,8 +160,8 @@ function divProcedure(procedure, item, suffix, i)
   Array.from(inputs).forEach(e => {
     inputname = e.name
     e.name = e.name + suffix + i
-    if (e.id === 'opdatepicker') {
-      e.id = 'opdatepicker' + suffix + i
+    if (e.id === 'opdateth') {
+      e.id = 'opdateth' + suffix + i
       datepicker($(e))
     }
     if (item && item[i]) {

@@ -32,7 +32,8 @@ export function htmlEquipment()
     width = "",
     name = "",
     label = "",
-    id = ""
+    id = "",
+    addclass = ""
 
   EQUIPSHEET.forEach(item => {
     type = item[0]
@@ -40,27 +41,28 @@ export function htmlEquipment()
     name = item[2]
     label = item[3]
     id = item[4]
+    addclass = width ? `class="w${width}"` : ""
 
     if (type === "divbegin") {
       equip += `<div title="${name}">`
     } else if (type === "divend") {
       equip += `</div>`
     } else if (type === "span") {
-      equip += `<span class="w${width}" id="${id}">${label}</span>`
+      equip += `<span ${addclass} id="${id}">${label}</span>`
     } else if (type === "spanInSpan") {
-      equip += `<span class="w${width}">${label}<span id="${id}"></span></span>`
+      equip += `<span ${addclass}>${label}<span id="${id}"></span></span>`
     } else if (type === "br") {
       equip += `<br>`
     } else if (type === "radio" || type === "checkbox") {
-      equip += `<span class="w${width}">
+      equip += `<span ${addclass}>
                  <label>
                    <input type="${type}" name="${name}" value="${label}">
                    <span>${label}</span></label>
                 </span>`
     } else if (type === "text") {
-      equip += `<input type="${type}" class="w${width}" placeholder="${label}">`
+      equip += `<input type="${type}" ${addclass} placeholder="${label}">`
     } else if (type === "textarea") {
-      equip += `<textarea class="w${width}" placeholder="${label}"></textarea>`
+      equip += `<textarea ${addclass} placeholder="${label}"></textarea>`
     }
   })
 
@@ -78,7 +80,8 @@ export function htmlProfile(profile)
     name = "",
     label = "",
     min = "",
-    max = ""
+    max = "",
+    addclass = ""
 
   profile.forEach(item => {
     type = item[0]
@@ -87,6 +90,7 @@ export function htmlProfile(profile)
     label = item[3]
     min = item[4] || ""
     max = item[5] || ""
+    addclass = width ? `class="w${width}"` : ""
 
     if (type === "br") {
 			record += `<br>`
@@ -96,7 +100,7 @@ export function htmlProfile(profile)
 			record += `<hr class="${width}">`
     } else if (type === "number") {
 			record += `<span class="bold">${label}</span>
-				<input class="w${width}" type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}">`
+				<input ${addclass} type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}">`
     } else if (type === "divbegin") {
 			record += `<div id="${name}"><span class="bold">${label}</span><br>`
     } else if (type === "divend") {
@@ -104,10 +108,10 @@ export function htmlProfile(profile)
     } else if (type === "div") {
 			record += `<div class="${width}" contenteditable="true"></div>`
     } else if (type === "text") {
-			record += `<input class="w${width}" type="${type}" name="${name}" id="${label}"`
+			record += `<input ${addclass} type="${type}" name="${name}" id="${label}"`
 		} else if (type === "checkbox" || type === "radio") {
 			record += `<label>
-				<input class="w${width}" type="${type}" name="${name}" value="${label}">
+				<input ${addclass} type="${type}" name="${name}" value="${label}">
 				<span style="right:${width}px">${label.replace(" ", "&nbsp;")}</span></label>`
 		}
   })
