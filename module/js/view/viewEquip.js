@@ -6,6 +6,7 @@ const EQUIPICONS = {
     "O-arm": "Oarm",
     Robotics: "Robotics",
     Microscope: "Microscope",
+    "Pentaro 900": "Pentaro900",
     ICG: "Microscope",
     Endoscope: "Endoscope",
     Excell: "CUSA",
@@ -31,6 +32,7 @@ const EQUIPICONSHOWN = [
   "Fluoroscope",
   "Navigator",
   "Microscope",
+  "Pentaro900",
   "CUSA",
   "Endoscope",
   "Monitor"
@@ -62,7 +64,7 @@ function viewEquipText(equipJSON)
 function viewEquipImage(equipJSON)
 {
   let equipPics = [],
-    img = ""
+    img = []
 
   Object.values(equipJSON).forEach(value => {
     if (typeof value === 'string') {
@@ -84,22 +86,31 @@ function viewEquipImage(equipJSON)
   // display 6 pics: pale the not-checked ones
   EQUIPICONSHOWN.forEach((item) => {
     if (equipPics.includes(item)) {
-      img += `<img src="css/pic/equip/${item}.jpg"> `
+      if (item === "Pentaro900") { img.pop() }
+      img.push(`<img src="css/pic/equip/${item}.jpg">`)
       equipPics = equipPics.filter(e => e !== item)
     } else {
-      img += `<img class="imgpale" src="css/pic/equip/${item}.jpg"> `
+      if (item !== "Pentaro900") {
+        img.push(`<img class="imgpale"  src="css/pic/equip/${item}.jpg">`)
+      }
     }
   })
-  
-  return img + equipImg(equipPics)
+
+  // Remainders in equipPics
+  if (equipPics.length) {
+    img = img.concat(equipImg(equipPics))
+  }
+
+  return img.join(' ')
 }
 
+// the remain of equipPics
 function equipImg(equipPics)
 {
-  let img = ""
+  let img = []
 
   equipPics.forEach(function(item) {
-    img += `<img src="css/pic/equip/${item}.jpg"> `
+    img.push(`<img src="css/pic/equip/${item}.jpg">`)
   })
 
   return img

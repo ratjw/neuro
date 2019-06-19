@@ -41,7 +41,7 @@ export function htmlEquipment()
     name = item[2]
     label = item[3]
     id = item[4]
-    addclass = width ? `class="w${width}"` : ""
+    addclass = width ? `class="w${width}"` : ``
 
     if (type === "divbegin") {
       equip += `<div title="${name}">`
@@ -53,7 +53,7 @@ export function htmlEquipment()
       equip += `<span ${addclass}>${label}<span id="${id}"></span></span>`
     } else if (type === "br") {
       equip += `<br>`
-    } else if (type === "radio" || type === "checkbox") {
+    } else if (type === "checkbox" || type === "radio") {
       equip += `<span ${addclass}>
                  <label>
                    <input type="${type}" name="${name}" value="${label}">
@@ -71,7 +71,7 @@ export function htmlEquipment()
 
 // name is the column in Mysql
 // title is the value
-// <span style right: width> to make <span> contained in <input> box
+// <span style right:width> to make <span> contained in <input> box
 export function htmlProfile(profile)
 {
   let record = "",
