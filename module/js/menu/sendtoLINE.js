@@ -10,36 +10,14 @@ const HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT]
 
 export function sendtoLINE()
 {
-  let $dialogNotify = $('#dialogNotify'),
-    $textarea = $dialogNotify.find('textarea')
-
-  $dialogNotify.dialog({
-    title: `<img src="css/pic/general/linenotify.png" width="40" style="float:left">
-            <span style="font-size:20px">Qbook: ${USER}</span>`,
-    closeOnEscape: true,
-    modal: true,
-    show: 200,
-    hide: 200,
-    width: 270,
-    height: 300
-  })
-  $textarea.one('click', function() {
-    $textarea.removeAttr('onfocus')
-    $textarea.focus()
-  })
-  $('#buttonLINE').one('click', function() {
-    $dialogNotify.find('.loader').show()
-    setTimeout(toLINE, 100)
-  })
-}
-
-export function toLINE()
-{
-  let capture = document.querySelector("#capture"),
+  let maintbl = document.querySelector("#maintbl"),
+    cssmenu = document.querySelector("#cssmenu"),
+    capture = document.querySelector("#capture"),
     $capture = $("#capture"),
     $selected = $(".selected"),
     $dialogNotify = $('#dialogNotify'),
-    message = $dialogNotify.find('textarea').val()
+    $textarea = $dialogNotify.find('textarea'),
+    message = $textarea.val()
 
   $capture.find("tr").slice(1).remove()
   $.each($selected, function() {
@@ -66,17 +44,46 @@ export function toLINE()
     }
   })
 
+  maintbl.style.visibility = 'hidden'
+  cssmenu.style.visibility = 'hidden'
   $capture.show()
   $capture.width(isMobile ? '500' : '1000')
-  html2canvas(capture).then(function(canvas) {
-    $capture.hide()
-    $.post(LINENOTIFY, {
-      'user': USER,
-      'message': message,
-      'image': canvas.toDataURL('image/png', 1.0)
-    })
-    $('#dialogNotify .loader').hide()
-    $dialogNotify.dialog('close')
+
+  $dialogNotify.dialog({
+    title: `<img src="css/pic/general/linenotify.png" width="40" style="float:left">
+            <span style="font-size:20px">Qbook: ${USER}</span>`,
+    closeOnEscape: true,
+    modal: true,
+    show: 200,
+    hide: 200,
+    width: 270,
+    height: 300,
+    close: function() {
+      capture.style.display = 'none'
+      maintbl.style.visibility = 'visible'
+      cssmenu.style.visibility = 'visible'
+    }
+  })
+  $textarea.one('click', function() {
+    $textarea.removeAttr('onfocus')
+    $textarea.focus()
+  })
+  $('#buttonLINE').one('click', function() {
+    $dialogNotify.find('.loader').show()
+    // setTimeout to wait loader css rendering
+    setTimeout(function() {
+      $('#dialogNotify .loader').show()
+      html2canvas(capture).then(function(canvas) {
+        capture.style.display = 'none'
+        $.post(LINENOTIFY, {
+          'user': USER,
+          'message': message,
+          'image': canvas.toDataURL('image/png', 1.0)
+        })
+        $('#dialogNotify .loader').hide()
+        $dialogNotify.dialog('close')
+      })
+    }, 100)
   })
 }
 

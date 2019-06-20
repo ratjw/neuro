@@ -761,43 +761,31 @@ function sendtoLINE()
     $textarea.removeAttr('onfocus')
     $textarea.focus()
   })
-  $('#buttonLINE').one('click', function() {
-    $dialogNotify.find('.loader').show()
-    setTimeout(toLINE, 100)
-  })
 }
 
 function toLINE()
 {
   var capture = document.querySelector("#capture")
   var $capture = $("#capture")
-  var $captureTRs = $capture.find('tr')
   var $selected = $(".selected")
-  var row = ""
   var HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT, QN]
   var $dialogNotify = $('#dialogNotify')
-  var message
+  var message = $dialogNotify.find('textarea').val()
 
-
-  message = $dialogNotify.find('textarea').val()
-  $dialogNotify.dialog('close')
-
-  $captureTRs.slice(1).remove()
+  $capture.find("tr").slice(1).remove()
   $.each($selected, function() {
     $capture.find("tbody").append($(this).clone())
   })
-  $captureTRs = $capture.find('tr')
-  $captureTRs.removeClass('selected')
-  $captureTRs.removeClass('lastselected')
 
-  $.each($captureTRs, function() {
-    let cell = this.cells,
+  $rows = $capture.find('tr')
+  $rows.removeClass('selected')
+  $rows.removeClass('lastselected')
+
+  $.each($rows, function() {
+    var cell = this.cells,
       tr = this,
       $td = $(tr).find('td')
-
-    HIDE.forEach(function(e) {
-      tr.cells[e].style.display = 'none'
-    })
+    HIDE.forEach(function(e) { tr.cells[e].style.display = 'none' })
     if ($td.length) {
       cell[OPDATE].innerHTML = cell[OPDATE].innerHTML.replace(' ', '<br>')
       cell[HN].innerHTML += '<br>' + cell[PATIENT].innerHTML.split(" ")[0]
@@ -809,7 +797,7 @@ function toLINE()
   })
 
   $capture.show()
-  $capture.width('500')
+  $capture.width('600')
   html2canvas(capture).then(function(canvas) {
     $.post(LINENOTIFY, {
       'user': gv.user,
@@ -824,7 +812,7 @@ function toLINE()
 
 function string25(txt)
 {
-  let result1 = [],
+  var result1 = [],
    result2 = [],
    result3 = [],
    result4 = [],

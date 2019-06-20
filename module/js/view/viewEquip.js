@@ -32,7 +32,6 @@ const EQUIPICONSHOWN = [
   "Fluoroscope",
   "Navigator",
   "Microscope",
-  "Pentaro900",
   "CUSA",
   "Endoscope",
   "Monitor"
@@ -84,15 +83,16 @@ function viewEquipImage(equipJSON)
   equipPics = [...new Set(equipPics)]
 
   // display 6 pics: pale the not-checked ones
+  // filtering to show the remainders 
   EQUIPICONSHOWN.forEach((item) => {
+    if ((item === "Microscope") && (equipPics.includes("Pentaro900"))) {
+      item = "Pentaro900"
+    }
     if (equipPics.includes(item)) {
-      if (item === "Pentaro900") { img.pop() }
       img.push(`<img src="css/pic/equip/${item}.jpg">`)
       equipPics = equipPics.filter(e => e !== item)
     } else {
-      if (item !== "Pentaro900") {
-        img.push(`<img class="imgpale"  src="css/pic/equip/${item}.jpg">`)
-      }
+      img.push(`<img class="imgpale"  src="css/pic/equip/${item}.jpg">`)
     }
   })
 
@@ -104,7 +104,7 @@ function viewEquipImage(equipJSON)
   return img.join(' ')
 }
 
-// the remain of equipPics
+// the remainder of equipPics
 function equipImg(equipPics)
 {
   let img = []

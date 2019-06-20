@@ -10,7 +10,7 @@ import { copyCase } from "./copyCase.js"
 import { editHistory } from "./editHistory.js"
 import { delCase } from "./delCase.js"
 import { sendtoExcel } from "./sendtoExcel.js"
-import { sendtoLINE, toLINE } from "./sendtoLINE.js"
+import { sendtoLINE } from "./sendtoLINE.js"
 
 let clickevent = {
   "clicksearchCases": searchCases,

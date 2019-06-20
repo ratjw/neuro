@@ -386,11 +386,11 @@
   border: 2px solid Dodgerblue;
 }
 
-.loader {
+#dialogNotify .loader {
   display: none;
   position: absolute;
-  top:5%;
-  left: 50%;
+  top:20%;
+  left: 80%;
   border: 5px solid #a3e3f3;
   border-radius: 50%;
   border-top: 5px solid #3498db;
