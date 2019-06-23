@@ -10,12 +10,15 @@ const HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT]
 
 export function sendtoLINE()
 {
-  let maintbl = document.querySelector("#maintbl"),
+  let wrapper = document.querySelector("#wrapper"),
+    notifywrapper = document.querySelector("#notifywrapper"),
     cssmenu = document.querySelector("#cssmenu"),
     capture = document.querySelector("#capture"),
+    $capturewrapper = $("#capturewrapper"),
     $capture = $("#capture"),
     $selected = $(".selected"),
     $dialogNotify = $('#dialogNotify'),
+    $notify = $dialogNotify.find('span'),
     $textarea = $dialogNotify.find('textarea'),
     message = $textarea.val()
 
@@ -44,11 +47,10 @@ export function sendtoLINE()
     }
   })
 
-  maintbl.style.visibility = 'hidden'
-  cssmenu.style.visibility = 'hidden'
-  $capture.show()
+  wrapper.style.visibility = 'hidden'
+  notifywrapper.style.display = 'block'
   $capture.width(isMobile ? '500' : '1000')
-
+/*
   $dialogNotify.dialog({
     title: `<img src="css/pic/general/linenotify.png" width="40" style="float:left">
             <span style="font-size:20px">Qbook: ${USER}</span>`,
@@ -64,6 +66,8 @@ export function sendtoLINE()
       cssmenu.style.visibility = 'visible'
     }
   })
+*/
+  $notify.html($notify.html() + USER)
   $textarea.one('click', function() {
     $textarea.removeAttr('onfocus')
     $textarea.focus()

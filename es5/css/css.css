@@ -51,6 +51,9 @@ td img {
 	height: 32px;
 	width: 40px;
 }
+td img.imgpale {
+  filter: opacity(30%);
+}
 
 #queuewrapper {
 	float: right;

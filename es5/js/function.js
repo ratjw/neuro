@@ -519,11 +519,12 @@ function makeEquip(equipJSON)
   var equip = "",
     equipIcons = {
       Fluoroscope: "Fluoroscope",
-      Navigator_frameless: "Navigator",
-      "Navigator_frame-based": "Navigator",
-      Oarm: "Oarm",
+      "Navigator frameless": "Navigator",
+      "Navigator with frame": "Navigator",
+      "O-arm": "Oarm",
       Robotics: "Robotics",
       Microscope: "Microscope",
+      "Pentaro 900": "Pentaro900",
       ICG: "Microscope",
       Endoscope: "Endoscope",
       Excell: "CUSA",
@@ -536,47 +537,72 @@ function makeEquip(equipJSON)
       CN6: "Monitor",
       CN7: "Monitor",
       CN8: "Monitor",
+      CN9: "Monitor",
+      CN10: "Monitor",
+      CN11: "Monitor",
+      CN12: "Monitor",
       SSEP: "Monitor",
       EMG: "Monitor",
       MEP: "Monitor"
     },
-    equipPics = []
+    equipiconShown = [
+      "Fluoroscope",
+      "Navigator",
+      "Microscope",
+      "CUSA",
+      "Endoscope",
+      "Monitor"
+    ],
+    equipPics = [],
+    img = []
 
   $.each(equipJSON, function(key, value) {
-    var Monitor = /Monitor/.test(equip)
-    if (equip) { equip += ", " }
-    if (value === "checked") {
-      if (key in equipIcons) {
-        equipPics.push(equipIcons[key])
-        if (!Monitor) {
-          equip += "Monitor:"
-        }
-      }
-      equip += key
+    if (typeof value === 'string') {
+      if (equipIcons[value]) {
+        equipPics.push(equipIcons[value])
+      } 
     } else {
-      if (key === "Monitor") {
-        if (Monitor) {
-          equip += value
-        }
-      } else {
-        equip += key + ":" + value
-      }
+      $.each(value, function() {
+        if (equipIcons[this]) {
+          equipPics.push(equipIcons[this])
+        } 
+      })
     }
   })
+
+  // display 6 pics: pale the not-checked ones
+  // filtering to show the remainders 
+  $.each(equipiconShown, function(i, each) {
+    if ((each === "Microscope") && (equipPics.indexOf("Pentaro900") >= 0)) {
+      each = "Pentaro900"
+    }
+    if (equipPics.indexOf(each) >= 0) {
+      img.push('<img src="css/pic/equip/' + each + '.jpg">')
+      equipPics = equipPics.filter(function(e) { e !== each })
+    } else {
+      img.push('<img class="imgpale"  src="css/pic/equip/' + each + '.jpg">')
+    }
+  })
+
   // remove duplicated pics
   equipPics = equipPics.filter(function(pic, pos) {
     return equipPics.indexOf(pic) === pos;
   })
 
-  return equip + "<br>" + equipImg(equipPics)
+  // Remainders in equipPics
+  if (equipPics.length) {
+    img = img.concat(equipImg(equipPics))
+  }
+
+  return img.join(' ')
 }
 
 function equipImg(equipPics)
 {
-  var img = ""
+  var img = []
 
   $.each(equipPics, function() {
-    img += '<img src="css/pic/equip/' + this + '.jpg"> '
+    img.push('<img src="css/pic/equip/' + this + '.jpg">')
   })
 
   return img

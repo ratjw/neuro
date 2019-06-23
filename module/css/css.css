@@ -62,10 +62,66 @@ td img.imgpale {
   filter: opacity(30%);
 }
 
+#notifywrapper {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+#dialogNotify {
+  width: 240px;
+  height: auto;
+  border: 1px solid lightgray;
+  padding: 20px;
+  margin: 30px;
+}
+#dialogNotify img {
+  width: 40px;
+  float:left;
+}
+#dialogNotify span {
+  position: relative;
+  top: 7px;
+  left: 20px;
+  font-size: 20px;
+}
+#dialogNotify textarea {
+  height: 200px;
+  padding: 7px;
+  font-size: 14px;
+}
+#buttonLINE {
+  float: right;
+  width: 35px;
+  height: 35px;
+  background-image: url(pic/general/message.png);
+  background-size: 35px;
+  border: 1px solid lightblue;
+}
+#buttonLINE:hover {
+  border: 2px solid Dodgerblue;
+}
+#dialogNotify .loader {
+  display: none;
+  position: absolute;
+  top:20%;
+  left: 80%;
+  border: 5px solid #a3e3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 10px;
+  height: 10px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
 #capture td img {
   height: 40px;
   width: 45px;
   margin: 0px 3px 0px 3px;
+}
+#capture td img.imgpale {
+  filter: opacity(100%);
 }
 #capture th,
 #capture td {
@@ -75,17 +131,17 @@ td img.imgpale {
   border: solid 1px gray;
 }
 #capture th:nth-child(1) { width: 3%; }
-#capture th:nth-child(2) { width: 0%; }
+#capture th:nth-child(2) { display: none; }
 #capture th:nth-child(3) { width: 3%; font-size: 12px; }
-#capture th:nth-child(4) { width: 0%; }
-#capture th:nth-child(5) { width: 0%; }
+#capture th:nth-child(4) { display: none; }
+#capture th:nth-child(5) { display: none; }
 #capture th:nth-child(6) { width: 5%; }
 #capture th:nth-child(7) { width: 9%; }
 #capture th:nth-child(8) { width: 10%; }
 #capture th:nth-child(9) { width: 20%; }
 #capture th:nth-child(10) { width: 20%; }
 #capture th:nth-child(11) { width: 30%; }
-#capture th:nth-child(12) { width: 0%; }
+#capture th:nth-child(12) { display: none; }
 
 td.consult:nth-child(8)::after { 
   color: #999999;
@@ -269,6 +325,7 @@ td.consult:nth-child(8)::after {
 #findtbl th:nth-child(9) { width: 12%; }
 #findtbl th:nth-child(10) { width: 12%; }
 
+#notifywrapper,
 #wrapper,
 #tblcells,
 #queuetbl th:nth-child(2), #queuetbl td:nth-child(2),
@@ -298,8 +355,6 @@ td.consult:nth-child(8)::after {
 #dialogHoliday,
 #holidaycells,
 #holidayInput,
-#capture,
-#dialogNotify,
 .ui-datepicker-year {
   display: none;
 }
