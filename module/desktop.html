@@ -24,30 +24,33 @@
     <img src="css/pic/general/linenotify.png">
     <span>LINE Notify: </span>
     <br><br><br>
-    <textarea placeholder="พิมพ์ข้อความ"></textarea>
     <button id="buttonLINE"></button>
     <div class="loader"></div>
+    <textarea placeholder="พิมพ์ข้อความ"></textarea>
+    <button id="cancelnotify"></button>
   </div>
 
  <table id="capture">
   <tbody>
-   <tr>
-     <th>Date</th>
-     <th>OR</th>
-     <th>Rm</th>
-     <th>Time</th>
-     <th>№</th>
-     <th>Staff</th>
-     <th>HN</th>
-     <th>Patient</th>
-     <th>Diagnosis</th>
-     <th>Treatment</th>
-     <th>Equipment</th>
-     <th>Contact</th>
-   </tr>
   </tbody>
  </table>
 </div>
+<template id="capturerow">
+ <tr>
+   <th>Date</th>
+   <th></th>
+   <th>Rm</th>
+   <th></th>
+   <th></th>
+   <th>Staff</th>
+   <th></th>
+   <th>Patient</th>
+   <th>Diagnosis</th>
+   <th>Treatment</th>
+   <th>Equipment</th>
+   <th></th>
+ </tr>
+</template>
 
 <div id="wrapper">
   <div id="cssmenu">
@@ -143,7 +146,7 @@
        <th>Diagnosis</th>
        <th>Treatment</th>
        <th>Equipment</th>
-       <th>Contact</th>
+       <th>Contact & Notes</th>
       </tr>
      </tbody>
     </table>
