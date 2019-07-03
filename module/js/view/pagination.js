@@ -75,7 +75,6 @@ export function pagination($dialog, $maintbl, book, search)
   })
 
   showOneWeek(book, firstday, 0)
-  $maintbl.fixMe($dialog)
 
   //for resizing dialogs in landscape / portrait view
   $(window).on("resize", resizeDialog )
@@ -86,7 +85,13 @@ export function pagination($dialog, $maintbl, book, search)
     }
   })
 
-  function showOneWeek(book, Monday, offset)
+  function showOneWeek(book, firstday, offset) {
+    $('.fixed').remove()
+    showTheWeek(book, firstday, offset)
+    $maintbl.fixMe($dialog)
+  }
+
+  function showTheWeek(book, Monday, offset)
   {
     let  bookOneWeek, Sunday
 

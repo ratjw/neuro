@@ -24,8 +24,7 @@ let clickevent = {
   "copyCase": copyCase,
   "delcase": delCase,
   "clicksendtoExcel": sendtoExcel,
-  "clicksendtoLINE": sendtoLINE,
-  "clicksearchDB": searchDB
+  "clicksendtoLINE": sendtoLINE
 }
 
 export function setClickMenu()

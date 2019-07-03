@@ -15,7 +15,7 @@ export function viewSearchDB(found, search)
   let flen = found.length,
     $dialogFind = $("#dialogFind"),
     $findtbl = $("#findtbl"),
-    show = scrolltoThisCase(found[flen-1].qn)
+    show = flen && scrolltoThisCase(found[flen-1].qn)
 
   if (!show || (flen > 1)) {
     if (flen > 100) {

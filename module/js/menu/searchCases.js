@@ -1,9 +1,9 @@
 
 /* to do !!!!!!!!!!!!!
-Search Exact Phrases       +
-Exclude a word             -
-Search in sepific column   :
-Forgotten words            *
+Search Exact Phrases      +
+Exclude a word            -
+Search in sepific column  :
+Forgotten words           *
 */
 
 import { sqlSearchDB } from "../model/sqlSearchDB.js"
@@ -37,7 +37,9 @@ export function searchCases()
     if ($staffsearch.is(":visible")) {
       $staffsearch.hide();
     } else {
-      if ($(target).closest('input[name="staffname"]').length) {
+      if (target.nodeName === 'IMG') {
+        searchDB()
+      } else if (target.name === 'staffname') {
         getSaffName(target, $staffsearch)
       }
     }
@@ -67,9 +69,9 @@ function getSaffName(pointing, $staffsearch)
 
 export function searchDB()
 {
-  let hn = $('input[name="hn"]').val(),
-    staffname = $('input[name="staffname"]').val(),
-    others = $('input[name="others"]').val(),
+  let hn = $('#dialogInput input[name="hn"]').val(),
+    staffname = $('#dialogInput input[name="staffname"]').val(),
+    others = $('#dialogInput input[name="others"]').val(),
     search = ""
 
   // Close before open another dialog
@@ -80,12 +82,12 @@ export function searchDB()
   search += (search && staffname ? ", " : "") + staffname
   search += (search && others ? ", " : "") + others
   if (search) {
-  sqlSearchDB(hn, staffname, others).then(response => {
-    typeof response === "object"
-    ? viewSearchDB(response, search)
-    : Alert("Search: " + search, response)
-  }).catch(error => {})
+    sqlSearchDB(hn, staffname, others).then(response => {
+      typeof response === "object"
+      ? viewSearchDB(response, search)
+      : Alert("Search: " + search, response)
+    }).catch(error => {})
   } else {
-    Alert("Search: ''", "<br><br>No Result")
+    Alert("Search: " + search, "<br><br>Nothing to Search")
   }
 }
