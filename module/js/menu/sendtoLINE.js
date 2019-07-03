@@ -6,40 +6,53 @@ import {
 
 const LINEBOT = "line/lineBot.php"
 const LINENOTIFY = "line/lineNotify.php"
-const HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT]
+//const HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT]
 
 export function sendtoLINE()
 {
   let wrapper = document.querySelector("#wrapper"),
-    notifywrapper = document.querySelector("#notifywrapper"),
     cssmenu = document.querySelector("#cssmenu"),
+    notifywrapper = document.querySelector("#notifywrapper"),
+    dialogNotify = document.querySelector("#dialogNotify"),
+    buttonLINE = document.querySelector("#buttonLINE"),
+    cancelnotify = document.querySelector("#cancelnotify"),
     capture = document.querySelector("#capture"),
-    $capturewrapper = $("#capturewrapper"),
-    $capture = $("#capture"),
-    $selected = $(".selected"),
-    $dialogNotify = $('#dialogNotify'),
-    $notify = $dialogNotify.find('span'),
-    $textarea = $dialogNotify.find('textarea'),
-    message = $textarea.val()
+    tbody = capture.querySelector("tbody"),
+    selected = document.querySelectorAll(".selected"),
+    notify = dialogNotify.querySelector('span'),
+    loader = dialogNotify.querySelector(".loader"),
+    txtarea = dialogNotify.querySelector('textarea'),
+    message = txtarea.innerHTML,
+    template = document.querySelector('#capturerow'),
+    closeNotify = function() {
+      loader.style.display = 'none'
+      notifywrapper.style.display = 'none'
+      wrapper.style.visibility = 'visible'
+    }
 
-  $capture.find("tr").slice(1).remove()
-  $.each($selected, function() {
-    $capture.find("tbody").append($(this).clone())
+  wrapper.style.visibility = 'hidden'
+  notifywrapper.style.display = 'block'
+  capture.style.width = (isMobile ? '500' : '1000') + 'px'
+  notify.innerHTML += USER
+
+  tbody.innerHTML = template.innerHTML
+  selected.forEach(e => {
+    capture.querySelector("tbody").appendChild(e.cloneNode(true))
   })
 
-  let $rows = $capture.find('tr')
+  let rows = capture.querySelectorAll('tr')
 
-  $rows.removeClass('selected')
-  $rows.removeClass('lastselected')
+  rows.forEach(e => e.classList.remove('selected'))
+  rows.forEach(e => e.classList.remove('lastselected'))
+  rows.forEach(tr => {
+    let cell = tr.cells
 
-  $.each($rows, function() {
-    let cell = this.cells,
-      tr = this,
-      td = tr.querySelectorAll('td')
-    HIDE.forEach(e => tr.cells[e].style.display = 'none')
-    if (td.length) {
+    if (cell.length && cell[0].nodeName !== 'TH') {
+      let hn = cell[HN].innerHTML,
+        patient = cell[PATIENT].innerHTML
+      // สัปดาห์ Consult has no HN
       cell[OPDATE].innerHTML = cell[OPDATE].innerHTML.replace(' ', '<br>')
-      cell[HN].innerHTML += '<br>' + cell[PATIENT].innerHTML.split(" ")[0]
+      cell[PATIENT].innerHTML = hn ? (hn + '<br>' + patient.split(" ")[0]) : ''
       cell[DIAGNOSIS].innerHTML = string25(cell[DIAGNOSIS].innerHTML)
       cell[TREATMENT].innerHTML = string25(cell[TREATMENT].innerHTML)
       cell[EQUIPMENT].innerHTML = cell[EQUIPMENT].innerHTML.replace(/\<br\>/g, '')
@@ -47,36 +60,10 @@ export function sendtoLINE()
     }
   })
 
-  wrapper.style.visibility = 'hidden'
-  notifywrapper.style.display = 'block'
-  $capture.width(isMobile ? '500' : '1000')
-/*
-  $dialogNotify.dialog({
-    title: `<img src="css/pic/general/linenotify.png" width="40" style="float:left">
-            <span style="font-size:20px">Qbook: ${USER}</span>`,
-    closeOnEscape: true,
-    modal: true,
-    show: 200,
-    hide: 200,
-    width: 270,
-    height: 300,
-    close: function() {
-      capture.style.display = 'none'
-      maintbl.style.visibility = 'visible'
-      cssmenu.style.visibility = 'visible'
-    }
-  })
-*/
-  $notify.html($notify.html() + USER)
-  $textarea.one('click', function() {
-    $textarea.removeAttr('onfocus')
-    $textarea.focus()
-  })
-  $('#buttonLINE').one('click', function() {
-    $dialogNotify.find('.loader').show()
+  buttonLINE.onclick = function() {
+    loader.style.display = 'block'
     // setTimeout to wait loader css rendering
     setTimeout(function() {
-      $('#dialogNotify .loader').show()
       html2canvas(capture).then(function(canvas) {
         capture.style.display = 'none'
         $.post(LINENOTIFY, {
@@ -84,11 +71,12 @@ export function sendtoLINE()
           'message': message,
           'image': canvas.toDataURL('image/png', 1.0)
         })
-        $('#dialogNotify .loader').hide()
-        $dialogNotify.dialog('close')
+        closeNotify()
       })
     }, 100)
-  })
+  }
+
+  cancelnotify.onclick = closeNotify
 }
 
 function string25(txt)
