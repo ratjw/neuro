@@ -1,5 +1,5 @@
 
-import { OPDATE, DIAGNOSIS, LARGESTDATE } from "../model/const.js"
+import { OPDATE, DIAGNOSIS, LARGESTDATE } from "../control/const.js"
 import { putThdate } from "../util/date.js"
 import { holiday } from "./holiday.js"
 

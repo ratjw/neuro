@@ -1,7 +1,7 @@
 
 import {
   STAFFNAME, HN, PATIENT, DIAGNOSIS, TREATMENT, CONTACT
-} from "../model/const.js"
+} from "../control/const.js"
 import { OLDCONTENT, clearEditcell } from "../control/edit.js"
 import { sqlMoveCaseHN, sqlCopyCaseHN } from "../model/sqlsavehn.js"
 import { putNameAge } from "../util/date.js"

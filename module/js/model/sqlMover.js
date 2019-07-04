@@ -1,6 +1,6 @@
 
 import { USER } from "../main.js"
-import { LARGESTDATE } from "../model/const.js"
+import { LARGESTDATE } from "../control/const.js"
 
 // if no oproom, will have no casenum too
 export function sqlMover(waitnum, opdate, theatre, oproom, casenum, qn)

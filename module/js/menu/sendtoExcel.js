@@ -1,6 +1,6 @@
 
 import { exportQbookToExcel } from "../util/excel.js"
-import { THEATRE, OPTIME, CASENUM, CONTACT } from "../model/const.js"
+import { THEATRE, OPTIME, CASENUM, CONTACT } from "../control/const.js"
 
 export function sendtoExcel()
 {

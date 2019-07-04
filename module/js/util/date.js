@@ -1,5 +1,5 @@
 
-import { LARGESTDATE, THAIMONTH } from "../model/const.js"
+import { LARGESTDATE, THAIMONTH } from "../control/const.js"
 
 const today = new Date()
 export const START = ISOdate(new Date(today.getFullYear(), today.getMonth()-1, 1))

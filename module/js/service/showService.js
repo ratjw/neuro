@@ -2,7 +2,7 @@
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
   FINALSV, ADMITSV, DISCHARGESV
-} from "../model/const.js"
+} from "../control/const.js"
 import { coloring } from "./coloring.js"
 import { getAdmitDischargeDate } from "./getAdmitDischargeDate.js"
 import { SERVICE, seteditableSV, serviceFromDate } from "./setSERVICE.js"

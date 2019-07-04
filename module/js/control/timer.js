@@ -2,7 +2,7 @@
 import {
   DIAGNOSIS, TREATMENT, CONTACT,
   DIAGNOSISSV, TREATMENTSV, ADMISSIONSV, FINALSV
-} from "../model/const.js"
+} from "../control/const.js"
 import {
   POINTER, OLDCONTENT, getNewcontent, editcellLocation, renewEditcell
 } from "./edit.js"

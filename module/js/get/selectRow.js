@@ -1,5 +1,5 @@
 
-import { LARGESTDATE } from "../model/const.js"
+import { LARGESTDATE } from "../control/const.js"
 import { getOpdate } from "../util/date.js"
 
 // disable some menu-items for the one current row

@@ -3,7 +3,7 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
-import { LARGESTDATE } from "../model/const.js"
+import { LARGESTDATE } from "../control/const.js"
 import { getLargestWaitnum, URIcomponent } from "../util/util.js"
 
 export function sqlcopyCase(allNewCases, moverow, thisrow) {

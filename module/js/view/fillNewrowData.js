@@ -2,7 +2,7 @@
 import {
   OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
   DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT
-} from "../model/const.js"
+} from "../control/const.js"
 import { putNameAge } from "../util/date.js"
 import { isPACS } from "../main.js"
 import { rowDecoration } from "./rowDecoration.js"

@@ -1,5 +1,5 @@
 
-import { PATIENT } from "../model/const.js"
+import { PATIENT } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"

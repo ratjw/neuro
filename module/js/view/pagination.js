@@ -1,7 +1,7 @@
 
 import { PACS } from "../get/PACS.js"
 import { rowDecoration } from "./rowDecoration.js"
-import { LARGESTDATE } from "../model/const.js"
+import { LARGESTDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { ISOdate, thDate, nextdays, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"

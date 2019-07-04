@@ -2,7 +2,7 @@
 import { fillOldrowData, unfillOldrowData } from "./fillNewrowData.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
-import { LARGESTDATE } from "../model/const.js"
+import { LARGESTDATE } from "../control/const.js"
 
 export function viewOneDay(table, opdate, opdateBOOKrows) {
   if ((table.id === 'maintbl') && (opdate === LARGESTDATE)) { return }

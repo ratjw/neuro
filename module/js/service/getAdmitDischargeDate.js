@@ -1,5 +1,5 @@
 
-import { ADMISSIONSV, ADMITSV, DISCHARGESV } from "../model/const.js"
+import { ADMISSIONSV, ADMITSV, DISCHARGESV } from "../control/const.js"
 import { sqlGetIPD } from "../model/sqlservice.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { setSERVICE, SERVICE } from "./setSERVICE.js"

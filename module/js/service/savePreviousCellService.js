@@ -1,7 +1,7 @@
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
   FINALSV, ADMITSV, DISCHARGESV
-} from "../model/const.js"
+} from "../control/const.js"
 import { POINTER, OLDCONTENT, getNewcontent } from "../control/edit.js"
 import { sqlSaveService } from "../model/sqlservice.js"
 import { getBOOKrowByQN } from "../util/rowsgetting.js"

@@ -1,5 +1,5 @@
 
-import { LARGESTDATE } from "../model/const.js"
+import { LARGESTDATE } from "../control/const.js"
 import { START, ISOdate, nextdays } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"

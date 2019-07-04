@@ -1,5 +1,5 @@
 
-import { OPROOM } from "../model/const.js"
+import { OPROOM } from "../control/const.js"
 import { createEditcell, clearEditcell } from "../control/edit.js"
 import { savePreviousCell } from "../control/clicktable.js"
 import { spinNumber } from "../util/spinner.js"

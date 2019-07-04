@@ -1,5 +1,5 @@
 
-import { DIAGNOSIS, THAIMONTH } from "../model/const.js"
+import { DIAGNOSIS, THAIMONTH } from "../control/const.js"
 import { numDate, putThdate, datepicker } from "../util/date.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { HOLIDAY, setHOLIDAY } from "../util/updateBOOK.js"

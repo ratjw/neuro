@@ -1,5 +1,5 @@
 
-import { COMPLICATION } from "../model/const.js"
+import { COMPLICATION } from "../control/const.js"
 
 // used when freshly loaded SERVICE from DB only
 // changes after this, must use showInputColor(target)

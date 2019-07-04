@@ -1,5 +1,5 @@
 
-import { EQUIPMENT, NAMEOFDAYTHAI } from "../model/const.js"
+import { EQUIPMENT, NAMEOFDAYTHAI } from "../control/const.js"
 import { clearEditcell } from "../control/edit.js"
 import { USER } from "../main.js"
 import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEquip.js"

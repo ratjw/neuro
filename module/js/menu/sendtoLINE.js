@@ -2,7 +2,7 @@
 import { USER, isMobile } from "../main.js"
 import {
   OPDATE, THEATRE, OPTIME, CASENUM, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT
-} from "../model/const.js"
+} from "../control/const.js"
 
 const LINEBOT = "line/lineBot.php"
 const LINENOTIFY = "line/lineNotify.php"

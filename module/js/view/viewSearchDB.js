@@ -1,7 +1,7 @@
 
 import { PACS } from "../get/PACS.js"
 import { rowDecoration } from "./rowDecoration.js"
-import { OPDATE } from "../model/const.js"
+import { OPDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { ISOdate, numDate, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"

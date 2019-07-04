@@ -1,7 +1,7 @@
 
 import {
   KEYWORDS, SPINEOP, NOOPERATION, RADIOSURGERY, ENDOVASCULAR
-} from "../model/const.js"
+} from "../control/const.js"
 
 // SERVICE is retrieved from DB by getServiceOneMonth
 // calSERVE modifies SERVICE at run time, if no user-defined value in DB

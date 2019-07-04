@@ -1,5 +1,5 @@
 
-import { htmlStafflist } from "../view/html.js"
+import { htmlStafflist } from "./html.js"
 import { sqlDoAddStaff, sqlDoUpdateStaff, sqlDoDeleteStaff } from "../model/sqlDoAddStaff.js"
 import { updateBOOK, setSTAFF } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"

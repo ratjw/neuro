@@ -1,5 +1,5 @@
 
-import { LARGESTDATE } from "../model/const.js"
+import { LARGESTDATE } from "../control/const.js"
 
 export function msie()
 {

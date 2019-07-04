@@ -1,7 +1,7 @@
 import {
   OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT, DIAGNOSIS,
   TREATMENT, EQUIPMENT, CONTACT
-} from "../model/const.js"
+} from "../control/const.js"
 import {
   POINTER, OLDCONTENT, getNewcontent, createEditcell, clearEditcell
 } from "./edit.js"

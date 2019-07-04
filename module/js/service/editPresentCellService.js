@@ -2,7 +2,7 @@
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
   FINALSV, ADMITSV, DISCHARGESV
-} from "../model/const.js"
+} from "../control/const.js"
 import { clearEditcell, createEditcell } from "../control/edit.js"
 import { isPACS } from "../main.js"
 import { inPicArea } from "../util/util.js"

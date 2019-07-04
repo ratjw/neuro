@@ -3,7 +3,7 @@ import { savePreviousCell, editPresentCell } from "./clicktable.js"
 import {
   PATIENT, DIAGNOSIS, TREATMENT, CONTACT,
   DIAGNOSISSV, ADMISSIONSV, FINALSV
-} from "../model/const.js"
+} from "../control/const.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { reposition } from "../util/util.js"

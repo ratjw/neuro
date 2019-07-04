@@ -1,5 +1,5 @@
 
-import { THEATRE } from "../model/const.js"
+import { THEATRE } from "../control/const.js"
 import { createEditcell, clearEditcell } from "../control/edit.js"
 
 export function getTHEATRE(evt, pointing)

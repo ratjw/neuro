@@ -1,5 +1,5 @@
  
-import { OPDATE } from "../model/const.js"
+import { OPDATE } from "../control/const.js"
 import { ISOdate } from "../util/date.js"
 import { BOOK, CONSULT } from "../util/updateBOOK.js"
 import { isSplit, hoverPicArea } from "../util/util.js"

@@ -1,5 +1,5 @@
 
-import { EQUIPSHEET} from "../model/const.js"
+import { EQUIPSHEET} from "../control/const.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { STAFF } from "../util/updateBOOK.js"
 

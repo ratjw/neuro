@@ -10,7 +10,7 @@
 <link href="css/menu.css" rel="stylesheet">
 <link href="css/jquery-ui.min.css" rel="stylesheet">
 
-<script src="js/html2canvas.js"></script>
+<script src="js/html2canvas.min.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery.mousewheel.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
@@ -19,24 +19,38 @@
 </HEAD>
 <BODY>
 
-<table id="capture">
+<div id="notifywrapper">
+  <div id="dialogNotify">
+    <img src="css/pic/general/linenotify.png">
+    <span>LINE Notify: </span>
+    <br><br><br>
+    <button id="buttonLINE"></button>
+    <div class="loader"></div>
+    <textarea placeholder="พิมพ์ข้อความ"></textarea>
+    <button id="cancelnotify"></button>
+  </div>
+
+ <table id="capture">
   <tbody>
-   <tr>
-     <th>Date</th>
-     <th>OR</th>
-     <th>Rm</th>
-     <th>Time</th>
-     <th>№</th>
-     <th>Staff</th>
-     <th>HN</th>
-     <th>Patient</th>
-     <th>Diagnosis</th>
-     <th>Treatment</th>
-     <th>Equipment</th>
-     <th>Contact</th>
-   </tr>
   </tbody>
-</table>
+ </table>
+</div>
+<template id="capturerow">
+ <tr>
+   <th>Date</th>
+   <th></th>
+   <th>Rm</th>
+   <th></th>
+   <th></th>
+   <th>Staff</th>
+   <th></th>
+   <th>Patient</th>
+   <th>Diagnosis</th>
+   <th>Treatment</th>
+   <th>Equipment</th>
+   <th></th>
+ </tr>
+</template>
 
 <div id="wrapper">
   <div id="cssmenu">
@@ -186,12 +200,6 @@
   </tr>
  </tbody>
 </table>
-
-<div id="dialogNotify">
-  <div class="loader"></div>
-  <textarea onfocus="blur()" placeholder="พิมพ์ข้อความ"></textarea>
-  <button id="buttonLINE"></button>
-</div>
 
 <div id="monthpicker"></div>
 <div id="monthstart"></div>

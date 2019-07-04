@@ -1,7 +1,7 @@
 
-import { PROFILESHEET, OPERATION, RADIOSURG, ENDOVASC, THAIMONTH } from "../model/const.js"
+import { PROFILESHEET, OPERATION, RADIOSURG, ENDOVASC, THAIMONTH } from "../control/const.js"
 import { editableSV } from "./setSERVICE.js"
-import { htmlProfile } from '../view/html.js'
+import { htmlProfile } from '../control/html.js'
 import { URIcomponent, winHeight, radioHack, deepEqual } from "../util/util.js"
 import { numDate, thDate, datepicker } from '../util/date.js'
 import { saveService } from './savePreviousCellService.js'
