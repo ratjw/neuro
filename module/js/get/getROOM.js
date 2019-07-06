@@ -7,7 +7,7 @@ export function getROOM(pointing)
 {
   let  patient = pointing.parentElement.dataset.qn
   let  editcell = document.getElementById("editcell")
-  let  html = '<input id="spin" type="number">'
+  let  spinnerinput = document.getElementById("spinnerinput")
   let  oldval = pointing.innerHTML
 
   if ( !patient ) {
@@ -18,6 +18,6 @@ export function getROOM(pointing)
 
   createEditcell(pointing)
   editcell.style.width = "40px"
-  editcell.innerHTML = html
+  editcell.innerHTML = spinnerinput.innerHTML
   spinNumber($("#spin"), oldval)
 }

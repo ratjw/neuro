@@ -21,6 +21,7 @@ export let POINTER = null
 export let OLDCONTENT = ""
 
 // get current content in the editing cell
+// Don't know why there are 2 spin???
 export function getNewcontent() {
   let editcell = document.getElementById("editcell")
   let spin = document.querySelectorAll("#spin")
@@ -31,7 +32,8 @@ export function getNewcontent() {
     return spin[1].value
   }
 
-  return getHtmlText(editcell)
+  return editcell.innerHTML.trim()
+
 }
 
 // newcontent is the content currently in editcell
@@ -88,17 +90,17 @@ let keyin = function (evt, keycode) {
       clearAllEditing()
       evt.preventDefault()
       return
+    case 13:
+      if ($("#spin").is(":visible")) {
+        savePreviousCell()
+        clearAllEditing()
+      }
+      return
     case 9:
       servicetbl
       ? serviceTable9(evt, editable, Shift)
       : mainTable9(evt, editable, Shift)
       evt.preventDefault()
-      return
-    case 13:
-      if (Shift || Ctrl) { return }
-      servicetbl
-      ? serviceTable13(evt, editable, Shift, Ctrl)
-      : mainTable13(evt, editable, Shift, Ctrl)
       return
   }
 
@@ -127,27 +129,6 @@ let serviceTable9 = function (evt, editable, Shift) {
   let thiscell = Shift
       ? findPrevcell(editable, POINTER)
       : findNextcell(editable, POINTER)
-  thiscell
-    ? editPresentCellService(evt, thiscell)
-    : clearEditcell()
-}
-
-let mainTable13 = function (evt, editable, Shift, Ctrl) {
-  savePreviousCell()
-  if (!POINTER || POINTER.cellIndex > 7) {
-    let thiscell = findThisCellNextRow(editable, POINTER)
-    thiscell && !$("#spin").is(":visible")
-      ? editPresentCell(evt, thiscell)
-      : clearEditcell()
-  } else {
-    clearEditcell()
-  }
-  evt.preventDefault()
-}
-
-let serviceTable13 = function (evt, editable, Shift, Ctrl) {
-  savePreviousCellService()
-  let thiscell = findThisCellNextRow(editable, POINTER)
   thiscell
     ? editPresentCellService(evt, thiscell)
     : clearEditcell()
@@ -225,7 +206,7 @@ export function createEditcell(pointing)
   let $pointing = $(pointing)
   let height = $pointing.height() + "px"
   let width = $pointing.width() + "px"
-  let context = getHtmlText(pointing)
+  let context = pointing.innerHTML.trim()
 
   $("#editcell").html(context)
   showEditcell(pointing, height, width)
@@ -313,8 +294,7 @@ export function clearEditcell() {
 // TRIM excess spaces at begin, mid, end
 // remove html tags except <br>
 let getHtmlText = function (cell) {
-  let HTMLTRIM = /^(\s*<[^>]*>)*\s*|\s*(<[^>]*>\s*)*$/g,
-    HTMLNOBR = /(<((?!br)[^>]+)>)/ig
+  let HTMLTRIM = /^(\s*<[^>]*>)*\s*|\s*(<[^>]*>\s*)*$/g
 
-  return cell && cell.innerHTML.replace(HTMLTRIM, '').replace(HTMLNOBR, '')
+  return cell && cell.innerHTML.replace(HTMLTRIM, '')
 }

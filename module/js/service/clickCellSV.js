@@ -6,8 +6,8 @@ import { editPresentCellService } from "./editPresentCellService.js"
 export function clickCellSV(event)
 {
   let target = event.target,
-    inCell = target.closest("td"),
-    onNormalCell = (inCell && inCell.nodeName === "TD" && inCell.colSpan === 1)
+    inCell = target.closest("td") || target,
+    onNormalCell = (inCell.nodeName === "TD" && inCell.colSpan === 1)
 
   // Editcell is currently on
   if (POINTER) {

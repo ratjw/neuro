@@ -5,7 +5,7 @@ import { spinTime } from "../util/spinner.js"
 export function getOPTIME(pointing)
 {
   let  editcell = document.getElementById("editcell")
-  let  html = '<input id="spin">'
+  let  spinnerinput = document.getElementById("spinnerinput")
   let  oldtime = pointing.innerHTML || "09.00"
   let  newtime = ""
 
@@ -15,6 +15,6 @@ export function getOPTIME(pointing)
 
   createEditcell(pointing)
   editcell.style.width = "65px"
-  editcell.innerHTML = html
+  editcell.innerHTML = spinnerinput.innerHTML
   spinTime($("#spin"), oldtime)
 }

@@ -10,7 +10,7 @@ export function getCASENUM(pointing)
   let  oproom = row.dataset.oproom
   let  qn = row.dataset.qn
   let  editcell = document.getElementById("editcell")
-  let  html = '<input id="spin">'
+  let  spinnerinput = document.getElementById("spinnerinput")
   let  oldval = pointing.innerHTML
 
   if ( !qn || !oproom ) {
@@ -21,6 +21,6 @@ export function getCASENUM(pointing)
 
   createEditcell(pointing)
   editcell.style.width = "40px"
-  editcell.innerHTML = html
+  editcell.innerHTML = spinnerinput.innerHTML
   spinNumber($("#spin"), oldval)
 }

@@ -86,39 +86,33 @@ function wrapperEvent()
   
   document.getElementById("wrapper").addEventListener("mousemove", resetTimerCounter)
 
-  $("#wrapper").off("click").on("click", (event) => {
-    let target = event.target
-    let $stafflist = $('#stafflist')
+  document.getElementById("wrapper").addEventListener("click", event => {
+    let target = event.target,
+      inCell = target.closest("th") || target.closest("td") || target,
+      stafflist = document.querySelector('#stafflist')
 
     resetTimerCounter()
     $(".marker").removeClass("marker")
 
-    if ($(target).closest('#cssmenu').length) {
-      return
-    }
+    if (target.closest('#cssmenu')) { return }
 
-    if ($stafflist.is(":visible")) {
-      if (!$(target).closest('#stafflist').length) {
-        $stafflist.hide();
+    if (stafflist.style.visibility === 'visible') {
+      if (!target.closest('#stafflist')) {
+        stafflist.style.display = 'none'
         clearEditcell()
       }
     }
 
-    // click on Equipment img
-    if (target.nodeName === "IMG") {
-      target = target.closest("td")
-    }
-
-    if (target.cellIndex === THEATRE) {
-      let maintbl = document.getElementById("maintbl")
+    if (inCell.cellIndex === THEATRE) {
+      let maintbl = document.querySelector("#maintbl")
       if (maintbl.querySelectorAll("th")[THEATRE].offsetWidth < 10) {
         maintbl.classList.add("showColumn2")
-      } else if (target.nodeName === "TH") {
+      } else if (inCell.nodeName === "TH") {
         maintbl.classList.remove("showColumn2")
       }
     }
 
-    clicktable(event, target)
+    clicktable(event, inCell)
 
     event.stopPropagation()
   })
