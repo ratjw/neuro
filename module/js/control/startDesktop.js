@@ -1,4 +1,4 @@
-
+//test
 import { THEATRE } from "../control/const.js"
 import { addStaff } from "./addStaff.js"
 import { clicktable } from "./clicktable.js"
