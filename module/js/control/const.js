@@ -336,6 +336,8 @@ RADIOSURG = [
 ENDOVASC = [
   ["hr", "inner", "", "", ""],
   ["button", "30 ", "delproc", "-"],
+  ["text", "100", "opdateth", ""],
+  ["br", "", "", ""],
   ["br", "", "", ""],
   ["br", "", "", ""],
   ["div", "textdiv", "", ""],

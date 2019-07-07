@@ -2,9 +2,11 @@
 // Add all profiles in one string to show in 1 cell
 export function viewProfile(profile, thopdate, treatment)
 {
-  const OPERATE = ["doneby", "manner", "scale", "disease"],
-        RADIO = ["doneby"],
-        ENDO = ["doneby", "manner"]
+  const VIEW = {
+    operated: ["doneby", "manner", "scale", "disease"],
+    radiosurg: ["doneby"],
+    endovasc: ["doneby", "manner"]
+  }
 
   let profileJSON = JSON.parse(profile),
     treatmentstr = [],
@@ -13,30 +15,16 @@ export function viewProfile(profile, thopdate, treatment)
   if (!profileJSON) { return treatment }
 
   Object.keys(profileJSON).forEach(key => {
-    if (key === "operated") {
+    if (key in VIEW) {
       profileJSON[key].forEach((e, i) => {
-        let opdateth = e.opdateth ? ('<b>' + e.opdateth + '</b>') : '',
+        let opdateth = e.opdateth ? (`<b>${e.opdateth}</b>`) : '',
           proc = e.procedure || '',
           space = (opdateth && proc) ? ' ' : '',
           rx = opdateth + space + proc
 
         rx && treatmentstr.push(rx)
         if (complete) {
-          complete = OPERATE.every(i => i in e)
-        }
-      })
-    } else if (key === "radiosurg") {
-      profileJSON[key].forEach((e, i) => {
-        e.procedure && treatmentstr.push(e.procedure)
-        if (complete) {
-          complete = RADIO.every(i => i in e)
-        }
-      })
-    } else if (key === "endovasc") {
-      profileJSON[key].forEach((e, i) => {
-        e.procedure && treatmentstr.push(e.procedure)
-        if (complete) {
-          complete = ENDO.every(i => i in e)
+          complete = VIEW[key].every(i => i in e)
         }
       })
     }
