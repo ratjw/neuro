@@ -160,17 +160,23 @@ function divProcedure(procedure, item, suffix, i)
   Array.from(inputs).forEach(e => {
     inputname = e.name
     e.name = e.name + suffix + i
-    if (e.id === 'opdateth') {
-      e.id = 'opdateth' + suffix + i
-      datepicker($(e))
-    }
+//    if (e.id === 'opdateth') {
+//      e.id = 'opdateth' + suffix + i
+//      datepicker($(e))
+//    }
     if (item && item[i]) {
       if (inputname === 'opdateth') {
+        e.id = e.id + suffix + i
         if ((i === 0) && !item[i][inputname]) {
+          datepicker($(e))
           $(e).datepicker("setDate", new Date(_opdate))
           e.value = thDate(_opdate)
         } else {
-          $(e).datepicker("setDate", new Date(numDate(item[i][inputname])))
+          let date = new Date(numDate(item[i][inputname]))
+          if (!isNaN(date)) {
+            datepicker($(e))
+            $(e).datepicker("setDate", date)
+          }
           e.value = item[i][inputname]
         }
       } else if (e.className === 'textdiv') {

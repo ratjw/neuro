@@ -28,21 +28,22 @@ function calcSERVE(service)
       profile.admitted = 1
     }
 
-    if (!profile.radiosurg && isMatched(RADIOSURGERY, this.treatment)) {
-      profile.radiosurg = [{}]
-    }
+    if (!isMatched(NOOPERATION, this.treatment)) {
+      if (!profile.radiosurg && isMatched(RADIOSURGERY, this.treatment)) {
+        profile.radiosurg = [{}]
+      }
+      if (!profile.endovasc && isMatched(ENDOVASCULAR, this.treatment)) {
+        profile.endovasc = [{}]
+      }
 
-    if (!profile.endovasc && isMatched(ENDOVASCULAR, this.treatment)) {
-      profile.endovasc = [{}]
-    }
+      let opwhat = operationFor(this, profile)
+      if (!profile.operated && opwhat) {
+        profile.operated = [{"disease": opwhat}]
+      }
+      if (!Object.keys(profile).length) { profile = null }
 
-    let opwhat = operationFor(this, profile)
-    if (!profile.operated && opwhat) {
-      profile.operated = [{"disease": opwhat}]
+      this.profile = JSON.stringify(profile)
     }
-    if (!Object.keys(profile).length) { profile = null }
-
-    this.profile = JSON.stringify(profile)
   })
 
   return service
@@ -57,8 +58,6 @@ function operationFor(thisrow, profile)
     treatment = thisrow.treatment,
     endovascular = (profile.endovascular === "Endovascular"),
     opwhat = ""
-
-  if (isMatched(NOOPERATION, treatment)) { return "" }
 
   opfor = isOpfor(KEYWORDS, opfor, Rx, treatment)
   if (opfor.length === 0) { opwhat = "" }

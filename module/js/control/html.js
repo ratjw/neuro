@@ -108,7 +108,7 @@ export function htmlProfile(profile)
     } else if (type === "div") {
 			record += `<div class="${width}" contenteditable="true"></div>`
     } else if (type === "text") {
-			record += `<input ${addclass} type="${type}" name="${name}" id="${label}"`
+			record += `<input ${addclass} type="${type}" name="${name}" id="${name}"`
 		} else if (type === "checkbox" || type === "radio") {
 			record += `<label>
 				<input ${addclass} type="${type}" name="${name}" value="${label}">
