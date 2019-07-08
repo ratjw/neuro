@@ -184,6 +184,9 @@ function divProcedure(procedure, item, suffix, i)
       } else {
         e.checked = (e.value === (item[i][inputname]))
       }
+    } else if (e.id === 'opdateth') {
+      e.id = 'opdateth' + suffix + i
+      datepicker($(e))
     }
   })
 
