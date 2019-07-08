@@ -148,45 +148,52 @@ function resizeScroll()
   _$dialogProfile.scrollTop(_$dialogProfile.height())
 }
 
-// add op to e.name to make it unique
+// add op+i to e.name to make it unique
+// if Invalid Date, no datepicker. Let user input free hand
 function divProcedure(procedure, item, suffix, i)
 {
   let div = document.createElement("div")
   div.innerHTML = htmlProfile(procedure)
 
-  let inputs = div.querySelectorAll("div.textdiv, input"),
-    inputname = ''
+  let inputs = div.querySelectorAll("input"),
+    textdiv = div.querySelectorAll("div.textdiv")
 
   Array.from(inputs).forEach(e => {
-    inputname = e.name
+    let inputname = e.name
     e.name = e.name + suffix + i
     if (item && item[i]) {
+      let iname = item[i][inputname],
+        date = new Date(numDate(iname))
       if (inputname === 'opdateth') {
         e.id = e.id + suffix + i
-        if ((i === 0) && !item[i][inputname]) {
+        if ((i === 0) && !iname) {
           datepicker($(e))
           $(e).datepicker("setDate", new Date(_opdate))
           e.value = thDate(_opdate)
         } else {
-          let date = new Date(numDate(item[i][inputname]))
           if (!isNaN(date)) {
             datepicker($(e))
             $(e).datepicker("setDate", date)
           }
-          e.value = item[i][inputname]
-        }
-      } else if (e.className === 'textdiv') {
-        if ((i === 0) && (item[i] && item[i].procedure === undefined) && !usedTreatment()) {
-          e.innerHTML = _treatment
-        } else {
-          e.innerHTML = item[i].procedure
+          e.value = iname
         }
       } else {
-        e.checked = (e.value === (item[i][inputname]))
+        e.checked = (e.value === (iname))
       }
     } else if (e.id === 'opdateth') {
-      e.id = 'opdateth' + suffix + i
+      e.id = e.id + suffix + i
       datepicker($(e))
+    }
+  })
+
+  Array.from(textdiv).forEach(e => {
+    e.name = e.name + suffix + i
+    if (item && item[i]) {
+      if ((i === 0) && (item[i].procedure === undefined) && !usedTreatment()) {
+        e.innerHTML = _treatment
+      } else {
+        e.innerHTML = item[i].procedure
+      }
     }
   })
 

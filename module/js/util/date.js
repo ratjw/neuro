@@ -42,7 +42,10 @@ export function numDate(opdate) {
   let date = opdate.split(" "),
     mm = THAIMONTH.indexOf(date[1]) + 1
 
-    return [
+  if (date.length > 3) { return "" }
+  if (mm === 0) { return "" }
+
+  return [
     Number(date[2]) - 543,
     (mm < 10 ? '0' : '') + mm,
     date[0]
