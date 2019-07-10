@@ -1,6 +1,6 @@
 import {
   OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT, DIAGNOSIS,
-  TREATMENT, EQUIPMENT, CONTACT
+  TREATMENT, BLOOD, EQUIPMENT, CONTACT
 } from "../control/const.js"
 import {
   POINTER, OLDCONTENT, getNewcontent, createEditcell, clearEditcell
@@ -22,6 +22,7 @@ import { getOPTIME } from "../get/getOPTIME.js"
 import { getCASENUM } from "../get/getCASENUM.js"
 import { getSTAFFNAME } from "../get/getSTAFFNAME.js"
 import { getHN } from "../get/getHN.js"
+import { getBLOOD } from "../get/getBLOOD.js"
 import { getEQUIP } from "../get/getEQUIP.js"
 
 // Click on main or staff table
@@ -82,6 +83,7 @@ export function editPresentCell(evt, pointing) {
     case PATIENT: clearAllEditing(); break
     case DIAGNOSIS: createEditcell(pointing); break
     case TREATMENT: createEditcell(pointing); break
+    case BLOOD: getBLOOD(pointing); break
     case EQUIPMENT: getEQUIP(pointing); break
     case CONTACT: createEditcell(pointing); break
   }

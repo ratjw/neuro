@@ -1,12 +1,9 @@
 
 import { USER, isMobile } from "../main.js"
-import {
-  OPDATE, THEATRE, OPTIME, CASENUM, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT
-} from "../control/const.js"
+import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "../control/const.js"
 
 const LINEBOT = "line/lineBot.php"
 const LINENOTIFY = "line/lineNotify.php"
-//const HIDE = [THEATRE, OPTIME, CASENUM, PATIENT, CONTACT]
 
 export function sendtoLINE()
 {

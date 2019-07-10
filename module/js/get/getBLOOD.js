@@ -30,7 +30,7 @@ let rowEquip,
   thisqn,
   $dialogEquip = $('#dialogEquip')
 
-export function getEQUIP(pointing)
+export function getBLOOD(pointing)
 {
   let row = pointing.closest('tr'),
     qn = row.dataset.qn,
