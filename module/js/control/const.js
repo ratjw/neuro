@@ -13,7 +13,7 @@ HN        = 6,
 PATIENT   = 7,
 DIAGNOSIS = 8,
 TREATMENT = 9,
-BLOOD     = 10,
+LAB       = 10,
 EQUIPMENT = 11,
 CONTACT   = 12,
 
@@ -39,6 +39,48 @@ COMPLICATION = {
   morbid: "Morbidity",
   dead: "Dead"
 },
+
+// ["type", "width", "name", "id", "label", "min", "max"]
+LABSHEET = [
+  ["spanInSpan", "", "", "opdaylab", "วัน"],
+  ["spanInSpan", "100", "", "opdatethlab", "ที่ "],
+  ["spanInSpan", "", "", "staffnamelab", "Surgeon "],
+  ["br", "", "", "", ""],
+  ["spanInSpan", "70", "", "oproomlab", "ห้อง "],
+  ["spanInSpan", "70", "", "casenumlab", "Case "],
+  ["spanInSpan", "120", "", "optimelab", "เวลา "],
+  ["br", "", "", "", ""],
+  ["br", "", "", "", ""],
+  ["span", "70", "", "", "ชื่อผู้ป่วย"],
+  ["span", "", "", "patientnamelab", ""],
+  ["span", "20", "", "", ""],
+  ["span", "", "", "", "อายุ&nbsp;"],
+  ["span", "", "", "agelab", ""],
+  ["br", "", "", "", ""],
+  ["span", "70", "", "", "HN"],
+  ["span", "", "", "hnlab", ""],
+  ["br", "", "", "", ""],
+  // floatleft makes the subsequent text rows go downwards
+  // instead of pushing previous rows upward
+  ["span", "70 floatleft", "", "", "Diagnosis"],
+  ["span", "200", "", "diagnosislab", ""],
+  ["br", "", "", "", ""],
+  ["span", "70 floatleft", "", "", "Operation"],
+  ["span", "200", "", "treatmentlab", ""],
+  ["br", "", "", "", ""],
+  ["br", "", "", "", ""],
+  ["number", "150", "", "PRC", "Packed Red Cells", "0", "99"],
+  ["br", "", "", "", ""],
+  ["number", "150", "", "FFP", "Fresh Frozen Plasma", "0", "99"],
+  ["br", "", "", "", ""],
+  ["number", "150", "", "WB", "Whole Blood", "0", "99"],
+  ["br", "", "", "", ""],
+  ["number", "150", "", "Plt", "Platelet Concentrate", "0", "99"],
+  ["br", "", "", "", ""],
+  ["number", "150", "", "Cryo", "Cryoprecipitate", "0", "99"],
+  ["br", "", "", "", ""],
+  ["number", "150", "", "IX", "Factor IX", "0", "99"]
+],
 
 // ["type", "width", "name", "label", "id"]
 EQUIPSHEET = [

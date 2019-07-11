@@ -16,7 +16,7 @@ import { fillConsults } from "../view/fillConsults.js"
 import { START, ISOdate, thDate } from "../util/date.js"
 import { BOOK, TIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { htmlStafflist, htmlEquipment } from "./html.js"
+import { htmlStafflist, htmlLab, htmlEquipment } from "./html.js"
 import { scrolltoToday } from "../view/scrolltoThisCase.js"
 import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
@@ -45,6 +45,7 @@ function success(response) {
   clearSelection()
 
   // setting up html
+  htmlLab()
   htmlEquipment()
   htmlStafflist()
 

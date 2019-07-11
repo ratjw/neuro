@@ -1,7 +1,7 @@
 
 import { savePreviousCell, editPresentCell } from "./clicktable.js"
 import {
-  PATIENT, DIAGNOSIS, TREATMENT, CONTACT,
+  HN, PATIENT, DIAGNOSIS, TREATMENT, CONTACT,
   DIAGNOSISSV, ADMISSIONSV, FINALSV
 } from "../control/const.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
@@ -91,7 +91,7 @@ let keyin = function (evt, keycode) {
       evt.preventDefault()
       return
     case 13:
-      if ($("#spin").is(":visible")) {
+      if ($("#spin").is(":visible") || (POINTER.cellIndex === HN)) {
         savePreviousCell()
         clearAllEditing()
       }

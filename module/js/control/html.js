@@ -1,5 +1,5 @@
 
-import { EQUIPSHEET} from "../control/const.js"
+import { LABSHEET, EQUIPSHEET} from "../control/const.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { STAFF } from "../util/updateBOOK.js"
 
@@ -23,6 +23,43 @@ export function htmlStafflist() {
       staffqueue(staffname)
     }
   })
+}
+
+export function htmlLab()
+{
+  let lab = "",
+    type = "",
+    width = "",
+    name = "",
+    id = "",
+    label = "",
+    min = "",
+    max = ""
+
+  LABSHEET.forEach(item => {
+    type = item[0]
+    width = item[1]
+    name = item[2]
+    id = item[3]
+    label = item[4]
+    min = item[5] || ""
+    max = item[6] || ""
+
+    if (type === "span") {
+      lab += `<span class="w${width}" id="${id}">${label}</span>`
+    } else if (type === "spanInSpan") {
+      lab += `<span class="w${width}">${label}<span id="${id}"></span></span>`
+    } else if (type === "br") {
+      lab += `<br>`
+    } else if (type === "number") {
+      lab += `<label>
+        <span class="w${width}">${label}</span>
+        <input class="w40" type="${type}" id="${id}" value="" min="${min}" max="${max}">
+      </label>`
+    }
+  })
+
+  document.getElementById("dialogLab").innerHTML = lab
 }
 
 export function htmlEquipment()
@@ -70,7 +107,7 @@ export function htmlEquipment()
 }
 
 // name is the column in Mysql
-// title is the value
+// label is the value
 // <span style right:width> to make <span> contained in <input> box
 export function htmlProfile(profile)
 {

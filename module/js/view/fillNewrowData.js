@@ -1,12 +1,12 @@
 
 import {
   OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
-  DIAGNOSIS, TREATMENT, BLOOD, EQUIPMENT, CONTACT
+  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT
 } from "../control/const.js"
 import { putNameAge } from "../util/date.js"
 import { isPACS } from "../main.js"
 import { rowDecoration } from "./rowDecoration.js"
-import { viewBlood } from "./viewBlood.js"
+import { viewLab } from "./viewLab.js"
 import { viewEquip } from "./viewEquip.js"
 import { setRowData, blankRowData } from "../model/rowdata.js"
 import { hoverPicArea } from "../util/util.js"
@@ -28,7 +28,7 @@ export function fillNewrowData(row, q)
   cells[PATIENT].innerHTML = putNameAge(q)
   cells[DIAGNOSIS].innerHTML = q.diagnosis
   cells[TREATMENT].innerHTML = q.treatment
-  cells[BLOOD].innerHTML = viewBlood(q.blood)
+  cells[LAB].innerHTML = viewLab(q.lab)
   cells[EQUIPMENT].innerHTML = viewEquip(q.equipment)
   cells[CONTACT].innerHTML = q.contact
 }
@@ -81,9 +81,9 @@ export function fillOldrowData(row, q)
     rowdata.treatment = q.treatment
     cells[TREATMENT].innerHTML = q.treatment
   }
-  if (rowdata.blood !== q.blood) {
-    rowdata.blood = q.blood
-    cells[BLOOD].innerHTML = viewBlood(q.blood)
+  if (rowdata.lab !== q.lab) {
+    rowdata.lab = q.lab
+    cells[LAB].innerHTML = viewLab(q.lab)
   }
   if (rowdata.equipment !== q.equipment) {
     rowdata.equipment = q.equipment
