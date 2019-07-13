@@ -31,8 +31,8 @@ export function htmlLab()
     type = "",
     width = "",
     name = "",
-    id = "",
     label = "",
+    id = "",
     min = "",
     max = ""
 
@@ -40,8 +40,8 @@ export function htmlLab()
     type = item[0]
     width = item[1]
     name = item[2]
-    id = item[3]
-    label = item[4]
+    label = item[3]
+    id = item[4]
     min = item[5] || ""
     max = item[6] || ""
 
@@ -51,6 +51,11 @@ export function htmlLab()
       lab += `<span class="w${width}">${label}<span id="${id}"></span></span>`
     } else if (type === "br") {
       lab += `<br>`
+    } else if (type === "text") {
+      lab += `<label>
+        <span class="w${width}">${label}</span>
+        <input class="w40" type="${type}" id="${id}" value="">
+      </label>`
     } else if (type === "number") {
       lab += `<label>
         <span class="w${width}">${label}</span>
@@ -116,6 +121,7 @@ export function htmlProfile(profile)
     width = "",
     name = "",
     label = "",
+    id = "",
     min = "",
     max = "",
     addclass = ""
@@ -125,8 +131,9 @@ export function htmlProfile(profile)
     width = item[1]
     name = item[2]
     label = item[3]
-    min = item[4] || ""
-    max = item[5] || ""
+    id = item[4]
+    min = item[5] || ""
+    max = item[6] || ""
     addclass = width ? `class="w${width}"` : ""
 
     if (type === "br") {
@@ -139,13 +146,13 @@ export function htmlProfile(profile)
 			record += `<span class="bold">${label}</span>
 				<input ${addclass} type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}">`
     } else if (type === "divbegin") {
-			record += `<div id="${name}"><span class="bold">${label}</span><br>`
+			record += `<div id="${id}"><span class="bold">${label}</span><br>`
     } else if (type === "divend") {
       record += `</div>`
     } else if (type === "div") {
 			record += `<div class="${width}" contenteditable="true"></div>`
     } else if (type === "text") {
-			record += `<input ${addclass} type="${type}" name="${name}" id="${name}"`
+			record += `<input ${addclass} type="${type}" name="${name}" id="${id}"`
 		} else if (type === "checkbox" || type === "radio") {
 			record += `<label>
 				<input ${addclass} type="${type}" name="${name}" value="${label}">

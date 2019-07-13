@@ -2,18 +2,12 @@
 // Add all labs in one string to show in 1 cell
 export function viewLab(lab)
 {
-  if (lab) {
-    return viewLabJSON(JSON.parse(lab))
-  }
-  return ""
+  return lab ? viewLabJSON(JSON.parse(lab)) : ""
 }
 
 export function viewLabJSON(labJSON)
 {
-  if (Object.entries(labJSON).length) {
-    return viewLabText(labJSON)
-  }
-  return ""
+  return Object.entries(labJSON).length ? viewLabText(labJSON) :  ""
 }
 
 function viewLabText(labJSON)

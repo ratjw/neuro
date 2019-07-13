@@ -7,6 +7,7 @@ import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
+import { string25 } from '../util/util.js'
 //import { viewLabJSON } from "../view/viewLab.js"
 
 let rowLab,
@@ -20,17 +21,14 @@ export function getLAB(pointing)
     row = pointing.closest('tr'),
     qn = row.dataset.qn,
     thisLab = {
-      oproomlab: row.dataset.oproom || "",
-      casenumlab: row.dataset.casenum || "",
-      optimelab: row.dataset.optime,
       opdaylab: NAMEOFDAYTHAI[(new Date(row.dataset.opdate)).getDay()],
       opdatethlab: putThdate(row.dataset.opdate),
       staffnamelab: row.dataset.staffname,
       hnlab: row.dataset.hn,
       patientnamelab: row.dataset.patient,
       agelab: putAgeOpdate(row.dataset.dob, row.dataset.opdate),
-      diagnosislab: row.dataset.diagnosis,
-      treatmentlab: row.dataset.treatment
+      diagnosislab: string25(row.dataset.diagnosis),
+      treatmentlab: string25(row.dataset.treatment)
     }
 
   if (!qn) { return }
@@ -52,8 +50,7 @@ export function getLAB(pointing)
     title: "Laboratory",
     closeOnEscape: true,
     modal: true,
-    width: 320,
-    height: 550
+    width: 320
   })
 
   // If ever filled, show checked equips & texts

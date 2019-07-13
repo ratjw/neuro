@@ -1,6 +1,7 @@
 
 import { USER, isMobile } from "../main.js"
 import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "../control/const.js"
+import { string25 } from '../util/util.js'
 
 const LINEBOT = "line/lineBot.php"
 const LINENOTIFY = "line/lineNotify.php"
@@ -74,56 +75,6 @@ export function sendtoLINE()
   }
 
   cancelnotify.onclick = closeNotify
-}
-
-function string25(txt)
-{
-  let result1 = [],
-   result2 = [],
-   result3 = [],
-   result4 = [],
-   endresult = [],
-   temp = '',
-   i = 0
-
-  if (!txt) { return '' }
-  txt = txt.replace(/ {1,}/g, ' ')
-  result1 = txt.split('<br>')
-  result1.forEach(e => e.trim())
-  result1.forEach(e => {
-    if (e.length > 25) {
-      result2 = e.split(' ')
-      result2.forEach(el => {
-        temp += temp ? (' ' + el) : el
-        if (temp.length > 25) {
-          if (temp.length <= 30) {
-            result3.push(temp)
-            temp = ''
-          } else {
-            result4 = temp.match(/(.{1,28})/g)
-            temp = result4.pop()
-            result3.push(...result4)
-          }
-        }
-      })
-      if (temp) { result3.push(temp) }
-      temp = ''
-    }
-    if (result3.length) {
-      result1.splice(result1.indexOf(e), 1, result3.join('<br>'))
-      result3 = []
-    }
-  })
-
-  result1.filter(e => e)
-  result1 = result1.join('<br>')
-  result1 = result1.split('<br>')
-  while ((i < 2) && (i < result1.length)) {
-    endresult.push(result1[i])
-    i++
-  }
-
-  return endresult.join('<br>')
 }
 
 function equipImage(equip)
