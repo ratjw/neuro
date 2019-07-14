@@ -9,7 +9,6 @@ const LINENOTIFY = "line/lineNotify.php"
 export function sendtoLINE()
 {
   let wrapper = document.querySelector("#wrapper"),
-    cssmenu = document.querySelector("#cssmenu"),
     notifywrapper = document.querySelector("#notifywrapper"),
     dialogNotify = document.querySelector("#dialogNotify"),
     buttonLINE = document.querySelector("#buttonLINE"),

@@ -179,9 +179,10 @@ td img.imgpale {
 #maintbl td:nth-child(5) { font-size: 14px; padding: 0px; }
 #maintbl td:nth-child(5) { text-align: center; }
 
-#maintbl td:nth-child(6),
-#maintbl td:nth-child(7),
+#maintbl td:nth-child(6) { font-size: 12px; }
+#maintbl td:nth-child(7) { font-size: 12px; }
 #maintbl td:nth-child(8) { font-size: 12px; }
+#maintbl td:nth-child(11) { font-size: 12px; }
 
 td.consult::after { 
   color: #999999;

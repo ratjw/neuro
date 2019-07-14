@@ -6,8 +6,7 @@ import { sqlGetLab, sqlSaveLab, sqlCancelAllLab } from "../model/sqlGetLab.js"
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winHeight } from "../util/util.js"
-import { string25 } from '../util/util.js'
+import { Alert, winHeight, string25 } from "../util/util.js"
 //import { viewLabJSON } from "../view/viewLab.js"
 
 let rowLab,
@@ -44,24 +43,17 @@ export function getLAB(pointing)
   // clear all previous dialog values
   $dialogLab.show()
   $dialogLab.find('input').val('')
-  $dialogLab.find('textarea').val('')
-  $dialogLab.find('input').prop('checked', false)
   $dialogLab.dialog({
-    title: "Laboratory",
+    title: "Blood Request",
     closeOnEscape: true,
     modal: true,
-    width: 320
+    width: 300
   })
 
-  // If ever filled, show checked equips & texts
-  // .prop("checked", true) shown in radio and checkbox
-  // .val(val) shown in <input text> && <textarea>
-  if ( Object.keys(JsonLab).length ) {
-    $.each(JsonLab, function(key, val) {
-      if (val) {
-        $("#"+ key).val(val)
-      }
-    })
+  if ( JsonLab && Object.keys(JsonLab).length ) {
+    Object.entries(JsonLab).forEach(([key, val]) => 
+      document.getElementById(key).value = val
+    )
     showNonEditableLab()
    } else {
     showEditableLab()
@@ -99,7 +91,7 @@ let showEditableLab = function () {
       text: "Save",
       click: function () {
         if (checkLab()) {
-          ChecklistLab()
+          checklistLab()
           showNonEditableLab()
         } else {
           cancelAllLab()
@@ -135,60 +127,48 @@ function checkLab()
   return equip
 }
 
-let ChecklistLab = function () {
+let checklistLab = function () {
   let equipJSON = {},
     lab = "",
     sql = ""
 
-  document.querySelectorAll('#dialogLab input[type=number]').forEach(e => {
+  document.querySelectorAll('#dialogLab input').forEach(e => {
     if (e.value) {
       equipJSON[e.id] = e.value
     }
   })
 
   lab = JSON.stringify(equipJSON)
-  if (lab === rowLab) {
-    return
-  }
+  if (lab === rowLab) { return }
 
   // escape the \ (escape) and ' (single quote) for sql string, not for JSON
   lab = lab.replace(/\\/g,"\\\\").replace(/'/g,"\\'")
   sqlSaveLab(lab, thisqn).then(response => {
-    let showup = function () {
+    if (typeof response === "object") {
       updateBOOK(response)
       $dialogLab.dialog('close')
-    }
-    let rollback = function () {
-      // Error update server
-      Alert("Checklistequip", response)
-
+    } else {
+      Alert("checklistequip", response)
       // Roll back
       $('#dialogLab input').val('')
-      $('#dialogLab textarea').val('')
-      rowLab &&
-        Object.entries(JSON.parse(rowLab)).forEach(([key, val]) => {
-          val === 'checked'
-          ? document.getElementById("#"+ key).checked = true
-          : document.getElementById("#"+ key).value = val
-        });
-    };
-
-    typeof response === "object" ? showup() : rollback()
+      if (rowLab) {
+        Object.entries(JSON.parse(rowLab)).forEach(([key, val]) => 
+          document.getElementById(key).value = val
+        )
+      }
+    }
   }).catch(error => {})
 }
 
 function cancelAllLab()
 {
   sqlCancelAllLab(thisqn).then(response => {
-    let hasData = function () {
+    if (typeof response === "object") {
       updateBOOK(response)
       delelteAllLab()
+    } else {
+      restoreAllLab(response, rowLab, JsonLab)
     }
-
-    typeof response === "object"
-    ? hasData()
-    : restoreAllLab(response, rowLab, JsonLab)
-
   }).catch(error => {})
 }
 

@@ -17,7 +17,7 @@ export function sqlSaveLab(lab, qn) {
 
 export function sqlCancelAllLab(qn)
 {
-  let sql = `sqlReturnbook=UPDATE book SET lab='',editor='${USER}' WHERE qn='${qn}';`
+  let sql = `sqlReturnbook=UPDATE book SET lab=NULL,editor='${USER}' WHERE qn='${qn}';`
 
   return postData(MYSQLIPHP, sql)
 }
