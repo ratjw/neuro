@@ -184,14 +184,9 @@ function restoreAllLab(response, rowLab, JsonLab)
 {
   Alert("cancelAllLab", response)
   $('#dialogLab input').val('')
-  $('#dialogLab textarea').val('')
   if ( rowLab ) {
-    $.each(JsonLab, function(key, val) {
-      if (val === 'checked') {
-        $("#"+ key).prop("checked", true)
-      } else {
-        $("#"+ key).val(val)
-      }
-    })
+    Object.entries(JSON.parse(rowLab)).forEach(([key, val]) => 
+      document.getElementById(key).value = val
+    )
   }
 }
