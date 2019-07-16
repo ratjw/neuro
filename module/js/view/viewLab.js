@@ -21,5 +21,5 @@ function viewLabText(labJSON)
   })
 
   // convert to string
-  return lab.length ? lab.join('; ') : ''
+  return lab.length ? lab.join(' ') : ''
 }

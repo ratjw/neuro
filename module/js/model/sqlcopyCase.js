@@ -5,6 +5,7 @@ import { sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
 import { LARGESTDATE } from "../control/const.js"
 import { getLargestWaitnum, URIcomponent } from "../util/util.js"
+import { BOOK } from "../util/updateBOOK.js"
 
 export function sqlcopyCase(allNewCases, moverow, thisrow) {
   let sql = "sqlReturnbook=",

@@ -6,7 +6,7 @@ import { sqlGetLab, sqlSaveLab, sqlCancelAllLab } from "../model/sqlGetLab.js"
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winHeight, string25 } from "../util/util.js"
+import { Alert, winHeight, string25Oneline } from "../util/util.js"
 //import { viewLabJSON } from "../view/viewLab.js"
 
 let rowLab,
@@ -26,8 +26,8 @@ export function getLAB(pointing)
       hnlab: row.dataset.hn,
       patientnamelab: row.dataset.patient,
       agelab: putAgeOpdate(row.dataset.dob, row.dataset.opdate),
-      diagnosislab: string25(row.dataset.diagnosis),
-      treatmentlab: string25(row.dataset.treatment)
+      diagnosislab: string25Oneline(row.dataset.diagnosis),
+      treatmentlab: string25Oneline(row.dataset.treatment)
     }
 
   if (!qn) { return }
@@ -46,8 +46,7 @@ export function getLAB(pointing)
   $dialogLab.dialog({
     title: "Blood Request",
     closeOnEscape: true,
-    modal: true,
-    width: 300
+    modal: true
   })
 
   if ( JsonLab && Object.keys(JsonLab).length ) {

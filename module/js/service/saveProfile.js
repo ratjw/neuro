@@ -1,6 +1,7 @@
 
 import { URIcomponent, winHeight, deepEqual } from "../util/util.js"
 import { saveContentService, saveService } from './savePreviousCellService.js'
+import { getHtmlText } from '../control/edit.js'
 
 export function saveProfile(pointing, profileJSON)
 {
@@ -8,11 +9,12 @@ export function saveProfile(pointing, profileJSON)
       operated: [],
       radiosurg: [],
       endovasc: []
-    }
+    },
+    treatdiv = document.querySelector('#dialogProfile div.treatdiv'),
+    treathtml = getHtmlText(treatdiv.innerHTML)
 
-  let treatdiv = $('#dialogProfile div.treatdiv').html()
-  if (treatdiv) {
-    saveContentService(pointing, 'treatment', treatdiv)
+  if (treathtml) {
+    saveContentService(pointing, 'treatment', treathtml)
   }
 
   $('#dialogProfile input:not(#dialogProfile div input)').each(function() {
