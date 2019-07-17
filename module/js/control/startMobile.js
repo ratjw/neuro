@@ -63,7 +63,7 @@ function success(response) {
   scaleViewport()
 }
 
-// *** plan -> offline browsing by service worker ***
+// *** to do -> offline browsing by service worker ***
 function failed(response) {
   let title = "Server Error",
     error = error + "<br><br>Response from server has no data"

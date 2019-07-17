@@ -1,7 +1,6 @@
 
-import { PACS } from "../get/PACS.js"
 import { rowDecoration } from "./rowDecoration.js"
-import { OPDATE } from "../control/const.js"
+import { OPDATE, PACS } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { ISOdate, numDate, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
@@ -73,7 +72,7 @@ function makeDialogFound($dialogFind, $findtbl, found, search)
 
   $dialogFind.find('.pacs').off("click").on("click", function() {
     if (isPACS) {
-      PACS(this.innerHTML)
+      window.open(PACS + this.innerHTML)
     }
   })
 

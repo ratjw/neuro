@@ -82,7 +82,7 @@ function sqlUpdateHN(tableID, qn, waiting, wanting)
     WHERE qn=${qn};`
 }
 
-// GETNAMEHN will get hn from DB if existed
+// GETNAMEHN will get hn from DB all that existed
 export function sqlGetNameHN(pointed, content)
 {
   let row = pointed.closest('tr'),

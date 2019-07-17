@@ -10,7 +10,8 @@ export function saveHN(pointed, content) {
     return false
   }
 
-  let  todate = ISOdate(new Date())
+  // waiting list after today
+  let todate = ISOdate(new Date())
   let waiting = BOOK.find(q => (q.opdate > todate) && (q.hn === content))
 
   if (waiting) {
