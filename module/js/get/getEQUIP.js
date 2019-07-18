@@ -33,6 +33,7 @@ let rowEquip,
 export function getEQUIP(pointing)
 {
   let row = pointing.closest('tr'),
+    hn = row.dataset.hn,
     qn = row.dataset.qn,
     thisEquip = {
       oproomequip: row.dataset.oproom || "",
@@ -55,7 +56,7 @@ export function getEQUIP(pointing)
     })
   }
 
-  if (!qn) { return }
+  if (!hn || !qn) { return }
 
   for (let key in thisEquip) {
     document.getElementById(key).innerHTML = thisEquip[key]

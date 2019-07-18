@@ -18,6 +18,7 @@ export function getLAB(pointing)
 {
   let tableID = pointing.closest('table').id,
     row = pointing.closest('tr'),
+    hn = row.dataset.hn,
     qn = row.dataset.qn,
     thisLab = {
       opdaylab: NAMEOFDAYTHAI[(new Date(row.dataset.opdate)).getDay()],
@@ -30,7 +31,7 @@ export function getLAB(pointing)
       treatmentlab: string25Oneline(row.dataset.treatment)
     }
 
-  if (!qn) { return }
+  if (!hn || !qn) { return }
 
   for (let key in thisLab) {
     document.getElementById(key).innerHTML = thisLab[key]
