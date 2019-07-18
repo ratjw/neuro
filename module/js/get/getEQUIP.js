@@ -150,7 +150,10 @@ function showNonEditableEquip()
       }
     }
   ])
-  disableInput()
+
+  $('#dialogEquip label:has(input[type=radio])').off('mousedown')
+  $('#dialogEquip input').prop('disabled', true)
+  $('#dialogEquip textarea').prop('disabled', true)
 }
 
 // having any equip must have copay. if no copay, ->alert
@@ -175,18 +178,7 @@ function showEditableEquip()
       }
     }
   ])
-  enableInput()
-}
 
-function disableInput()
-{
-  $('#dialogEquip label:has(input[type=radio])').off('mousedown')
-  $('#dialogEquip input').prop('disabled', true)
-  $('#dialogEquip textarea').prop('disabled', true)
-}
-
-function enableInput()
-{
   $('#dialogEquip label:has(input[type=radio])').on('mousedown')
   $('#dialogEquip input').prop('disabled', false)
   $('#dialogEquip textarea').prop('disabled', false)

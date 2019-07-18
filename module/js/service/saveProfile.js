@@ -17,14 +17,14 @@ export function saveProfile(pointing, profileJSON)
     saveContentService(pointing, 'treatment', treathtml)
   }
 
-  $('#dialogProfile input:not(#dialogProfile div input)').each(function() {
-    if (this.name === "admitted") {
-      if (this.value) {
-        recordJSON[this.name] = this.value
+  document.querySelectorAll('#dialogProfile > label > input').forEach(e => {
+    if (e.name === "admitted") {
+      if (e.value) {
+        recordJSON[e.name] = e.value
       }
     } else {
-      if (this.checked) {
-        recordJSON[this.name] = this.value
+      if (e.checked) {
+        recordJSON[e.name] = e.value
       }
     }
   })

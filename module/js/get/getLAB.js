@@ -50,9 +50,7 @@ export function getLAB(pointing)
   })
 
   if ( JsonLab && Object.keys(JsonLab).length ) {
-    Object.entries(JsonLab).forEach(([key, val]) => 
-      document.getElementById(key).value = val
-    )
+    Object.entries(JsonLab).forEach(([key, val]) => document.getElementById(key).value = val)
     showNonEditableLab()
    } else {
     showEditableLab()
@@ -81,14 +79,17 @@ function showNonEditableLab()
       }
     }
   ])
-  disableInput()
+
+  $('#dialogLab input').prop('disabled', true)
 }
 
-let showEditableLab = function () {
+function showEditableLab()
+{
   $dialogLab.dialog("option", "buttons", [
     {
       text: "Save",
       click: function () {
+        let checkLab = Array.from(document.querySelectorAll('#dialogLab input')).some(e => e.value)
         if (checkLab()) {
           checklistLab()
           showNonEditableLab()
@@ -99,34 +100,12 @@ let showEditableLab = function () {
       }
     }
   ])
-  enableInput()
-}
 
-function disableInput()
-{
-  $('#dialogLab input').prop('disabled', true)
-}
-
-function enableInput()
-{
   $('#dialogLab input').prop('disabled', false)
 }
 
-function checkLab()
+function checklistLab()
 {
-  let equip = false
-
-  $('#dialogLab input[type=number]').each((i, e) => {
-    if (e.value) {
-      equip = true
-      return false
-    }
-  })
-
-  return equip
-}
-
-let checklistLab = function () {
   let equipJSON = {},
     lab = "",
     sql = ""

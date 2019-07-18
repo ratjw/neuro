@@ -143,8 +143,8 @@ export function htmlProfile(profile)
     } else if (type === "hr") {
 			record += `<hr class="${width}">`
     } else if (type === "number") {
-			record += `<span class="bold">${label}</span>
-				<input ${addclass} type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}">`
+			record += `<label class="bold">${label}
+				<input ${addclass} type="${type}" onfocus="blur()" name="${name}" value="" min="${min}" max="${max}"></label>`
     } else if (type === "divbegin") {
 			record += `<div id="${id}"><span class="bold">${label}</span><br>`
     } else if (type === "divend") {
