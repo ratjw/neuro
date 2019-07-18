@@ -1,13 +1,12 @@
 
 import {
   CASENUMSV, HNSV, NAMESV, DIAGNOSISSV, TREATMENTSV, ADMISSIONSV,
-  FINALSV, ADMITSV, DISCHARGESV
+  FINALSV, ADMITSV, DISCHARGESV, PACS
 } from "../control/const.js"
 import { clearEditcell, createEditcell } from "../control/edit.js"
 import { isPACS } from "../main.js"
 import { inPicArea } from "../util/util.js"
 import { editableSV } from "./setSERVICE.js"
-import { PACS } from "../get/PACS.js"
 import { showProfile } from "./showProfile.js"
 
 // Set up editcell for keyin
@@ -34,7 +33,7 @@ function getHNSV(evt, pointing)
   clearEditcell()
   if (isPACS) {
     if (inPicArea(evt, pointing)) {
-      PACS(pointing.innerHTML)
+      window.open(PACS + pointing.innerHTML)
     }
   }
 }

@@ -12,6 +12,7 @@ import { reViewService } from "./showService.js"
 import { coloring } from "./coloring.js"
 import { setSERVICE, SERVICE } from "./setSERVICE.js"
 import { viewProfile } from './viewProfile.js'
+
 export function savePreviousCellService() {
   let newcontent = getNewcontent()
 

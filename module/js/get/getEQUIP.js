@@ -6,7 +6,7 @@ import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEqu
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winWidth, winHeight, radioHack, deepEqual } from "../util/util.js"
+import { Alert, winWidth, winHeight, radioHack, deepEqual, string50 } from "../util/util.js"
 
 const EQUIPITEMS = [
   "copay",
@@ -44,8 +44,8 @@ export function getEQUIP(pointing)
       hnequip: row.dataset.hn,
       patientnameequip: row.dataset.patient,
       ageequip: putAgeOpdate(row.dataset.dob, row.dataset.opdate),
-      diagnosisequip: row.dataset.diagnosis.split(' ').slice(0,6).join(' '),
-      treatmentequip: row.dataset.treatment.split(' ').slice(0,6).join(' ')
+      diagnosisequip: string50(row.dataset.diagnosis),
+      treatmentequip: string50(row.dataset.treatment)
     }
 
   let resizeDialogEquip = () => {
@@ -71,7 +71,7 @@ export function getEQUIP(pointing)
     modal: true,
     width: 620,
     height: winHeight(95),
-    clse: function() {
+    close: function() {
       $(window).off("resize", resizeDialogEquip)
     }
   })
@@ -150,7 +150,10 @@ function showNonEditableEquip()
       }
     }
   ])
-  disableInput()
+
+  $('#dialogEquip label:has(input[type=radio])').off('mousedown')
+  $('#dialogEquip input').prop('disabled', true)
+  $('#dialogEquip textarea').prop('disabled', true)
 }
 
 // having any equip must have copay. if no copay, ->alert
@@ -175,18 +178,7 @@ function showEditableEquip()
       }
     }
   ])
-  enableInput()
-}
 
-function disableInput()
-{
-  $('#dialogEquip label:has(input[type=radio])').off('mousedown')
-  $('#dialogEquip input').prop('disabled', true)
-  $('#dialogEquip textarea').prop('disabled', true)
-}
-
-function enableInput()
-{
   $('#dialogEquip label:has(input[type=radio])').on('mousedown')
   $('#dialogEquip input').prop('disabled', false)
   $('#dialogEquip textarea').prop('disabled', false)

@@ -1,7 +1,7 @@
 
 import { savePreviousCell, editPresentCell } from "./clicktable.js"
 import {
-  PATIENT, DIAGNOSIS, TREATMENT, CONTACT,
+  HN, PATIENT, DIAGNOSIS, TREATMENT, CONTACT,
   DIAGNOSISSV, ADMISSIONSV, FINALSV
 } from "../control/const.js"
 import { resetTimer, resetTimerCounter } from "./timer.js"
@@ -32,7 +32,7 @@ export function getNewcontent() {
     return spin[1].value
   }
 
-  return editcell.innerHTML.trim()
+  return getHtmlText(editcell.innerHTML)
 
 }
 
@@ -91,7 +91,7 @@ let keyin = function (evt, keycode) {
       evt.preventDefault()
       return
     case 13:
-      if ($("#spin").is(":visible")) {
+      if ($("#spin").is(":visible") || (POINTER.cellIndex === HN)) {
         savePreviousCell()
         clearAllEditing()
       }
@@ -206,7 +206,7 @@ export function createEditcell(pointing)
   let $pointing = $(pointing)
   let height = $pointing.height() + "px"
   let width = $pointing.width() + "px"
-  let context = pointing.innerHTML.trim()
+  let context = pointing.innerHTML
 
   $("#editcell").html(context)
   showEditcell(pointing, height, width)
@@ -292,9 +292,11 @@ export function clearEditcell() {
 }
 
 // TRIM excess spaces at begin, mid, end
-// remove html tags except <br>
-let getHtmlText = function (cell) {
-  let HTMLTRIM = /^(\s*<[^>]*>)*\s*|\s*(<[^>]*>\s*)*$/g
+// remove html tags except <br> <div> </div>
+export function getHtmlText(innerhtml)
+{
+  let HTMLTRIM = /^(\s*<[^>]*>)*\s*|\s*(<[^>]*>\s*)*$/g,
+	  HTMLNOTBRDIV = /(<(?!br|div|\/div).*?>)/gi
 
-  return cell && cell.innerHTML.replace(HTMLTRIM, '')
+  return innerhtml.replace(HTMLTRIM, '').replace(HTMLNOTBRDIV, '')
 }

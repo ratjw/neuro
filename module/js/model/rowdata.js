@@ -15,7 +15,8 @@ export function setRowData(row, q)
   rowdata.dob = q.dob || ""
   rowdata.diagnosis = q.diagnosis
   rowdata.treatment = q.treatment
-  rowdata.equipment = q.equipment
+  rowdata.lab = q.lab || ""
+  rowdata.equipment = q.equipment || ""
   rowdata.contact = q.contact
   rowdata.qn = q.qn
 }
@@ -36,6 +37,7 @@ export function blankRowData(row, opdate)
   rowdata.dob = ""
   rowdata.diagnosis = ""
   rowdata.treatment = ""
+  rowdata.lab = ""
   rowdata.equipment = ""
   rowdata.contact = ""
   rowdata.qn = ""

@@ -155,10 +155,36 @@ td img.imgpale {
 #capture th:nth-child(8), #capture td:nth-child(8) { width: 9%; }
 #capture th:nth-child(9), #capture td:nth-child(9) { width: 25%; }
 #capture th:nth-child(10), #capture td:nth-child(10) { width: 25%; }
-#capture th:nth-child(11), #capture td:nth-child(11) { width: 30%; }
-#capture th:nth-child(12), #capture td:nth-child(12) { display: none; }
+#capture th:nth-child(11), #capture td:nth-child(11) { display: none; }
+#capture th:nth-child(12), #capture td:nth-child(12) { width: 30%; }
+#capture th:nth-child(13), #capture td:nth-child(13) { display: none; }
 
-td.consult:nth-child(8)::after { 
+#maintbl td:first-child { font-size: 12px; }
+
+#maintbl th:nth-child(2),
+#maintbl td:nth-child(2) { width: 0px; font-size: 0px; }
+#maintbl.showColumn2 th:nth-child(2),
+#maintbl.showColumn2 td:nth-child(2) { width: 30px; font-size: xx-small; }
+#maintbl td:nth-child(2) { text-align: center; }
+
+#maintbl th:nth-child(3) { font-size: xx-small; padding: 0px; }
+#maintbl td:nth-child(3) { font-size: 14px; padding: 0px; }
+#maintbl td:nth-child(3) { text-align: center; }
+
+#maintbl th:nth-child(4) { font-size: xx-small; padding: 0px; }
+#maintbl td:nth-child(4) { font-size: xx-small; padding: 0px; }
+#maintbl td:nth-child(4) { text-align: center; }
+
+#maintbl th:nth-child(5) { font-size: xx-small; padding: 0px; }
+#maintbl td:nth-child(5) { font-size: 14px; padding: 0px; }
+#maintbl td:nth-child(5) { text-align: center; }
+
+#maintbl td:nth-child(6) { font-size: 12px; }
+#maintbl td:nth-child(7) { font-size: 12px; }
+#maintbl td:nth-child(8) { font-size: 12px; }
+#maintbl td:nth-child(11) { font-size: 12px; }
+
+td.consult::after { 
   color: #999999;
   font-size: 12px;
   content: 'สัปดาห์ Consult\A'attr(data-consult);
@@ -177,40 +203,23 @@ td.consult:nth-child(8)::after {
   border-left: solid 2px snow;
 }
 
-#maintbl.showColumn2 th:nth-child(2),
-#maintbl.showColumn2 td:nth-child(2) { width: 30px; font-size: xx-small; }
-#maintbl th:nth-child(2),
-#maintbl td:nth-child(2) { width: 0px; font-size: 0px; }
-
-#maintbl th:nth-child(3),
-#maintbl th:nth-child(4),
-#maintbl th:nth-child(5),
-#maintbl td:nth-child(4),
 #queuetbl th:nth-child(3),
 #queuetbl th:nth-child(4),
 #queuetbl th:nth-child(5),
 #queuetbl td:nth-child(3),
 #queuetbl td:nth-child(4),
-#queuetbl td:nth-child(5) {
-  font-size: xx-small;
-  padding: 0px;
-}
+#queuetbl td:nth-child(5) { font-size: xx-small; padding: 0px; }
 
 #queuetbl tr.nodate td:first-child::before {
   font-size: 14px;
   content: attr(data-number);
 }
 
-#maintbl td:nth-child(3),
-#maintbl td:nth-child(5) { font-size: 14px; padding: 0px; }
-#maintbl td:first-child,
-#maintbl td:nth-child(6),
-#maintbl td:nth-child(7),
-#maintbl td:nth-child(8),
 #queuetbl td:first-child,
 #queuetbl td:nth-child(6),
 #queuetbl td:nth-child(7),
-#queuetbl td:nth-child(8),
+#queuetbl td:nth-child(8) { font-size: 12px; }
+
 #servicetbl td:nth-child(2),
 #servicetbl td:nth-child(8),
 #servicetbl td:nth-child(9),
@@ -226,19 +235,11 @@ td.consult:nth-child(8)::after {
 #historytbl td:nth-child(11),
 #historytbl td:nth-child(12),
 #findtbl td,
-#alltbl td {
-  font-size: 12px;
-}
+#alltbl td { font-size: 12px; }
 
-#maintbl td:nth-child(2),
-#maintbl td:nth-child(3),
-#maintbl td:nth-child(4),
-#maintbl td:nth-child(5),
 #servicetbl td:first-child,
 #historytbl td:nth-child(2),
-#historytbl td:nth-child(3) {
-  text-align: center;
-}
+#historytbl td:nth-child(3) { text-align: center; }
 
 #maintbl th:first-child { width: 3%; }
 #maintbl th:nth-child(3) { width: 1%; }
@@ -246,18 +247,19 @@ td.consult:nth-child(8)::after {
 #maintbl th:nth-child(5) { width: 1%; }
 #maintbl th:nth-child(6) { width: 1%; }
 #maintbl th:nth-child(7) { width: 3%; }
-#maintbl th:nth-child(8) { width: 5%; }
+#maintbl th:nth-child(8) { width: 7%; }
 #maintbl th:nth-child(9) { width: 20%; }
 #maintbl th:nth-child(10) { width: 25%; }
-#maintbl th:nth-child(11) { width: 15%; }
-#maintbl th:nth-child(12) { width: 25%; }
+#maintbl th:nth-child(11) { width: 3%; }
+#maintbl th:nth-child(12) { width: 15%; }
+#maintbl th:nth-child(13) { width: 20%; }
 
 #queuetbl th:first-child { width: 3%; }
 #queuetbl th:nth-child(7) { width: 3%; }
 #queuetbl th:nth-child(8) { width: 4%; }
 #queuetbl th:nth-child(9) { width: 30%; }
 #queuetbl th:nth-child(10) { width: 30%; }
-#queuetbl th:nth-child(12) { width: 30%; }
+#queuetbl th:nth-child(13) { width: 30%; }
 
 #queuetbl {
   margin-bottom: 100px;
@@ -348,11 +350,13 @@ td.consult:nth-child(8)::after {
 #queuetbl th:nth-child(4), #queuetbl td:nth-child(4),
 #queuetbl th:nth-child(5), #queuetbl td:nth-child(5),
 #queuetbl th:nth-child(11), #queuetbl td:nth-child(11),
+#queuetbl th:nth-child(12), #queuetbl td:nth-child(12),
 #dialogService, #servicecells,
 #monthpicker button.ui-datepicker-current,
 #monthpicker .ui-datepicker-calendar,
 #monthstart,
 #dialogReview,
+#dialogLab,
 #dialogEquip,
 #dialogAll, #allcells,
 #dialogAllDeleted, #deletedcells,

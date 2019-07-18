@@ -47,6 +47,7 @@
    <th>Patient</th>
    <th>Diagnosis</th>
    <th>Treatment</th>
+   <th>Req</th>
    <th>Equipment</th>
    <th></th>
  </tr>
@@ -145,6 +146,7 @@
        <th>Patient</th>
        <th>Diagnosis</th>
        <th>Treatment</th>
+       <th>Req</th>
        <th>Equipment</th>
        <th>Contact & Notes</th>
       </tr>
@@ -172,6 +174,7 @@
        <th>Patient</th>
        <th>Diagnosis</th>
        <th>Treatment</th>
+       <th>Req</th>
        <th>Equipment</th>
        <th>Contact</th>
       </tr>
@@ -185,6 +188,7 @@
 <table id="tblcells">
  <tbody>
   <tr>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
@@ -247,27 +251,27 @@
 </table>
 
 <div id="dialogReview" class="dialogBox">
+ <div id="servicehead">
+  <div>
+   <span class="item">Admission : <span id="Admission"></span></span>
+   <span class="item Readmission">Re-admission : <span id="Readmission"></span></span>
+  </div>
+  <div>
+   <span class="item">Operation : <span id="Operation"></span></span>
+   <span class="item Reoperation">Re-operation : <span id="Reoperation"></span></span>
+  </div>
+  <div>
+   <span class="item">Discharge : <span id="Discharge"></span></span>
+   <span class="item Infection">Infection SSI : <span id="Infection"></span></span>
+  </div>
+  <div>
+   <span class="item Morbidity">Morbidity : <span id="Morbidity"></span></span>
+   <span class="item Dead">Dead : <span id="Dead"></span></span>
+  </div>
+ </div>
+ <br>
  <table id="reviewtbl">
   <thead>
-   <div id="servicehead">
-    <div>
-     <span class="item">Admission : <span id="Admission"></span></span>
-     <span class="item Readmission">Re-admission : <span id="Readmission"></span></span>
-    </div>
-    <div>
-     <span class="item">Operation : <span id="Operation"></span></span>
-     <span class="item Reoperation">Re-operation : <span id="Reoperation"></span></span>
-    </div>
-    <div>
-     <span class="item">Discharge : <span id="Discharge"></span></span>
-     <span class="item Infection">Infection SSI : <span id="Infection"></span></span>
-    </div>
-    <div>
-     <span class="item Morbidity">Morbidity : <span id="Morbidity"></span></span>
-     <span class="item Dead">Dead : <span id="Dead"></span></span>
-    </div>
-   </div>
-   <br>
    <tr>
      <th rowspan="3" class="first">OPERATION</th>
      <th colspan="4">STAFF</th>
@@ -326,12 +330,12 @@
      <td></td><td></td><td></td><td></td><td></td><td></td>
      <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
-   <tr id="Total" class="notcount">
+   <tr id="Total" class="notcount Total">
      <td>Total Operation</td>
      <td></td><td></td><td></td><td></td><td></td><td></td>
      <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
-   <tr id="Grand" class="notcount">
+   <tr id="Grand" class="notcount Grand">
      <td>Grand Total</td>
      <td colspan="2"></td><td colspan="2"></td>
      <td colspan="2"></td><td colspan="2"></td>
@@ -635,6 +639,8 @@
 <div id="dialogAlert"></div>
 
 <div id="editcell" contenteditable="true"></div>
+
+<div id="dialogLab" class="dialogBox"></div>
 
 <div id="dialogEquip" class="dialogBox"></div>
 

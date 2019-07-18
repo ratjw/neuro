@@ -4,24 +4,25 @@ import { THEATRE, OPTIME, CASENUM, CONTACT } from "../control/const.js"
 
 export function sendtoExcel()
 {
-  let capture = document.querySelector("#capture")
-  let $capture = $("#capture")
-  let $captureTRs = $capture.find('tr')
-  let $selected = $(".selected")
-  let row = ""
-  let hide = [THEATRE, OPTIME, CASENUM, CONTACT]
+  let capture = document.querySelector("#capture"),
+    tbody = capture.querySelector("tbody"),
+    selected = document.querySelectorAll(".selected"),
+    template = document.querySelector('#capturerow'),
+    hide = [THEATRE, OPTIME, CASENUM, CONTACT]
 
-  $captureTRs.slice(1).remove()
-
-  $.each($selected, function() {
-    $capture.find("tbody").append($(this).clone())
+  tbody.innerHTML = template.innerHTML
+  selected.forEach(e => {
+    capture.querySelector("tbody").appendChild(e.cloneNode(true))
   })
-  $captureTRs = $capture.find('tr')
-  $captureTRs.removeClass('selected lastselected')
 
-  hide.forEach(function(i) {
-    $.each($captureTRs, function() {
-      this.cells[i].style.display = 'none'
+  let rows = capture.querySelectorAll('tr')
+
+  rows.forEach(e => e.classList.remove('selected'))
+  rows.forEach(e => e.classList.remove('lastselected'))
+
+  hide.forEach(i => {
+    rows.forEach(tr => {
+      tr.cells[i].style.display = 'none'
     })
   })
 

@@ -43,14 +43,14 @@ export function exportQbookToExcel()
   let head = `<thead id="excelhead">
       <tr></tr>
       <tr>
-        <td></td><td></td><td></td><td></td>
+        <td></td><td></td><td></td><td></td><td></td>
         <td colspan="4">${title}</td>
       </tr>
       <tr></tr>
       </thead>`
   let filename = `${title} ${Date.now()}.xls`
 
-  exportToExcel("capture", style, head, filename)
+  exportToExcel("#capture", style, head, filename)
 }
 
 export function exportServiceToExcel()
@@ -61,9 +61,6 @@ export function exportServiceToExcel()
       #exceltbl {\
         border-right: solid 1px gray;\
         border-collapse: collapse;\
-      }\
-      #exceltbl tr:nth-child(odd) {\
-        background-color: #E0FFE0;\
       }\
       #exceltbl th {\
         font-size: 16px;\
@@ -81,61 +78,37 @@ export function exportServiceToExcel()
         border-bottom: solid 1px silver;\
       }\
       #excelhead td {\
-        height: 30px; \
+        height: 100px; \
         vertical-align: middle;\
-        font-size: 22px;\
+        font-size: 30px;\
         text-align: center;\
+        color: #333333;\
+        background-color: #DDDDDD;\
+        border: none;\
       }\
-      #excelhead td.Readmission,\
       #exceltbl tr.Readmission,\
       #exceltbl td.Readmission { background-color: #AACCCC; }\
-      #excelhead td.Reoperation,\
       #exceltbl tr.Reoperation,\
       #exceltbl td.Reoperation { background-color: #CCCCAA; }\
-      #excelhead td.Infection,\
       #exceltbl tr.Infection,\
       #exceltbl td.Infection { background-color: #CCAAAA; }\
-      #excelhead td.Morbidity,\
       #exceltbl tr.Morbidity,\
       #exceltbl td.Morbidity { background-color: #AAAACC; }\
-      #excelhead td.Dead,\
       #exceltbl tr.Dead,\
       #exceltbl td.Dead { background-color: #AAAAAA; }\
     </style>'
   let head = `<thead id="excelhead">
       <tr></tr>
       <tr>
-        <td></td><td></td><td></td><td></td>
-        <td colspan="4">${title}</td>
+        <td colspan="9">${title}</td>
       </tr>
-      <tr></tr>
-      </thead>
-      <tr></tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td>Admission : ${$("#Admission").html()}</td>
-        <td>Discharge : ${$("#Discharge").html()}</td>
-        <td>Operation : ${$("#Operation").html()}</td>
-        <td class="Morbidity">Morbidity : ${$("#Morbidity").html()}</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td></td>
-        <td class="Readmission">Re-admission : ${$("#Readmission").html()}</td>
-        <td class="Infection">Infection SSI : ${$("#Infection").html()}</td>
-        <td class="Reoperation">Re-operation : ${$("#Reoperation").html()}</td>
-        <td class="Dead">Dead : ${$("#Dead").html()}</td>
-      </tr>
-      <tr></tr>
-      <tr></tr>
-      </table>`
+      </thead>`
   //use yyyy-mm for filename
   let month = $("#monthstart").val()
   month = month.substring(0, month.lastIndexOf("-"))
   let filename = `Service Neurosurgery ${month}.xls`
 
-  exportToExcel("servicetbl", style, head, filename)
+  exportToExcel("#servicetbl", style, head, filename)
 }
 
 export function exportFindToExcel(search)
@@ -168,23 +141,24 @@ export function exportFindToExcel(search)
         border-bottom: solid 1px silver;\
       }\
       #excelhead td {\
-        height: 30px; \
+        height: 100px; \
         vertical-align: middle;\
-        font-size: 22px;\
+        font-size: 30px;\
         text-align: center;\
+        color: #333333;\
+        background-color: #DDDDDD;\
+        border: none;\
       }\
     </style>'
   let head = `<thead id="excelhead">
       <tr></tr>
       <tr>
-        <td></td><td></td><td></td><td></td>
-        <td colspan="4">${title}</td>
+        <td colspan="10">${title}</td>
       </tr>
-      <tr></tr>
       </thead>`
   let filename = `Search ${search}.xls`
 
-  exportToExcel("findtbl", style, head, filename)
+  exportToExcel("#findtbl", style, head, filename)
 }
 
 export function exportReportToExcel(title)
@@ -193,14 +167,19 @@ export function exportReportToExcel(title)
   // IE uses "txt/html", "replace" with blob
   let style = '\
     <style type="text/css">\
-      #exceltbl {\
-        border-right: solid 1px gray;\
+      #excelhead {\
+        font-size: 22px;\
+      }\
+      div {\
+        width: auto;\
+        text-align: center;\
+        font-size: 18px;\
+      }\
+      table {\
+        border: solid 1px gray;\
         border-collapse: collapse;\
       }\
-      #exceltbl tr:nth-child(odd) {\
-        background-color: #E0FFE0;\
-      }\
-      #exceltbl th {\
+      th {\
         font-size: 16px;\
         font-weight: bold;\
         height: 40px;\
@@ -208,7 +187,7 @@ export function exportReportToExcel(title)
         color: white;\
         border: solid 1px silver;\
       }\
-      #exceltbl td {\
+      td {\
         font-size: 14px;\
         text-align: center;\
         vertical-align: middle;\
@@ -216,36 +195,20 @@ export function exportReportToExcel(title)
         border-left: solid 1px silver;\
         border-bottom: solid 1px silver;\
       }\
-      #exceltbl td:first-child {\
-        text-align: left;\
-      }\
-      #exceltbl tr.nonsurgical {\
-        background-color: LightGrey;\
-      }\
-      #exceltbl tr#total {\
+      tr.total td {\
         background-color: BurlyWood;\
       }\
-      #exceltbl tr#grand {\
+      tr.grand td {\
         background-color: Turquoise;\
       }\
-      #excelhead td {\
-        height: 30px; \
-        vertical-align: middle;\
-        font-size: 22px;\
-        text-align: center;\
+      tr.nonsurgical td {\
+        background-color: LightGrey;\
       }\
     </style>'
-  let head = `<thead id="excelhead">
-      <tr></tr>
-      <tr>
-        <td></td><td></td><td></td><td></td>
-        <td colspan="9">${title}</td>
-      </tr>
-      <tr></tr>
-      </thead>`
+  let head = `<div id="excelhead">\<br><br>${title}<br><br></div>`
   let filename = `Report ${title}.xls`
 
-  exportToExcel("reviewtbl", style, head, filename)
+  exportToExcel("#dialogReview", style, head, filename)
 }
 
 function exportToExcel(id, style, head, filename)
@@ -254,7 +217,7 @@ function exportToExcel(id, style, head, filename)
     $("#exceltbl").remove()
   }
 
-  $("#" + id).clone(true).attr("id", "exceltbl").appendTo("body")
+  $(id).clone(true).attr("id", "exceltbl").appendTo("body")
 
   // use only the last class because Excel does not accept multiple classes
   $.each( $("#exceltbl tr"), function() {
@@ -280,7 +243,7 @@ function exportToExcel(id, style, head, filename)
   $exceltbl.find('img').remove()
 
   // insert header
-  $exceltbl.find('tbody').before(head)
+  $exceltbl.prepend(head)
 
   //remove img in equipment
   $exceltbl.find('img').remove();
