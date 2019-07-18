@@ -24,7 +24,7 @@ const EQUIPITEMS = [
   "Monitor",
   "Notice"
 ]
-
+//
 let rowEquip,
   JsonEquip,
   thisqn,
