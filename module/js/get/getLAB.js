@@ -4,15 +4,12 @@ import { clearEditcell } from "../control/edit.js"
 import { USER } from "../main.js"
 import { sqlGetLab, sqlSaveLab, sqlCancelAllLab } from "../model/sqlGetLab.js"
 import { putAgeOpdate, putThdate } from "../util/date.js"
-import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winHeight, string25Oneline } from "../util/util.js"
-//import { viewLabJSON } from "../view/viewLab.js"
+import { Alert, winHeight, string25Oneline, deepEqual } from "../util/util.js"
 
-let rowLab,
-  JsonLab,
-  thisqn,
-  $dialogLab = $('#dialogLab')
+let _JsonLab,
+  _qn,
+  _$dialogLab = $('#dialogLab')
 
 export function getLAB(pointing)
 {
@@ -20,6 +17,7 @@ export function getLAB(pointing)
     row = pointing.closest('tr'),
     hn = row.dataset.hn,
     qn = row.dataset.qn,
+    rowLab = row.dataset.lab,
     thisLab = {
       opdaylab: NAMEOFDAYTHAI[(new Date(row.dataset.opdate)).getDay()],
       opdatethlab: putThdate(row.dataset.opdate),
@@ -37,39 +35,45 @@ export function getLAB(pointing)
     document.getElementById(key).innerHTML = thisLab[key]
   }
 
-  rowLab = row.dataset.lab
-  JsonLab = rowLab ? JSON.parse(rowLab) : {}
-  thisqn = qn
+  _JsonLab = rowLab ? JSON.parse(rowLab) : {}
+  _qn = qn
 
-  // clear all previous dialog values
-  $dialogLab.show()
-  $dialogLab.find('input').val('')
-  $dialogLab.dialog({
+  _$dialogLab.dialog({
     title: "Blood Request",
     closeOnEscape: true,
     modal: true
   })
 
-  if ( JsonLab && Object.keys(JsonLab).length ) {
-    Object.entries(JsonLab).forEach(([key, val]) => document.getElementById(key).value = val)
+  fillLab()
+
+  clearEditcell()
+}
+
+function fillLab()
+{
+  // clear all previous dialog values
+  _$dialogLab.find('input').val('')
+
+  if (Object.keys(_JsonLab).length) {
+    Object.entries(_JsonLab).forEach(([key, val]) => 
+      document.getElementById(key).value = val)
     showNonEditableLab()
    } else {
     showEditableLab()
   }
 
-  clearEditcell()
 }
 
 function showNonEditableLab()
 {
-  $dialogLab.dialog("option", "buttons", [
+  _$dialogLab.dialog("option", "buttons", [
     {
       text: "ยกเลิกทุกรายการ",
       style: "margin-right:50px",
       click: function () {
         if (confirm("ลบออกทั้งหมด")) {
           cancelAllLab()
-          $dialogLab.dialog('close')
+          _$dialogLab.dialog('close')
         }
       }
     },
@@ -81,91 +85,71 @@ function showNonEditableLab()
     }
   ])
 
-  $('#dialogLab input').prop('disabled', true)
+  _$dialogLab.find('input').prop('disabled', true)
 }
 
 function showEditableLab()
 {
-  $dialogLab.dialog("option", "buttons", [
+  _$dialogLab.dialog("option", "buttons", [
     {
       text: "Save",
       click: function () {
         let checkLab = Array.from(document.querySelectorAll('#dialogLab input')).some(e => e.value)
-        if (checkLab()) {
-          checklistLab()
+        if (checkLab) {
+          saveLab()
           showNonEditableLab()
         } else {
           cancelAllLab()
-          $dialogLab.dialog('close')
+          _$dialogLab.dialog('close')
         }
       }
     }
   ])
 
-  $('#dialogLab input').prop('disabled', false)
+  _$dialogLab.find('input').prop('disabled', false)
 }
 
-function checklistLab()
+function saveLab()
 {
-  let equipJSON = {},
+  let labJSON = {},
     lab = "",
     sql = ""
 
   document.querySelectorAll('#dialogLab input').forEach(e => {
     if (e.value) {
-      equipJSON[e.id] = e.value
+      labJSON[e.id] = e.value
     }
   })
 
-  lab = JSON.stringify(equipJSON)
-  if (lab === rowLab) { return }
+  if (deepEqual(labJSON, _JsonLab)) { return }
+
+  lab = JSON.stringify(labJSON)
 
   // escape the \ (escape) and ' (single quote) for sql string, not for JSON
   lab = lab.replace(/\\/g,"\\\\").replace(/'/g,"\\'")
-  sqlSaveLab(lab, thisqn).then(response => {
+  sqlSaveLab(lab, _qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
-      $dialogLab.dialog('close')
+      _$dialogLab.dialog('close')
     } else {
-      Alert("checklistequip", response)
-      // Roll back
-      $('#dialogLab input').val('')
-      if (rowLab) {
-        Object.entries(JSON.parse(rowLab)).forEach(([key, val]) => 
-          document.getElementById(key).value = val
-        )
-      }
+      Alert("saveLab", response)
+
+      // failed save, roll back
+      fillLab()
     }
   }).catch(error => {})
 }
 
 function cancelAllLab()
 {
-  sqlCancelAllLab(thisqn).then(response => {
+  sqlCancelAllLab(_qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
-      delelteAllLab()
     } else {
-      restoreAllLab(response, rowLab, JsonLab)
+      Alert("cancelAllLab", response)
+
+      // failed cancel, roll back
+      fillLab()
     }
   }).catch(error => {})
-}
-
-function delelteAllLab()
-{
-  let $row = getTableRowByQN("maintbl", thisqn)
-
-  $row.find("td").eq(LAB).html('')
-}
-
-// Error from server
-function restoreAllLab(response, rowLab, JsonLab)
-{
-  Alert("cancelAllLab", response)
-  $('#dialogLab input').val('')
-  if ( rowLab ) {
-    Object.entries(JSON.parse(rowLab)).forEach(([key, val]) => 
-      document.getElementById(key).value = val
-    )
-  }
 }

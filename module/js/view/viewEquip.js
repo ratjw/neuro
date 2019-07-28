@@ -66,17 +66,12 @@ function viewEquipImage(equipJSON)
     img = []
 
   Object.values(equipJSON).forEach(value => {
-    if (typeof value === 'string') {
-      if (value in EQUIPICONS) {
-        equipPics.push(EQUIPICONS[value])
+    if (typeof value === 'string') { value = value.split() }
+    value.forEach(e => {
+      if (e in EQUIPICONS) {
+        equipPics.push(EQUIPICONS[e])
       } 
-    } else {
-      value.forEach(e => {
-        if (e in EQUIPICONS) {
-          equipPics.push(EQUIPICONS[e])
-        } 
-      })
-    }
+    })
   })
 
   // remove duplicated pics

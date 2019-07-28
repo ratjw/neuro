@@ -2,7 +2,7 @@
 import { HN } from "../control/const.js"
 import { clearSelection } from "../get/selectRow.js"
 import { createEditcell } from "../control/edit.js"
-import { blankRowData } from "../model/rowdata.js"
+import { blankRowData } from "../view/fillNewrowData.js"
 
 export function addnewrow() {
   let row = document.querySelector(".selected"),

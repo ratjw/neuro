@@ -3,7 +3,7 @@ import { rowDecoration } from "./rowDecoration.js"
 import { putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 import { toUndelete } from "../menu/allDeletedCases.js"
-import { setRowData } from "../model/rowdata.js"
+import { setRowData } from "../view/fillNewrowData.js"
 
 // Make dialog box dialogAllDeleted containing historytbl
 export function viewAllDeletedCases(deletedCases) {
