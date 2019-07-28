@@ -111,7 +111,7 @@ function fillMatchValue(_JsonEquip)
     if (!title) { return }
     if (key === 'Notice') {
       title.querySelectorAll('textarea').forEach((e, i) =>
-        e.value = val[i]
+        e.value = val[i] || ''
       )
       return
     }
@@ -119,7 +119,7 @@ function fillMatchValue(_JsonEquip)
     let remain = fillValue(title, val)
     if (remain.length) {
       title.querySelectorAll('input[type=text]').forEach((e, i) =>
-        e.value = remain[i]
+        e.value = remain[i] || ''
       )
     }
   })
@@ -229,11 +229,13 @@ function saveEquip()
     sql = ""
 
   EQUIPITEMS.forEach(e => {
-    let title = `#dialogEquip div[title='${e}']`
-    document.querySelectorAll(`${title} input, ${title} textarea`).forEach(i => {
+    let title = document.querySelector(`#dialogEquip div[title='${e}']`)
+    title.querySelectorAll(`input, textarea`).forEach(i => {
       if (i.checked || ((i.type === 'text') && i.value)
         || ((i.type === 'textarea') && i.value)) {
-          if (!equipJSON[e]) { equipJSON[e] = [] }
+          if (!equipJSON[e]) {
+            equipJSON[e] = ((e === "เครื่องมือบริษัท") && (i.placeholder)) ? [''] : []
+          }
           equipJSON[e].push(i.value)
       }
     })
