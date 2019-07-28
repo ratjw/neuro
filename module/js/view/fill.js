@@ -4,7 +4,7 @@ import { START, ISOdate, nextdays } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { hoverPicArea } from "../util/util.js"
-import { blankRowData } from "../model/rowdata.js"
+import { blankRowData } from "../view/fillNewrowData.js"
 import { viewOneDay } from "./viewOneDay.js"
 import { fillNewrowData } from "./fillNewrowData.js"
 

@@ -1,101 +1,58 @@
 
 import {
   OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
-  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT
+  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT, COLUMN
 } from "../control/const.js"
-import { putNameAge } from "../util/date.js"
 import { isPACS } from "../main.js"
 import { rowDecoration } from "./rowDecoration.js"
+import { putNameAge } from "../util/date.js"
 import { viewLab } from "./viewLab.js"
 import { viewEquip } from "./viewEquip.js"
-import { setRowData, blankRowData } from "../model/rowdata.js"
-import { hoverPicArea } from "../util/util.js"
 
 export function fillNewrowData(row, q)
 {
-  let tableID = row.closest('table').id,
-    cells = row.cells
-
   setRowData(row, q)
   if (q.hn && isPACS) { cells[HN].className = "pacs" }
 
-  cells[THEATRE].innerHTML = q.theatre
-  cells[OPROOM].innerHTML = q.oproom || ""
-  cells[OPTIME].innerHTML = q.optime
-  cells[CASENUM].innerHTML = q.casenum || ""
-  cells[STAFFNAME].innerHTML = q.staffname
-  cells[HN].innerHTML = q.hn
-  cells[PATIENT].innerHTML = putNameAge(q)
-  cells[DIAGNOSIS].innerHTML = q.diagnosis
-  cells[TREATMENT].innerHTML = q.treatment
-  cells[LAB].innerHTML = viewLab(q.lab)
-  cells[EQUIPMENT].innerHTML = viewEquip(q.equipment)
-  cells[CONTACT].innerHTML = q.contact
+  Object.entries(q).forEach(([key, val]) => q[key] = (val || ''))
+
+  Object.entries(COLUMN).forEach(([key, val]) => {
+    fillRow(row, q, key, val)
+  })
+}
+
+export function setRowData(row, q)
+{
+  let rowdata = row.dataset
+
+  Object.entries(q).forEach(([key, val]) => q[key] = (val || ''))
+
+  Object.keys(COLUMN).forEach(k => rowdata[k] = q[k])
+
+  rowdata.opdate = q.opdate
+}
+
+export function blankRowData(row, opdate)
+{
+  let rowdata = row.dataset
+
+  Object.keys(COLUMN).forEach(k => rowdata[k] = "")
+
+  rowdata.opdate = opdate
 }
 
 export function fillOldrowData(row, q)
 {
-  let tableID = row.closest('table').id,
-    rowdata = row.dataset,
-    cells = row.cells
+  let rowdata = row.dataset
 
-  if (rowdata.waitnum !== q.waitnum) {
-    rowdata.waitnum = q.waitnum
-  }
-  if (rowdata.theatre !== q.theatre) {
-    rowdata.theatre = q.theatre
-    cells[THEATRE].innerHTML = q.theatre
-  }
-  if (rowdata.oproom !== (q.oproom || "")) {
-    rowdata.oproom = q.oproom || ""
-    cells[OPROOM].innerHTML = q.oproom || ""
-  }
-  if (rowdata.optime !== q.optime) {
-    rowdata.optime = q.optime
-    cells[OPTIME].innerHTML = q.optime
-  }
-  if (rowdata.casenum !== (q.casenum || "")) {
-    rowdata.casenum = q.casenum || ""
-    cells[CASENUM].innerHTML = q.casenum || ""
-  }
-  if (rowdata.staffname !== q.staffname) {
-    rowdata.staffname = q.staffname
-    cells[STAFFNAME].innerHTML = q.staffname
-  }
-  if (rowdata.hn !== q.hn) {
-    rowdata.hn = q.hn
-    cells[HN].innerHTML = q.hn
-  }
-  if (rowdata.patient !== q.patient) {
-    rowdata.patient = q.patient
-    cells[PATIENT].innerHTML = q.patient
-  }
-  if (rowdata.dob !== (q.dob || "")) {
-    rowdata.dob = q.dob || ""
-  }
-  if (rowdata.diagnosis !== q.diagnosis) {
-    rowdata.diagnosis = q.diagnosis
-    cells[DIAGNOSIS].innerHTML = q.diagnosis
-  }
-  if (rowdata.treatment !== q.treatment) {
-    rowdata.treatment = q.treatment
-    cells[TREATMENT].innerHTML = q.treatment
-  }
-  if (rowdata.lab !== q.lab) {
-    rowdata.lab = q.lab
-    cells[LAB].innerHTML = viewLab(q.lab)
-  }
-  if (rowdata.equipment !== q.equipment) {
-    rowdata.equipment = q.equipment
-    cells[EQUIPMENT].innerHTML = viewEquip(q.equipment)
-  }
-  if (rowdata.contact !== q.contact) {
-    rowdata.contact = q.contact
-    cells[CONTACT].innerHTML = q.contact
-  }
-  if (rowdata.qn !== q.qn) {
-    rowdata.qn = q.qn
-  }
+  Object.entries(q).forEach(([key, val]) => q[key] = (val || ''))
+
+  Object.entries(COLUMN).forEach(([key, val]) => {
+    if (rowdata[key] !== q[key]) {
+      rowdata[key] = q[key]
+      fillRow(row, q, key, val)
+    }
+  })
 }
 
 export function unfillOldrowData(row, opdate)
@@ -106,4 +63,22 @@ export function unfillOldrowData(row, opdate)
   cells[HN].classList.remove("pacs")
   rowDecoration(row, opdate)
   blankRowData(row, opdate)
+}
+
+function fillRow(row, q, key, val)
+{
+  let cells = row.cells
+
+  if (val === PATIENT) {
+    cells[val].innerHTML = putNameAge(q)
+  }
+  else if (val === LAB) {
+    cells[val].innerHTML = viewLab(q.lab)
+  }
+  else if (val === EQUIPMENT) {
+    cells[val].innerHTML = viewEquip(q.equipment)
+  }
+  else if (val) {
+    cells[val].innerHTML = q[key]
+  }
 }

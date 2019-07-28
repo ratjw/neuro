@@ -4,7 +4,6 @@ import { clearEditcell } from "../control/edit.js"
 import { USER } from "../main.js"
 import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEquip.js"
 import { putAgeOpdate, putThdate } from "../util/date.js"
-import { getTableRowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winWidth, winHeight, radioHack, deepEqual, string50 } from "../util/util.js"
 
@@ -25,16 +24,16 @@ const EQUIPITEMS = [
   "Notice"
 ]
 //
-let rowEquip,
-  JsonEquip,
-  thisqn,
-  $dialogEquip = $('#dialogEquip')
+let _JsonEquip,
+  _qn,
+  _$dialogEquip = $('#dialogEquip')
 
 export function getEQUIP(pointing)
 {
   let row = pointing.closest('tr'),
     hn = row.dataset.hn,
     qn = row.dataset.qn,
+    rowEquip = row.dataset.equipment,
     thisEquip = {
       oproomequip: row.dataset.oproom || "",
       casenumequip: row.dataset.casenum || "",
@@ -50,7 +49,7 @@ export function getEQUIP(pointing)
     }
 
   let resizeDialogEquip = () => {
-    $dialogEquip.dialog({
+    _$dialogEquip.dialog({
       width: winWidth(95),
       height: winHeight(95)
     })
@@ -62,11 +61,10 @@ export function getEQUIP(pointing)
     document.getElementById(key).innerHTML = thisEquip[key]
   }
 
-  rowEquip = row.dataset.equipment
-  JsonEquip = rowEquip? JSON.parse(rowEquip) : {}
-  thisqn = qn
+  _JsonEquip = rowEquip? JSON.parse(rowEquip) : {}
+  _qn = qn
 
-  $dialogEquip.dialog({
+  _$dialogEquip.dialog({
     title: "เครื่องมือผ่าตัด",
     closeOnEscape: true,
     modal: true,
@@ -77,7 +75,7 @@ export function getEQUIP(pointing)
     }
   })
 
-  fillEquip($dialogEquip, JsonEquip)
+  fillEquip()
 
   clearEditcell()
 
@@ -85,62 +83,75 @@ export function getEQUIP(pointing)
   $(window).on("resize", resizeDialogEquip)
 }
 
-function fillEquip($dialogEquip, JsonEquip)
+function fillEquip()
 {
   // clear all previous dialog values
-  $dialogEquip.find('input[type=text]').val('')
-  $dialogEquip.find('textarea').val('')
-  $dialogEquip.find('input').prop('checked', false)
+  _$dialogEquip.find('input[type=text]').val('')
+  _$dialogEquip.find('textarea').val('')
+  _$dialogEquip.find('input').prop('checked', false)
 
-  if (JsonEquip) {
-    Object.entries(JsonEquip).forEach(([key, val]) => {
-      if (val.constructor === Array) {
-        val.forEach(e => {
-          checkMatchValue(key, e)
-        })
-      } else {
-        checkMatchValue(key, val)
-      }
-    })
+  if (Object.keys(_JsonEquip).length) {
+    fillMatchValue(_JsonEquip)
     showNonEditableEquip()
-    getEditedBy(thisqn)
+    getEditedBy()
   } else {
     showEditableEquip()
     $('#editedby').html("")
   }
 }
 
-function checkMatchValue(key, val)
+function fillMatchValue(_JsonEquip)
 {
-  let dd = document.querySelector(`#dialogEquip div[title='${key}']`)
+  Object.entries(_JsonEquip).forEach(([key, val]) => {
+    let title = document.querySelector(`#dialogEquip div[title='${key}']`)
 
-  if (!dd) { return }
-  if (dd.querySelector('textarea')) {
-    dd.querySelector('textarea').value = val
-    return
-  }
+    // convert string to array
+    if (typeof val === 'string') { val = val.split() }
 
-  for ( let e of dd.querySelectorAll('input')) {
-    if (e.type === 'text') {
-      if (e.value) { continue }
-      e.value = val
-      break
-    } else if (val === e.value) {
-      e.checked = true
-      break
+    if (!title) { return }
+    if (key === 'Notice') {
+      title.querySelectorAll('textarea').forEach((e, i) =>
+        e.value = val[i]
+      )
+      return
     }
-  }
+
+    let remain = fillValue(title, val)
+    if (remain.length) {
+      title.querySelectorAll('input[type=text]').forEach((e, i) =>
+        e.value = remain[i]
+      )
+    }
+  })
+}
+
+function fillValue(title, val)
+{
+  let radios = title.querySelectorAll('input[type=radio]'),
+    checkboxes = title.querySelectorAll('input[type=checkbox]'),
+    radioCheckbox = Array.from(radios).concat(Array.from(checkboxes)),
+    mapValue = radioCheckbox.map(e => e.value),
+    copyval = [...val]
+
+  val.forEach(v => {
+    if (mapValue.includes(v)) {
+      radioCheckbox[mapValue.indexOf(v)].checked = true
+      copyval.splice(copyval.indexOf(v), 1)
+    }
+  })
+
+  return copyval
 }
 
 function showNonEditableEquip()
 {
-  $dialogEquip.dialog("option", "buttons", [
+  _$dialogEquip.dialog("option", "buttons", [
     {
       text: "ยกเลิกทุกรายการ",
       click: function () {
         if (confirm("ลบออกทั้งหมด")) {
           cancelAllEquip()
-          $dialogEquip.dialog('close')
+          _$dialogEquip.dialog('close')
         }
       }
     },
@@ -152,53 +163,51 @@ function showNonEditableEquip()
     }
   ])
 
-  $('#dialogEquip input').prop('disabled', true)
-  $('#dialogEquip textarea').prop('disabled', true)
-  $('#dialogEquip label').off('mousedown click')
+  _$dialogEquip.find('input').prop('disabled', true)
+  _$dialogEquip.find('textarea').prop('disabled', true)
+  _$dialogEquip.find('label').off('mousedown click')
 }
 
 // having any equip must have copay. if no copay, ->alert
 // having no equip, cancel copay
 function showEditableEquip()
 {
-  $dialogEquip.dialog("option", "buttons", [
+  _$dialogEquip.dialog("option", "buttons", [
     {
       text: "Save",
       click: function () {
         if (checkEquip()) {
-          if ($(`#dialogEquip div[title=copay] input[type=text]`).val()) {
-            checklistEquip()
+          if (_$dialogEquip.find(`div[title=copay] input[type=text]`).val()) {
+            saveEquip()
             showNonEditableEquip()
           } else {
-            Alert("checklistEquip", "<br>ต้องระบุจำนวนเงิน<br>จ่ายไม่ได้เลย = 0")
+            Alert("saveEquip", "<br>ต้องระบุจำนวนเงิน<br>จ่ายไม่ได้เลย = 0")
           }
         } else {
           cancelAllEquip()
-          $dialogEquip.dialog('close')
+          _$dialogEquip.dialog('close')
         }
       }
     }
   ])
 
-  $('#dialogEquip input').prop('disabled', false)
-  $('#dialogEquip textarea').prop('disabled', false)
+  _$dialogEquip.find('input').prop('disabled', false)
+  _$dialogEquip.find('textarea').prop('disabled', false)
   radioHack('#dialogEquip')
 }
 
 function getEditedBy()
 {
-  sqlGetEditedBy(thisqn).then(response => {
-    let hasData = function () {
+  sqlGetEditedBy(_qn).then(response => {
+    if (typeof response === "object") {
       let Editedby = ""
       $.each(response, function(key, val) {
         Editedby += (val.editor + " : " + val.editdatetime + "<br>")
       });
       $('#editedby').html(Editedby)
-    };
-
-    typeof response === "object"
-    ? hasData()
-    : Alert("getEditedby", response)
+    } else {
+      Alert("getEditedby", response)
+    }
   }).catch(error => {})
 }
 
@@ -213,66 +222,52 @@ function checkEquip()
   })
 }
 
-function checklistEquip()
+function saveEquip()
 {
   let equipJSON = {},
     equipment = "",
     sql = ""
 
   EQUIPITEMS.forEach(e => {
-    let dd = `#dialogEquip div[title='${e}']`
-    document.querySelectorAll(`${dd} input, ${dd} textarea`).forEach(i => {
-      if (i.checked || ((i.type === 'text') && i.value)) {
-        if (equipJSON[e]) {
-          if (typeof equipJSON[e] === 'string') { equipJSON[e] = equipJSON[e].split() }
+    let title = `#dialogEquip div[title='${e}']`
+    document.querySelectorAll(`${title} input, ${title} textarea`).forEach(i => {
+      if (i.checked || ((i.type === 'text') && i.value)
+        || ((i.type === 'textarea') && i.value)) {
+          if (!equipJSON[e]) { equipJSON[e] = [] }
           equipJSON[e].push(i.value)
-        } else {
-          equipJSON[e] = i.value
-        }
-      } else if ((i.type === 'textarea') && i.value) {
-        equipJSON[e] = i.value
       }
     })
   })
 
-  if (deepEqual(equipJSON, JsonEquip)) { return }
+  if (deepEqual(equipJSON, _JsonEquip)) { return }
 
   equipment = JSON.stringify(equipJSON)
 
   // escape the \ (escape) and ' (single quote) for sql string, not for JSON
   equipment = equipment.replace(/\\/g,"\\\\").replace(/'/g,"\\'")
-  sqlSaveEquip(equipment, thisqn).then(response => {
+  sqlSaveEquip(equipment, _qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
-      $dialogEquip.dialog('close')
+      _$dialogEquip.dialog('close')
     } else {
-      // Error update server
-      Alert("checklistEquip", response)
+      Alert("saveEquip", response)
 
-      // Roll back
-      fillEquip($dialogEquip, JsonEquip)
+      // failed save, roll back
+      fillEquip()
     }
   }).catch(error => {})
 }
 
 function cancelAllEquip()
 {
-  sqlCancelAllEquip(thisqn).then(response => {
+  sqlCancelAllEquip(_qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
-      delelteAllEquip()
     } else {
       Alert("cancelAllEquip", response)
 
-      // Roll back
-      fillEquip($dialogEquip, JsonEquip)
+      // failed cancel, roll back
+      fillEquip()
     }
   }).catch(error => {})
-}
-
-function delelteAllEquip()
-{
-  let $row = getTableRowByQN("maintbl", thisqn)
-
-  $row.find("td").eq(EQUIPMENT).html('')
 }
