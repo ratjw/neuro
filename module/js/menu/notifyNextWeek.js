@@ -1,40 +1,48 @@
 
-import { USER, isMobile } from "../main.js"
 import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "../control/const.js"
+import { ISOdate, nextdays } from '../util/date.js'
 import { string25 } from '../util/util.js'
 
 const LINENOTIFY = "line/lineNotify.php"
 
-export function sendtoLINE()
+export function notifyNextWeek()
+{
+  selectNextWeek()
+  notifyLINE()
+}
+
+function selectNextWeek()
+{
+  const todate = ISOdate(new Date())
+  const nextMonday = nextdays(todate, 3)
+  const nextSatday = nextdays(todate, 4)
+  const maintbl = document.querySelector('#maintbl')
+  const rows = maintbl.querySelectorAll('tr')
+  const findMon = Array.from(rows).find(e => e.dataset.opdate === nextMonday)
+  const findSat = Array.from(rows).find(e => e.dataset.opdate === nextSatday)
+
+  rows.forEach(e => {
+    if (e.dataset.opdate >= nextMonday && e.dataset.opdate < nextSatday) {
+      e.classList.add('selected')
+    }
+  })
+}
+
+function notifyLINE()
 {
   let wrapper = document.querySelector("#wrapper"),
-    notifywrapper = document.querySelector("#notifywrapper"),
-    dialogNotify = document.querySelector("#dialogNotify"),
-    buttonLINE = document.querySelector("#buttonLINE"),
-    cancelnotify = document.querySelector("#cancelnotify"),
     capture = document.querySelector("#capture"),
     tbody = capture.querySelector("tbody"),
     selected = document.querySelectorAll(".selected"),
-    notify = dialogNotify.querySelector('span'),
-    loader = dialogNotify.querySelector(".loader"),
-    txtarea = dialogNotify.querySelector('textarea'),
-    message = txtarea.innerHTML,
-    template = document.querySelector('#capturerow'),
-    closeNotify = function() {
-      loader.style.display = 'none'
-      notifywrapper.style.display = 'none'
-      wrapper.style.visibility = 'visible'
-    }
-
-  wrapper.style.visibility = 'hidden'
-  notifywrapper.style.display = 'block'
-  capture.style.width = (isMobile ? '500' : '1000') + 'px'
-  notify.innerHTML += USER
+    template = document.querySelector('#capturerow')
 
   tbody.innerHTML = template.innerHTML
   selected.forEach(e => {
     capture.querySelector("tbody").appendChild(e.cloneNode(true))
   })
+
+//  wrapper.remove()
+  capture.style.width = '1000px'
 
   let rows = capture.querySelectorAll('tr')
 
@@ -56,23 +64,13 @@ export function sendtoLINE()
     }
   })
 
-  buttonLINE.onclick = function() {
-    loader.style.display = 'block'
-    // setTimeout to wait loader css rendering
-    setTimeout(function() {
-      html2canvas(capture).then(function(canvas) {
-        capture.style.display = 'none'
-        $.post(LINENOTIFY, {
-          'user': USER,
-          'message': message,
-          'image': canvas.toDataURL('image/png', 1.0)
-        })
-        closeNotify()
-      })
-    }, 100)
-  }
-
-  cancelnotify.onclick = closeNotify
+  html2canvas(capture).then(function(canvas) {
+    $.post(LINENOTIFY, {
+      'user': 'ตารางผ่าตัดสัปดาห์หน้า',
+      'message': '',
+      'image': canvas.toDataURL('image/png', 1.0)
+    })
+  })
 }
 
 function equipImage(equip)

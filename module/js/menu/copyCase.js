@@ -9,7 +9,7 @@ export function copyCase()
 
   if (selected ) {
     mouseEvent(selected)
-    selected.classList.remove("lastselected")
+    selected.classList.remove("beginselected")
     selected.classList.replace("selected", "copyCase")
   } else if (moveCase) {
     moveCase.classList.replace("moveCase", "copyCase")
