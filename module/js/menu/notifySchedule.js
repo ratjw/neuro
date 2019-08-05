@@ -5,24 +5,25 @@ import { string25 } from '../util/util.js'
 
 const LINENOTIFY = "line/lineNotify.php"
 
-export function notifyNextWeek()
+export function notifySchedule()
 {
-  selectNextWeek()
+  selectWeekDays()
   notifyLINE()
 }
 
-function selectNextWeek()
+function selectWeekDays()
 {
-  const todate = ISOdate(new Date())
-  const nextMonday = nextdays(todate, 3)
-  const nextSatday = nextdays(todate, 4)
-  const maintbl = document.querySelector('#maintbl')
-  const rows = maintbl.querySelectorAll('tr')
-  const findMon = Array.from(rows).find(e => e.dataset.opdate === nextMonday)
-  const findSat = Array.from(rows).find(e => e.dataset.opdate === nextSatday)
+  let today = new Date(),
+    todate = ISOdate(today),
+    tomorrow = nextdays(todate, 1),
+    nextSatday = today.setDate(today.getDate() + 6 - today.getDay() % 7),
+    nextSatdate = ISOdate(new Date(nextSatday)),
+    maintbl = document.querySelector('#maintbl'),
+    rows = maintbl.querySelectorAll('tr')
 
   rows.forEach(e => {
-    if (e.dataset.opdate >= nextMonday && e.dataset.opdate < nextSatday) {
+    let edate = e.dataset.opdate
+    if (edate >= tomorrow && edate < nextSatdate) {
       e.classList.add('selected')
     }
   })
@@ -31,6 +32,7 @@ function selectNextWeek()
 function notifyLINE()
 {
   let wrapper = document.querySelector("#wrapper"),
+    notifywrapper = document.querySelector("#notifywrapper"),
     capture = document.querySelector("#capture"),
     tbody = capture.querySelector("tbody"),
     selected = document.querySelectorAll(".selected"),
@@ -41,7 +43,8 @@ function notifyLINE()
     capture.querySelector("tbody").appendChild(e.cloneNode(true))
   })
 
-//  wrapper.remove()
+  notifywrapper.style.display = 'block'
+  wrapper.remove()
   capture.style.width = '1000px'
 
   let rows = capture.querySelectorAll('tr')
@@ -66,7 +69,7 @@ function notifyLINE()
 
   html2canvas(capture).then(function(canvas) {
     $.post(LINENOTIFY, {
-      'user': 'ตารางผ่าตัดสัปดาห์หน้า',
+      'user': 'ตารางผ่าตัด Neurosurgery',
       'message': '',
       'image': canvas.toDataURL('image/png', 1.0)
     })
