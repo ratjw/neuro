@@ -7,28 +7,29 @@ const LINENOTIFY = "line/lineNotify.php"
 
 export function notifyLINE()
 {
-  selectWeekDays()
-  sendNotifyLINE()
-}
-
-function selectWeekDays()
-{
   let today = new Date(),
+    day = today.getDay(),
     todate = ISOdate(today),
     tomorrow = nextdates(todate, 1),
     thisSatday = today.setDate(today.getDate() + 6 - today.getDay() % 7),
     thisSatdate = ISOdate(new Date(thisSatday)),
     nextMonday = nextdates(thisSatdate, 2),
     nextSatdate = nextdates(thisSatdate, 7),
-    day = today.getDay(),
     ifFriday = day === 5,
     ifWeekEnd = day === 6 || day === 0,
     begindate = ifFriday ? nextMonday : tomorrow,
-    enddate = ifFriday ? nextSatdate : thisSatdate,
-    maintbl = document.querySelector('#maintbl'),
-    rows = maintbl.querySelectorAll('tr')
+    enddate = ifFriday ? nextSatdate : thisSatdate
 
   if (ifWeekEnd) { return }
+  selectCases(begindate, enddate)
+  sendNotifyLINE()
+}
+
+function selectCases(begindate, enddate)
+{
+  let maintbl = document.querySelector('#maintbl'),
+    rows = maintbl.querySelectorAll('tr')
+
   rows.forEach(e => {
     let edate = e.dataset.opdate
     if (edate >= begindate && edate < enddate) {
