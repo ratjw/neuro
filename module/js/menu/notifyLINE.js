@@ -1,35 +1,43 @@
 
 import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "../control/const.js"
-import { ISOdate, nextdays } from '../util/date.js'
+import { ISOdate, nextdates } from '../util/date.js'
 import { string25 } from '../util/util.js'
 
 const LINENOTIFY = "line/lineNotify.php"
 
-export function notifySchedule()
+export function notifyLINE()
 {
   selectWeekDays()
-  notifyLINE()
+  sendNotifyLINE()
 }
 
 function selectWeekDays()
 {
   let today = new Date(),
     todate = ISOdate(today),
-    tomorrow = nextdays(todate, 1),
-    nextSatday = today.setDate(today.getDate() + 6 - today.getDay() % 7),
-    nextSatdate = ISOdate(new Date(nextSatday)),
+    tomorrow = nextdates(todate, 1),
+    thisSatday = today.setDate(today.getDate() + 6 - today.getDay() % 7),
+    thisSatdate = ISOdate(new Date(thisSatday)),
+    nextMonday = nextdates(thisSatdate, 2),
+    nextSatdate = nextdates(thisSatdate, 7),
+    day = today.getDay(),
+    ifFriday = day === 5,
+    ifWeekEnd = day === 6 || day === 0,
+    begindate = ifFriday ? nextMonday : tomorrow,
+    enddate = ifFriday ? nextSatdate : thisSatdate,
     maintbl = document.querySelector('#maintbl'),
     rows = maintbl.querySelectorAll('tr')
 
+  if (ifWeekEnd) { return }
   rows.forEach(e => {
     let edate = e.dataset.opdate
-    if (edate >= tomorrow && edate < nextSatdate) {
+    if (edate >= begindate && edate < enddate) {
       e.classList.add('selected')
     }
   })
 }
 
-function notifyLINE()
+function sendNotifyLINE()
 {
   let wrapper = document.querySelector("#wrapper"),
     notifywrapper = document.querySelector("#notifywrapper"),
@@ -50,7 +58,6 @@ function notifyLINE()
   let rows = capture.querySelectorAll('tr')
 
   rows.forEach(e => e.classList.remove('selected'))
-  rows.forEach(e => e.classList.remove('beginselected'))
   rows.forEach(tr => {
     let cell = tr.cells
 
@@ -73,6 +80,7 @@ function notifyLINE()
       'message': '',
       'image': canvas.toDataURL('image/png', 1.0)
     })
+    history.back()
   })
 }
 

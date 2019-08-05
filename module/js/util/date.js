@@ -54,7 +54,7 @@ export function numDate(opdate) {
 
 // Date Object or ISOdate to be added or substracted by days
 // Result in ISOdate (2014-05-11)
-export function nextdays(date, days) {
+export function nextdates(date, days) {
   if (!date) { return date }
 
   let next = new Date(date);

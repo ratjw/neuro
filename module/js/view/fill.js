@@ -1,6 +1,6 @@
 
 import { LARGESTDATE } from "../control/const.js"
-import { START, ISOdate, nextdays } from "../util/date.js"
+import { START, ISOdate, nextdates } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { hoverPicArea } from "../util/util.js"
@@ -65,7 +65,7 @@ export function fillDatedCases(table, book)
           makenextrow(table, date)
           madedate = date
         }
-        date = nextdays(date, 1)
+        date = nextdates(date, 1)
         // make table head row before every Monday
         if ((new Date(date).getDay())%7 === 1) {
           clone = head.cloneNode(true)
@@ -122,7 +122,7 @@ export function fillBlankDates(table, date, until)
 
   // from end of waiting list with opdate to 2 years
   while (date < until) {
-    date = nextdays(date, 1)
+    date = nextdates(date, 1)
     if (((new Date(date)).getDay())%7 === 1) {
       let clone = head.cloneNode(true)
       tbody.appendChild(clone)
