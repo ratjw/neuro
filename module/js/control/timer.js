@@ -11,7 +11,7 @@ import { sqlSaveOnChange } from "../model/sqlupdate.js"
 import { sqlSaveOnChangeService } from "../model/sqlservice.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { notifyNextWeek } from '../menu/notifyNextWeek.js'
+import { notifySchedule } from '../menu/notifySchedule.js'
 
 // timer is just an id number of setTimeout, not the clock object
 // idleCounter is number of cycles of idle setTimeout
@@ -19,9 +19,7 @@ export let timer = 0
 let idleCounter = 0
 
 const host = location.host === "localhost"
-const today = new Date()
-const Friday = 1//today.getDay() === 6
-const sixpm = 1//today.getHours() === 18
+const sixpm = 1//(new Date()).getHours() === 18
 
 // poke server every 10 sec.
 export function resetTimer() {
@@ -39,9 +37,9 @@ export function resetTimerCounter()
 //  1 Editcell changed, update DB
 //  2 Editcell not changed, check timer (idleCounter)
 function updating() {
-  if (host && Friday && sixpm) {
-    notifyNextWeek()
-//    history.back()
+  if (host && sixpm) {
+    notifySchedule()
+    history.back()
   }
   if (onChange()) {
     idleCounter = 0
