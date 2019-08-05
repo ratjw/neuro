@@ -5,7 +5,7 @@ import { USER } from "../main.js"
 import { sqlGetLab, sqlSaveLab, sqlCancelAllLab } from "../model/sqlGetLab.js"
 import { putAgeOpdate, putThdate } from "../util/date.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winHeight, string25Oneline, deepEqual } from "../util/util.js"
+import { Alert, winHeight, string25_1, deepEqual } from "../util/util.js"
 
 let _JsonLab,
   _qn,
@@ -25,8 +25,8 @@ export function getLAB(pointing)
       hnlab: row.dataset.hn,
       patientnamelab: row.dataset.patient,
       agelab: putAgeOpdate(row.dataset.dob, row.dataset.opdate),
-      diagnosislab: string25Oneline(row.dataset.diagnosis),
-      treatmentlab: string25Oneline(row.dataset.treatment)
+      diagnosislab: string25_1(row.dataset.diagnosis),
+      treatmentlab: string25_1(row.dataset.treatment)
     }
 
   if (!hn || !qn) { return }

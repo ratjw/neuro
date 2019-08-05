@@ -54,7 +54,7 @@ function notifyLINE()
     if (cell.length && cell[0].nodeName !== 'TH') {
       let hn = cell[HN].innerHTML,
         patient = cell[PATIENT].innerHTML
-      // สัปดาห์ Consult has no HN
+      // Sat. สัปดาห์ Consult has no HN
       cell[OPDATE].innerHTML = cell[OPDATE].innerHTML.replace(' ', '<br>')
       cell[PATIENT].innerHTML = hn ? (hn + '<br>' + patient.split(" ")[0]) : ''
       cell[DIAGNOSIS].innerHTML = string25(cell[DIAGNOSIS].innerHTML)

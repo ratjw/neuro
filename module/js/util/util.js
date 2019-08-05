@@ -286,7 +286,7 @@ export function string25(longtext)
   return endresult.join('<br>')
 }
 
-export function string25Oneline(longtext)
+export function string25_1(longtext)
 {
    return stringChopper(longtext, 25)[0]
 }
