@@ -81,7 +81,6 @@ function sendNotifyLINE()
       'message': '',
       'image': canvas.toDataURL('image/png', 1.0)
     })
-    history.back()
   })
 }
 

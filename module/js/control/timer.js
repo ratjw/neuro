@@ -18,9 +18,6 @@ import { notifyLINE } from '../menu/notifyLINE.js'
 export let timer = 0
 let idleCounter = 0
 
-const host = location.host === "localhost"
-const sixpm = new Date().getHours() === 18
-
 // poke server every 10 sec.
 export function resetTimer() {
   clearTimeout(timer)
@@ -37,8 +34,13 @@ export function resetTimerCounter()
 //  1 Editcell changed, update DB
 //  2 Editcell not changed, check timer (idleCounter)
 function updating() {
-  if (host && sixpm) {
+  const localhost = location.host === "localhost"
+  const crontime = new Date().getHours() === 18
+
+  if (localhost && crontime) {
+    clearTimeout(timer)
     notifyLINE()
+    return
   }
   if (onChange()) {
     idleCounter = 0
