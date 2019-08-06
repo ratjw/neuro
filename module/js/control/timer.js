@@ -11,10 +11,11 @@ import { sqlSaveOnChange } from "../model/sqlupdate.js"
 import { sqlSaveOnChangeService } from "../model/sqlservice.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
+import { notifyLINE } from '../menu/notifyLINE.js'
 
 // timer is just an id number of setTimeout, not the clock object
 // idleCounter is number of cycles of idle setTimeout
-let timer = 0
+export let timer = 0
 let idleCounter = 0
 
 // poke server every 10 sec.
@@ -29,14 +30,18 @@ export function resetTimerCounter()
   idleCounter = 0
 }
 
-export function clearTimer() {
-  clearTimeout(timer)
-}
-
 // While idling every 10 sec, get updated by itself
 //  1 Editcell changed, update DB
 //  2 Editcell not changed, check timer (idleCounter)
 function updating() {
+  const localhost = location.host === "localhost"
+  const crontime = new Date().getHours() === 18
+
+  if (localhost && crontime) {
+    clearTimeout(timer)
+    notifyLINE()
+    return
+  }
   if (onChange()) {
     idleCounter = 0
   } else {

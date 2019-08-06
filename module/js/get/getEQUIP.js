@@ -105,27 +105,22 @@ function fillMatchValue(_JsonEquip)
   Object.entries(_JsonEquip).forEach(([key, val]) => {
     let title = document.querySelector(`#dialogEquip div[title='${key}']`)
 
+    if (!title) { return }
+
     // convert string to array
     if (typeof val === 'string') { val = val.split() }
 
-    if (!title) { return }
-    if (key === 'Notice') {
-      title.querySelectorAll('textarea').forEach((e, i) =>
-        e.value = val[i] || ''
-      )
-      return
-    }
-
-    let remain = fillValue(title, val)
+    let remain = fillRadioCheckbox(title, val)
     if (remain.length) {
-      title.querySelectorAll('input[type=text]').forEach((e, i) =>
-        e.value = remain[i] || ''
-      )
+      remain = fillText(title, remain)
+    }
+    if (remain.length) {
+      fillTextarea(title, remain)
     }
   })
 }
 
-function fillValue(title, val)
+function fillRadioCheckbox(title, val)
 {
   let radios = title.querySelectorAll('input[type=radio]'),
     checkboxes = title.querySelectorAll('input[type=checkbox]'),
@@ -141,6 +136,25 @@ function fillValue(title, val)
   })
 
   return copyval
+}
+
+function fillText(title, val)
+{
+  let copyval = [...val]
+
+  title.querySelectorAll('input[type=text]').forEach((e, i) => {
+    if (val[i]) {
+      e.value = val[i]
+      copyval.splice(copyval.indexOf(val[i]), 1)
+    }
+  })
+
+  return copyval
+}
+
+function fillTextarea(title, val)
+{
+  title.querySelectorAll('textarea').forEach((e, i) => e.value = val[i] || '' )
 }
 
 function showNonEditableEquip()

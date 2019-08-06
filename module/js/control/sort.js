@@ -1,5 +1,5 @@
 
-import { clearTimer, resetTimerCounter } from "./timer.js"
+import { timer, resetTimerCounter } from "./timer.js"
 import { clearEditcell } from "./edit.js"
 import { clearMouseoverTR } from "../util/util.js"
 import { sqlSortable } from "../model/sqlSortable.js"
@@ -31,7 +31,7 @@ export function sortable () {
     revert: true,
     cancel: "tr:has('th')",
     start: function(e, ui){
-      clearTimer()
+      clearTimeout(timer)
       clearAllEditing()
       ui.placeholder.innerHeight(ui.item.outerHeight())
       prevplace = ui.placeholder.index()

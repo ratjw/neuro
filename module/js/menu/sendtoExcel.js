@@ -18,7 +18,7 @@ export function sendtoExcel()
   let rows = capture.querySelectorAll('tr')
 
   rows.forEach(e => e.classList.remove('selected'))
-  rows.forEach(e => e.classList.remove('lastselected'))
+  rows.forEach(e => e.classList.remove('beginselected'))
 
   hide.forEach(i => {
     rows.forEach(tr => {

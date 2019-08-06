@@ -1,7 +1,7 @@
 
 import { isMobile } from "../main.js"
 import { PATIENT, LARGESTDATE } from "../control/const.js"
-import { ISOdate, nextdays, numDate, thDate, START } from "../util/date.js"
+import { ISOdate, nextdates, numDate, thDate, START } from "../util/date.js"
 import { STAFF } from "../util/updateBOOK.js"
 import { isSplit } from "../util/util.js"
 
@@ -31,7 +31,7 @@ export function fillConsults(tableID = 'maintbl')
 
   // find first date to begin
   while (dateoncall < firstsat) {
-    dateoncall = nextdays(dateoncall, 7)
+    dateoncall = nextdates(dateoncall, 7)
     sindex = (sindex + 1) % slen
   }
 

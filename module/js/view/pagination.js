@@ -2,7 +2,7 @@
 import { rowDecoration } from "./rowDecoration.js"
 import { LARGESTDATE, PACS } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
-import { ISOdate, thDate, nextdays, putThdate } from "../util/date.js"
+import { ISOdate, thDate, nextdates, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 
 export function pagination($dialog, $maintbl, book, search)
@@ -94,10 +94,10 @@ export function pagination($dialog, $maintbl, book, search)
   {
     let  bookOneWeek, Sunday
 
-    firstday = nextdays(Monday, offset)
+    firstday = nextdates(Monday, offset)
     if (firstday < beginday) { firstday = getPrevMonday(beginday) }
     if (firstday > lastday) {
-      firstday = nextdays(getPrevMonday(lastday), 7)
+      firstday = nextdates(getPrevMonday(lastday), 7)
       bookOneWeek = getBookNoDate(book)
       showAllCases(bookOneWeek)
     } else {
@@ -161,7 +161,7 @@ export function pagination($dialog, $maintbl, book, search)
             cells = row.cells
             rowDecoration(row, date)
           }
-          date = nextdays(date, 1)
+          date = nextdates(date, 1)
           nocase = true
         }
         $('#allcells tr').clone()
@@ -169,13 +169,13 @@ export function pagination($dialog, $maintbl, book, search)
             .filldataAllcases(this)
         nocase = false
       })
-      date = nextdays(date, 1)
+      date = nextdates(date, 1)
       while (date <= Sunday) {
         $row = $('#allcells tr').clone().appendTo($maintbl.find('tbody'))
         row = $row[0]
         cells = row.cells
         rowDecoration(row, date)
-        date = nextdays(date, 1)
+        date = nextdates(date, 1)
       }
     } else {
       $.each( bookOneWeek, function() {
