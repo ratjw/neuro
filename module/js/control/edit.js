@@ -91,9 +91,11 @@ let keyin = function (evt, keycode) {
       evt.preventDefault()
       return
     case 13:
-      if ($("#spin").is(":visible") || (POINTER.cellIndex === HN)) {
-        savePreviousCell()
-        clearAllEditing()
+      if (!servicetbl) {
+        if ($("#spin").is(":visible") || (POINTER.cellIndex === HN)) {
+          savePreviousCell()
+          clearAllEditing()
+        }
       }
       return
     case 9:
