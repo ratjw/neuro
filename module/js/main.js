@@ -12,14 +12,8 @@ document.getElementById("wrapper").style.display = "block"
 document.getElementById("mainwrapper").style.height = window.innerHeight
   - document.getElementById("cssmenu").style.height
 
-if (location.host === "localhost") {
-	USER = '001198'
-	isMobile = false
-  userDesktop()
-} else {
-  /^\d{6}$/.test(USER)
+; /^\d{6}$/.test(USER)
   ? isMobile
     ? userMobile()
     : userDesktop()
   : Alert("Alert!", "Invalid userid")
-}

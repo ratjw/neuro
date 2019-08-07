@@ -4,7 +4,7 @@ import { addStaff } from "./addStaff.js"
 import { clicktable } from "./clicktable.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 import { editcellEvent, clearEditcell, renewEditcell } from "./edit.js"
-import { resetTimer, resetTimerCounter } from "./timer.js"
+import { timer, resetTimer, resetTimerCounter } from "./timer.js"
 import { setClickMenu } from "../menu/setClickDesktopMenu.js"
 import { setClickSetting } from "./setClickSetting.js"
 import { setClickService } from "../service/monthpicker.js"
@@ -21,6 +21,8 @@ import { scrolltoToday } from "../view/scrolltoThisCase.js"
 import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
+import { notifyLINE } from '../menu/notifyLINE.js'
+import { USER } from "../main.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function userDesktop() {
@@ -61,6 +63,11 @@ function success(response) {
   resetTimer()
 //  serverSentEvent()
 //  scaleViewport()
+
+  if (USER === "000000" && new Date().getHours() === 18) {
+    clearTimeout(timer)
+    notifyLINE()
+  }
 }
 
 // *** to do -> offline browsing by service worker ***

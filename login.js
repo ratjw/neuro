@@ -33,10 +33,16 @@ function login()
                   ? "module/mobile.html"
                   : "module/desktop.html"
                 : "es5/es5.html"
+  var admin = '000000'
 					
 	document.getElementById("browser").value = browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
 	sessionStorage.setItem('isMobile', isMobile)
+  if (location.host === "localhost") {
+    sessionStorage.setItem('userid', admin)
+    document.getElementById("userid").value = admin
+    document.getElementById("form").submit()
+  }
 }
 
 function namesix()

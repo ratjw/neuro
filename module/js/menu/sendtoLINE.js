@@ -61,12 +61,12 @@ export function sendtoLINE()
     // setTimeout to wait loader css rendering
     setTimeout(function() {
       html2canvas(capture).then(function(canvas) {
-        capture.style.display = 'none'
         $.post(LINENOTIFY, {
           'user': USER,
           'message': message,
           'image': canvas.toDataURL('image/png', 1.0)
         })
+        capture.style.display = 'none'
         closeNotify()
       })
     }, 100)

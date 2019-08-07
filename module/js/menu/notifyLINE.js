@@ -22,7 +22,7 @@ export function notifyLINE()
 
   if (ifWeekEnd) { return }
   selectCases(begindate, enddate)
-  sendNotifyLINE()
+  sendNotifyLINE(ifFriday)
 }
 
 function selectCases(begindate, enddate)
@@ -38,7 +38,7 @@ function selectCases(begindate, enddate)
   })
 }
 
-function sendNotifyLINE()
+function sendNotifyLINE(ifFriday)
 {
   let wrapper = document.querySelector("#wrapper"),
     notifywrapper = document.querySelector("#notifywrapper"),
@@ -77,8 +77,8 @@ function sendNotifyLINE()
 
   html2canvas(capture).then(function(canvas) {
     $.post(LINENOTIFY, {
-      'user': 'ตารางผ่าตัด Neurosurgery',
-      'message': '',
+      'user': 'Schedule',
+      'message': ifFriday ? 'สัปดาห์หน้า' : 'สัปดาห์นี้',
       'image': canvas.toDataURL('image/png', 1.0)
     })
   })
