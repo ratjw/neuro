@@ -64,7 +64,7 @@ function success(response) {
 //  serverSentEvent()
 //  scaleViewport()
 
-  if (USER === "000000" && new Date().getHours() === 16) {
+  if (USER === "000000" && new Date().getHours() === 18) {
     clearTimeout(timer)
     notifyLINE()
   }
