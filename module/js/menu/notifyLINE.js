@@ -77,7 +77,7 @@ function sendNotifyLINE(ifFriday)
 
   html2canvas(capture).then(function(canvas) {
     $.post(LINENOTIFY, {
-      'user': 'Schedule',
+      'user': 'ตารางผ่าตัด',
       'message': ifFriday ? 'สัปดาห์หน้า' : 'สัปดาห์นี้',
       'image': canvas.toDataURL('image/png', 1.0)
     })
