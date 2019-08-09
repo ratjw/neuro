@@ -37,6 +37,7 @@ function login()
 					
 	document.getElementById("browser").value = browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
+	sessionStorage.setItem('hostip', document.getElementById("hostip").value)
 	sessionStorage.setItem('isMobile', isMobile)
   if (location.host === "localhost") {
     sessionStorage.setItem('userid', admin)

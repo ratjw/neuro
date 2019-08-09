@@ -64,7 +64,7 @@ function success(response) {
 //  serverSentEvent()
 //  scaleViewport()
 
-  if (USER === "000000" && new Date().getHours() === 18) {
+  if (sessionStorage.getItem("hostip") === "10.6.22.116" && new Date().getHours() === 18) {
     clearTimeout(timer)
     notifyLINE()
   }
