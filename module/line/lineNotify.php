@@ -14,7 +14,7 @@
 	// Use userID and time in seconds for filename
 	$t = microtime();
 	$sec = substr($t, strpos($t, ' ') + 1);
-	$filename = $user . '-' . $sec . '.png';
+	$filename = $sec . '.png';
 
 	// remove "data:image/png;base64,"
 	$content = substr($image, strpos($image, ",") + 1);
