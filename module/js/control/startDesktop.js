@@ -64,13 +64,7 @@ function success(response) {
 //  serverSentEvent()
 //  scaleViewport()
 
-  let localhost = location.hostname === "localhost"
-  let hostip = sessionStorage.getItem("hostip") === "10.6.22.116"
-  let getHour = new Date().getHours() === 18
-  if (localhost && hostip && getHour) {
-    clearTimeout(timer)
-    notifyLINE()
-  }
+  serverNotify()
 }
 
 // *** to do -> offline browsing by service worker ***
@@ -252,4 +246,15 @@ function scaleViewport()
 
   document.querySelector('meta[name="viewport"]')
     .setAttribute('content', 'width=' + siteWidth + ', initial-scale=' + scale)
+}
+
+function serverNotify()
+{
+  let localhost = location.hostname === "localhost"
+  let hostip = sessionStorage.getItem("hostip") === "10.6.22.116"
+  let getHour = new Date().getHours() === 18
+  if (localhost && hostip && getHour) {
+    clearTimeout(timer)
+    notifyLINE()
+  }
 }
