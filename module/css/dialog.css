@@ -143,7 +143,7 @@
 }
 
 #dialogInput { font-size: 14px; overflow: hidden; }
-#dialogInput span { width:50px }
+#dialogInput span { width:80px }
 #dialogInput input[name=others] { width:450px }
 #dialogInput img {
   float: right;

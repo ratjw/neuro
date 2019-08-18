@@ -10,7 +10,19 @@ require_once "mysqli.php";
 
 	$sql = "";
 	if ($hn) {
-		$sql .= "hn='$hn'";
+		if (preg_match('/\d{7}$/', $hn)) {
+			$hn = filter_var($hn, FILTER_SANITIZE_NUMBER_INT);
+			$sql .= "hn='$hn'";
+		} else {
+			$patient = preg_replace('/\d/', '',  $hn);
+			$name = explode(" ", $patient);
+			if ($name[0]) {
+				$sql .= "patient like '%$name[0]%'";
+			}
+			if ($name[1]) {
+				$sql .= " AND patient like '%$name[1]%'";
+			}
+		}
 	}
 	if ($staffname) {
 		if ($sql) { $sql .= " AND "; }
