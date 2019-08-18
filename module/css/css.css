@@ -368,11 +368,10 @@ td.consult::after {
 #stafflist,
 #editcell,
 #undelete,
-#dialogStaff,
+#dialogStaff, #staffcells,
 #scbb option:first-of-type,
-#staffcells,
-#dialogHoliday,
-#holidaycells,
+#dialogPatient, #patientcells,
+#dialogHoliday, #holidaycells,
 #holidayInput,
 .ui-datepicker-year {
   display: none;
