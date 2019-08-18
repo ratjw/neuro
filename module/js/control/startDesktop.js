@@ -64,7 +64,10 @@ function success(response) {
 //  serverSentEvent()
 //  scaleViewport()
 
-  if (USER === "000000" && new Date().getHours() === 18) {
+  let localhost = location.hostname === "localhost"
+  let hostip = sessionStorage.getItem("hostip") === "10.6.22.116"
+  let getHour = new Date().getHours() === 18
+  if (localhost && hostip && getHour) {
     clearTimeout(timer)
     notifyLINE()
   }
