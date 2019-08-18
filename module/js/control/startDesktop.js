@@ -61,10 +61,9 @@ function success(response) {
   setClickService()
   overrideJqueryUI()
   resetTimer()
+  serverNotify()
 //  serverSentEvent()
 //  scaleViewport()
-
-  serverNotify()
 }
 
 // *** to do -> offline browsing by service worker ***

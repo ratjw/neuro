@@ -59,6 +59,7 @@ function success(response) {
   setClickService()
   overrideJqueryUI()
   resetTimer()
+//  serverNotify()
 //  serverSentEvent()
   scaleViewport()
 }

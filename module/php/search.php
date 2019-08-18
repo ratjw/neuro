@@ -20,7 +20,7 @@ require_once "mysqli.php";
 				$sql .= "patient like '%$name[0]%'";
 			}
 			if ($name[1]) {
-				$sql .= " OR patient like '%$name[1]%'";
+				$sql .= " AND patient like '%$name[1]%'";
 			}
 		}
 	}
