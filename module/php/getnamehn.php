@@ -18,7 +18,7 @@ require_once "book.php";
 
 	extract($_POST);
 
-	$ip = gethostbyname(trim(`hostname`);
+	$ip = gethostbyname(trim(`hostname`));
 	if (strpos($ip, "10.6") !== false) {
 
 		$wsdl="http://appcenter/webservice/patientservice.wsdl";
