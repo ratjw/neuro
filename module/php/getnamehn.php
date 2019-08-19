@@ -2,49 +2,61 @@
 include "connect.php";
 require_once "book.php";
 
-	$hn = "5232323";
-	$initial_name = "Mr.";
-	$first_name = "Name";
-	$last_name = "Surname";
-	$dob = "1954-03-02";
-	$gender = "M";
+  $record = array(
+    "hn" => "เจีย กากแก้ว",
+    "initial_name" => "Mr.",
+    "first_name" => "Name",
+    "last_name" => "Surname",
+    "dob" => "2000-01-01",
+    "gender" => "M",
 
-	$staffname = "";
-	$qn = "";
-	$editor = "";
-	$diagnosis = "";
-	$treatment = "";
-	$contact = "";
+    "waitnum" => 1,
+    "opdate" => date("Y-m-d"),
+    "staffname" => "",
+    "qn" => 0,
+    "editor" => "",
+    "diagnosis" => "",
+    "treatment" => "",
+    "contact" => ""
+  );
 
-	extract($_POST);
+  foreach ($_POST as $key => $val) {
+    $record[$key] = $_POST[$key];
+  }
 
 	$ip = gethostbyname(trim(`hostname`));
 	if (strpos($ip, "10.6") !== false) {
-
-		$wsdl="http://appcenter/webservice/patientservice.wsdl";
-		$client = new SoapClient($wsdl);
-		$resultx = $client->Get_demographic_short($hn);
-		$resulty = simplexml_load_string($resultx);
-		while ($resulty->children())			//find last children
-			$resulty = $resulty->children();
-		$resultj = json_encode($resulty);		//use json encode-decode to make
-		$resultz = json_decode($resultj,true);	//numeric array	into assoc array
-
-		if (empty($resultz["initial_name"]))
-			$resultz["initial_name"] = "";
-		if (empty($resultz["first_name"]))
-			exit ("DBfailed ไม่มีผู้ป่วย hn นี้");		//Error exit 1
-		if (empty($resultz["last_name"]))
-			$resultz["last_name"] = "";
-		if (empty($resultz["dob"]))
-			$resultz["dob"] = null;
-		if (empty($resultz["gender"]))
-			$resultz["gender"] = "";
-
-		extract($resultz);
+    $arg = $record["hn"];
+    if (preg_match('/\d{7}$/', $arg)) {
+      $arg = filter_var($arg, FILTER_SANITIZE_NUMBER_INT);
+      $result = getPatientByHN($arg);
+    } else {
+      $patient = preg_replace('/\d/', '',  $arg);
+      $patient = trim($arg);
+      $patient = preg_replace('/\s+/', ' ',  $arg);
+      $name = explode(" ", $patient);
+      $result = getPatientByName($name);
+      if (!array_key_exists("initial_name", $result)) {
+        foreach ($result as $resulty) {
+          while ($resulty->children())
+            $resulty = $resulty->children();
+          $result = array_push($resulty);
+        }
+        exit (json_encode($result));
+      }
+    }
 	}
 
+  foreach ($record as $key => $val) {
+    if ($result[$key]) {
+      $record[$key] = $result[$key];
+    }
+  }
+
+  if (!$record["first_name"]) { exit ("ไม่มีผู้ป่วย ชื่อ/hn นี้"); }
+
 	//Find last entry of patient with this hn
+  $hn = $record["hn"];
 	$sql = "SELECT staffname,diagnosis,treatment,contact
           FROM book
           WHERE hn = '$hn' AND deleted=0 AND opdate<CURDATE()
@@ -52,89 +64,16 @@ require_once "book.php";
 	$query = $mysqli->query ($sql);
 	if ($query) {
     $oldpatient = $query->fetch_assoc();
-    $staffname = $staffname ? $staffname : $oldpatient["staffname"];
-    $diagnosis = $diagnosis ? $diagnosis : $oldpatient["diagnosis"];
-    $treatment = $treatment ? $treatment : $oldpatient["treatment"];
-    $contact = $contact ? $contact : $oldpatient["contact"];
+    if (!$record["staffname"]) { $record["staffname"] = $oldpatient["staffname"]; }
+    if (!$record["diagnosis"]) { $record["diagnosis"] = $oldpatient["diagnosis"]; }
+    if (!$record["treatment"]) { $record["treatment"] = $oldpatient["treatment"]; }
+    if (!$record["contact"]) { $record["contact"] = $oldpatient["contact"]; }
   }
 
 	if ($qn) {
-		//existing row, ignore waitnum
-		$sql = "UPDATE book 
-				SET staffname = CASE WHEN staffname = ''
-									 THEN '$staffname'
-									 ELSE staffname
-								END,
-					hn = '$hn', 
-					patient = '$initial_name$first_name $last_name',
-					dob = CASE WHEN $dob IS NOT NULL THEN '$dob' ELSE dob END,
-					gender = '$gender', 
-					diagnosis = CASE WHEN diagnosis = ''
-									 THEN '$diagnosis'
-									 ELSE diagnosis
-								END,
-					treatment = CASE WHEN treatment = ''
-									 THEN '$treatment'
-									 ELSE treatment
-								END,
-					contact =  CASE WHEN contact = ''
-									THEN '$contact'
-									ELSE contact
-								END,
-					editor = '$editor' 
-				WHERE qn = $qn;";
-	} else if ($dob) {
-		//new row, insert waitnum, opdate and others if any
-		$sql = "INSERT INTO book (
-					waitnum, 
-					opdate, 
-					staffname, 
-					hn, 
-					patient, 
-					dob, 
-					gender,
-					diagnosis,
-					treatment,
-					contact,
-					editor) 
-				VALUES (
-					$waitnum, 
-					'$opdate', 
-					'$staffname', 
-					'$hn', 
-					'$initial_name$first_name $last_name', 
-					'$dob', 
-					'$gender', 
-					'$diagnosis',
-					'$treatment',
-					'$contact',
-					'$editor');";
+    $sql = sqlUpdate($record);
 	} else {
-		//new row, insert waitnum, opdate and others if any
-		$sql = "INSERT INTO book (
-					waitnum, 
-					opdate, 
-					staffname, 
-					hn, 
-					patient, 
-					dob, 
-					gender,
-					diagnosis,
-					treatment,
-					contact,
-					editor) 
-				VALUES (
-					$waitnum, 
-					'$opdate', 
-					'$staffname', 
-					'$hn', 
-					'$initial_name$first_name $last_name', 
-					 null, 
-					'$gender', 
-					'$diagnosis',
-					'$treatment',
-					'$contact',
-					'$editor');";
+    $sql = sqlInsert($record);
 	}
 
 	$query = $mysqli->query ($sql);
@@ -142,3 +81,113 @@ require_once "book.php";
 		echo $mysqli->error . $sql;
 	else
 		echo json_encode(book($mysqli));
+
+//-----------------------------------
+
+//existing row, ignore waitnum
+function sqlUpdate($record)
+{
+	extract($record);
+
+  $sql = "UPDATE book 
+      SET staffname = CASE WHEN staffname = ''
+                 THEN '$staffname'
+                 ELSE staffname
+              END,
+        hn = '$hn', 
+        patient = '$initial_name$first_name $last_name',
+        dob = CASE WHEN $dob IS NOT NULL THEN '$dob' ELSE dob END,
+        gender = '$gender', 
+        diagnosis = CASE WHEN diagnosis = ''
+                 THEN '$diagnosis'
+                 ELSE diagnosis
+              END,
+        treatment = CASE WHEN treatment = ''
+                 THEN '$treatment'
+                 ELSE treatment
+              END,
+        contact =  CASE WHEN contact = ''
+                THEN '$contact'
+                ELSE contact
+              END,
+        editor = '$editor' 
+      WHERE qn = $qn;";
+
+  return $sql;
+}
+
+//new row, insert waitnum, opdate and others if any
+function sqlInsert($record)
+{
+	extract($record);
+
+  $patient = "$initial_name$first_name $last_name";
+  $dob = $dob ? "'$dob'" : "null";
+  $sql = "INSERT INTO book (
+         waitnum,   opdate,    staffname,    hn,   patient,   dob,  gender,    diagnosis,    treatment,    contact,    editor) 
+VALUES ($waitnum,'$opdate','$staffname','$hn','$patient',$dob,'$gender','$diagnosis','$treatment','$contact','$editor');";
+
+  return $sql;
+}
+
+//find last children, then
+//use json encode-decode to make numeric array into assoc array
+function getPatientByHN($hn)
+{
+  $wsdl="http://appcenter/webservice/patientservice.wsdl";
+  $client = new SoapClient($wsdl);
+  $resultx = $client->Get_demographic_short($hn);
+  $resulty = simplexml_load_string($resultx);
+  while ($resulty->children())
+    $resulty = $resulty->children();
+  $resultj = json_encode($resulty);
+  $resultz = json_decode($resultj,true);
+
+  if (empty($resultz["initial_name"]))
+    $resultz["initial_name"] = "";
+  if (empty($resultz["first_name"]))
+    $resultz["first_name"] = "";
+  if (empty($resultz["last_name"]))
+    $resultz["last_name"] = "";
+  if (empty($resultz["dob"]))
+    $resultz["dob"] = null;
+  if (empty($resultz["gender"]))
+    $resultz["gender"] = "";
+
+  return $resultz;
+}
+
+//find last children, then
+//use json encode-decode to make numeric array into assoc array
+function getPatientByName($name)
+{
+  $first_name = isset($name[0]) ? $name[0] : "";
+  $last_name = isset($name[1]) ? $name[1] : "";
+  $space = $last_name ? " " : "";
+  $fullname = $first_name.$space.$last_name;
+
+  $wsdl="http://appcenter/webservice/patientservice.wsdl";
+  $client = new SoapClient($wsdl);
+  $resultx = $client->Get_demographic_shortByName($fullname);
+  $resulty = simplexml_load_string($resultx);
+
+  if (sizeof($resulty) > 1) { return $resulty; }
+
+  while ($resulty->children())
+    $resulty = $resulty->children();
+  $resultj = json_encode($resulty);
+  $resultz = json_decode($resultj,true);
+
+  if (empty($resultz["initial_name"]))
+    $resultz["initial_name"] = "";
+  if (empty($resultz["first_name"]))
+    $resultz["first_name"] = "";
+  if (empty($resultz["last_name"]))
+    $resultz["last_name"] = "";
+  if (empty($resultz["dob"]))
+    $resultz["dob"] = null;
+  if (empty($resultz["gender"]))
+    $resultz["gender"] = "";
+
+  return $resultz;
+}
