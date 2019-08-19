@@ -3,27 +3,27 @@ include "connect.php";
 require_once "book.php";
 
   $record = array(
-    $hn => "1234567",
-    $initial_name => "Mr.",
-    $first_name => "Name",
-    $last_name => "Surname",
-    $dob => "2000-01-01",
-    $gender => "M",
+    "hn" => "กนิษฐา",
+    "initial_name" => "Mr.",
+    "first_name" => "Name",
+    "last_name" => "Surname",
+    "dob" => "2000-01-01",
+    "gender" => "M",
 
-    $staffname => "",
-    $qn => 0,
-    $editor => "",
-    $diagnosis => "",
-    $treatment => "",
-    $contact => "",
+    "staffname" => "",
+    "qn" => 0,
+    "editor" => "",
+    "diagnosis" => "",
+    "treatment" => "",
+    "contact" => ""
   );
 
 	extract($record);
 
-	extract($_POST);
+//	extract($_POST);
 
-	$ip = gethostbyname(trim(`hostname`);
-	if (strpos($ip, "10.6") !== false) {
+//	$ip = gethostbyname(trim(`hostname`);
+//	if (strpos($ip, "10.6") !== false) {
     if ($hn) {
       if (preg_match('/\d{7}$/', $hn)) {
         $hn = filter_var($hn, FILTER_SANITIZE_NUMBER_INT);
@@ -46,7 +46,7 @@ require_once "book.php";
     }
 
 		extract($result);
-	}
+//	}
 
   if (!$first_name) { exit ("ไม่มีผู้ป่วย ชื่อ/hn นี้"); }
 
@@ -165,7 +165,7 @@ function getPatientByName($name)
   $resultx = $client->Get_demographic_shortByName($first_name." ".$last_name);
   $resulty = simplexml_load_string($resultx);
 
-  if (sizeof($resulty) > 1) { return $resulty }
+  if (sizeof($resulty) > 1) { return $resulty; }
 
   while ($resulty->children())
     $resulty = $resulty->children();
