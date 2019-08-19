@@ -29,7 +29,7 @@ function showPatientNames(names)
 
   $patienttbl.find('tr').slice(1).remove()
 
-  $.each(names, item => {
+  Object.values(names).forEach(item => {
     $('#patientcells tr').clone()
       .appendTo($tbody)
         .filldataPatient(item)

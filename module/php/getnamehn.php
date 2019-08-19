@@ -36,13 +36,14 @@ require_once "book.php";
       $patient = preg_replace('/\s+/', ' ',  $arg);
       $name = explode(" ", $patient);
       $result = getPatientByName($name);
+      $cases = [];
       if (!array_key_exists("initial_name", $result)) {
         foreach ($result as $resulty) {
           while ($resulty->children())
             $resulty = $resulty->children();
-          $result = array_push($resulty);
+          array_push($cases, $resulty);
         }
-        exit (json_encode($result));
+        exit (json_encode($cases));
       }
     }
 	}
