@@ -13,7 +13,7 @@ export function saveHN(pointed, content) {
     // already having case in waiting list
     saveCaseHN(pointed, waiting)
   } else {
-    // have been in the book before
+    // new case or may have been in the book before
     saveNameHN(pointed, content)
   }
 }
