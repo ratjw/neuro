@@ -36,25 +36,21 @@ require_once "book.php";
       $patient = preg_replace('/\s+/', ' ',  $arg);
       $name = explode(" ", $patient);
       $result = getPatientByName($name);
-      if (empty($result["initial_name"])) {
-        if (array_key_exists("initial_name", $result)) {
-          exit;
-        } else {
-          exit(json_encode($result));
-        }
-      }
+      // Name not found
+      if (array_key_exists("initial_name", $result)) { exit("ม่มีผู้ป่วย ชื่อ/hn นี้"); }
+      // More than one name found
+      if (empty($result["initial_name"])) { exit(json_encode($result)); }
     }
 	}
 
+  // Only one name found
   foreach ($record as $key => $val) {
     if ($result[$key]) {
       $record[$key] = $result[$key];
     }
   }
 
-  if (!$record["first_name"]) { exit ("ไม่มีผู้ป่วย ชื่อ/hn นี้"); }
-
-	//Find last entry of patient with this hn
+	// Find last previous entry of this hn
   $hn = $record["hn"];
 	$sql = "SELECT staffname,diagnosis,treatment,contact
           FROM book
@@ -69,7 +65,8 @@ require_once "book.php";
     if (!$record["contact"]) { $record["contact"] = $oldpatient["contact"]; }
   }
 
-	if ($qn) {
+	// Existing row
+  if ($qn) {
     $sql = sqlUpdate($record);
 	} else {
     $sql = sqlInsert($record);

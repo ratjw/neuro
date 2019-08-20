@@ -11,12 +11,12 @@ export function sendtoLINE()
     notifywrapper = document.querySelector("#notifywrapper"),
     dialogNotify = document.querySelector("#dialogNotify"),
     buttonLINE = document.querySelector("#buttonLINE"),
+    loader = document.querySelector(".loader").cloneNode(),
     cancelnotify = document.querySelector("#cancelnotify"),
     capture = document.querySelector("#capture"),
     tbody = capture.querySelector("tbody"),
     selected = document.querySelectorAll(".selected"),
     notify = dialogNotify.querySelector('span'),
-    loader = dialogNotify.querySelector(".loader"),
     txtarea = dialogNotify.querySelector('textarea'),
     message = txtarea.innerHTML,
     template = document.querySelector('#capturerow'),
@@ -57,22 +57,22 @@ export function sendtoLINE()
   })
 
   buttonLINE.onclick = function() {
-    loader.style.display = 'block'
+    loader.style.display = 'block'// how to make loader follows mouse cursor
     // setTimeout to wait loader css rendering
     setTimeout(function() {
       html2canvas(capture).then(function(canvas) {
-        $.post(LINENOTIFY, {
-          'user': USER,
-          'message': message,
-          'image': canvas.toDataURL('image/png', 1.0)
-        })
+ //       $.post(LINENOTIFY, {
+ //         'user': USER,
+ //         'message': message,
+ //         'image': canvas.toDataURL('image/png', 1.0)
+ //       })
         capture.style.display = 'none'
-        closeNotify()
+ //       closeNotify()
       })
     }, 100)
   }
 
-  cancelnotify.onclick = closeNotify
+//  cancelnotify.onclick = closeNotify
 }
 
 function equipImage(equip)
