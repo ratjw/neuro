@@ -6,6 +6,7 @@ import { reCreateEditcell } from "../control/edit.js"
 
 export function saveNameHN(pointed, content)
 {
+  pointed.innerHTML = content
   sqlGetNameHN(pointed, content).then(response => {
     if (typeof response === "object") {
       if ("BOOK" in response) {
@@ -15,7 +16,7 @@ export function saveNameHN(pointed, content)
         showPatientNames(response, content)
       }
     } else {
-      Alert("saveNameHN", response)
+      Alert("saveNameHN", response + "<br>ไม่พบ<br>" + content)
       pointed.innerHTML = ""
       // unsuccessful entry
     }
@@ -45,7 +46,7 @@ function showPatientNames(response, content)
     show: 200,
     hide: 200,
     width: 'auto',
-    height: ($dialogPatient.height() > _maxHeight) ? _maxHeight : 'auto',
+    height: ($dialogPatient.height() > maxHeight) ? maxHeight : 'auto'
   })
 }
 

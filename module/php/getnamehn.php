@@ -36,14 +36,12 @@ require_once "book.php";
       $patient = preg_replace('/\s+/', ' ',  $arg);
       $name = explode(" ", $patient);
       $result = getPatientByName($name);
-      $cases = [];
-      if (!array_key_exists("initial_name", $result)) {
-        foreach ($result as $resulty) {
-          while ($resulty->children())
-            $resulty = $resulty->children();
-          array_push($cases, $resulty);
+      if (empty($result["initial_name"])) {
+        if (array_key_exists("initial_name", $result)) {
+          exit;
+        } else {
+          exit(json_encode($result));
         }
-        exit (json_encode($cases));
       }
     }
 	}
@@ -171,24 +169,35 @@ function getPatientByName($name)
   $client = new SoapClient($wsdl);
   $resultx = $client->Get_demographic_shortByName($fullname);
   $resulty = simplexml_load_string($resultx);
+//var_dump($resulty);exit;
+//  if (!is_array($resulty)) { return false; }
+//      if (!array_key_exists("initial_name", $result)) {
+//      }
+//    exit (json_encode($cases));
+  if (sizeof($resulty) > 1) {
+    $resultz = [];
+    foreach ($resulty as $result) {
+      while ($result->children())
+        $result = $result->children();
+      array_push($resultz, $result);
+    }
+  } else {
+    while ($resulty->children())
+      $resulty = $resulty->children();
+    $resultj = json_encode($resulty);
+    $resultz = json_decode($resultj,true);
 
-  if (sizeof($resulty) > 1) { return $resulty; }
-
-  while ($resulty->children())
-    $resulty = $resulty->children();
-  $resultj = json_encode($resulty);
-  $resultz = json_decode($resultj,true);
-
-  if (empty($resultz["initial_name"]))
-    $resultz["initial_name"] = "";
-  if (empty($resultz["first_name"]))
-    $resultz["first_name"] = "";
-  if (empty($resultz["last_name"]))
-    $resultz["last_name"] = "";
-  if (empty($resultz["dob"]))
-    $resultz["dob"] = null;
-  if (empty($resultz["gender"]))
-    $resultz["gender"] = "";
+    if (empty($resultz["initial_name"]))
+      $resultz["initial_name"] = "";
+    if (empty($resultz["first_name"]))
+      $resultz["first_name"] = "";
+    if (empty($resultz["last_name"]))
+      $resultz["last_name"] = "";
+    if (empty($resultz["dob"]))
+      $resultz["dob"] = null;
+    if (empty($resultz["gender"]))
+      $resultz["gender"] = "";
+  }
 
   return $resultz;
 }
