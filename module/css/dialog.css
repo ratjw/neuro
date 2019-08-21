@@ -451,3 +451,7 @@
 #cancelnotify:hover {
   border: 2px solid Dodgerblue;
 }
+
+#patienttbl tr:hover {
+  background: lightblue;
+}

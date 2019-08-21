@@ -1,11 +1,9 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
-import { calcWaitnum, defaultWaitnum } from "../util/calcWaitnum.js"
+import { calcWaitnum } from "../util/calcWaitnum.js"
 import { getOpdate } from "../util/date.js"
 import { URIcomponent, getTitlename } from "../util/util.js"
-
-const GETNAMEHN = "php/getnamehn.php"
 
 export function sqlMoveCaseHN(pointed, waiting, wanting)
 {
@@ -32,6 +30,25 @@ function sqlCaseHN(pointed, waiting, wanting)
   } else {
     return sqlInsertHN(tableID, pointed, waiting, wanting)
   }
+}
+
+function sqlUpdateHN(tableID, qn, waiting, wanting)
+{
+  let hn = waiting.hn,
+    patient = waiting.patient,
+    dob = waiting.dob,
+    staffname = getTitlename(tableID)
+
+  return `UPDATE book
+    SET hn='${hn}',
+      patient='${patient}',
+      dob='${dob}',
+      staffname='${wanting.staffname || staffname}',
+      diagnosis='${URIcomponent(wanting.diagnosis)}',
+      treatment='${URIcomponent(wanting.treatment)}',
+      contact='${URIcomponent(wanting.contact)}',
+      editor='${USER}'
+    WHERE qn=${qn};`
 }
 
 function sqlInsertHN(tableID, pointed, waiting, wanting)
@@ -61,42 +78,4 @@ function sqlInsertHN(tableID, pointed, waiting, wanting)
     '${wanting.staffname || staffname}','${URIcomponent(wanting.diagnosis)}',
     '${URIcomponent(wanting.treatment)}','${URIcomponent(wanting.contact)}',
     '${USER}');`
-}
-
-function sqlUpdateHN(tableID, qn, waiting, wanting)
-{
-  let hn = waiting.hn,
-    patient = waiting.patient,
-    dob = waiting.dob,
-    staffname = getTitlename(tableID)
-
-  return `UPDATE book
-    SET hn='${hn}',
-      patient='${patient}',
-      dob='${dob}',
-      staffname='${wanting.staffname || staffname}',
-      diagnosis='${URIcomponent(wanting.diagnosis)}',
-      treatment='${URIcomponent(wanting.treatment)}',
-      contact='${URIcomponent(wanting.contact)}',
-      editor='${USER}'
-    WHERE qn=${qn};`
-}
-
-// GETNAMEHN will get hn from DB all that existed
-export function sqlGetNameHN(pointed, content)
-{
-  let row = pointed.closest('tr'),
-    opdate = row.dataset.opdate,
-    qn = row.dataset.qn,
-    staffname = row.dataset.staffname,
-    diagnosis = row.dataset.diagnosis,
-    treatment = row.dataset.treatment,
-    contact = row.dataset.contact,
-    prevrow = row.previousElementSibling,
-    nextrow = row.nextElementSibling,
-    waitnum = row.dataset.waitnum || calcWaitnum(opdate, prevrow, nextrow)
-
-  let sql = `hn=${content}&waitnum=${waitnum}&opdate=${opdate}&staffname=${staffname}&diagnosis=${diagnosis}&treatment=${treatment}&contact=${contact}&qn=${qn}&editor=${USER}`
-
-  return postData(GETNAMEHN, sql)
 }

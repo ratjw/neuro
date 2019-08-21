@@ -9,10 +9,11 @@ export function calcWaitnum(thisOpdate, prevrow, nextrow)
 {
   let prevWaitNum = Number(prevrow.dataset.waitnum) || 0,
       nextWaitNum = nextrow ? (Number(nextrow.dataset.waitnum) || 0) : prevWaitNum + 2,
+      tableID = prevrow.closest('table').id,
 
   prevOpdate = prevrow.dataset.opdate,
   nextOpdate = nextrow ? nextrow.dataset.opdate : prevOpdate,
-  defaultwaitnum = defaultWaitnum(prevrow)
+  defaultwaitnum = (isOnConsultsTbl(tableID))? -1 : 1
 
   return (prevOpdate !== thisOpdate && thisOpdate !== nextOpdate)
       ? defaultwaitnum
@@ -23,11 +24,4 @@ export function calcWaitnum(thisOpdate, prevrow, nextrow)
       : nextWaitNum
       ? ((prevWaitNum + nextWaitNum) / 2)
       : (prevWaitNum + defaultwaitnum)
-}
-
-export function defaultWaitnum(row)
-{
-  let tableID = row.closest('table').id
-
-  return (isOnConsultsTbl(tableID))? -1 : 1
 }
