@@ -1,6 +1,6 @@
 <?php
 // Find last previous entry of this hn
-function lastEntryHN($record)
+function lastEntryHN($mysqli, $record)
 {
   $hn = $record["hn"];
 	$sql = "SELECT staffname,diagnosis,treatment,contact

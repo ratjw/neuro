@@ -8,7 +8,7 @@ require_once "saveRecord.php";
 
 	$result = [];
   $record = [
-    "hn" => "เจีย กากแก้ว",
+    "hn" => "สมหมาย หล",
     "initial_name" => "Mr.",
     "first_name" => "Name",
     "last_name" => "Surname",
@@ -31,30 +31,36 @@ require_once "saveRecord.php";
 
   $ip = gethostbyname(trim(`hostname`));
 	if (strpos($ip, "10.6") !== false) {
-    $arg = $record["hn"];
-    if (preg_match('/\d{7}$/', $arg)) {
-      $arg = filter_var($arg, FILTER_SANITIZE_NUMBER_INT);
-      $result = getPatientByHN($arg);
+    $namehn = $record["hn"];
+    if (preg_match('/\d{7}$/', $namehn)) {
+      $hn = filter_var($namehn, FILTER_SANITIZE_NUMBER_INT);
+      $result = getPatientByHN($hn);
     } else {
-      $patient = preg_replace('/\d/', '',  $arg);
-      $patient = trim($arg);
-      $patient = preg_replace('/\s+/', ' ',  $arg);
-      $name = explode(" ", $patient);
+      $name = preg_replace('/\d/', '',  $namehn);
+      $name = trim($name);
+      $name = preg_replace('/\s+/', ' ',  $name);
       $result = getPatientByName($name);
-      // Name not found
-      if (array_key_exists("initial_name", $result)) { exit("ม่มีผู้ป่วย ชื่อ/hn นี้"); }
+
       // More than one name found
-      if (empty($result["initial_name"])) { exit(json_encode($result)); }
+      if (!array_key_exists("initial_name", $result)) {
+        exit(json_encode($result));
+      }
+
+      // Name not found
+      if (empty($result["initial_name"])) {
+        exit("ไม่มีผู้ป่วย ชื่อ/hn นี้");
+      }
     }
 	}
 
   // Only one name found
   foreach ($record as $key => $val) {
-    if ($result[$key]) {
+    if (array_key_exists($key, $result)) {
       $record[$key] = $result[$key];
     }
   }
 
-  $record = lastEntryHN($record);
+  $record = lastEntryHN($mysqli, $record);
 
-  echo saveRecord($record);
+  echo saveRecord($mysqli, $record);
+?>

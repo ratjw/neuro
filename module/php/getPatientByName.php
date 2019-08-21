@@ -4,6 +4,7 @@
 //use json encode-decode to make numeric array into assoc array
 function getPatientByName($name)
 {
+  $name = explode(" ", $name);
   $first_name = isset($name[0]) ? $name[0] : "";
   $last_name = isset($name[1]) ? $name[1] : "";
   $space = $last_name ? " " : "";
@@ -13,11 +14,7 @@ function getPatientByName($name)
   $client = new SoapClient($wsdl);
   $resultx = $client->Get_demographic_shortByName($fullname);
   $resulty = simplexml_load_string($resultx);
-//var_dump($resulty);exit;
-//  if (!is_array($resulty)) { return false; }
-//      if (!array_key_exists("initial_name", $result)) {
-//      }
-//    exit (json_encode($cases));
+
   if (sizeof($resulty) > 1) {
     $resultz = [];
     foreach ($resulty as $result) {

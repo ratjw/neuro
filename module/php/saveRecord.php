@@ -1,5 +1,5 @@
 <?php
-function saveRecord($record)
+function saveRecord($mysqli, $record)
 {
   if ($record["qn"]) {
     $sql = sqlUpdate($record);
