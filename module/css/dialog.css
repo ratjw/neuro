@@ -110,17 +110,7 @@
 .copybutton { background-color: skyblue }
 .nodate { background-color: #EEEEFF }
 
-.loader {
-  display: none;
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border: 5px solid #a3e3f3;
-  border-radius: 50%;
-  border-top: 5px solid #3498db;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
-}
+.wait { cursor: wait; }
 
 /* Safari */
 @-webkit-keyframes spin {
@@ -454,4 +444,8 @@
 
 #patienttbl tr:hover {
   background: lightblue;
+}
+
+#patienttbl {
+  white-space: nowrap;
 }

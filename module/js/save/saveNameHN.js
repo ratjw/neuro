@@ -2,7 +2,7 @@
 import { sqlGetNameHN } from "../model/sqlGetNameHN.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
-import { reCreateEditcell } from "../control/edit.js"
+import { OLDCONTENT, reCreateEditcell } from "../control/edit.js"
 import { saveHN } from '../save/saveHN.js'
 
 export function saveNameHN(pointed, content)
@@ -52,7 +52,8 @@ function showPatientNames(response, pointed, content)
     show: 200,
     hide: 200,
     width: 'auto',
-    height: ($dialogPatient.height() > maxHeight) ? maxHeight : 'auto'
+    height: ($dialogPatient.height() > maxHeight) ? maxHeight : 'auto',
+    close: function() { pointed.innerHTML = OLDCONTENT }
   })
 }
 
