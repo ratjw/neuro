@@ -7,17 +7,35 @@ import { saveHN } from '../save/saveHN.js'
 
 export function saveNameHN(pointed, content)
 {
+  const wrapper = document.querySelector('#wrapper'),
+    timer = setTimeout( function() { controller.abort();wrapper.style.cursor = 'default' }, 30000),
+    controller = new AbortController(),
+    signal = controller.signal
+
+  wrapper.style.cursor = 'wait'
   pointed.innerHTML = content
-  sqlGetNameHN(pointed, content).then(response => {
-    if (typeof response === "object") {
-      if ("BOOK" in response) {
-        updateBOOK(response)
+  fetch(sqlGetNameHN(pointed, content), {
+    method: 'get',
+    signal: signal,
+  })
+  .then(async (response) => {
+    wrapper.style.cursor = 'default'
+    const text = await response.text()
+    let result = ''
+    try {
+      result = JSON.parse(text)
+    } catch(e) {
+      result = text
+    }
+    if (typeof result === "object") {
+      if ("BOOK" in result) {
+        updateBOOK(result)
         reCreateEditcell()
       } else {
-        showPatientNames(response, pointed, content)
+        showPatientNames(result, pointed, content)
       }
     } else {
-      Alert("saveNameHN", content + "<br><br>" + response)
+      Alert("saveNameHN", content + "<br><br>" + result)
       pointed.innerHTML = ""
       // unsuccessful entry
     }

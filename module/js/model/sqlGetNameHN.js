@@ -29,7 +29,7 @@ export function sqlGetNameHN(pointed, content)
     contact = `contact=${row.dataset.contact}`
     qn = `qn=${row.dataset.qn}`
 
-  let sql = `${hn}&${waitnum}&${opdate}&${staffname}&${diagnosis}&${treatment}&${contact}&${qn}&${user}`
+  let sql = `?${hn}&${waitnum}&${opdate}&${staffname}&${diagnosis}&${treatment}&${contact}&${qn}&${user}`
 
-  return postData(GETNAMEHN, sql)
+  return GETNAMEHN + sql//postData(GETNAMEHN, sql)
 }

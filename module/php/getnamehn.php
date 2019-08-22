@@ -25,8 +25,8 @@ require_once "saveRecord.php";
     "contact" => ""
   ];
 
-  foreach ($_POST as $key => $val) {
-    $record[$key] = $_POST[$key];
+  foreach ($_GET as $key => $val) {
+    $record[$key] = $_GET[$key];
   }
 
   $ip = gethostbyname(trim(`hostname`));
