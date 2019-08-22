@@ -8,34 +8,28 @@ import { saveHN } from '../save/saveHN.js'
 export function saveNameHN(pointed, content)
 {
   const wrapper = document.querySelector('#wrapper'),
-    timer = setTimeout( function() { controller.abort();wrapper.style.cursor = 'default' }, 30000),
     controller = new AbortController(),
-    signal = controller.signal
+    signal = controller.signal,
+    timer = setTimeout(() => {
+      controller.abort()
+      wrapper.style.cursor = 'default'
+      Alert(content, 'Fetch too long')
+    }, 10000)
 
   wrapper.style.cursor = 'wait'
   pointed.innerHTML = content
-  fetch(sqlGetNameHN(pointed, content), {
-    method: 'get',
-    signal: signal,
-  })
-  .then(async (response) => {
+  sqlGetNameHN(pointed, content, signal).then(response => {
+    clearTimeout(timer)
     wrapper.style.cursor = 'default'
-    const text = await response.text()
-    let result = ''
-    try {
-      result = JSON.parse(text)
-    } catch(e) {
-      result = text
-    }
-    if (typeof result === "object") {
-      if ("BOOK" in result) {
-        updateBOOK(result)
+    if (typeof response === "object") {
+      if ("BOOK" in response) {
+        updateBOOK(response)
         reCreateEditcell()
       } else {
-        showPatientNames(result, pointed, content)
+        showPatientNames(response, pointed, content)
       }
     } else {
-      Alert("saveNameHN", content + "<br><br>" + result)
+      Alert("saveNameHN", content + "<br><br>" + response)
       pointed.innerHTML = ""
       // unsuccessful entry
     }

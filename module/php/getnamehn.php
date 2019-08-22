@@ -25,8 +25,8 @@ require_once "saveRecord.php";
     "contact" => ""
   ];
 
-  foreach ($_GET as $key => $val) {
-    $record[$key] = $_GET[$key];
+  foreach ($_POST as $key => $val) {
+    $record[$key] = $_POST[$key];
   }
 
   $ip = gethostbyname(trim(`hostname`));
@@ -52,7 +52,7 @@ require_once "saveRecord.php";
       }
     }
 	}
-
+sleep(20);
   // Only one name found
   foreach ($record as $key => $val) {
     if (array_key_exists($key, $result)) {

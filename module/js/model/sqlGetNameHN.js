@@ -6,7 +6,7 @@ import { USER } from "../main.js"
 const GETNAMEHN = "php/getnamehn.php"
 
 // GETNAMEHN will find last previous entry of this hn in DB
-export function sqlGetNameHN(pointed, content)
+export function sqlGetNameHN(pointed, content, signal)
 {
   let row = pointed.closest('tr'),
     opdate = row.dataset.opdate,
@@ -29,7 +29,7 @@ export function sqlGetNameHN(pointed, content)
     contact = `contact=${row.dataset.contact}`
     qn = `qn=${row.dataset.qn}`
 
-  let sql = `?${hn}&${waitnum}&${opdate}&${staffname}&${diagnosis}&${treatment}&${contact}&${qn}&${user}`
+  let sql = `${hn}&${waitnum}&${opdate}&${staffname}&${diagnosis}&${treatment}&${contact}&${qn}&${user}`
 
-  return GETNAMEHN + sql//postData(GETNAMEHN, sql)
+  return postData(GETNAMEHN, sql, signal)
 }
