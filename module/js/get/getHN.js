@@ -6,7 +6,7 @@ import { PACS } from "../control/const.js"
 
 export function getHN(evt, pointing)
 {
-  if (pointing.innerHTML) {
+  if (/^\d{7}$/.test(pointing.innerHTML)) {
     clearEditcell()
     if (isPACS) {
       if (inPicArea(evt, pointing)) {

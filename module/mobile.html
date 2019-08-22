@@ -21,13 +21,12 @@
 
 <div id="notifywrapper">
   <div id="dialogNotify">
-    <img src="css/pic/general/linenotify.png">
-    <span>LINE Notify: </span>
-    <br><br><br>
-    <button id="buttonLINE"></button>
-    <div class="loader"></div>
-    <textarea placeholder="พิมพ์ข้อความ"></textarea>
     <button id="cancelnotify"></button>
+    <img src="css/pic/general/linenotify.png">
+    <br><br><br>
+    <div>LINE Notify: </div>
+    <button id="buttonLINE"></button>
+    <textarea placeholder="พิมพ์ข้อความ"></textarea>
   </div>
 
  <table id="capture">
@@ -35,6 +34,7 @@
   </tbody>
  </table>
 </div>
+
 <template id="capturerow">
  <tr>
    <th>Date</th>
@@ -105,16 +105,16 @@
       </li>
      </ul>
     </li>
-    <li class="floatright">
-      <a id="clickreadme">Readme</a>
-    </li>
-    <li class="floatright hassub"><a>Setting</a>
+    <li class="hassub"><a>Setting</a>
      <ul class="w120">
       <li class="w120">
         <a id="clickaddStaff">Staff Setting</a>
       </li>
       <li class="w120">
         <a id="clicksetHoliday">Holiday Setting</a>
+      </li>
+      <li class="w120">
+        <a id="clickreadme">Readme</a>
       </li>
      </ul>
     </li -->
@@ -251,27 +251,27 @@
 </table>
 
 <div id="dialogReview" class="dialogBox">
+ <div id="servicehead">
+  <div>
+   <span class="item">Admission : <span id="Admission"></span></span>
+   <span class="item Readmission">Re-admission : <span id="Readmission"></span></span>
+  </div>
+  <div>
+   <span class="item">Operation : <span id="Operation"></span></span>
+   <span class="item Reoperation">Re-operation : <span id="Reoperation"></span></span>
+  </div>
+  <div>
+   <span class="item">Discharge : <span id="Discharge"></span></span>
+   <span class="item Infection">Infection SSI : <span id="Infection"></span></span>
+  </div>
+  <div>
+   <span class="item Morbidity">Morbidity : <span id="Morbidity"></span></span>
+   <span class="item Dead">Dead : <span id="Dead"></span></span>
+  </div>
+ </div>
+ <br>
  <table id="reviewtbl">
   <thead>
-   <div id="servicehead">
-    <div>
-     <span class="item">Admission : <span id="Admission"></span></span>
-     <span class="item Readmission">Re-admission : <span id="Readmission"></span></span>
-    </div>
-    <div>
-     <span class="item">Operation : <span id="Operation"></span></span>
-     <span class="item Reoperation">Re-operation : <span id="Reoperation"></span></span>
-    </div>
-    <div>
-     <span class="item">Discharge : <span id="Discharge"></span></span>
-     <span class="item Infection">Infection SSI : <span id="Infection"></span></span>
-    </div>
-    <div>
-     <span class="item Morbidity">Morbidity : <span id="Morbidity"></span></span>
-     <span class="item Dead">Dead : <span id="Dead"></span></span>
-    </div>
-   </div>
-   <br>
    <tr>
      <th rowspan="3" class="first">OPERATION</th>
      <th colspan="4">STAFF</th>
@@ -619,6 +619,28 @@
   </tbody>
 </table>
 -->
+<div id="dialogPatient">
+ <table id="patienttbl">
+  <thead>
+   <tr>
+    <th>HN</th>
+    <th>Name</th>
+   </tr>
+  </thead>
+  <tbody>
+  </tbody>
+ </table>
+</div>
+
+<table id="patientcells">
+  <tbody>
+   <tr>
+    <td></td>
+    <td></td>
+   </tr>
+  </tbody>
+</table>
+
 <div id="dialogMoveCaseHN">
   <table id="movetbl">
   <tbody>

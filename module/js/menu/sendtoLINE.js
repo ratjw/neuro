@@ -15,13 +15,12 @@ export function sendtoLINE()
     capture = document.querySelector("#capture"),
     tbody = capture.querySelector("tbody"),
     selected = document.querySelectorAll(".selected"),
-    notify = dialogNotify.querySelector('span'),
-    loader = dialogNotify.querySelector(".loader"),
+    notify = dialogNotify.querySelector('div'),
     txtarea = dialogNotify.querySelector('textarea'),
     message = txtarea.innerHTML,
     template = document.querySelector('#capturerow'),
     closeNotify = function() {
-      loader.style.display = 'none'
+      buttonLINE.classList.remove('waiting')
       notifywrapper.style.display = 'none'
       wrapper.style.visibility = 'visible'
     }
@@ -56,9 +55,9 @@ export function sendtoLINE()
     }
   })
 
+  // setTimeout to wait css render waiting
   buttonLINE.onclick = function() {
-    loader.style.display = 'block'
-    // setTimeout to wait loader css rendering
+    buttonLINE.classList.add('waiting')
     setTimeout(function() {
       html2canvas(capture).then(function(canvas) {
         $.post(LINENOTIFY, {

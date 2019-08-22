@@ -1,144 +1,66 @@
 ﻿<?php
 include "connect.php";
 require_once "book.php";
+require_once "getPatientByHN.php";
+require_once "getPatientByName.php";
+require_once "lastEntryHN.php";
+require_once "saveRecord.php";
 
-	$hn = "5232323";
-	$initial_name = "Mr.";
-	$first_name = "Name";
-	$last_name = "Surname";
-	$dob = "1954-03-02";
-	$gender = "M";
+	$result = [];
+  $record = [
+    "hn" => "สมหมาย หล",
+    "initial_name" => "Mr.",
+    "first_name" => "Name",
+    "last_name" => "Surname",
+    "dob" => "2000-01-01",
+    "gender" => "M",
 
-	$staffname = "";
-	$qn = "";
-	$editor = "";
-	$diagnosis = "";
-	$treatment = "";
-	$contact = "";
+    "waitnum" => 1,
+    "opdate" => date("Y-m-d"),
+    "staffname" => "",
+    "qn" => 0,
+    "editor" => "",
+    "diagnosis" => "",
+    "treatment" => "",
+    "contact" => ""
+  ];
 
-	extract($_POST);
-
-	$ip = gethostbyname(trim(`hostname`));
-	if (strpos($ip, "10.6") !== false) {
-
-		$wsdl="http://appcenter/webservice/patientservice.wsdl";
-		$client = new SoapClient($wsdl);
-		$resultx = $client->Get_demographic_short($hn);
-		$resulty = simplexml_load_string($resultx);
-		while ($resulty->children())			//find last children
-			$resulty = $resulty->children();
-		$resultj = json_encode($resulty);		//use json encode-decode to make
-		$resultz = json_decode($resultj,true);	//numeric array	into assoc array
-
-		if (empty($resultz["initial_name"]))
-			$resultz["initial_name"] = "";
-		if (empty($resultz["first_name"]))
-			exit ("DBfailed ไม่มีผู้ป่วย hn นี้");		//Error exit 1
-		if (empty($resultz["last_name"]))
-			$resultz["last_name"] = "";
-		if (empty($resultz["dob"]))
-			$resultz["dob"] = null;
-		if (empty($resultz["gender"]))
-			$resultz["gender"] = "";
-
-		extract($resultz);
-	}
-
-	//Find last entry of patient with this hn
-	$sql = "SELECT staffname,diagnosis,treatment,contact
-          FROM book
-          WHERE hn = '$hn' AND deleted=0 AND opdate<CURDATE()
-          ORDER BY opdate DESC;";
-	$query = $mysqli->query ($sql);
-	if ($query) {
-    $oldpatient = $query->fetch_assoc();
-    $staffname = $staffname ? $staffname : $oldpatient["staffname"];
-    $diagnosis = $diagnosis ? $diagnosis : $oldpatient["diagnosis"];
-    $treatment = $treatment ? $treatment : $oldpatient["treatment"];
-    $contact = $contact ? $contact : $oldpatient["contact"];
+  foreach ($_POST as $key => $val) {
+    $record[$key] = $_POST[$key];
   }
 
-	if ($qn) {
-		//existing row, ignore waitnum
-		$sql = "UPDATE book 
-				SET staffname = CASE WHEN staffname = ''
-									 THEN '$staffname'
-									 ELSE staffname
-								END,
-					hn = '$hn', 
-					patient = '$initial_name$first_name $last_name',
-					dob = CASE WHEN $dob IS NOT NULL THEN '$dob' ELSE dob END,
-					gender = '$gender', 
-					diagnosis = CASE WHEN diagnosis = ''
-									 THEN '$diagnosis'
-									 ELSE diagnosis
-								END,
-					treatment = CASE WHEN treatment = ''
-									 THEN '$treatment'
-									 ELSE treatment
-								END,
-					contact =  CASE WHEN contact = ''
-									THEN '$contact'
-									ELSE contact
-								END,
-					editor = '$editor' 
-				WHERE qn = $qn;";
-	} else if ($dob) {
-		//new row, insert waitnum, opdate and others if any
-		$sql = "INSERT INTO book (
-					waitnum, 
-					opdate, 
-					staffname, 
-					hn, 
-					patient, 
-					dob, 
-					gender,
-					diagnosis,
-					treatment,
-					contact,
-					editor) 
-				VALUES (
-					$waitnum, 
-					'$opdate', 
-					'$staffname', 
-					'$hn', 
-					'$initial_name$first_name $last_name', 
-					'$dob', 
-					'$gender', 
-					'$diagnosis',
-					'$treatment',
-					'$contact',
-					'$editor');";
-	} else {
-		//new row, insert waitnum, opdate and others if any
-		$sql = "INSERT INTO book (
-					waitnum, 
-					opdate, 
-					staffname, 
-					hn, 
-					patient, 
-					dob, 
-					gender,
-					diagnosis,
-					treatment,
-					contact,
-					editor) 
-				VALUES (
-					$waitnum, 
-					'$opdate', 
-					'$staffname', 
-					'$hn', 
-					'$initial_name$first_name $last_name', 
-					 null, 
-					'$gender', 
-					'$diagnosis',
-					'$treatment',
-					'$contact',
-					'$editor');";
-	}
+  $ip = gethostbyname(trim(`hostname`));
+	if (strpos($ip, "10.6") !== false) {
+    $namehn = $record["hn"];
+    if (preg_match('/\d{7}$/', $namehn)) {
+      $hn = filter_var($namehn, FILTER_SANITIZE_NUMBER_INT);
+      $result = getPatientByHN($hn);
+    } else {
+      $name = preg_replace('/\d/', '',  $namehn);
+      $name = trim($name);
+      $name = preg_replace('/\s+/', ' ',  $name);
+      $result = getPatientByName($name);
 
-	$query = $mysqli->query ($sql);
-	if (!$query)
-		echo $mysqli->error . $sql;
-	else
-		echo json_encode(book($mysqli));
+      // More than one name found
+      if (!array_key_exists("initial_name", $result)) {
+        exit(json_encode($result));
+      }
+
+      // Name not found
+      if (empty($result["initial_name"])) {
+        exit("ไม่มีผู้ป่วย ชื่อ/hn นี้");
+      }
+    }
+	}
+sleep(20);
+  // Only one name found
+  foreach ($record as $key => $val) {
+    if (array_key_exists($key, $result)) {
+      $record[$key] = $result[$key];
+    }
+  }
+
+  $record = lastEntryHN($mysqli, $record);
+
+  echo saveRecord($mysqli, $record);
+?>

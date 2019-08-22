@@ -249,10 +249,10 @@ function scaleViewport()
 
 function serverNotify()
 {
-  let localhost = location.hostname === "localhost"
+  let neuro = /localhost.neuro/.test(location.href)
   let hostip = sessionStorage.getItem("hostip") === "10.6.22.116"
   let getHour = new Date().getHours() === 18
-  if (localhost && hostip && getHour) {
+  if (neuro && hostip && getHour) {
     clearTimeout(timer)
     notifyLINE()
   }
