@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include "connect.php";
 require_once "book.php";
 require_once "getPatientByHN.php";
@@ -52,7 +52,7 @@ require_once "saveRecord.php";
       }
     }
 	}
-sleep(20);
+
   // Only one name found
   foreach ($record as $key => $val) {
     if (array_key_exists($key, $result)) {
