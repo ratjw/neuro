@@ -15,12 +15,12 @@ export function sendtoLINE()
     capture = document.querySelector("#capture"),
     tbody = capture.querySelector("tbody"),
     selected = document.querySelectorAll(".selected"),
-    notify = dialogNotify.querySelector('span'),
+    notify = dialogNotify.querySelector('div'),
     txtarea = dialogNotify.querySelector('textarea'),
     message = txtarea.innerHTML,
     template = document.querySelector('#capturerow'),
     closeNotify = function() {
-      notifywrapper.classList.remove('wait')
+      buttonLINE.classList.remove('waiting')
       notifywrapper.style.display = 'none'
       wrapper.style.visibility = 'visible'
     }
@@ -55,17 +55,20 @@ export function sendtoLINE()
     }
   })
 
+  // setTimeout to wait css render waiting
   buttonLINE.onclick = function() {
-    notifywrapper.classList.add('wait')
-    html2canvas(capture).then(function(canvas) {
-       $.post(LINENOTIFY, {
-         'user': USER,
-         'message': message,
-         'image': canvas.toDataURL('image/png', 1.0)
-       })
-       capture.style.display = 'none'
-       closeNotify()
-    })
+    buttonLINE.classList.add('waiting')
+    setTimeout(function() {
+      html2canvas(capture).then(function(canvas) {
+        $.post(LINENOTIFY, {
+          'user': USER,
+          'message': message,
+          'image': canvas.toDataURL('image/png', 1.0)
+        })
+        capture.style.display = 'none'
+        closeNotify()
+      })
+    }, 100)
   }
 
   cancelnotify.onclick = closeNotify

@@ -110,19 +110,6 @@
 .copybutton { background-color: skyblue }
 .nodate { background-color: #EEEEFF }
 
-.wait { cursor: wait; }
-
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 #servicehead {
   width: auto;
   text-align: center;
@@ -387,6 +374,10 @@
   padding: 0 10px;
 }
 
+#patienttbl tr:hover {
+  background: lightblue;
+}
+
 #notifywrapper {
   height: 100%;
   width: 100%;
@@ -397,18 +388,16 @@
   width: 200px;
   height: auto;
   border: 1px solid lightgray;
-  padding: 20px;
-  margin: 30px;
+  padding: 10px;
+  margin: 15px 30px;
 }
 #dialogNotify img {
   width: 40px;
   float:left;
 }
-#dialogNotify span {
-  position: relative;
-  top: 7px;
-  left: 20px;
+#dialogNotify div {
   font-size: 16px;
+  padding-bottom: 10px;
 }
 #dialogNotify textarea {
   width: 140px;
@@ -423,29 +412,22 @@
   background-image: url(pic/general/message.png);
   background-size: 35px;
   border: 1px solid lightblue;
+  border-radius: 50%;
 }
-#buttonLINE:hover {
-  border: 2px solid Dodgerblue;
+#buttonLINE.waiting {
+  animation: rotate 1s infinite linear;
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 #cancelnotify {
   float: right;
   position: relative;
-  top: -35px;
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   background-image: url(pic/general/cancel.png);
-  background-size: 35px;
+  background-size: 25px;
   border: 1px solid lightblue;
   border-radius: 50%;
-}
-#cancelnotify:hover {
-  border: 2px solid Dodgerblue;
-}
-
-#patienttbl tr:hover {
-  background: lightblue;
-}
-
-#patienttbl {
-  white-space: nowrap;
 }
