@@ -29,8 +29,8 @@ require_once "saveRecord.php";
     $record[$key] = $_POST[$key];
   }
 
-  $ip = gethostbyname(trim(`hostname`));
-	if (strpos($ip, "10.6") !== false) {
+//  $ip = gethostbyname(trim(`hostname`));
+//	if (strpos($ip, "10.6") !== false) {
     $namehn = $record["hn"];
     if (preg_match('/\d{7}$/', $namehn)) {
       $hn = filter_var($namehn, FILTER_SANITIZE_NUMBER_INT);
@@ -51,7 +51,7 @@ require_once "saveRecord.php";
         exit("ไม่มีผู้ป่วย ชื่อ/hn นี้");
       }
     }
-	}
+//	}
 
   // Only one name found
   foreach ($record as $key => $val) {

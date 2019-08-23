@@ -4,7 +4,7 @@ import { addStaff } from "./addStaff.js"
 import { clicktable } from "./clicktable.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 import { editcellEvent, clearEditcell, renewEditcell } from "./edit.js"
-import { timer, resetTimer, resetTimerCounter } from "./timer.js"
+import { resetTimer, resetTimerCounter } from "./timer.js"
 import { setClickMenu } from "../menu/setClickDesktopMenu.js"
 import { setClickSetting } from "./setClickSetting.js"
 import { setClickService } from "../service/monthpicker.js"
@@ -22,7 +22,6 @@ import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
 import { notifyLINE } from '../menu/notifyLINE.js'
-import { USER } from "../main.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function userDesktop() {
@@ -61,7 +60,7 @@ function success(response) {
   setClickService()
   overrideJqueryUI()
   resetTimer()
-  serverNotify()
+//  notifyLINE()
 //  serverSentEvent()
 //  scaleViewport()
 }
@@ -245,15 +244,4 @@ function scaleViewport()
 
   document.querySelector('meta[name="viewport"]')
     .setAttribute('content', 'width=' + siteWidth + ', initial-scale=' + scale)
-}
-
-function serverNotify()
-{
-  let neuro = /localhost.neuro/.test(location.href)
-  let hostip = sessionStorage.getItem("hostip") === "10.6.22.116"
-  let getHour = new Date().getHours() === 18
-  if (neuro && hostip && getHour) {
-    clearTimeout(timer)
-    notifyLINE()
-  }
 }

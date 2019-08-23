@@ -5,8 +5,8 @@ function login()
 //		window.location = "https://" + window.host
 //	}
 
-	// all via vpn (desktops and mobiles) must be "vpn-es5"
-	// intranet old browser is in "vpn-es5"
+	// mobile via vpn is in "mobilevpn"
+	// desktop via vpn or old browser is in "es5"
 	// Browsers that support module: Chrome/61, Firefox/60, Edge/16, Safari 10.1
 	// (.*)$ is the second argument
 	var ua = navigator.userAgent
@@ -37,7 +37,6 @@ function login()
 					
 	document.getElementById("browser").value = browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
-	sessionStorage.setItem('hostip', document.getElementById("hostip").value)
 	sessionStorage.setItem('isMobile', isMobile)
   if (location.host === "localhost") {
     sessionStorage.setItem('userid', admin)
