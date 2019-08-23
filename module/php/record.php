@@ -20,9 +20,7 @@ function record($POST)
   ];
 
   foreach ($POST as $key => $val) {
-    if ($POST[$key]) {
-     $record[$key] = $POST[$key];
-    }
+    $record[$key] = $POST[$key];
   }
 
   return $record;
