@@ -142,8 +142,11 @@
   background-color: snow;
 }
 
-#dialogInput { font-size: 14px; overflow: hidden; }
-#dialogInput span { width:80px }
+#dialogInput {
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+}
 #dialogInput input[name=others] { width:450px }
 #dialogInput img {
   float: right;

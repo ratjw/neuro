@@ -1,5 +1,5 @@
 
-import { sqlGetName } from "../model/sqlGetName.js"
+import { sqlGetName } from "../model/sqlGetHNName.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
 import { OLDCONTENT, reCreateEditcell } from "../control/edit.js"
