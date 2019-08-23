@@ -14,6 +14,7 @@ import { saveOpTime } from "../save/saveOpTime.js"
 import { saveContent } from "../save/saveContent.js"
 import { saveCaseNum } from "../save/saveCaseNum.js"
 import { saveHN } from "../save/saveHN.js"
+import { savePATIENT } from "../save/savePATIENT.js"
 
 import { selectRow, clearSelection } from "../get/selectRow.js"
 import { getTHEATRE } from "../get/getTHEATRE.js"
@@ -26,6 +27,7 @@ import { getLAB } from "../get/getLAB.js"
 import { getEQUIP } from "../get/getEQUIP.js"
 
 // Click on main or staff table
+// POINTER is the previous editing cell
 export function clicktable(evt, target) {
   if (POINTER) {
     savePreviousCell()
@@ -52,7 +54,7 @@ export function savePreviousCell() {
     case CASENUM: saveCaseNum(POINTER, newcontent); break
     case STAFFNAME: break
     case HN: saveHN(POINTER, newcontent); break
-    case PATIENT: break
+    case PATIENT: savePATIENT(POINTER, newcontent); break
     case DIAGNOSIS: saveContent(POINTER, "diagnosis", newcontent); break
     case TREATMENT: saveContent(POINTER, "treatment", newcontent); break
     case CONTACT: saveContent(POINTER, "contact", newcontent); break
@@ -80,7 +82,7 @@ export function editPresentCell(evt, pointing) {
     case CASENUM: getCASENUM(pointing); break
     case STAFFNAME: getSTAFFNAME(pointing); break
     case HN: getHN(evt, pointing); break
-    case PATIENT: clearAllEditing(); break
+    case PATIENT: pointing.innerHTML ? clearEditcell() : createEditcell(pointing); break
     case DIAGNOSIS: createEditcell(pointing); break
     case TREATMENT: createEditcell(pointing); break
     case LAB: getLAB(pointing); break

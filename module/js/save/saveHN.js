@@ -1,6 +1,6 @@
 
 import { saveCaseHN } from "./saveCaseHN.js"
-import { saveNameHN } from "./saveNameHN.js"
+import { saveThisHN } from "./saveThisHN.js"
 import { ISOdate } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 
@@ -14,6 +14,6 @@ export function saveHN(pointed, content) {
     saveCaseHN(pointed, waiting)
   } else {
     // new case or may have been in the book before
-    saveNameHN(pointed, content)
+    saveThisHN(pointed, content)
   }
 }

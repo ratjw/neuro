@@ -1,11 +1,11 @@
 
-import { sqlGetNameHN } from "../model/sqlGetNameHN.js"
+import { sqlGetName } from "../model/sqlGetName.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
 import { OLDCONTENT, reCreateEditcell } from "../control/edit.js"
 import { saveHN } from '../save/saveHN.js'
 
-export function saveNameHN(pointed, content)
+export function savePATIENT(pointed, content)
 {
   const wrapper = document.querySelector('#wrapper'),
     controller = new AbortController(),
@@ -13,12 +13,12 @@ export function saveNameHN(pointed, content)
     timer = setTimeout(() => {
       controller.abort()
       wrapper.style.cursor = 'default'
-      Alert(content, 'Fetch too long')
+      Alert(content, 'มีรายชื่อมากเกินไป<br><br>ควรใส่ชื่อและนามสกุล ให้เจาะจงกว่านี้')
     }, 10000)
 
   wrapper.style.cursor = 'wait'
   pointed.innerHTML = content
-  sqlGetNameHN(pointed, content, signal).then(response => {
+  sqlGetName(pointed, content, signal).then(response => {
     clearTimeout(timer)
     wrapper.style.cursor = 'default'
     if (typeof response === "object") {
@@ -29,7 +29,7 @@ export function saveNameHN(pointed, content)
         showPatientNames(response, pointed, content)
       }
     } else {
-      Alert("saveNameHN", content + "<br><br>" + response)
+      Alert("savePATIENT", content + "<br><br>" + response)
       pointed.innerHTML = ""
       // unsuccessful entry
     }

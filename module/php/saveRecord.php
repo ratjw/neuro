@@ -1,4 +1,6 @@
 <?php
+require_once "book.php";
+
 function saveRecord($mysqli, $record)
 {
   if ($record["qn"]) {
