@@ -9,21 +9,18 @@ require_once "mysqli.php";
 	extract($_POST);
 
 	$sql = "";
-	if ($hn) {
-		if (preg_match('/\d{7}$/', $hn)) {
-			$hn = filter_var($hn, FILTER_SANITIZE_NUMBER_INT);
-			$sql .= "hn='$hn'";
-		} else {
-			$patient = preg_replace('/\d/', '',  $hn);
-			$name = explode(" ", $patient);
-			if ($name[0]) {
-				$sql .= "patient like '%$name[0]%'";
-			}
-			if ($name[1]) {
-				$sql .= " AND patient like '%$name[1]%'";
-			}
-		}
-	}
+
+  if ($hn) {
+    $sql .= "hn='$hn'";
+  }
+  if ($name) {
+		if ($sql) { $sql .= " AND "; }
+    $sql .= "patient like '%$name%'";
+  }
+  if ($surname) {
+		if ($sql) { $sql .= " AND "; }
+    $sql .= "patient like '%$surname%'";
+  }
 	if ($staffname) {
 		if ($sql) { $sql .= " AND "; }
 		$sql .= "staffname='$staffname'";
@@ -47,12 +44,12 @@ function getData($mysqli, $sql, $others)
 	// Create array for the names that are close to or match the search term
 	$qns = array();
 
-	$sql = $sql ? "AND $sql" : "";
-	$sql = "SELECT * FROM book
-					 WHERE deleted=0 $sql
+	$sqlx = $sql ? "AND $sql" : "";
+	$sqls = "SELECT * FROM book
+					 WHERE deleted=0 $sqlx
 					 ORDER BY opdate;";
 
-	if (!$result = $mysqli->query ($sql)) {
+	if (!$result = $mysqli->query ($sqls)) {
 		return $mysqli->error;
 	}
 
@@ -106,8 +103,9 @@ function getData($mysqli, $sql, $others)
 function search($mysqli, $sql)
 {
 	$data = array();
+  $sqls = "SELECT * FROM book WHERE $sql ORDER BY opdate;";
 
-	if (!$result = $mysqli->query ("SELECT * FROM book WHERE $sql ORDER BY opdate;")) {
+	if (!$result = $mysqli->query ($sqls)) {
 		return $mysqli->error;
 	}
 

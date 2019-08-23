@@ -9,8 +9,7 @@ require_once "saveRecord.php";
 	$result = [];
   $record = record($_POST);
 
-  $name = preg_replace('/\d/', '',  $record["name"]);
-  $name = trim($name);
+  $name = trim($record["name"]);
   $name = preg_replace('/\s+/', ' ',  $name);
   $result = getPatientByName($name);
 

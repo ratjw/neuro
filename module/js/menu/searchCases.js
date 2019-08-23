@@ -24,8 +24,8 @@ export function searchCases()
     title: "Search",
     closeOnEscape: true,
     modal: true,
-    width: 500,
-    height: 250,
+    width: 'auto',
+    height: 'auto',
     close: function() {
       $staffsearch.hide()
     }
@@ -70,8 +70,11 @@ function getSaffName(pointing, $staffsearch)
 export function searchDB()
 {
   let hn = $('#dialogInput input[name="hn"]').val(),
+    name = $('#dialogInput input[name="name"]').val(),
+    surname = $('#dialogInput input[name="surname"]').val(),
     staffname = $('#dialogInput input[name="staffname"]').val(),
     others = $('#dialogInput input[name="others"]').val(),
+    fullname = name + (surname ? " " : "") + surname,
     search = ""
 
   // Close before open another dialog
@@ -79,15 +82,17 @@ export function searchDB()
 
   // for dialog title
   search += hn
+  search += (search && fullname ? ", " : "") + fullname
   search += (search && staffname ? ", " : "") + staffname
   search += (search && others ? ", " : "") + others
-  if (search) {
-    sqlSearchDB(hn, staffname, others).then(response => {
-      typeof response === "object"
-      ? viewSearchDB(response, search)
-      : Alert("Search: " + search, response)
-    }).catch(error => {})
-  } else {
-    Alert("Search: " + search, "<br><br>Nothing to Search")
-  }
+
+  if (!search) { return }
+
+  sqlSearchDB(hn, name, surname, staffname, others).then(response => {
+    if (typeof response === "object") {
+      viewSearchDB(response, search)
+    } else {
+      Alert("Search: " + search, response)
+    }
+  }).catch(error => {})
 }
