@@ -21,6 +21,7 @@ import { scrolltoToday } from "../view/scrolltoThisCase.js"
 import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
+import { notifyLINE } from '../menu/notifyLINE.js'
 
 // For staff & residents with login id / password from Get_staff_detail
 export function userMobile() {
@@ -59,7 +60,7 @@ function success(response) {
   setClickService()
   overrideJqueryUI()
   resetTimer()
-//  serverNotify()
+//  notifyLINE()
 //  serverSentEvent()
   scaleViewport()
 }

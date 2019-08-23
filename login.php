@@ -9,21 +9,22 @@
 		$browserNurse = "$location nurse/nurse.html";
 
 		$servername = "surgery.rama.mahidol.ac.th";
+    $thisname = $_SERVER["SERVER_NAME"];
 		$wsdl="http://appcenter/webservice/patientservice.wsdl";
 		$resultz = "";
 		$error = "";
 
 		if (preg_match('/^\d{6}$/', $userid)) {
-			if (strpos($_SERVER["SERVER_NAME"], $servername) !== false) {
+			if (strpos($thisname, $servername) !== false) {
 				$client = new SoapClient($wsdl);
 				$resultx = $client->Get_staff_detail($userid, $pwd);
 				$resulty = simplexml_load_string($resultx);
 				$resultz = (string)$resulty->children()->children()->role;
 			}
-			else if (strpos($_SERVER["SERVER_NAME"], "localhost") !== false) {
+			else if (strpos($thisname, "localhost") !== false) {
 				$resultz = "S";
 			}
-			else if (strpos($_SERVER["SERVER_NAME"], "192.168") !== false) {
+			else if (strpos($thisname, "192.168") !== false) {
 				$resultz = "S";
 			}
 

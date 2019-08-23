@@ -64,7 +64,6 @@ h4 {
 		<br>
 		<br>
 		<input type="hidden" name="browser" id="browser" />
-		<input type="hidden" name="hostip" id="hostip" value="<?php echo gethostbyname(trim(`hostname`)); ?>"/>
 	</form>
 </div>
 
