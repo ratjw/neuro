@@ -203,11 +203,13 @@ let findThisCellNextRow = function (editable, pointing) {
 export function createEditcell(pointing)
 {
   let $pointing = $(pointing)
-  let height = $pointing.height() + "px"
-  let width = $pointing.width() + "px"
+  let height = $pointing.height()
+  let width = $pointing.width()
   let context = pointing.innerHTML
+  let editcell = document.querySelector("#editcell")
 
-  $("#editcell").html(context)
+  editcell.contentEditable = "true"
+  editcell.innerHTML = context
   showEditcell(pointing, height, width)
   editcellSaveData(pointing, context)
 }
@@ -235,8 +237,8 @@ let showEditcell = function (pointing, height, width) {
     leftEdit,
     rightEdit
 
-  editcell.style.height = height
-  editcell.style.width = width
+  editcell.style.height = height + "px"
+  editcell.style.width = width + "px"
   editcell.style.fontSize = css.fontSize
   pointing.closest('div').appendChild(editcell)
   reposition($(editcell), "left center", "left center", pointing)
