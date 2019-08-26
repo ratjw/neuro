@@ -5,21 +5,23 @@ import { Alert, winHeight } from "../util/util.js"
 import { OLDCONTENT, reCreateEditcell } from "../control/edit.js"
 import { saveHN } from '../save/saveHN.js'
 
-export function savePATIENT(pointed, content)
+export function savePATIENT(pointed)
 {
   const wrapper = document.querySelector('#wrapper'),
-    name = content.querySelector('input[name=name]').value,
-    surname = content.querySelector('input[name=surname]').value,
+    editcell = document.querySelector('#editcell'),
+    name = editcell.querySelector('input[name=name]').value,
+    surname = editcell.querySelector('input[name=surname]').value,
+    patientname = name + ' ' + surname,
     controller = new AbortController(),
     signal = controller.signal,
     timer = setTimeout(() => {
       controller.abort()
       wrapper.style.cursor = 'default'
-      Alert(name + ' ' + surname, 'มีรายชื่อมากเกินไป<br><br>ควรใส่ชื่อและนามสกุล ให้เจาะจงกว่านี้')
+      Alert(patientname, 'มีรายชื่อมากเกินไป<br><br>ควรใส่ชื่อและนามสกุล ให้เจาะจงกว่านี้')
     }, 10000)
 
   wrapper.style.cursor = 'wait'
-  pointed.innerHTML = content
+  pointed.innerHTML = OLDCONTENT
   sqlGetName(pointed, name, surname, signal).then(response => {
     clearTimeout(timer)
     wrapper.style.cursor = 'default'
@@ -28,17 +30,17 @@ export function savePATIENT(pointed, content)
         updateBOOK(response)
         reCreateEditcell()
       } else {
-        showPatientNames(response, pointed, content)
+        showPatientNames(response, pointed, patientname)
       }
     } else {
-      Alert("savePATIENT", content + "<br><br>" + response)
+      Alert("savePATIENT", patientname + "<br><br>" + response)
       pointed.innerHTML = ""
       // unsuccessful entry
     }
   }).catch(error => { })
 }
 
-function showPatientNames(response, pointed, content)
+function showPatientNames(response, pointed, patientname)
 {
   const $dialogPatient = $("#dialogPatient"),
     maxHeight = winHeight(90),
@@ -60,7 +62,7 @@ function showPatientNames(response, pointed, content)
 
   $dialogPatient.dialog({ height: 'auto' })
   $dialogPatient.dialog({
-    title: content,
+    title: patientname,
     closeOnEscape: true,
     modal: true,
     show: 200,

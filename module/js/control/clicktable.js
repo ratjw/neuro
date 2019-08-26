@@ -55,7 +55,7 @@ export function savePreviousCell() {
     case CASENUM: saveCaseNum(POINTER, newcontent); break
     case STAFFNAME: break
     case HN: saveHN(POINTER, newcontent); break
-    case PATIENT: savePATIENT(POINTER, newcontent); break
+    case PATIENT: savePATIENT(POINTER); break
     case DIAGNOSIS: saveContent(POINTER, "diagnosis", newcontent); break
     case TREATMENT: saveContent(POINTER, "treatment", newcontent); break
     case CONTACT: saveContent(POINTER, "contact", newcontent); break
