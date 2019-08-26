@@ -6,16 +6,16 @@ import { sqlRowData } from "../model/sqlRowData.js"
 const GETHN = "php/gethn.php"
 const GETNAME = "php/getname.php"
 
-export function sqlGetHN(pointed, content, signal)
+export function sqlGetHN(pointed, content)
 {
-  let sql = sqlRowData(pointed, content, "")
+  let sql = sqlRowData(pointed, content)
 
-  return postData(GETHN, sql, signal)
+  return postData(GETHN, sql)
 }
 
-export function sqlGetName(pointed, content, signal)
+export function sqlGetName(pointed, name, surname, signal)
 {
-  let sql = sqlRowData(pointed, "", content)
+  let sql = sqlRowData(pointed, "", name, surname)
 
   return postData(GETNAME, sql, signal)
 }

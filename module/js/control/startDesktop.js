@@ -127,13 +127,8 @@ function documentEvent()
   // Esc to cancel everything
   $(document).keydown(event => {
     let keycode = event.which || window.event.keyCode,
-      ctrl = event.ctrlKey,
-      shift = event.shiftKey,
-      home = keycode === 36,
       backspace = keycode === 8,
-      esc = keycode === 27,
-      y = keycode === 89,
-      z = keycode === 90
+      esc = keycode === 27
 
     if (backspace) {
       if (doPrevent(event)) {

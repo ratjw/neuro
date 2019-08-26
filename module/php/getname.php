@@ -8,6 +8,7 @@ require_once "saveRecord.php";
 
 	$result = [];
   $record = record($_POST);
+  $sql = $record["name"] . " " . $record["surname"];
 
   $name = trim($record["name"]);
   $name = preg_replace('/\s+/', ' ',  $name);
