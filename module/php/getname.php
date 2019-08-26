@@ -8,11 +8,9 @@ require_once "saveRecord.php";
 
 	$result = [];
   $record = record($_POST);
-  $sql = $record["name"] . " " . $record["surname"];
+  $patient = trim($record["name"]) . " " . trim($record["surname"]);
 
-  $name = trim($record["name"]);
-  $name = preg_replace('/\s+/', ' ',  $name);
-  $result = getPatientByName($name);
+  $result = getPatientByName($patient);
 
   // More than one name found
   if (!array_key_exists("initial_name", $result)) {
