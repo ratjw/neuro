@@ -18,6 +18,7 @@ export function getPATIENT(pointing)
     editcell.querySelectorAll('input').forEach(e => {
       e.style.width = "60%"
       e.style.borderWidth = "0px 0px 2px 0px"
+      e.style.boxShadow = "5px 5px 10px slategray"
     })
     editcell.querySelector('input').focus()
   }

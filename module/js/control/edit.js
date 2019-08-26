@@ -24,6 +24,7 @@ export let OLDCONTENT = ""
 // Don't know why there are 2 spin???
 export function getNewcontent() {
   let editcell = document.getElementById("editcell")
+  let patientname = document.querySelector("#name")
   let spin = document.querySelectorAll("#spin")
 
   if (spin.length === 1) {
@@ -32,8 +33,11 @@ export function getNewcontent() {
     return spin[1].value
   }
 
-  return getHtmlText(editcell.innerHTML)
-
+  if (patientname) {
+    return editcell.innerHTML
+  } else {
+    return getHtmlText(editcell.innerHTML)
+  }
 }
 
 // newcontent is the content currently in editcell
@@ -202,6 +206,7 @@ let findThisCellNextRow = function (editable, pointing) {
 
 export function createEditcell(pointing)
 {
+  // jQuery height and width are content dimension which is more useful
   let $pointing = $(pointing)
   let height = $pointing.height()
   let width = $pointing.width()
