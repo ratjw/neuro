@@ -142,8 +142,11 @@
   background-color: snow;
 }
 
-#dialogInput { font-size: 14px; overflow: hidden; }
-#dialogInput span { width:80px }
+#dialogInput {
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+}
 #dialogInput input[name=others] { width:450px }
 #dialogInput img {
   float: right;
@@ -374,13 +377,60 @@
   padding: 0 10px;
 }
 
-/* Safari */
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+#patienttbl tr:hover {
+  background: lightblue;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+#notifywrapper {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+#dialogNotify {
+  width: 200px;
+  height: auto;
+  border: 1px solid lightgray;
+  padding: 10px;
+  margin: 15px 30px;
+}
+#dialogNotify img {
+  width: 40px;
+  float:left;
+}
+#dialogNotify div {
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+#dialogNotify textarea {
+  width: 140px;
+  height: 200px;
+  padding: 7px;
+  font-size: 14px;
+}
+#buttonLINE {
+  float: right;
+  width: 35px;
+  height: 35px;
+  background-image: url(pic/general/message.png);
+  background-size: 35px;
+  border: 1px solid lightblue;
+  border-radius: 50%;
+}
+#buttonLINE.waiting {
+  animation: rotate 1s infinite linear;
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+#cancelnotify {
+  float: right;
+  position: relative;
+  width: 25px;
+  height: 25px;
+  background-image: url(pic/general/cancel.png);
+  background-size: 25px;
+  border: 1px solid lightblue;
+  border-radius: 50%;
 }
