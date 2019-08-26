@@ -3,7 +3,7 @@ include "connect.php";
 require_once "book.php";
 
   $record = array(
-    "hn" => "กนิษฐา",
+    "hn" => "เจีย",
     "initial_name" => "Mr.",
     "first_name" => "Name",
     "last_name" => "Surname",
@@ -22,8 +22,8 @@ require_once "book.php";
 
 //	extract($_POST);
 
-//	$ip = gethostbyname(trim(`hostname`);
-//	if (strpos($ip, "10.6") !== false) {
+	$ip = gethostbyname(trim(`hostname`));
+	if (strpos($ip, "10.6") !== false) {
     if ($hn) {
       if (preg_match('/\d{7}$/', $hn)) {
         $hn = filter_var($hn, FILTER_SANITIZE_NUMBER_INT);
@@ -40,15 +40,15 @@ require_once "book.php";
               $resulty = $resulty->children();
             $result = array_push($resulty);
           }
-          exit json_encode($result);
+          exit (json_encode($result));
         }
       }
     }
 
-		extract($result);
-//	}
-
-  if (!$first_name) { exit ("ไม่มีผู้ป่วย ชื่อ/hn นี้"); }
+		var_dump($result);
+	}
+/*
+//  if (!$first_name) { exit ("ไม่มีผู้ป่วย ชื่อ/hn นี้"); }
 
 	//Find last entry of patient with this hn
 	$sql = "SELECT staffname,diagnosis,treatment,contact
@@ -64,7 +64,7 @@ require_once "book.php";
     $contact = $contact ? $contact : $oldpatient["contact"];
   }
 
-  foreach ($record as $key) { $record[$key] = $key; }
+  foreach ($record as $key) { $key = $key; }
 
 	if ($qn) {
     $sql = sqlUpdate($record);
@@ -125,7 +125,7 @@ VALUES ($waitnum,'$opdate','$staffname','$hn','$patient',$dob,'$gender','$diagno
 
   return $sql;
 }
-
+*/
 //find last children, then
 //use json encode-decode to make numeric array into assoc array
 function getPatientByHN($hn)
@@ -159,10 +159,12 @@ function getPatientByName($name)
 {
   $first_name = isset($name[0]) ? $name[0] : "";
   $last_name = isset($name[1]) ? $name[1] : "";
-
+  $space = $last_name ? " " : "";
+  $fullname = $first_name.$space.$last_name;
+echo $fullname;
   $wsdl="http://appcenter/webservice/patientservice.wsdl";
   $client = new SoapClient($wsdl);
-  $resultx = $client->Get_demographic_shortByName($first_name." ".$last_name);
+  $resultx = $client->Get_demographic_shortByName($fullname);
   $resulty = simplexml_load_string($resultx);
 
   if (sizeof($resulty) > 1) { return $resulty; }
