@@ -23,6 +23,7 @@ import { getOPTIME } from "../get/getOPTIME.js"
 import { getCASENUM } from "../get/getCASENUM.js"
 import { getSTAFFNAME } from "../get/getSTAFFNAME.js"
 import { getHN } from "../get/getHN.js"
+import { getPATIENT } from "../get/getPATIENT.js"
 import { getLAB } from "../get/getLAB.js"
 import { getEQUIP } from "../get/getEQUIP.js"
 
@@ -82,7 +83,7 @@ export function editPresentCell(evt, pointing) {
     case CASENUM: getCASENUM(pointing); break
     case STAFFNAME: getSTAFFNAME(pointing); break
     case HN: getHN(evt, pointing); break
-    case PATIENT: pointing.innerHTML ? clearEditcell() : createEditcell(pointing); break
+    case PATIENT: getPATIENT(pointing); break
     case DIAGNOSIS: createEditcell(pointing); break
     case TREATMENT: createEditcell(pointing); break
     case LAB: getLAB(pointing); break

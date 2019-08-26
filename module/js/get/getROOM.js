@@ -17,6 +17,7 @@ export function getROOM(pointing)
   }
 
   createEditcell(pointing)
+  editcell.contentEditable = "false"
   editcell.style.width = "40px"
   editcell.innerHTML = spinnerinput.innerHTML
   spinNumber($("#spin"), oldval)

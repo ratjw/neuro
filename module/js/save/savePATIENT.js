@@ -8,17 +8,19 @@ import { saveHN } from '../save/saveHN.js'
 export function savePATIENT(pointed, content)
 {
   const wrapper = document.querySelector('#wrapper'),
+    name = content.querySelector('input[name=name]').value,
+    surname = content.querySelector('input[name=surname]').value,
     controller = new AbortController(),
     signal = controller.signal,
     timer = setTimeout(() => {
       controller.abort()
       wrapper.style.cursor = 'default'
-      Alert(content, 'มีรายชื่อมากเกินไป<br><br>ควรใส่ชื่อและนามสกุล ให้เจาะจงกว่านี้')
+      Alert(name + ' ' + surname, 'มีรายชื่อมากเกินไป<br><br>ควรใส่ชื่อและนามสกุล ให้เจาะจงกว่านี้')
     }, 10000)
 
   wrapper.style.cursor = 'wait'
   pointed.innerHTML = content
-  sqlGetName(pointed, content, signal).then(response => {
+  sqlGetName(pointed, name, surname, signal).then(response => {
     clearTimeout(timer)
     wrapper.style.cursor = 'default'
     if (typeof response === "object") {

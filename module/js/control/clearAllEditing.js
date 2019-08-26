@@ -3,6 +3,7 @@ import { clearEditcell } from "./edit.js"
 import { clearMouseoverTR } from "../util/util.js"
 import { clearSelection } from "../get/selectRow.js"
 
+// use jQuery.marker because if the element doesn't exist, no error occurs
 export function clearAllEditing()
 {
   $('#stafflist').hide();

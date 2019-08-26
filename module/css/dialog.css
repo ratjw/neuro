@@ -147,15 +147,14 @@
   overflow: hidden;
   white-space: nowrap;
 }
-#dialogInput input[name=others] { width:450px }
-#dialogInput img {
-  float: right;
-  width: 150px;
-  border: 1px solid skyblue;
-  margin-right: 20px;
+#dialogInput div {
+  padding: 5px 10px;
+  border: 1px solid slategray;
+  border-radius: 15px;
 }
-#dialogInput img:hover {
-  border: 2px outset blue;
+#dialogInput input[name=others] {
+  width: 400px;
+  border: none;
 }
 
 #deleted,
