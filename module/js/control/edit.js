@@ -95,9 +95,12 @@ let keyin = function (evt, keycode) {
       clearAllEditing()
       return
     case 9:
-      servicetbl
-      ? serviceTable9(evt, editable, Shift)
-      : mainTable9(evt, editable, Shift)
+      if (servicetbl) {
+        serviceTable9(evt, editable, Shift)
+      } else {
+        if (POINTER.cellIndex === PATIENT) { return }
+        mainTable9(evt, editable, Shift)
+      }
       evt.preventDefault()
       return
   }
@@ -110,7 +113,7 @@ let keyin = function (evt, keycode) {
 
 let mainTable9 = function (evt, editable, Shift) {
   savePreviousCell()
-  if (!POINTER || POINTER.cellIndex > 7) {
+  if (!POINTER || POINTER.cellIndex > PATIENT) {
     let thiscell = Shift
         ? findPrevcell(editable, POINTER)
         : findNextcell(editable, POINTER)

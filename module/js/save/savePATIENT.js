@@ -13,15 +13,17 @@ export function savePATIENT(pointed)
     surname = editcell.querySelector('input[name=surname]').value,
     patientname = name + ' ' + surname,
     controller = new AbortController(),
-    signal = controller.signal,
-    timer = setTimeout(() => {
+    signal = controller.signal
+
+  if (!name && !surname) { return }
+
+  let timer = setTimeout(() => {
       controller.abort()
       wrapper.style.cursor = 'default'
       Alert(patientname, 'มีรายชื่อมากเกินไป<br><br>ควรใส่ชื่อและนามสกุล ให้เจาะจงกว่านี้')
     }, 10000)
 
   wrapper.style.cursor = 'wait'
-  pointed.innerHTML = OLDCONTENT
   sqlGetName(pointed, name, surname, signal).then(response => {
     clearTimeout(timer)
     wrapper.style.cursor = 'default'
@@ -37,7 +39,7 @@ export function savePATIENT(pointed)
       pointed.innerHTML = ""
       // unsuccessful entry
     }
-  }).catch(error => { })
+  }).catch(error => { clearTimeout(timer) })
 }
 
 function showPatientNames(response, pointed, patientname)
