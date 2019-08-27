@@ -4,9 +4,8 @@
 		$pwd = !empty($_POST['pwd']) ? $_POST['pwd'] : '';
 		$browser = !empty($_POST['browser']) ? $_POST['browser'] : '';
 
-		$location = "location:";
-		$browserDoctor = "$location $browser";
-		$browserNurse = "$location nurse/nurse.html";
+		$browserDoctor = "location:$browser";
+		$browserNurse = "location:nurse/nurse.html";
 
 		$servername = "surgery.rama.mahidol.ac.th";
     $thisname = $_SERVER["SERVER_NAME"];
