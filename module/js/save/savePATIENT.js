@@ -11,7 +11,7 @@ export function savePATIENT(pointed)
     editcell = document.querySelector('#editcell'),
     name = editcell.querySelector('input[name=name]').value,
     surname = editcell.querySelector('input[name=surname]').value,
-    patientname = trim(name) + ' ' + trim(surname),
+    patientname = name.trim() + ' ' + surname.trim(),
     controller = new AbortController(),
     signal = controller.signal
 
