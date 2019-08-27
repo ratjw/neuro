@@ -11,7 +11,7 @@ export function savePATIENT(pointed)
     editcell = document.querySelector('#editcell'),
     name = editcell.querySelector('input[name=name]').value,
     surname = editcell.querySelector('input[name=surname]').value,
-    patientname = name + ' ' + surname,
+    patientname = trim(name) + ' ' + trim(surname),
     controller = new AbortController(),
     signal = controller.signal
 
@@ -24,7 +24,7 @@ export function savePATIENT(pointed)
     }, 10000)
 
   wrapper.style.cursor = 'wait'
-  sqlGetName(pointed, name, surname, signal).then(response => {
+  sqlGetName(pointed, patientname, signal).then(response => {
     clearTimeout(timer)
     wrapper.style.cursor = 'default'
     if (typeof response === "object") {

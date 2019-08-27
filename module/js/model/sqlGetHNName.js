@@ -13,9 +13,9 @@ export function sqlGetHN(pointed, content)
   return postData(GETHN, sql)
 }
 
-export function sqlGetName(pointed, name, surname, signal)
+export function sqlGetName(pointed, patientname, signal)
 {
-  let sql = sqlRowData(pointed, "", name, surname)
+  let sql = sqlRowData(pointed, "", patientname)
 
   return postData(GETNAME, sql, signal)
 }

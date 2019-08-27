@@ -3,7 +3,7 @@ import { calcWaitnum } from "../util/calcWaitnum.js"
 import { USER } from "../main.js"
 
 // GETNAME will find last previous entry of this hn in DB
-export function sqlRowData(pointed, hnval, nameval, surnameval)
+export function sqlRowData(pointed, hnval, patientnameval)
 {
   let row = pointed.closest('tr'),
     prevrow = row.previousElementSibling,
@@ -15,13 +15,12 @@ export function sqlRowData(pointed, hnval, nameval, surnameval)
     opdate = `opdate=${row.dataset.opdate}`,
     staffname = `staffname=${row.dataset.staffname}`,
     hn = hnval ? `hn=${hnval}` : '',
-    name = nameval ? `name=${nameval}` : '',
-    surname = surnameval ? `surname=${surnameval}` : '',
+    patientname = patientnameval ? `patientname=${patientnameval}` : '',
     diagnosis = `diagnosis=${row.dataset.diagnosis}`,
     treatment = `treatment=${row.dataset.treatment}`,
     contact = `contact=${row.dataset.contact}`,
     qn = `qn=${row.dataset.qn}`,
     user = `editor=${USER}`
 
-  return `${hn}&${name}&${surname}&${waitnum}&${opdate}&${staffname}&${diagnosis}&${treatment}&${contact}&${qn}&${user}`
+  return `${waitnum}&${opdate}&${staffname}${hn}&${patientname}&&${diagnosis}&${treatment}&${contact}&${qn}&${user}`
 }

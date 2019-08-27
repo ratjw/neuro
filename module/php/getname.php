@@ -6,11 +6,8 @@ require_once "merge.php";
 require_once "lastEntryHN.php";
 require_once "saveRecord.php";
 
-	$result = [];
   $record = record($_POST);
-  $patient = trim($record["name"]) . " " . trim($record["surname"]);
-
-  $result = getPatientByName($patient);
+  $result = getPatientByName($record["patientname"]);
 
   // More than one name found
   if (!array_key_exists("initial_name", $result)) {

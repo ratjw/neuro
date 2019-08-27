@@ -330,12 +330,12 @@
      <td></td><td></td><td></td><td></td><td></td><td></td>
      <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
-   <tr id="Total" class="notcount">
+   <tr id="Total" class="notcount Total">
      <td>Total Operation</td>
      <td></td><td></td><td></td><td></td><td></td><td></td>
      <td></td><td></td><td></td><td></td><td></td><td></td>
    </tr>
-   <tr id="Grand" class="notcount">
+   <tr id="Grand" class="notcount Grand">
      <td>Grand Total</td>
      <td colspan="2"></td><td colspan="2"></td>
      <td colspan="2"></td><td colspan="2"></td>
@@ -494,21 +494,22 @@
 </table>
 
 <div id="dialogInput" class="dialogBox">
-  <span>HN:</span>
-  <input type="text" name="hn">
-  <br>
-  <br>
-  <span>Staff:</span>
-  <input type="text" name="staffname">
-  <br>
-  <br>
-  <span>Others:</span>
-  <br>
-  <input type="text" name="others"
-    placeholder="Dx, Rx, Adm & Final Status">
-  <br>
-  <br>
-  <img src="css/pic/general/find.png">
+ <span class="w40">HN:</span><input class="w70" type="text" name="hn">
+ <br>
+ <br>
+ <span class="w40">ชื่อ:</span><input class="w100" type="text" name="name">
+ <span class="w10"></span>
+ <span class="w60">นามสกุล:</span><input class="w150" type="text" name="surname">
+ <br>
+ <br>
+ <span class="w40">Staff:</span><input class="w100" type="text" name="staffname">
+ <br>
+ <br>
+ <div>
+   <img class="w20" src="css/pic/general/search.jpg">
+   <input type="text" name="others"
+      placeholder="Dx, Rx, Adm & Final Status">
+ </div>
 </div>
 
 <div id="dialogFind">
@@ -653,14 +654,20 @@
 </div>
 
 <template id="spinnerinput">
-  <input id="spin">
+  <input type="text" id="spin">
+</template>
+
+<template id="nameinput">
+   ชื่อ <input type="text" name="name">
+ <br>
+   สกุล <input type="text" name="surname">
 </template>
 
 <ul id="stafflist"></ul>
 
 <div id="dialogAlert"></div>
 
-<div id="editcell" contenteditable="true"></div>
+<div id="editcell"></div>
 
 <div id="dialogLab" class="dialogBox"></div>
 
