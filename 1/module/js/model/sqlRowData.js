@@ -22,5 +22,5 @@ export function sqlRowData(pointed, hnval, patientnameval)
     qn = `qn=${row.dataset.qn}`,
     user = `editor=${USER}`
 
-  return `${waitnum}&${opdate}&${staffname}${hn}&${patientname}&&${diagnosis}&${treatment}&${contact}&${qn}&${user}`
+  return `${waitnum}&${opdate}&${staffname}&${hn}&${patientname}&${diagnosis}&${treatment}&${contact}&${qn}&${user}`
 }
