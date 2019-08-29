@@ -27,7 +27,11 @@
 				$resultz = "S";
 			}
 
-			if ($resultz === "S" || $resultz === "R" || ($userid === "005497" && $resultz === "G")) {
+			$staff = $resultz === "S";
+      $resident = $resultz === "R";
+      $secretary = $userid === "005497" && $resultz === "G"
+
+      if ($staff || $resident || $secretary) {
 				header($browserDoctor);
 			}
 			else if ($resultz === "N") {
