@@ -4,7 +4,7 @@
 //use json encode-decode to make numeric array into assoc array
 function getPatientByHN($hn)
 {
-  $wsdl="http://appcenter/webservice/patientservice.wsdl";
+  $wsdl="http://appcenter.rama.mahidol.ac.th/webservice/patientservice.wsdl";
   $client = new SoapClient($wsdl);
   $resultx = $client->Get_demographic_short($hn);
   $resulty = simplexml_load_string($resultx);

@@ -29,7 +29,7 @@
 
 			$staff = $resultz === "S";
       $resident = $resultz === "R";
-      $secretary = $userid === "005497" && $resultz === "G"
+      $secretary = $userid === "005497" && $resultz === "G";
 
       if ($staff || $resident || $secretary) {
 				header($browserDoctor);

@@ -10,7 +10,7 @@ function getPatientByName($name)
   $space = $last_name ? " " : "";
   $fullname = $first_name.$space.$last_name;
 
-  $wsdl="http://appcenter/webservice/patientservice.wsdl";
+  $wsdl="http://appcenter.rama.mahidol.ac.th/webservice/patientservice.wsdl";
   $client = new SoapClient($wsdl);
   $resultx = $client->Get_demographic_shortByName($fullname);
   $resulty = simplexml_load_string($resultx);
