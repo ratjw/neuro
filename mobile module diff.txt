@@ -7,7 +7,7 @@ desktop.html -> mobile.html
 
 css/menu.css
   add @media (max-width: 600px) {
-    mobilemenu.css
+    mobile cssmenu
   }
 
 control/

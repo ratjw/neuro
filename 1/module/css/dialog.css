@@ -1,0 +1,435 @@
+
+.Reoperation, .Reoperation td:nth-child(5) { background-color: #CCCCAA !important; }
+.Readmission, .Readmission td:nth-child(6) { background-color: #AACCCC !important; } 
+.Infection, .Infection td:nth-child(7) { background-color: #CCAAAA !important; }
+.Morbidity { background-color: #AAAACC !important; }
+.Dead { background-color: #AAAAAA !important; }
+
+.ui-sortable-helper {
+  display: table;
+}
+
+.ui-dialog {
+  position: fixed;
+  box-shadow: 10px 20px 30px slategray;
+}
+
+.ui-dialog-title {
+  font-size: 120%;
+  text-align: center; 
+}
+
+.ui-icon-closethick {
+  float: right;
+  top: 15px;
+  right:10px;
+}
+
+.iconcontainer {
+  float: right;
+  height: 30px;
+}
+
+.ui-resizable-e { 
+  cursor: e-resize; 
+  width: 10px; 
+  top: 0; 
+}
+
+.ui-icon:hover {
+  cursor: pointer;
+  border: black dotted
+}
+
+.ui-icon-circle-close {
+  float: right;
+  background-color: white;
+  height: 15px;
+  width: 15px;
+}
+
+.ui-dialog-buttonpane {
+  font-size: 0px;
+}
+
+.ui-dialog-buttonset {
+  font-size: 14px;
+  margin: 0 30px 0 0;
+}
+
+.dialogBox span {
+  display:inline-block;
+  padding: 0px;
+  margin: 0px;
+  border: 0px;
+}
+
+.fixed{
+  position: fixed;
+  width: auto;
+  display: none;
+  border: none;
+}
+
+.floatleft { float: left;}
+.floatright { float: right; }
+.textleft { text-align: left;}
+.textright { text-align: right; }
+.textcenter { text-align: center; }
+.bold { font-weight: bold; }
+.inline { display: inline-block; }
+
+.w10 { width:10px !important; }
+.w20 { width:20px !important; }
+.w30 { width:30px !important; }
+.w40 { width:40px !important; }
+.w50 { width:50px !important; }
+.w55 { width:55px !important; }
+.w60 { width:60px !important; }
+.w65 { width:65px !important; }
+.w70 { width:70px !important; }
+.w75 { width:75px !important; }
+.w80 { width:80px !important; }
+.w85 { width:85px !important; }
+.w90 { width:90px !important; }
+.w100 { width:100px !important; }
+.w110 { width:110px !important; }
+.w120 { width:120px !important; }
+.w130 { width:130px !important; }
+.w150 { width:150px !important; }
+.w170 { width:170px !important; }
+.w200 { width:200px !important; }
+.w250 { width:250px !important; }
+.w400 { width:400px !important; }
+
+.monthbut { color:white !important; background-color: #00AAFF !important; }
+.yearbut { color:white !important; background-color: #0077BB !important; }
+
+.deletedcase,
+.movebutton { background-color: pink }
+.copybutton { background-color: skyblue }
+.nodate { background-color: #EEEEFF }
+
+#servicehead {
+  width: auto;
+  text-align: center;
+}
+
+#servicehead span.item {
+  display: inline-block; 
+  border: solid 1px white;
+  width: 170px;
+  padding: 2px 10px;
+}
+
+#monthpicker { position: absolute; top: 40px; }
+#monthpicker div.ui-datepicker{ font-size: 22px; }
+#monthpicker .ui-datepicker-prev:hover,
+#monthpicker .ui-datepicker-next:hover,
+#monthpicker .ui-datepicker-title:hover {
+  background-color: white;
+  border: solid 1px #0099FF !important;
+}
+
+#historytbl tr:nth-child(odd) {
+  background-color: lavender;
+}
+
+#deletedtbl tr:nth-child(odd) {
+  background-color: #FFF3F9;
+}
+#deletedtbl tr:nth-child(even) {
+  background-color: snow;
+}
+
+#dialogInput {
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+#dialogInput div {
+  padding: 5px 10px;
+  border: 1px solid slategray;
+  border-radius: 15px;
+}
+#dialogInput input[name=others] {
+  width: 400px;
+  border: none;
+}
+
+#deleted,
+#notdeleted {
+  height:30px;
+  width:140px;
+}
+
+#undelete { 
+  width: 127px;
+}
+
+#undel { 
+  display: inline-block;
+  text-align: center; 
+  height: 25px;
+  width: 100px;
+  font-size: 14px;
+  color: black;
+  background-color: white;
+  border: 2px solid slategray;
+  line-height: 25px;
+}
+
+#reviewtbl tbody tr:nth-child(6) td:first-child { font-weight: normal }
+#reviewtbl tbody tr:nth-child(7) th { text-align: left; padding-left: 20px }
+
+#reviewtbl {
+  font-weight: bold;
+}
+
+#reviewtbl th.first {
+  width: 150px;
+}
+
+#reviewtbl td {
+  width: 40px;
+  text-align: center;
+}
+
+#reviewtbl td:first-child {
+  text-align: left;
+}
+
+#reviewtbl th.elect {
+  background-color: #33AA77;
+}
+
+#reviewtbl th.emer {
+  background-color: #FF6688;
+}
+
+#reviewtbl tr.nonsurgical td {
+  background-color: LightGray;
+  border-left: solid 1px silver;
+}
+
+#Total {
+  background-color: BurlyWood;
+}
+
+#Grand {
+  background-color: Turquoise;
+}
+
+#oproomequip,
+#casenumequip,
+#optimeequip,
+#opdayequip,
+#opdateequip,
+#staffnameequip,
+#hnequip,
+#patientnameequip,
+#ageequip { font-size: 16px; font-weight: bold; }
+
+#dialogLab,
+#dialogEquip {
+  font-size: 14px;
+}
+
+#dialogLab input[type="number"] {
+  text-align: center;
+}
+
+#dialogEquip input[type=radio] + span,
+#dialogEquip input[type=checkbox] + span {
+  color: #999999;
+}
+#dialogEquip input[type=radio]:checked + span,
+#dialogEquip input[type=checkbox]:checked + span {
+  color: black;
+  font-weight: bold;
+}
+#dialogEquip input[type=text] {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px dashed gray;
+  color: blue;
+  font-weight: bold;
+}
+#dialogEquip textarea {
+  height: 55px;
+  padding: 2px;
+  color: blue;
+  font-weight: bold;
+}
+#editedby { position: absolute; }
+
+#dialogProfile {
+  white-space: nowrap;
+  background-color: lightblue;
+  scrollbar-width: none;
+}
+#dialogProfile div {
+  background-color: white;
+  padding-top: 10px;
+}
+#dialogProfile label { display: inline-block; }
+#dialogProfile label.border {
+  position: relative;
+  height: 20px;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #19adc4;
+  padding-left: 4px;
+  margin-left: 4px;
+}
+#dialogProfile label span {
+  display: inline-block;
+  position: relative;
+  font-size: 14px;
+  top: -5px;
+  width: 0px;
+}
+#dialogProfile label.border span {
+  top: 1px;
+  left: 3px;
+}
+#dialogProfile label input[type="checkbox"] {
+  height: 25px;
+}
+#dialogProfile label input[type="checkbox"] + span {
+  top: -10px;
+  font-size: 16px;
+  text-align: center;
+}
+/* -webkit: to disable the default appearance of radio button*/
+#dialogProfile input[type="checkbox"],
+#dialogProfile input[type="radio"] {
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid #19adc4;
+  background-color: white;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+/*no need, if you don't disable default appearance*/
+/*to remove the square border on focus*/
+#dialogProfile input[type="checkbox"]:focus,
+#dialogProfile input[type="radio"]:focus {
+  outline-color: transparent;
+}
+/*no need, if you don't disable default appearance*/
+#dialogProfile input[type="checkbox"]:checked,
+#dialogProfile input[type="radio"]:checked {
+  background-color: #19adc4;
+}
+#dialogProfile input:checked ~ span {
+  color: white;
+}
+#dialogProfile input[type="text"] {
+  position: relative;
+  top: 5px;
+  height: 25px;
+  width: 250px;
+  border: 1px solid lightblue;
+  margin-left: 5px;
+}
+#dialogProfile hr.outer {
+  border: 1px solid #19adc4;
+  margin: 10px 0px 10px 0px;
+}
+#dialogProfile hr.inner {
+  border: 1px solid lightblue;
+  margin: 0px 0px 10px 0px;
+}
+#dialogProfile button {
+  float: right;
+  font-size: 20px;
+  height: 25px;
+  width: 30px;
+  border-radius: 25%;
+  line-height: 20px;
+}
+#dialogProfile div.textdiv {
+  width: 350px !important;
+  height: auto;
+  min-height: 20px;
+  overflow: auto;
+  white-space: normal;
+  border: 1px solid lightblue;
+  padding: 7px;
+  margin-left: 5px;
+}
+#dialogProfile div.treatdiv {
+  display: none;
+  width: 350px !important;
+  height: auto;
+  min-height: 20px;
+  overflow: auto;
+  white-space: normal;
+  border: 1px solid lightblue;
+  padding: 7px;
+  margin-left: 5px;
+}
+
+#dialogHoliday table td {
+  padding: 0 10px;
+}
+
+#patienttbl tr:hover {
+  background: lightblue;
+}
+
+#notifywrapper {
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+}
+
+#dialogNotify {
+  width: 200px;
+  height: auto;
+  border: 1px solid lightgray;
+  padding: 10px;
+  margin: 15px 30px;
+}
+#dialogNotify img {
+  width: 40px;
+  float:left;
+}
+#dialogNotify div {
+  font-size: 16px;
+  padding-bottom: 10px;
+}
+#dialogNotify textarea {
+  width: 140px;
+  height: 200px;
+  padding: 7px;
+  font-size: 14px;
+}
+#buttonLINE {
+  float: right;
+  width: 35px;
+  height: 35px;
+  background-image: url(pic/general/message.png);
+  background-size: 35px;
+  border: 1px solid lightblue;
+  border-radius: 50%;
+}
+#buttonLINE.waiting {
+  animation: rotate 1s infinite linear;
+}
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+#cancelnotify {
+  float: right;
+  position: relative;
+  width: 25px;
+  height: 25px;
+  background-image: url(pic/general/cancel.png);
+  background-size: 25px;
+  border: 1px solid lightblue;
+  border-radius: 50%;
+}
