@@ -6,10 +6,7 @@ require_once "merge.php";
 require_once "lastEntryHN.php";
 require_once "saveRecord.php";
 
-	$result = [];
   $record = record($_POST);
-
-  $hn = filter_var($record["hn"], FILTER_SANITIZE_NUMBER_INT);
   $result = getPatientByHN($hn);
 
   // HN not found
