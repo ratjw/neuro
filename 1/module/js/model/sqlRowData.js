@@ -5,6 +5,9 @@ import { USER } from "../main.js"
 // GETNAME will find last previous entry of this hn in DB
 export function sqlRowData(pointed, hnval, patientnameval)
 {
+  hnval = hnval ? hnval : ''
+  patientnameval = patientnameval ? patientnameval : ''
+
   let row = pointed.closest('tr'),
     prevrow = row.previousElementSibling,
     nextrow = row.nextElementSibling,
@@ -14,8 +17,8 @@ export function sqlRowData(pointed, hnval, patientnameval)
     waitnum = `waitnum=${calcnum}`,
     opdate = `opdate=${row.dataset.opdate}`,
     staffname = `staffname=${row.dataset.staffname}`,
-    hn = hnval ? `hn=${hnval}` : '',
-    patientname = patientnameval ? `patientname=${patientnameval}` : '',
+    hn = `hn=${hnval}`,
+    patientname = `patientname=${patientnameval}`,
     diagnosis = `diagnosis=${row.dataset.diagnosis}`,
     treatment = `treatment=${row.dataset.treatment}`,
     contact = `contact=${row.dataset.contact}`,

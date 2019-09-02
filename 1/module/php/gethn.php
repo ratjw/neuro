@@ -7,7 +7,7 @@ require_once "lastEntryHN.php";
 require_once "saveRecord.php";
 
   $record = record($_POST);
-  $result = getPatientByHN($hn);
+  $result = getPatientByHN($record["hn"]);
 
   // HN not found
   if (empty($result["initial_name"])) {
