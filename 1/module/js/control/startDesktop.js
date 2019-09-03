@@ -191,7 +191,7 @@ function overrideJqueryUI()
 
 function serverSentEvent()
 {
-  let evtSource = new EventSource('./php/sse.php')
+  let evtSource = new EventSource('../../php/sse.php')
 
   evtSource.onopen = function() {
     console.log("Connection to server opened.")
