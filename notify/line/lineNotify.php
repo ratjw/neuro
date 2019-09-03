@@ -7,6 +7,7 @@
 	$message = $user . "\n" . $message;
 	$subdir = "imagefile/";
    
+	$line_api = 'https://notify-api.line.me/api/notify';
 	$line_token = 'jyaKhr5MuY9jBeWbEzk2OjhT9ucAzCY9Q8ei3ieEGac'; // my LINE
 	$line_token1 = '2ItNh2j4Z1fIFCSWkZXBH4qtDYigXpl19ahsdWIR5pX'; // group LINE นิวโรศัลย์ รามา ปัจจุบัน
 	$line_token2 = 'KKVhc6ZVdAHqGQtL23U9kvfT502cjprMNNbRTH9NEll'; // group LINE Navigator

@@ -6,7 +6,7 @@ function record($POST)
     "opdate" => date("Y-m-d"),
     "staffname" => "",
     "hn" => "1234567",
-    "name" => "สมหมาย หล",
+    "patientname" => "สมหมาย หล",
     "initial_name" => "Mr.",
     "first_name" => "Name",
     "last_name" => "Surname",
