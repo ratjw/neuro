@@ -1,6 +1,7 @@
 
 import { exportReportToExcel } from "../util/excel.js"
 import { SERVICE } from "./setSERVICE.js"
+import { winHeight } from "../util/util.js"
 
 const ROWREPORT = {
   "Brain Tumor": 3,
@@ -36,6 +37,7 @@ export function showReportToDept(title)
     closeOnEscape: true,
     modal: true,
     width: 700,
+    height: winHeight(95),
     buttons: [{
       text: "Export to Excel",
       click: function() {
@@ -56,23 +58,26 @@ export function showReportToDept(title)
   })
 
   SERVICE.forEach(e => {
-    let profile = JSON.parse(e.profile) || {}
+    let profile = JSON.parse(e.profile) || {},
+      profileOperated = profile.operated,
+      profileRadiosurg = profile.radiosurg,
+      profileEndovasc = profile.endovasc
 
     countAdmitCase(e, profile.admitted)
-    if (profile.operated) { countOpCase(profile.operated) }
-    if (profile.radiosurg) { countRadioCase(profile.radiosurg) }
-    if (profile.endovasc) { countEndoCase(profile.endovasc) }
+    if (profileOperated) { countOpCase(profileOperated) }
+    if (profileRadiosurg) { countRadioCase(profileRadiosurg) }
+    if (profileEndovasc) { countEndoCase(profileEndovasc) }
 
     if (e.discharge) { document.querySelector('#Discharge').innerHTML++ }
     if (profile.infection) { document.querySelector('#Infection').innerHTML++ }
     if (profile.morbid) { document.querySelector('#Morbidity').innerHTML++ }
     if (profile.dead) { document.querySelector('#Dead').innerHTML++ }
 
-    if (profile.radiosurgery) { countNonOpCase("Radiosurgery") }
-    if (profile.endovascular) { countNonOpCase("Endovascular") }
-    if (!profile.operated
-     && !profile.radiosurgery
-     && !profile.endovascular) {
+    if (profileRadiosurg) { countNonOpCase("Radiosurgery") }
+    if (profileEndovasc) { countNonOpCase("Endovascular") }
+    if ((!profileOperated || !profileOperated.length)
+     && (!profileRadiosurg || !profileRadiosurg.length)
+     && (!profileEndovasc || !profileEndovasc.length)) {
        countNonOpCase("NotDone")
     }
   })
