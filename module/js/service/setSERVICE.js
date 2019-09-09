@@ -36,8 +36,11 @@ function calcSERVE(service)
         profile.endovasc = [{}]
       }
 
-      let opwhat = operationFor(this, profile)
-      if (!profile.operated && opwhat) {
+      // hasOperated: has previous operated entry, which may be deleted to blank []
+      let opwhat = operationFor(this, profile),
+        profileOperated = profile.operated,
+        hasOperated = profileOperated && profileOperated.length
+      if ((!profileOperated || !hasOperated) && opwhat) {
         profile.operated = [{"disease": opwhat}]
       }
       if (!Object.keys(profile).length) { profile = null }
@@ -56,7 +59,7 @@ function operationFor(thisrow, profile)
     opfor = Object.keys(KEYWORDS),
     diagnosis = thisrow.diagnosis,
     treatment = thisrow.treatment,
-    endovascular = (profile.endovascular === "Endovascular"),
+    endovascular = (profile.endovasc === "Endovascular"),
     opwhat = ""
 
   opfor = isOpfor(KEYWORDS, opfor, Rx, treatment)
