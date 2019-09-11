@@ -10,8 +10,7 @@ import { viewProfile } from "./viewProfile.js"
 import { START, thDate, putThdate, putNameAge } from "../util/date.js"
 
 export function showService() {
-  let $dialogService = $("#dialogService"),
-    $servicetbl = $("#servicetbl"),
+  let $servicetbl = $("#servicetbl"),
     $servicecells = $("#servicecells"),
     clen = $servicecells.find('tr td').length,
     staffname = "",

@@ -71,9 +71,9 @@
   border: none;
 }
 
-.floatleft { float: left;}
+.floatleft { float: left; }
 .floatright { float: right; }
-.textleft { text-align: left;}
+.textleft { text-align: left; }
 .textright { text-align: right; }
 .textcenter { text-align: center; }
 .bold { font-weight: bold; }
@@ -106,8 +106,9 @@
 .yearbut { color:white !important; background-color: #0077BB !important; }
 
 .deletedcase,
-.movebutton { background-color: pink }
-.copybutton { background-color: skyblue }
+.movebutton { background-color: pink !important }
+.consultedcase,
+.copybutton { background-color: skyblue !important }
 .nodate { background-color: #EEEEFF }
 
 #servicehead {
@@ -147,7 +148,7 @@
   overflow: hidden;
   white-space: nowrap;
 }
-#dialogInput div {
+#dialogInput > div {
   padding: 5px 10px;
   border: 1px solid slategray;
   border-radius: 15px;

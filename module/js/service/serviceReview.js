@@ -13,6 +13,7 @@ import { isSplit,  winWidth, winHeight, winResizeFix } from "../util/util.js"
 import { savePreviousCellService } from "./savePreviousCellService.js"
 import { clearSelection } from "../get/selectRow.js"
 import { clickCellSV } from "./clickCellSV.js"
+import { timer, resetTimerCounter } from "../control/timer.js"
 
 // Includes all serviced cases, attended or consulted
 // PHP Getipd retrieves admit/discharge dates
@@ -38,7 +39,7 @@ export function serviceReview(begin) {
     winResizeFix($servicetbl, $dialogService)
   }
 
-  // close: it is necessary NOT to close the non-visible jQuery dialogs,
+  // ".ui-dialog:visible": it is necessary NOT to close the non-visible jQuery dialogs,
   // because these may not have yet been initialized (which results in an error)
   $dialogService.dialog({
     title: title,
@@ -61,8 +62,10 @@ export function serviceReview(begin) {
       }
       clearEditcell()
       clearSelection()
+      resetTimerCounter()
     }
   })
+  clearTimeout(timer)
 
   // for resizing dialogs in landscape / portrait view
   $(window).on("resize", resizeDialogSV)

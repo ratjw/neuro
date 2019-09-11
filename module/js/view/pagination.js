@@ -10,7 +10,7 @@ export function pagination($dialog, $maintbl, book, search)
   let  beginday = book[0].opdate,
     lastday = findLastDateInBOOK(book),
     firstday = getPrevMonday(),
-  offset = 0
+    offset = 0
 
   $dialog.dialog({
     title: search,

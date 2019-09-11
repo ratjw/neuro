@@ -36,12 +36,9 @@ export function searchCases()
 
     if ($staffsearch.is(":visible")) {
       $staffsearch.hide();
-    } else {
-      if (target.nodeName === 'IMG') {
-        searchDB()
-      } else if (target.name === 'staffname') {
-        getSaffName(target, $staffsearch)
-      }
+    }
+    if (target.name === 'staffname') {
+      getSaffName(target, $staffsearch)
     }
   })
   .keydown(event => {
