@@ -606,7 +606,7 @@ BRAINTUMORRX = [
   /approa/i, /biopsy/i, /\bbx\b/i,
   /crani[oe]c?tomy/i, /\bETS\b/i,
   /trans.*remov/i, /TSP/i, /TSS/i, /transnasal/i,
-  /transsphenoid/i, /transventric/i, /tumou?r/i
+  /transsphenoid/i, /transventric/i, /tumou?r remov/i
 ],
 BRAINVASCULARRX = [
   /anast/i, /bypass/i, /(clot|hematoma).*(remov|irrigat|evacuat)/i,
@@ -630,7 +630,7 @@ SPINERX = [
   /\bESI\b/i, /fixation/i, /foraminotomy/i, /\bfusion/i, /kyphoplasty/i,
   /lamin[eo]/i, /MIDLIF/i, /OLIF/i, 
   /PDS/i, /PLF/i, /PLIF/i, /remov/i, /sacr[ao]/i, /screw/i, /SNRB/i,
-  /thora/i, /TLIF/i, /transoral/i, /transforam/i, /tumou?r/i,
+  /thora/i, /TLIF/i, /transoral/i, /transforam/i,
   /vertebr/i, /untether/i
 ],
 SPINEOP = [
@@ -763,8 +763,9 @@ ETCRXNO = [
 ],
 
 NOOPERATION = [
-  /adjust.*pressure/i, /advice.*surg[ery|ical]/i,
-  /conservative/i, /observe/i, /\boff OR/, /standby/i
+  /adjust.*pressure/i, /advice.*surg[ery|ical]/i, /conservative/i, 
+  /denial/i, /no op/i, /observe/i, /\boff OR/, /standby/i,
+  /ปฏิเสธ/, /ปฎิเสธ/
 ],
 RADIOSURGERY = [
   /conformal radiotherapy/i, /CRT/i, /Cyber ?Knife/i,
