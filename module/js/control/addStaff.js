@@ -9,7 +9,7 @@ import { fillConsults } from "../view/fillConsults.js"
 export function addStaff()
 {
   $("#dialogStaff").dialog({
-    title: "Subspecialty Staff",
+    title: "Neurosurgery Staff",
     closeOnEscape: true,
     modal: true,
     show: 200,
@@ -20,49 +20,36 @@ export function addStaff()
   viewAddStaff()
 }
 
-export function doAddStaff()
+export async function doAddStaff()
 {
-  sqlDoAddStaff().then(response => {
-    let hasData = function () {
-      updateBOOK(response)
-      showAddStaff(response)
-    }
-
-    typeof response === "object"
-    ? hasData()
-    : Alert ("doDeleteStaff", response)
-  })
+  let response = await sqlDoAddStaff()
+  if (typeof response === "object") {
+    updateBOOK(response)
+    showAddStaff(response)
+  } else {
+    Alert ("doAddStaff", response)
+  }
 }
 
-export function doUpdateStaff()
+export async function doUpdateStaff()
 {
-  if (confirm("ต้องการแก้ไขข้อมูลนี้")) {
-  sqlDoUpdateStaff().then(response => {
-    let hasData = function () {
-      updateBOOK(response)
-      showAddStaff(response)
-    }
-
-    typeof response === "object"
-    ? hasData()
-    : Alert ("doDeleteStaff", response)
-  })
+  let response = await sqlDoUpdateStaff()
+  if (typeof response === "object") {
+    updateBOOK(response)
+    showAddStaff(response)
+  } else {
+    Alert ("doUpdateStaff", response)
   }
-} // end of function doUpdateStaff
+}
 
-export function doDeleteStaff()
+export async function doDeleteStaff()
 {
-  if (confirm("ต้องการลบข้อมูลนี้หรือไม่")) {
-  sqlDoDeleteStaff().then(response => {
-    let hasData = function () {
-      updateBOOK(response)
-      showAddStaff(response)
-    }
-
-    typeof response === "object"
-    ? hasData()
-    : Alert ("doDeleteStaff", response)
-  })
+  let response = await sqlDoDeleteStaff()
+  if (typeof response === "object") {
+    updateBOOK(response)
+    showAddStaff(response)
+  } else {
+    Alert ("doDeleteStaff", response)
   }
 }
 

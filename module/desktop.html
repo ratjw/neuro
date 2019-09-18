@@ -121,7 +121,10 @@
      </a>
      <ul>
       <li>
-        <a id="clickaddStaff">Resident Research</a>
+        <a id="clickresEPA">Resident EPA</a>
+      </li>
+      <li>
+        <a id="clickresResearch">Resident Research</a>
       </li>
       <li>
         <a id="clickaddStaff">Staff Setting</a>
@@ -558,21 +561,10 @@
  <table id="stafftbl">
   <thead>
    <tr>
-    <td>Name : <input type="text" id="sname" size="10"></td>
-    <td>Specialty : <select id="specialty"><option></option></select></td>
-    <td>Date Oncall : <input type="text" id="soncall" size="10" readonly>
-             <input id="snumber" type="hidden">
-    </td>
-   </tr>
-   <tr>
-    <td><button id="clickdoAddStaff">AddStaff</button></td>
-    <td><button id="clickdoUpdateStaff">UpdateStaff</button></td>
-    <td><button id="clickdoDeleteStaff">DeleteStaff</button></td>
-   </tr>
-   <tr>
     <th>Staff</th>
-    <th>Specialty</th>
-    <th>Start Date Oncall</th>
+    <th>Oncall</th>
+    <th>Restart Date Oncall</th>
+    <th>Modify</th>
    </tr>
   </thead>
   <tbody>
@@ -583,6 +575,7 @@
 <table id="staffcells">
   <tbody>
    <tr>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
