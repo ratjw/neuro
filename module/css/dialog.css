@@ -373,6 +373,14 @@
   margin-left: 5px;
 }
 
+#researchtbl { width: 100% }
+
+#residenttbl td:nth-child(4) { text-align: center; }
+
+#stafftbl td:nth-child(1) { text-align: center; }
+#stafftbl td:nth-child(3) { text-align: center; }
+#stafftbl td:nth-child(5) { text-align: center; }
+
 #dialogHoliday table td {
   padding: 0 10px;
 }

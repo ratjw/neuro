@@ -18,6 +18,9 @@ require_once "book.php";
 	else if (isset($_POST['sqlReturnData'])) {
 		echo returnData($mysqli, $_POST['sqlReturnData']);
 	}
+	else if (isset($_POST['sqlReturnResident'])) {
+		echo returnResident($mysqli, $_POST['sqlReturnResident']);
+	}
 	else if (isset($_POST['sqlReturnStaff'])) {
 		echo returnStaff($mysqli, $_POST['sqlReturnStaff']);
 	}
@@ -64,6 +67,21 @@ function returnData($mysqli, $sql)
 	}
 }
 
+function returnResident($mysqli, $sql)
+{
+	$data = array();
+  $return = array();
+  if ($sql) {
+    $return = multiquery($mysqli, $sql);
+  }
+	if (is_string($return)) {
+		return $return;
+	} else {
+		$data["RESIDENT"] = getResident($mysqli);
+		return json_encode($data);
+	}
+}
+
 function returnStaff($mysqli, $sql)
 {
 	$data = array();
@@ -74,6 +92,17 @@ function returnStaff($mysqli, $sql)
 		$data["STAFF"] = getStaff($mysqli);
 		return json_encode($data);
 	}
+}
+
+function getResident($mysqli)
+{
+	$year = date("Y") + 543;
+  $month = date("m");
+  $endmonth = 4;
+  $training = 5;
+  $yearth = ($month > $endmonth) ? ($year + 1) : $year;
+  $sql = "SELECT * FROM resident WHERE $yearth-enrollyear<=$training ORDER BY enrollyear,ramaid;";
+	return multiquery($mysqli, $sql);
 }
 
 function getStaff($mysqli)

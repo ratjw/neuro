@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+<meta charset="utf-8"/>
+<title>Neurosurgery Service</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="js/chart.min.js"></script>
+</HEAD>
+
+<BODY>
+<canvas id="myChart" width="1100" height="500"></canvas>
+<script>
+ //Create the plug in
+  var originalLineDraw = Chart.controllers.horizontalBar.prototype.draw;
+  Chart.helpers.extend(Chart.controllers.horizontalBar.prototype, {
+  
+      draw: function () {
+          originalLineDraw.apply(this, arguments);
+  
+          var chart = this.chart;
+          var ctx = chart.chart.ctx;
+  
+          var index = chart.config.options.lineAtIndex;
+          if (index) {
+  
+              var xaxis = chart.scales['x-axis-0'];
+              var yaxis = chart.scales['y-axis-0'];
+  
+              var x1 = xaxis.getPixelForValue(index);                       
+              var y1 = yaxis.top;                                                   
+  
+              var x2 = xaxis.getPixelForValue(index);                       
+              var y2 = yaxis.bottom;                                        
+  
+              ctx.save();
+              ctx.beginPath();
+              ctx.moveTo(x1, y1);
+              ctx.strokeStyle = 'red';
+              ctx.lineTo(x2, y2);
+              ctx.stroke();
+  
+              ctx.restore();
+          }
+      }
+  });
+
+//Set up the chart data
+  var data = {
+      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      datasets: [
+          {
+              label: "My First dataset",
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)',
+                  'rgba(255, 206, 86, 0.2)',
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(153, 102, 255, 0.2)',
+                  'rgba(255, 159, 64, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(255,99,132,1)',
+                  'rgba(54, 162, 235, 1)',
+                  'rgba(255, 206, 86, 1)',
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(153, 102, 255, 1)',
+                  'rgba(255, 159, 64, 1)'
+              ],
+              borderWidth: 1,
+              data: [65, 59, 80, 81, 56, 55, 40],
+          }
+      ]
+  };
+
+  //Load Chart
+  var ctx = document.querySelector("#myChart");
+  var myBarChart = new Chart(ctx, {
+      type: 'horizontalBar',
+      data: data,
+      options: {
+          //Set the index of the value where you want to draw the line
+          lineAtIndex: 60,
+          legend: {
+            display: false
+          }
+      }
+  });
+</script>
+
+</BODY>
+</HTML>

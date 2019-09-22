@@ -15,6 +15,7 @@
 <script src="js/jquery.mousewheel.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/main.js" type="module"></script>
+<script src="js/chart.min.js"></script>
 
 </HEAD>
 <BODY>
@@ -125,6 +126,9 @@
       </li>
       <li>
         <a id="clickresResearch">Resident Research</a>
+      </li>
+      <li>
+        <a id="clickaddResident">Resident Setting</a>
       </li>
       <li>
         <a id="clickaddStaff">Staff Setting</a>
@@ -561,10 +565,11 @@
  <table id="stafftbl">
   <thead>
    <tr>
-    <th>Staff</th>
+    <th>№</th>
+    <th>Staff Name</th>
     <th>Oncall</th>
-    <th>Restart Date Oncall</th>
-    <th>Modify</th>
+    <th>Restart Oncall</th>
+    <th>Add Upd Del</th>
    </tr>
   </thead>
   <tbody>
@@ -575,6 +580,56 @@
 <table id="staffcells">
   <tbody>
    <tr>
+    <td></td>
+    <td contentEditable></td>
+    <td contentEditable></td>
+    <td contentEditable></td>
+    <td></td>
+   </tr>
+  </tbody>
+</table>
+
+<div id="dialogResident">
+ <table id="residenttbl">
+  <thead>
+   <tr>
+    <th>Rama ID</th>
+    <th>Resident Name</th>
+    <th>ปีเข้า</th>
+    <th>Add Upd Del</th>
+   </tr>
+  </thead>
+  <tbody>
+  </tbody>
+ </table>
+</div>
+
+<table id="residentcells">
+  <tbody>
+   <tr>
+    <td contentEditable></td>
+    <td contentEditable></td>
+    <td contentEditable></td>
+    <td></td>
+   </tr>
+  </tbody>
+</table>
+
+<div id="dialogResResearch">
+ <canvas id="chartjs" width="1000" height="600"></canvas>
+</div>
+
+<table id="researchcells">
+  <tbody>
+   <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>

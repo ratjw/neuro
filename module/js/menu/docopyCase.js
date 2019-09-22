@@ -11,12 +11,8 @@ export function docopyCase(allNewCases, moverow, thisrow)
   moverow.dataset.waitnum = calcWaitnum(thisopdate, thisrow, thisrow.nextElementSibling)
 
   sqlcopyCase(allNewCases, moverow, thisrow).then(response => {
-    let hasData = function () {
-      updateBOOK(response)
-    }
-
     typeof response === "object"
-    ? hasData()
+    ? updateBOOK(response)
     : Alert ("copyCase", response)
   }).catch(error => {})
 }

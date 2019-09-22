@@ -1,19 +1,18 @@
 
-import { resEPA } from './resEPA.js'
-import { resResearch } from './resResearch.js'
-import { addStaff, doAddStaff, doUpdateStaff, doDeleteStaff } from "./addStaff.js"
-import { inputHoliday, addHoliday, delHoliday } from "./inputHoliday.js"
+import { resEPA } from '../setting/resEPA.js'
+import { resResearch } from '../setting/resResearch.js'
+import { inputHoliday, addHoliday, delHoliday } from "../setting/inputHoliday.js"
+import { viewResident } from '../setting/viewResident.js'
+import { viewStaff } from '../setting/viewStaff.js'
 
 export function setClickSetting()
 {
   let onclick = {
     "clickresEPA": resEPA,
     "clickresResearch": resResearch,
-    "clickaddStaff": addStaff,
+    "clickaddResident": viewResident,
+    "clickaddStaff": viewStaff,
     "clicksetHoliday": inputHoliday,
-    "clickdoAddStaff": doAddStaff,
-    "clickdoUpdateStaff": doUpdateStaff,
-    "clickdoDeleteStaff": doDeleteStaff,
     "addholiday": addHoliday
   }
 

@@ -36,14 +36,12 @@ export function toUndelete(thisdate)
     allCases.splice(casenum, 0, qn)
 
     sqlUndelete(allCases, oproom, qn, 0).then(response => {
-      let hasData = function () {
+      if (typeof response === "object") {
         updateBOOK(response)
         scrolltoThisCase(qn)
-      };
-
-      typeof response === "object"
-      ? hasData()
-      : Alert("toUndelete", response)
+      } else {
+        Alert("toUndelete", response)
+      }
     }).catch(error => {})
 
     $('#dialogAllDeleted').dialog("close")

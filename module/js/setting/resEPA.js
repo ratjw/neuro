@@ -1,12 +1,12 @@
 
-import { htmlStafflist } from "./html.js"
-import { sqlDoAddStaff, sqlDoUpdateStaff, sqlDoDeleteStaff } from "../model/sqlDoAddStaff.js"
+import { htmlStafflist } from "../control/html.js"
+import { sqlDoSaveStaff, sqlDoUpdateStaff, sqlDoDeleteStaff } from "../model/sqlDoStaff.js"
 import { updateBOOK, setSTAFF } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { viewAddStaff } from "../view/viewAddStaff.js"
+import { viewStaff } from "../setting/viewStaff.js"
 import { fillConsults } from "../view/fillConsults.js"
 
-export function resResearch()
+export function resEPA()
 {
   $("#dialogStaff").dialog({
     title: "Subspecialty Staff",
@@ -17,7 +17,7 @@ export function resResearch()
     width: 600,
     height: 400
   })
-  viewAddStaff()
+  viewStaff()
 }
 
 export function doAddStaff()
@@ -71,5 +71,5 @@ function showAddStaff(response)
   setSTAFF(response.STAFF)
   htmlStafflist()
   fillConsults()
-  addStaff()
+  viewStaff()
 }

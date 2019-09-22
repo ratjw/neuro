@@ -300,6 +300,7 @@ td.consult::after {
 #stafflist,
 #editcell,
 #undelete,
+#dialogResident, #residentcells,
 #dialogStaff, #staffcells,
 #scbb option:first-of-type,
 #dialogPatient, #patientcells,
