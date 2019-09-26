@@ -1,86 +1,37 @@
 
-import { RESIDENT } from "../setting/doResident.js"
+import { RESIDENT } from "../model/sqlDoResident.js"
 
-const xRange = 100,
-      training = 5,
-      endmonth = 4,
-      today = new Date(),
-      thisY = today.getFullYear(),
-      thisyear = thisY + 543,
-      add = (today.getMonth() > endmonth) ? 1 : 0,
-      yearth = thisyear + add,
-      firstDate = new Date(`${thisY + add - training}`),
-      lastDate = new Date(`${thisY + add + training}`),
-      interval = lastDate - firstDate
-     
+export const RESEARCHBAR = [
+  {"label": "", "progress": "", "color": "#FFFFFF"},
+  {"label": "Proposal", "progress": "proposal", "color": "#DAA520"},
+  {"label": "Ethic", "progress": "ethic", "color": "gold"},
+  {"label": "Planning", "progress": "planning", "color": "#70EE70"},
+  {"label": "50% Data", "progress": "data50", "color": "#ADD8E6"},
+  {"label": "100% Data", "progress": "data100", "color": "#6698FF"},
+  {"label": "Analysis", "progress": "analysis", "color": "violet"},
+  {"label": "Complete", "progress": "complete", "color": "red"}
+]
+
+export const xRange = 2000
+
+// xRange (xAxis length) is the span of 10 years
+const training = 5,
+  endmonth = 4,
+  today = new Date(),
+  thisY = today.getFullYear(),
+  thisyear = thisY + 543,
+  add = (today.getMonth() > endmonth) ? 1 : 0,
+  yearth = thisyear + add,
+  firstDate = new Date(`${thisY + add - training}`),
+  lastDate = new Date(`${thisY + add + training}`),
+  interval = lastDate - firstDate
+
 export function prepareData()
 {
-  let white = "#FFFFFF",
-    goldenRod = "#DAA520",
-    gold = "gold",
-    lightGreen ="#90EE90",
-    lightBlue = "#ADD8E6",
-    skyBlue = "#6698FF",
-    violet = "violet",
-    red = "red",
-
-    // X axis is double the research time range, 'cos half of it is the white bars
-    // In DB, total rtime of each resident is 100 for the range of 5 years
-    rtime = xRange / 2,
-    tick = rtime / training,
-    scale = rtime / 100,
-    enrollyears = RESIDENT.map(e => Number(e.enrollyear)),
-    research = RESIDENT.map(e => JSON.parse(e.research)),
-
-    data = {
-      labels: RESIDENT.map(e => e.residentname),
-      datasets: [
-        {
-          label: "",
-          backgroundColor: enrollyears.map(e => white),
-          data: enrollyears.map(e => (training + e - yearth)*tick + tick/2)
-        },
-        {
-          label: "Proposal",
-          backgroundColor: research.map(e => goldenRod),
-          borderWidth: 1,
-          data: research.map(e => e.proposal*scale)
-        },
-        {
-          label: "Planning",
-          backgroundColor: research.map(e => gold),
-          borderWidth: 1,
-          data: research.map(e => e.planning*scale)
-        },
-        {
-          label: "Ethic",
-          backgroundColor: research.map(e => lightGreen),
-          data: research.map(e => e.ethic*scale)
-        },
-        {
-          label: "50% Data",
-          backgroundColor: research.map(e => lightBlue),
-          data: research.map(e => e.data50*scale)
-        },
-        {
-          label: "100% Data",
-          backgroundColor: research.map(e => skyBlue),
-          data: research.map(e => e.data100*scale)
-        },
-        {
-          label: "Assertion",
-          backgroundColor: research.map(e => violet),
-          data: research.map(e => e.assertion*scale)
-        },
-        {
-          label: "Complete",
-          backgroundColor: research.map(e => red),
-          data: research.map(e => e.complete*scale)
-        }
-      ]
-    }
-
-  return data
+  return {
+    labels: RESIDENT.map(e => e.residentname),
+    datasets: calcDatasets()
+  }
 }
 
 export function prepareYears()
@@ -98,4 +49,29 @@ export function prepareYears()
   years.today = (today - firstDate) / interval * xRange
 
   return years
+}
+
+function calcDatasets()
+{
+  // X axis is double the research time range, because half of it is the white bars
+  // In DB, total time of each resident is for the 5 years training
+  const tick = xRange / 2 / training,
+    enrollyears = RESIDENT.map(e => Number(e.enrollyear)),
+    research = RESIDENT.map(e => JSON.parse(e.research))
+
+  return RESEARCHBAR.map((r, i) => {
+    if (i === 0) {
+      return {
+        label: r.label,
+        backgroundColor: enrollyears.map(e => r.color),
+        data: enrollyears.map(e => (training + e - yearth)*tick + tick/2)
+      }
+    } else {
+      return {
+        label: r.label,
+        backgroundColor: research.map(e => r.color),
+        data: research.map(e => e[r.progress])
+      }
+    }
+  })
 }

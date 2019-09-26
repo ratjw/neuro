@@ -10,10 +10,11 @@ export function readme()
     title: "ReadMe",
     closeOnEscape: true,
     modal: true,
+    show: 200,
     width: 430,
     height: 570,
     open: function () {
       $dialogReadme.html(object)
     }
-  }).fadeIn();
+  })
 }

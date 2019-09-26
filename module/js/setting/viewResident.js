@@ -1,7 +1,7 @@
 
 import {
-  RESIDENT, getResident, doSaveResident, doAddResident, doUpdateResident, doDeleteResident
-} from "../setting/doResident.js"
+  RESIDENT, getResident, saveResident, addResident, updateResident, deleteResident
+} from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
 const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
@@ -12,9 +12,9 @@ const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
 export async function viewResident()
 {
   const IMAGE = {
-    image1: doAddResident,
-    image2: doUpdateResident,
-    image3: doDeleteResident
+    image1: addResident,
+    image2: updateResident,
+    image3: deleteResident
   }
 
   const $dialogResident = $("#dialogResident"),
@@ -38,7 +38,7 @@ export async function viewResident()
     cells[2].innerHTML = ""
     cells[3].innerHTML = "Save"
     save.one("click", function() {
-      doSaveResident(clone0, 1)
+      saveResident(clone0, 1)
     })
   } else {
     $.each( RESIDENT, (i, item) => {
@@ -60,15 +60,6 @@ export async function viewResident()
     hide: 200,
     width: "auto",
     height: ($dialogResident.height() > maxHeight) ? maxHeight : 'auto'
-  })
-}
-
-export function viewAddResident(row)
-{
-  $("#residentcells tr").clone().insertAfter(row).cells[3].innerHTML = "Save"
-
-  $("#dialogResident").off("click", "td").on("click", "td:eq(" + 3 + ")", function() {
-    doSaveResident(this.closest("tr"))
   })
 }
 

@@ -71,6 +71,8 @@
   border: none;
 }
 
+.left { left: 0; }
+.right { right: 0; }
 .floatleft { float: left; }
 .floatright { float: right; }
 .textleft { text-align: left; }
@@ -110,6 +112,51 @@
 .consultedcase,
 .copybutton { background-color: skyblue !important }
 .nodate { background-color: #EEEEFF }
+
+:root {
+  --track: #6698FF;
+  --progress: #43e5f7;
+}
+/** Chrome*/
+input[type="range"] {
+  overflow: hidden;
+  width: 100%;
+  background-color: var(--track); 
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 20px;
+  -webkit-appearance: none;
+  color: var(--track);
+  margin-top: -1px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 10px;
+  -webkit-appearance: none;
+  height: 20px;
+  cursor: ew-resize;
+  background-color: white;
+  border: 2px solid gray;
+  border-style: inset;
+  box-shadow: -2000px 0 0 2000px var(--progress);
+}
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: var(--progress);
+  height: 20px;
+}
+input[type="range"]::-moz-range-track {  
+  background-color: var(--track);
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: var(--progress);
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: var(--track);
+}
 
 #servicehead {
   width: auto;
@@ -442,3 +489,9 @@
   border: 1px solid lightblue;
   border-radius: 50%;
 }
+
+#enddate,
+#thumbdate {
+  position: absolute;
+}
+#slider { width: 99% }

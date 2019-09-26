@@ -1,7 +1,8 @@
 
 import { winHeight, winWidth } from "../util/util.js"
-import { prepareData, prepareYears } from '../setting/prepareData.js'
-import { RESIDENT, getResident } from "../setting/doResident.js"
+import { xRange, prepareData, prepareYears } from '../setting/prepareData.js'
+import { getResident } from "../model/sqlDoResident.js"
+import { slider } from '../setting/slider.js'
 
 export async function resResearch()
 {
@@ -9,7 +10,7 @@ export async function resResearch()
     $dialogResResearch = $("#dialogResResearch"),
     maxHeight = winHeight(90)
 
-  if (!RESIDENT.length) { await getResident() }
+  await getResident()
 
   let data = prepareData()
   let years = prepareYears()
@@ -23,11 +24,14 @@ export async function resResearch()
     options: {
       scales: {
         xAxes: [{
+          position: 'bottom',
           stacked: true,
           ticks: {
             callback: function(label, index, labels) {
               return years.range[index]
-            }
+            },
+            'min': 0,
+            'max': xRange
           },
           gridLines: {
             color: "gray"
@@ -55,7 +59,10 @@ export async function resResearch()
     show: 200,
     hide: 200,
     width: winWidth(90),
-    height: ($dialogResResearch.height() > maxHeight) ? maxHeight : 'auto'
+    height: ($dialogResResearch.height() > maxHeight) ? maxHeight : 'auto',
+    close: function() {
+      $dialogResResearch.dialog('destroy')
+    }
   })
 
   //Create the plug in
@@ -93,15 +100,6 @@ export async function resResearch()
   });
 
   chartjs.onclick = function (event) {
-    var activePoint = barChart.getElementAtEvent(event)
-    if (!activePoint.length) { return }
-    var cdata = activePoint[0]['_chart'].config.data
-    var idx = activePoint[0]['_index']
-    var cidx = activePoint[0]['_datasetIndex']
-    var rname = cdata.labels[idx]
-    var label = cdata.datasets[cidx].label
-    var value = cdata.datasets[cidx].data[idx]
-
-    
+    slider(event, barChart, years)
   }
 }

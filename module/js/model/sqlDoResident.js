@@ -1,14 +1,38 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
+import { Alert } from "../util/util.js"
+import { viewResident } from "../setting/viewResident.js"
+import { RESEARCHBAR } from '../setting/prepareData.js'
+import { resResearch } from '../setting/resResearch.js'
 
-export function sqlgetResident()
+export let RESIDENT = []
+
+export async function getResident()
 {
   let sql = `sqlReturnResident=`
 
-  return postData(MYSQLIPHP, sql)
+  let response = await postData(MYSQLIPHP, sql)
+  if (typeof response === "object") {
+    RESIDENT = response.RESIDENT
+  } else {
+    Alert("getResident", response)
+  }  
 }
 
-export function sqlDoSaveResident(row)
+export function addResident(row)
+{
+  let residenttr = document.querySelector("#residentcells tr")
+  let clone = residenttr.cloneNode(true)
+  let save = clone.cells[3]
+
+  save.innerHTML = "Save"
+  row.after(clone)
+  save.addEventListener("click", function() {
+    saveResident(clone, 1)
+  })
+}
+
+export async function saveResident(row)
 {
   let cell = row.cells
   let ramaid = cell[0].textContent
@@ -20,10 +44,15 @@ export function sqlDoSaveResident(row)
   let sql = `sqlReturnResident=INSERT INTO resident (ramaid,residentname,enrollyear)
                VALUES('${ramaid}','${residentname}','${enrollyear}');`
 
-  return postData(MYSQLIPHP, sql)
+  let response = await postData(MYSQLIPHP, sql)
+  if (typeof response === "object") {
+    showResident(response)
+  } else {
+    response && Alert("saveResident", response)
+  }
 }
 
-export function sqlDoUpdateResident(row)
+export async function updateResident(row)
 {
   let cell = row.cells
   let ramaid = cell[0].textContent
@@ -36,12 +65,16 @@ export function sqlDoUpdateResident(row)
     let sql = `sqlReturnResident=UPDATE resident
                SET residentname='${residentname}',enrollyear='${enrollyear}'
                WHERE ramaid=${ramaid};`
-
-    return postData(MYSQLIPHP, sql)
+    let response = await postData(MYSQLIPHP, sql)
+    if (typeof response === "object") {
+      showResident(response)
+    } else {
+      response && Alert("updateResident", response)
+    }
   }
 }
 
-export function sqlDoDeleteResident(row)
+export async function deleteResident(row)
 {
   let cell = row.cells
   let ramaid = cell[0].textContent
@@ -50,7 +83,37 @@ export function sqlDoDeleteResident(row)
 
   if (confirm("ต้องการลบข้อมูลนี้หรือไม่")) {
     let sql = `sqlReturnResident=DELETE FROM resident WHERE ramaid=${ramaid};`
-
-    return postData(MYSQLIPHP, sql)
+    let response = await postData(MYSQLIPHP, sql)
+    if (typeof response === "object") {
+      showResident(response)
+    } else {
+      response && Alert("deleteResident", response)
+    }
   }
+}
+
+function showResident(response)
+{
+  RESIDENT = response.RESIDENT
+  viewResident()
+}
+
+export async function updateResearch(barChart, newval, ridx, cidx)
+{
+  let ramaid = RESIDENT[ridx].ramaid
+  let progress = RESEARCHBAR[cidx].progress
+  let progressval = newval
+
+  let sql = `sqlReturnResident=UPDATE resident
+             SET research=JSON_SET(research,'$.${progress}','${progressval}')
+             WHERE ramaid=${ramaid};`
+
+  let response = await postData(MYSQLIPHP, sql)
+  if (typeof response === "object") {
+    RESIDENT = response.RESIDENT
+    barChart.data.datasets[cidx].data[ridx] = newval
+    barChart.update()
+  } else {
+    Alert("getResident", response)
+  }  
 }

@@ -218,10 +218,11 @@ export function Alert(title, message) {
     title: title,
     closeOnEscape: true,
     modal: true,
+    show: 200,
     hide: 200,
     minWidth: 400,
     height: 230
-  }).fadeIn();
+  })
 }
 
 export function clearMouseoverTR()

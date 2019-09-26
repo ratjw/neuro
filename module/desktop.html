@@ -106,21 +106,11 @@
       </li>
      </ul>
     </li>
-    <li id="EXCEL" class="floatright">
-     <a id="clicksendtoExcel">
-      <img src="css/pic/general/Excel.png">
-     </a>
-    </li>
-    <li id="LINE" class="floatright">
-     <a id="clicksendtoLINE">
-      <img src="css/pic/general/LINE.png">
-     </a>
-    </li>
     <li id="submenu" class="floatright">
      <a>
       <img src="css/pic/general/submenu.png">
      </a>
-     <ul>
+     <ul class="right">
       <li>
         <a id="clickresEPA">Resident EPA</a>
       </li>
@@ -140,6 +130,16 @@
         <a id="clickreadme">Readme</a>
       </li>
      </ul>
+    </li>
+    <li id="EXCEL" class="floatright">
+     <a id="clicksendtoExcel">
+      <img src="css/pic/general/Excel.png">
+     </a>
+    </li>
+    <li id="LINE" class="floatright">
+     <a id="clicksendtoLINE">
+      <img src="css/pic/general/LINE.png">
+     </a>
     </li>
    </ul>
   </div>
@@ -604,6 +604,16 @@
  </table>
 </div>
 
+<div id="dialogSlider">
+  <span id="begindate"></span>
+  <span id="enddate"></span>
+  <br>
+  <input type="range" min="0" max="1600" id="slider">
+  <br>
+  <br>
+  <span id="thumbdate"></span>
+</div>
+
 <table id="residentcells">
   <tbody>
    <tr>
@@ -618,25 +628,6 @@
 <div id="dialogResResearch">
  <canvas id="chartjs" width="1000" height="600"></canvas>
 </div>
-
-<table id="researchcells">
-  <tbody>
-   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-   </tr>
-  </tbody>
-</table>
 
 <div id="dialogHoliday">
  <table id="holidaytbl">
