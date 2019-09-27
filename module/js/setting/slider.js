@@ -47,7 +47,8 @@ export function slider(evt, barChart, years)
     sliderbegin = pasttime * xScale,
     sliderthumb = thistime * xScale,
     begin = addMillisec(beginx, sliderbegin),
-    thumb = addMillisec(beginx, sliderthumb);
+    thumb = addMillisec(beginx, sliderthumb),
+    minvalue = 10
 
   _xScale = xScale
   _begindate = begin
@@ -70,7 +71,9 @@ export function slider(evt, barChart, years)
     buttons: [{
       text: "OK",
       click: function() {
-        updateResearch(barChart, slider.value/scale, ridx, cidx)
+        let value = slider.value/scale
+        value = value < minvalue ? minvalue : value
+        updateResearch(barChart, value, ridx, cidx)
         $dialogSlider.dialog("close")
       }
     }]
@@ -85,13 +88,6 @@ export function slider(evt, barChart, years)
   slider.oninput = function() {
     updateEndDate(slider.value/scale)
   }
-}
-
-function addMillisec(beginx, millisec)
-{
-  let begin = new Date(beginx.getTime())
-
-  return new Date(begin.setTime(begin.getTime() + millisec))
 }
 
 export function updateEndDate(sliderval)
@@ -110,4 +106,11 @@ export function updateEndDate(sliderval)
   thumbdate.style.top = slider.offsetHeight*3 + 'px';
   thumbdate.style.left = px + 'px';
   thumbdate.innerHTML = endval;
+}
+
+function addMillisec(beginx, millisec)
+{
+  let begin = new Date(beginx.getTime())
+
+  return new Date(begin.setTime(begin.getTime() + millisec))
 }

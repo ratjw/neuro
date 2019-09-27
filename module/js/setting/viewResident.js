@@ -31,14 +31,14 @@ export async function viewResident()
     let clone = $residentcellstr.clone(),
       clone0 = clone[0],
       cells = clone0.cells,
-      save = clone.find("td").eq(3)
+      ccell3 = clone.find("td").eq(3)
     clone.appendTo($residenttbltbody)
     cells[0].innerHTML = ""
     cells[1].innerHTML = ""
     cells[2].innerHTML = ""
     cells[3].innerHTML = "Save"
-    save.one("click", function() {
-      saveResident(clone0, 1)
+    ccell3.one("click", function() {
+      saveResident(clone0)
     })
   } else {
     $.each( RESIDENT, (i, item) => {

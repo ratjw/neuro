@@ -12,16 +12,17 @@ export const RESEARCHBAR = [
   {"label": "Complete", "progress": "complete", "color": "red"}
 ]
 
-export const xRange = 2000
+// Neurosurgery residency training is for the 5 years
+export const xRange = 2000,
+              training = 5
 
 // xRange (xAxis length) is the span of 10 years
-const training = 5,
-  endmonth = 4,
+const endmonth = 4,
   today = new Date(),
   thisY = today.getFullYear(),
   thisyear = thisY + 543,
   add = (today.getMonth() > endmonth) ? 1 : 0,
-  yearth = thisyear + add,
+  yearadd = thisyear + add,
   firstDate = new Date(`${thisY + add - training}`),
   lastDate = new Date(`${thisY + add + training}`),
   interval = lastDate - firstDate
@@ -36,25 +37,15 @@ export function prepareData()
 
 export function prepareYears()
 {
-  let years = {
-    range: [],
-    today: 0
-  },
-  year = yearth - training
-
-  while (year < yearth + training) {
-    years.range.push(year)
-    year++
+  return {
+    range: [...Array(training*2)].map((e,i) => yearadd - training + i),
+    today: (today - firstDate) / interval * xRange
   }
-  years.today = (today - firstDate) / interval * xRange
-
-  return years
 }
 
 function calcDatasets()
 {
   // X axis is double the research time range, because half of it is the white bars
-  // In DB, total time of each resident is for the 5 years training
   const tick = xRange / 2 / training,
     enrollyears = RESIDENT.map(e => Number(e.enrollyear)),
     research = RESIDENT.map(e => JSON.parse(e.research))
@@ -64,7 +55,7 @@ function calcDatasets()
       return {
         label: r.label,
         backgroundColor: enrollyears.map(e => r.color),
-        data: enrollyears.map(e => (training + e - yearth)*tick + tick/2)
+        data: enrollyears.map(e => (training + e - yearadd)*tick + tick/2)
       }
     } else {
       return {

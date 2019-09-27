@@ -13,7 +13,8 @@ export function sqlDoSaveStaff(row)
 
   if (!staffname) { return "<br>Incomplete Entry" }
 
-  let sql = `sqlReturnStaff=UPDATE staff SET number=number${encodeURIComponent('+')}1)}
+  let add = encodeURIComponent('+'),
+    sql = `sqlReturnStaff=UPDATE staff SET number=number${add}1
                WHERE number>${rownum-1};
              INSERT INTO staff (number,staffname,oncall,startoncall)
                VALUES(${rownum},'${staffname}',${oncall},${startoncall});`
@@ -31,7 +32,7 @@ export function sqlDoUpdateStaff(row)
 
   if (!number || !staffname || !oncall) { return "<br>Incomplete Entry" }
 
-  if (confirm("ต้องการแก้ไขข้อมูลนี้")) {
+  if (confirm(`Confirm update this item\n\n${staffname}`)) {
     startoncall = startoncall ? `'${startoncall}'` : null
 
     let sql = `sqlReturnStaff=UPDATE staff SET staffname='${staffname}',
@@ -46,12 +47,13 @@ export function sqlDoDeleteStaff(row)
   let rownum = row.rowIndex
   let cell = row.cells
   let number = cell[0].textContent
+  let staffname = cell[1].textContent
 
   if (!number) { return "<br>No Number" }
 
-  if (confirm("ต้องการลบข้อมูลนี้หรือไม่")) {
+  if (confirm(`ต้องการลบออก\n\n${staffname}`)) {
     let sql = `sqlReturnStaff=DELETE FROM staff WHERE number=${number};
-             UPDATE staff SET number=${URIcomponent('number-1')}
+             UPDATE staff SET number=number-1
                WHERE number>${rownum};`
 
     return postData(MYSQLIPHP, sql)

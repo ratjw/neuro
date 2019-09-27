@@ -2,14 +2,14 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
 import { viewResident } from "../setting/viewResident.js"
-import { RESEARCHBAR } from '../setting/prepareData.js'
+import { RESEARCHBAR, training } from '../setting/prepareData.js'
 import { resResearch } from '../setting/resResearch.js'
 
 export let RESIDENT = []
 
 export async function getResident()
 {
-  let sql = `sqlReturnResident=`
+  let sql = `sqlReturnResident=&training=${training}`
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -23,12 +23,12 @@ export function addResident(row)
 {
   let residenttr = document.querySelector("#residentcells tr")
   let clone = residenttr.cloneNode(true)
-  let save = clone.cells[3]
+  let ccell3 = clone.cells[3]
 
-  save.innerHTML = "Save"
+  ccell3.innerHTML = "Save"
   row.after(clone)
-  save.addEventListener("click", function() {
-    saveResident(clone, 1)
+  ccell3.addEventListener("click", function() {
+    saveResident(clone)
   })
 }
 
@@ -42,7 +42,7 @@ export async function saveResident(row)
   if (!residentname || !enrollyear) { return "<br>Incomplete Entry" }
 
   let sql = `sqlReturnResident=INSERT INTO resident (ramaid,residentname,enrollyear)
-               VALUES('${ramaid}','${residentname}','${enrollyear}');`
+               VALUES('${ramaid}','${residentname}','${enrollyear}');&training=${training}`
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -64,7 +64,7 @@ export async function updateResident(row)
   if (confirm("ต้องการแก้ไขข้อมูลนี้")) {
     let sql = `sqlReturnResident=UPDATE resident
                SET residentname='${residentname}',enrollyear='${enrollyear}'
-               WHERE ramaid=${ramaid};`
+               WHERE ramaid=${ramaid};&training=${training}`
     let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
@@ -82,7 +82,8 @@ export async function deleteResident(row)
   if (!ramaid) { return "<br>No Number" }
 
   if (confirm("ต้องการลบข้อมูลนี้หรือไม่")) {
-    let sql = `sqlReturnResident=DELETE FROM resident WHERE ramaid=${ramaid};`
+    let sql = `sqlReturnResident=DELETE FROM resident 
+               WHERE ramaid=${ramaid};&training=${training}`
     let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
@@ -105,8 +106,8 @@ export async function updateResearch(barChart, newval, ridx, cidx)
   let progressval = newval
 
   let sql = `sqlReturnResident=UPDATE resident
-             SET research=JSON_SET(research,'$.${progress}','${progressval}')
-             WHERE ramaid=${ramaid};`
+             SET research=JSON_SET(research,'$.${progress}',${progressval})
+             WHERE ramaid=${ramaid};&training=${training}`
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {

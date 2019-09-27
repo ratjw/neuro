@@ -19,7 +19,7 @@ require_once "book.php";
 		echo returnData($mysqli, $_POST['sqlReturnData']);
 	}
 	else if (isset($_POST['sqlReturnResident'])) {
-		echo returnResident($mysqli, $_POST['sqlReturnResident']);
+		echo returnResident($mysqli, $_POST['sqlReturnResident'], $_POST['training']);
 	}
 	else if (isset($_POST['sqlReturnStaff'])) {
 		echo returnStaff($mysqli, $_POST['sqlReturnStaff']);
@@ -67,7 +67,7 @@ function returnData($mysqli, $sql)
 	}
 }
 
-function returnResident($mysqli, $sql)
+function returnResident($mysqli, $sql, $training)
 {
 	$data = array();
   $return = array();
@@ -77,7 +77,7 @@ function returnResident($mysqli, $sql)
 	if (is_string($return)) {
 		return $return;
 	} else {
-		$data["RESIDENT"] = getResident($mysqli);
+		$data["RESIDENT"] = getResident($mysqli, $training);
 		return json_encode($data);
 	}
 }
@@ -94,12 +94,11 @@ function returnStaff($mysqli, $sql)
 	}
 }
 
-function getResident($mysqli)
+function getResident($mysqli, $training)
 {
 	$year = date("Y") + 543;
   $month = date("m");
   $endmonth = 4;
-  $training = 5;
   $yearth = ($month > $endmonth) ? ($year + 1) : $year;
   $sql = "SELECT * FROM resident WHERE $yearth-enrollyear<=$training ORDER BY enrollyear,ramaid;";
 	return multiquery($mysqli, $sql);
