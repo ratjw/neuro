@@ -32,7 +32,7 @@ export function sqlDoUpdateStaff(row)
 
   if (!number || !staffname || !oncall) { return "<br>Incomplete Entry" }
 
-  if (confirm(`Confirm update this item\n\n${staffname}`)) {
+  if (confirm(`Confirm update?\n\n${staffname}`)) {
     startoncall = startoncall ? `'${startoncall}'` : null
 
     let sql = `sqlReturnStaff=UPDATE staff SET staffname='${staffname}',
@@ -51,7 +51,7 @@ export function sqlDoDeleteStaff(row)
 
   if (!number) { return "<br>No Number" }
 
-  if (confirm(`ต้องการลบออก\n\n${staffname}`)) {
+  if (confirm(`Confirm delete?\n\n${staffname}`)) {
     let sql = `sqlReturnStaff=DELETE FROM staff WHERE number=${number};
              UPDATE staff SET number=number-1
                WHERE number>${rownum};`

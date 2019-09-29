@@ -39,7 +39,10 @@ export async function saveResident(row)
   let residentname = cell[1].textContent
   let enrollyear = cell[2].textContent
 
-  if (!residentname || !enrollyear) { return "<br>Incomplete Entry" }
+  if (!residentname || !enrollyear) {
+    Alert("saveResident", "<br>Incomplete Entry")
+    return
+  }
 
   let sql = `sqlReturnResident=INSERT INTO resident (ramaid,residentname,enrollyear)
                VALUES('${ramaid}','${residentname}','${enrollyear}');&training=${training}`
