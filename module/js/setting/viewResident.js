@@ -33,10 +33,7 @@ export async function viewResident()
       cells = clone0.cells,
       ccell3 = clone.find("td").eq(3)
     clone.appendTo($residenttbltbody)
-    cells[0].innerHTML = ""
-    cells[1].innerHTML = ""
-    cells[2].innerHTML = ""
-    cells[3].innerHTML = "Save"
+;   ["", "", "", "", "Save"].forEach((e, i) => { cells[i].innerHTML = e })
     ccell3.one("click", function() {
       saveResident(clone0)
     })
@@ -61,6 +58,14 @@ export async function viewResident()
     width: "auto",
     height: ($dialogResident.height() > maxHeight) ? maxHeight : 'auto'
   })
+  .keydown(event => {
+    let keycode = event.which || window.Event.keyCode
+    if (keycode === 13) {
+      $("#residenttbl tr").each(function() {
+        if (this.cells[3].innerHTML === "Save") { doSaveStaff(this) }
+      })
+    }
+  })
 }
 
 jQuery.fn.extend({
@@ -69,9 +74,10 @@ jQuery.fn.extend({
     let row = this[0]
     let cells = row.cells
 
-    cells[0].innerHTML = q.ramaid
-    cells[1].innerHTML = q.residentname
-    cells[2].innerHTML = q.enrollyear
-    cells[3].innerHTML = IMAGEALL
+;   [ q.ramaid,
+      q.residentname,
+      q.enrollyear,
+      IMAGEALL
+    ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })

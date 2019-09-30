@@ -32,12 +32,9 @@ export function viewStaff()
       cells = clone0.cells,
       save = clone.find("td").eq(3)
     clone.appendTo($stafftbltbody)
-    cells[0].innerHTML = ""
-    cells[1].innerHTML = ""
-    cells[2].innerHTML = ""
-    cells[3].innerHTML = "Save"
+;   ["", "", "", "", "Save"].forEach((e, i) => { cells[i].innerHTML = e })
     save.one("click", function() {
-      doSaveStaff(clone0, 1)
+      doSaveStaff(clone0)
     })
   } else {
     $.each( STAFF, (i, item) => {
@@ -60,6 +57,14 @@ export function viewStaff()
     width: "auto",
     height: ($dialogStaff.height() > maxHeight) ? maxHeight : 'auto'
   })
+  .keydown(event => {
+    let keycode = event.which || window.Event.keyCode
+    if (keycode === 13) {
+      $("#stafftbl tr").each(function() {
+        if (this.cells[4].innerHTML === "Save") { doSaveStaff(this) }
+      })
+    }
+  })
 }
 
 jQuery.fn.extend({
@@ -68,11 +73,12 @@ jQuery.fn.extend({
     let row = this[0]
     let cells = row.cells
 
-    cells[0].innerHTML = q.number
-    cells[1].innerHTML = q.staffname
-    cells[2].innerHTML = q.oncall
-    cells[3].innerHTML = q.startoncall
-    cells[4].innerHTML = IMAGEALL
+;   [ q.number,
+      q.staffname,
+      q.oncall,
+      q.startoncall,
+      IMAGEALL
+    ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
 
@@ -80,13 +86,15 @@ function doAddStaff(row)
 {
   let stafftr = document.querySelector("#staffcells tr")
   let clone = stafftr.cloneNode(true)
-  let save = clone.cells[4]
+  let ccell0 = clone.cells[0]
+  let ccell4 = clone.cells[4]
 
-  save.innerHTML = "Save"
+  ccell4.innerHTML = "Save"
   row.after(clone)
-  save.addEventListener("click", function() {
-    doSaveStaff(clone, 1)
+  ccell4.addEventListener("click", function() {
+    doSaveStaff(clone)
   })
+  ccell0.focus()
 }
 
 async function doSaveStaff(row)

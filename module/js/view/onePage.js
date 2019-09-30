@@ -93,7 +93,7 @@ jQuery.fn.extend({
     }
     q.hn && isPACS && (cells[2].className = "pacs")
 
-;    [  putThdate(q.opdate),
+;   [ putThdate(q.opdate),
       q.staffname,
       q.hn,
       q.patient,

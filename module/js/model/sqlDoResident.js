@@ -23,6 +23,7 @@ export function addResident(row)
 {
   let residenttr = document.querySelector("#residentcells tr")
   let clone = residenttr.cloneNode(true)
+  let ccell0 = clone.cells[0]
   let ccell3 = clone.cells[3]
 
   ccell3.innerHTML = "Save"
@@ -30,6 +31,7 @@ export function addResident(row)
   ccell3.addEventListener("click", function() {
     saveResident(clone)
   })
+  ccell0.focus()
 }
 
 export async function saveResident(row)
