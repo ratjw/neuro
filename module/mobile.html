@@ -15,6 +15,7 @@
 <script src="js/jquery.mousewheel.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/main.js" type="module"></script>
+<script src="js/chart.min.js"></script>
 
 </HEAD>
 <BODY>
@@ -104,24 +105,20 @@
         <a id="delcase"></a>
       </li>
      </ul>
-    </li-->
-    <li id="EXCEL" class="floatright">
-     <a id="clicksendtoExcel">
-      <img src="css/pic/general/Excel.png">
-     </a>
     </li>
-    <li id="LINE" class="floatright narrow">
-     <a id="clicksendtoLINE">
-      <img src="css/pic/general/LINE.png">
-     </a>
-    </li>
-    <!--li id="submenu" class="floatright">
+    <li id="submenu" class="floatright">
      <a>
       <img src="css/pic/general/submenu.png">
      </a>
-     <ul>
+     <ul class="right">
       <li>
-        <a id="clickaddStaff">Resident Research</a>
+        <a id="clickresEPA">Resident EPA</a>
+      </li>
+      <li>
+        <a id="clickresResearch">Resident Research</a>
+      </li>
+      <li>
+        <a id="clickaddResident">Resident Setting</a>
       </li>
       <li>
         <a id="clickaddStaff">Staff Setting</a>
@@ -134,6 +131,16 @@
       </li>
      </ul>
     </li -->
+    <li id="EXCEL" class="floatright">
+     <a id="clicksendtoExcel">
+      <img src="css/pic/general/Excel.png">
+     </a>
+    </li>
+    <li id="LINE" class="floatright narrow">
+     <a id="clicksendtoLINE">
+      <img src="css/pic/general/LINE.png">
+     </a>
+    </li>
    </ul>
   </div>
 
@@ -555,40 +562,72 @@
 </table>
 <!-- 
 <div id="dialogStaff">
-  <table id="stafftbl">
-   <thead>
-  <tr>
-    <td>Name : <input type="text" id="sname" size="10"></td>
-    <td>Specialty : <select id="specialty"><option></option></select></td>
-    <td>Date Oncall : <input type="text" id="soncall" size="10" readonly>
-             <input id="snumber" type="hidden">
-    </td>
-  </tr>
-  <tr>
-    <td><button id="clickdoAddStaff">AddStaff</button></td>
-    <td><button id="clickdoUpdateStaff">UpdateStaff</button></td>
-    <td><button id="clickdoDeleteStaff">DeleteStaff</button></td>
-  </tr>
-    <tr>
-    <th>Staff</th>
-    <th>Specialty</th>
-    <th>Start Date Oncall</th>
-    </tr>
-   </thead>
-   <tbody>
-   </tbody>
-  </table>
+ <table id="stafftbl">
+  <thead>
+   <tr>
+    <th>№</th>
+    <th>Staff Name</th>
+    <th>Oncall</th>
+    <th>Restart Oncall</th>
+    <th>Add Upd Del</th>
+   </tr>
+  </thead>
+  <tbody>
+  </tbody>
+ </table>
 </div>
 
 <table id="staffcells">
   <tbody>
    <tr>
     <td></td>
-    <td></td>
+    <td contentEditable></td>
+    <td contentEditable></td>
+    <td contentEditable></td>
     <td></td>
    </tr>
   </tbody>
 </table>
+
+<div id="dialogResident">
+ <table id="residenttbl">
+  <thead>
+   <tr>
+    <th>Rama ID</th>
+    <th>Resident Name</th>
+    <th>ปีเข้า</th>
+    <th>Add Upd Del</th>
+   </tr>
+  </thead>
+  <tbody>
+  </tbody>
+ </table>
+</div>
+
+<div id="dialogSlider">
+  <span id="begindate"></span>
+  <span id="enddate"></span>
+  <br>
+  <input type="range" min="0" max="1600" id="slider">
+  <br>
+  <br>
+  <span id="thumbdate"></span>
+</div>
+
+<table id="residentcells">
+  <tbody>
+   <tr>
+    <td contentEditable></td>
+    <td contentEditable></td>
+    <td contentEditable></td>
+    <td></td>
+   </tr>
+  </tbody>
+</table>
+
+<div id="dialogResResearch">
+ <canvas id="chartjs"></canvas>
+</div>
 
 <div id="dialogHoliday">
  <table id="holidaytbl">

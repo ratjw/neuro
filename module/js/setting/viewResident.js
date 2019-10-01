@@ -62,7 +62,7 @@ export async function viewResident()
     let keycode = event.which || window.Event.keyCode
     if (keycode === 13) {
       $("#residenttbl tr").each(function() {
-        if (this.cells[3].innerHTML === "Save") { doSaveStaff(this) }
+        if (this.cells[3].innerHTML === "Save") { saveResident(this) }
       })
     }
   })
