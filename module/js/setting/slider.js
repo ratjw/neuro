@@ -3,14 +3,24 @@ import { updateResearch } from "../model/sqlDoResident.js"
 import { ISOdate, thDate } from "../util/date.js"
 import { winWidth } from "../util/util.js"
 import { xRange } from '../setting/prepareData.js'
+import { STAFF } from "../util/updateBOOK.js"
+import { USER } from "../main.js"
+import { RESIDENT } from "../model/sqlDoResident.js"
 
 let _xScale,
     _begindate
 
 export function slider(evt, barChart, years)
 {
-  const activePoint = barChart.getElementAtEvent(evt)
+  const activePoint = barChart.getElementAtEvent(evt),
+    staff = STAFF.map(e => e.ramaid),
+    resident = RESIDENT.map(e => e.ramaid),
+    userStaff = staff.includes(USER),
+    userResident = resident.includes(USER),
+    admin = USER === '000000' || '005497'
+
   if (!activePoint.length) { return }
+  if (!(userStaff || userResident || admin)) { return }
 
   const $dialogSlider = $('#dialogSlider'),
     slider = document.getElementById('slider'),

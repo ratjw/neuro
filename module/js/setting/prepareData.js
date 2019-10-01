@@ -25,7 +25,17 @@ const endmonth = 4,
   yearadd = thisyear + add,
   firstDate = new Date(`${thisY + add - training}`),
   lastDate = new Date(`${thisY + add + training}`),
-  interval = lastDate - firstDate
+  interval = lastDate - firstDate,
+  tick = xRange / 2 / training,
+  month = tick / 12,
+  defaultTime = { proposal: month*3,
+                ethic: month*9,
+                planning: month*12,
+                "data50": month*18,
+                "data100": month*12,
+                analysis: month*5,
+                complete: month*1
+              }
 
 export function prepareData()
 {
@@ -46,21 +56,11 @@ export function prepareYears()
 function calcDatasets()
 {
   // X axis is double the research time range, because half of it is the white bars
-  const tick = xRange / 2 / training,
-    month = tick / 12,
-    enrollyears = RESIDENT.map(e => Number(e.enrollyear)),
+  const enrollyears = RESIDENT.map(e => Number(e.enrollyear)),
     research = RESIDENT.map(e => {
       return e.research
               ? JSON.parse(e.research)
-              : {
-                  proposal: month*3,
-                  ethic: month*9,
-                  planning: month*12,
-                  "data50": month*18,
-                  "data100": month*12,
-                  analysis: month*5,
-                  complete: month*1
-                }
+              : defaultTime
     })
 
   return RESEARCHBAR.map((r, i) => {

@@ -32,7 +32,7 @@ export function viewStaff()
       cells = clone0.cells,
       save = clone.find("td").eq(3)
     clone.appendTo($stafftbltbody)
-;   ["", "", "", "", "Save"].forEach((e, i) => { cells[i].innerHTML = e })
+;   ["", "", "", "", "", "Save"].forEach((e, i) => { clone0.cells[i].innerHTML = e })
     save.one("click", function() {
       doSaveStaff(clone0)
     })
@@ -75,6 +75,7 @@ jQuery.fn.extend({
 
 ;   [ q.number,
       q.staffname,
+      q.ramaid,
       q.oncall,
       q.startoncall,
       IMAGEALL

@@ -8,16 +8,17 @@ export function sqlDoSaveStaff(row)
   let rownum = row.rowIndex
   let cell = row.cells
   let staffname = cell[1].textContent
-  let oncall = cell[2].textContent || 1
-  let startoncall = cell[3].textContent ? `'${cell[3].textContent}'` : null
+  let ramaid = cell[2].textContent
+  let oncall = cell[3].textContent || 1
+  let startoncall = cell[4].textContent ? `'${cell[3].textContent}'` : null
 
   if (!staffname) { return "<br>Incomplete Entry" }
 
   let add = encodeURIComponent('+'),
     sql = `sqlReturnStaff=UPDATE staff SET number=number${add}1
                WHERE number>${rownum-1};
-             INSERT INTO staff (number,staffname,oncall,startoncall)
-               VALUES(${rownum},'${staffname}',${oncall},${startoncall});`
+             INSERT INTO staff (number,staffname,ramaid,oncall,startoncall)
+               VALUES(${rownum},'${staffname}','${ramaid}',${oncall},${startoncall});`
 
   return postData(MYSQLIPHP, sql)
 }
@@ -27,15 +28,16 @@ export function sqlDoUpdateStaff(row)
   let cell = row.cells
   let number = cell[0].textContent
   let staffname = cell[1].textContent
-  let oncall = cell[2].textContent
-  let startoncall = cell[3].textContent
+  let ramaid = cell[2].textContent
+  let oncall = cell[3].textContent
+  let startoncall = cell[4].textContent
 
   if (!number || !staffname || !oncall) { return "<br>Incomplete Entry" }
 
   if (confirm(`Confirm update?\n\n${staffname}`)) {
     startoncall = startoncall ? `'${startoncall}'` : null
 
-    let sql = `sqlReturnStaff=UPDATE staff SET staffname='${staffname}',
+    let sql = `sqlReturnStaff=UPDATE staff SET staffname='${staffname}',ramaid='${ramaid}',
                oncall=${oncall},startoncall=${startoncall} WHERE number=${number};`
 
     return postData(MYSQLIPHP, sql)

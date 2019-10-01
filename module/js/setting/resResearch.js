@@ -65,7 +65,7 @@ export async function resResearch()
     }
   })
 
-  //Create the plug in
+  //Create the plug-in for vertical line on horizontal bar chart
   var originalLineDraw = Chart.controllers.horizontalBar.prototype.draw;
   Chart.helpers.extend(Chart.controllers.horizontalBar.prototype, {
   

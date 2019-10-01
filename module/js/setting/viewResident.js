@@ -33,7 +33,7 @@ export async function viewResident()
       cells = clone0.cells,
       ccell3 = clone.find("td").eq(3)
     clone.appendTo($residenttbltbody)
-;   ["", "", "", "", "Save"].forEach((e, i) => { cells[i].innerHTML = e })
+;   ["", "", "", "Save"].forEach((e, i) => { clone0.cells[i].innerHTML = e })
     ccell3.one("click", function() {
       saveResident(clone0)
     })
