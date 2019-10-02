@@ -1,8 +1,8 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
-import { viewResident } from "../setting/viewResident.js"
-import { RESEARCHBAR, training } from '../setting/prepareData.js'
+import { RAMAID, RNAME, ENYEAR, ICONS, viewResident } from "../setting/viewResident.js"
+import { xRange, training, RESEARCHBAR } from '../setting/prepareData.js'
 import { resResearch } from '../setting/resResearch.js'
 
 export let RESIDENT = []
@@ -23,31 +23,43 @@ export function addResident(row)
 {
   let residenttr = document.querySelector("#residentcells tr")
   let clone = residenttr.cloneNode(true)
-  let ccell0 = clone.cells[0]
-  let ccell3 = clone.cells[3]
+  let ramaid = clone.cells[RAMAID]
+  let icon = clone.cells[ICONS]
 
-  ccell3.innerHTML = "Save"
+  icon.innerHTML = "Save"
   row.after(clone)
-  ccell3.addEventListener("click", function() {
+  icon.addEventListener("click", function() {
     saveResident(clone)
   })
-  ccell0.focus()
+  ramaid.focus()
 }
 
 export async function saveResident(row)
 {
   let cell = row.cells
-  let ramaid = cell[0].textContent
-  let residentname = cell[1].textContent
-  let enrollyear = cell[2].textContent
+  let ramaid = cell[RAMAID].textContent
+  let residentname = cell[RNAME].textContent
+  let enrollyear = cell[ENYEAR].textContent
+
+  // X axis is double the research time range, because half of it is the white bars
+  let fulltrain = xRange / 2
+  let month = fulltrain / training / 12
+  let research = JSON.stringify({ proposal: month*3,
+                   planning: month*12,
+                   ethic: month*9,
+                   "data50": month*18,
+                   "data100": month*15,
+                   analysis: month*2,
+                   complete: month*1
+                 })
 
   if (!residentname || !enrollyear) {
     Alert("saveResident", "<br>Incomplete Entry")
     return
   }
 
-  let sql = `sqlReturnResident=INSERT INTO resident (ramaid,residentname,enrollyear)
-               VALUES('${ramaid}','${residentname}','${enrollyear}');&training=${training}`
+  let sql = `sqlReturnResident=INSERT INTO resident (ramaid,residentname,enrollyear,research)
+               VALUES('${ramaid}','${residentname}','${enrollyear}','${research}');&training=${training}`
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -60,16 +72,17 @@ export async function saveResident(row)
 export async function updateResident(row)
 {
   let cell = row.cells
-  let ramaid = cell[0].textContent
-  let residentname = cell[1].textContent
-  let enrollyear = cell[2].textContent
+  let oldramaid = row.dataset.ramaid
+  let newramaid = cell[RAMAID].textContent
+  let residentname = cell[RNAME].textContent
+  let enrollyear = cell[ENYEAR].textContent
 
   if (!residentname || !enrollyear) { return "<br>Incomplete Entry" }
 
   if (confirm("ต้องการแก้ไขข้อมูลนี้")) {
     let sql = `sqlReturnResident=UPDATE resident
-               SET residentname='${residentname}',enrollyear='${enrollyear}'
-               WHERE ramaid=${ramaid};&training=${training}`
+               SET ramaid='${newramaid}',residentname='${residentname}',enrollyear='${enrollyear}'
+               WHERE ramaid=${oldramaid};&training=${training}`
     let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
@@ -82,7 +95,7 @@ export async function updateResident(row)
 export async function deleteResident(row)
 {
   let cell = row.cells
-  let ramaid = cell[0].textContent
+  let ramaid = cell[RAMAID].textContent
 
   if (!ramaid) { return "<br>No Number" }
 
@@ -117,9 +130,37 @@ export async function updateResearch(barChart, newval, ridx, cidx)
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
     RESIDENT = response.RESIDENT
-    barChart.data.datasets[cidx].data[ridx] = newval
-    barChart.update()
+    updateBar(barChart, ridx)
   } else {
     Alert("getResident", response)
   }  
 }
+
+function updateBar(barChart, ridx)
+{
+  let fulltrain = xRange / 2
+  let bardataset = barChart.data.datasets
+  let sumMonths = 0
+  let time = 0
+  let research = JSON.parse(RESIDENT[ridx].research)
+  let resbar = RESEARCHBAR.map(e => e.progress)
+
+  resbar.filter(e => e).forEach(key => {
+    let time = research[key]
+    if (sumMonths + time <= fulltrain) {
+      sumMonths += time
+    } else {
+      research[key] = fulltrain - sumMonths
+      sumMonths = fulltrain
+    }
+  })
+
+  bardataset.forEach((e, i) => {
+    if (i) {
+      e.data[ridx] = research[resbar[i]]
+    }
+  })
+
+  barChart.update()
+}
+

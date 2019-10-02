@@ -4,6 +4,11 @@ import {
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
+export const RAMAID = 0,
+  RNAME = 1,
+  ENYEAR = 2,
+  ICONS = 3
+
 const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
   IMAGE2 = `<img class="image2" src="css/pic/general/update.png">`,
   IMAGE3 = `<img class="image3" src="css/pic/general/delete.png">`,
@@ -11,7 +16,7 @@ const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
 
 export async function viewResident()
 {
-  const IMAGE = {
+  const IMAGES = {
     image1: addResident,
     image2: updateResident,
     image3: deleteResident
@@ -28,14 +33,14 @@ export async function viewResident()
   if (!RESIDENT.length) { await getResident() }
 
   if (!RESIDENT.length) {
-    let clone = $residentcellstr.clone(),
-      clone0 = clone[0],
-      cells = clone0.cells,
-      ccell3 = clone.find("td").eq(3)
-    clone.appendTo($residenttbltbody)
-;   ["", "", "", "Save"].forEach((e, i) => { clone0.cells[i].innerHTML = e })
-    ccell3.one("click", function() {
-      saveResident(clone0)
+    let $clone = $residentcellstr.clone(),
+      clone = $clone[0],
+      cells = clone.cells,
+      $icon = $clone.find("td").eq(ICONS)
+    $clone.appendTo($residenttbltbody)
+;   ["", "", "", "Save"].forEach((e, i) => { clone.cells[i].innerHTML = e })
+    $icon.one("click", function() {
+      saveResident(clone)
     })
   } else {
     $.each( RESIDENT, (i, item) => {
@@ -44,7 +49,7 @@ export async function viewResident()
           .filldataResident(i, item)
     })
     $("#dialogResident").off("click", "img").on("click", "img", function() {
-      IMAGE[this.className].call(this, this.closest("tr"))
+      IMAGES[this.className].call(this, this.closest("tr"))
     })
   }
 
@@ -58,12 +63,13 @@ export async function viewResident()
     width: "auto",
     height: ($dialogResident.height() > maxHeight) ? maxHeight : 'auto'
   })
-  .keydown(event => {
+  .off('keydown').on('keydown', event => {
     let keycode = event.which || window.Event.keyCode
     if (keycode === 13) {
-      $("#residenttbl tr").each(function() {
-        if (this.cells[3].innerHTML === "Save") { saveResident(this) }
-      })
+      let save = [...document.querySelectorAll("#residenttbl tr")].find(e => 
+        e.cells[3].innerHTML === "Save"
+      )
+      if (save) { saveResident(save) }
     }
   })
 }
@@ -74,6 +80,7 @@ jQuery.fn.extend({
     let row = this[0]
     let cells = row.cells
 
+    row.dataset.ramaid = q.ramaid
 ;   [ q.ramaid,
       q.residentname,
       q.enrollyear,

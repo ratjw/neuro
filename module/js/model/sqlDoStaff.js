@@ -2,15 +2,16 @@
 import { STAFF } from "../util/updateBOOK.js"
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { URIcomponent } from "../util/util.js"
+import { NUMBER, STAFFNAME, RAMAID, ONCALL, STARTONCALL, ICONS } from '../setting/viewStaff.js'
 
 export function sqlDoSaveStaff(row)
 {
   let rownum = row.rowIndex
   let cell = row.cells
-  let staffname = cell[1].textContent
-  let ramaid = cell[2].textContent
-  let oncall = cell[3].textContent || 1
-  let startoncall = cell[4].textContent ? `'${cell[3].textContent}'` : null
+  let staffname = cell[STAFFNAME].textContent
+  let ramaid = cell[RAMAID].textContent
+  let oncall = cell[ONCALL].textContent || 1
+  let startoncall = cell[STARTONCALL].textContent ? `'${cell[STARTONCALL].textContent}'` : null
 
   if (!staffname) { return "<br>Incomplete Entry" }
 
@@ -26,11 +27,11 @@ export function sqlDoSaveStaff(row)
 export function sqlDoUpdateStaff(row)
 {
   let cell = row.cells
-  let number = cell[0].textContent
-  let staffname = cell[1].textContent
-  let ramaid = cell[2].textContent
-  let oncall = cell[3].textContent
-  let startoncall = cell[4].textContent
+  let number = cell[NUMBER].textContent
+  let staffname = cell[STAFFNAME].textContent
+  let ramaid = cell[RAMAID].textContent
+  let oncall = cell[ONCALL].textContent
+  let startoncall = cell[STARTONCALL].textContent
 
   if (!number || !staffname || !oncall) { return "<br>Incomplete Entry" }
 
@@ -48,8 +49,8 @@ export function sqlDoDeleteStaff(row)
 {
   let rownum = row.rowIndex
   let cell = row.cells
-  let number = cell[0].textContent
-  let staffname = cell[1].textContent
+  let number = cell[NUMBER].textContent
+  let staffname = cell[STAFFNAME].textContent
 
   if (!number) { return "<br>No Number" }
 

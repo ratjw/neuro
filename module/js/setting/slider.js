@@ -81,9 +81,9 @@ export function slider(evt, barChart, years)
     buttons: [{
       text: "OK",
       click: function() {
-        let value = slider.value/scale
-        value = value < minvalue ? minvalue : value
-        updateResearch(barChart, value, ridx, cidx)
+        let newval = slider.value/scale
+        newval = newval < minvalue ? minvalue : newval
+        updateResearch(barChart, newval, ridx, cidx)
         $dialogSlider.dialog("close")
       }
     }]
@@ -110,8 +110,8 @@ export function updateEndDate(sliderval)
     thumbdate = document.querySelector('#thumbdate'),
     slidermin = Number(slider.min),      
     slidermax = Number(slider.max),      
-    off = slider.offsetWidth / (slider.max - slider.min),
-    px =  (slider.valueAsNumber - slider.min) * off
+    off = slider.offsetWidth / (slidermax - slidermin),
+    px =  (slider.valueAsNumber - slidermin) * off
 
   thumbdate.style.top = slider.offsetHeight*3 + 'px';
   thumbdate.style.left = px + 'px';

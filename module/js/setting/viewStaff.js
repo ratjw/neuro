@@ -5,6 +5,13 @@ import { STAFF, setSTAFF } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
 
+export const NUMBER = 0,
+              STAFFNAME = 1,
+              RAMAID = 2,
+              ONCALL = 3,
+              STARTONCALL = 4,
+              ICONS = 5
+
 const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
   IMAGE2 = `<img class="image2" src="css/pic/general/update.png">`,
   IMAGE3 = `<img class="image3" src="css/pic/general/delete.png">`,
@@ -27,14 +34,14 @@ export function viewStaff()
   $stafftbltr.slice(1).remove()
 
   if (!STAFF.length) {
-    let clone = $staffcellstr.clone(),
-      clone0 = clone[0],
-      cells = clone0.cells,
-      save = clone.find("td").eq(3)
-    clone.appendTo($stafftbltbody)
-;   ["", "", "", "", "", "Save"].forEach((e, i) => { clone0.cells[i].innerHTML = e })
-    save.one("click", function() {
-      doSaveStaff(clone0)
+    let $clone = $staffcellstr.clone(),
+      clone = $clone[0],
+      cells = clone.cells,
+      $save = $clone.find("td").eq(ICONS)
+    $clone.appendTo($stafftbltbody)
+;   ["", "", "", "", "", "Save"].forEach((e, i) => { clone.cells[i].innerHTML = e })
+    $save.one("click", function() {
+      doSaveStaff(clone)
     })
   } else {
     $.each( STAFF, (i, item) => {
@@ -57,11 +64,11 @@ export function viewStaff()
     width: "auto",
     height: ($dialogStaff.height() > maxHeight) ? maxHeight : 'auto'
   })
-  .keydown(event => {
+  .off('keydown').on('keydown', event => {
     let keycode = event.which || window.Event.keyCode
     if (keycode === 13) {
       $("#stafftbl tr").each(function() {
-        if (this.cells[4].innerHTML === "Save") { doSaveStaff(this) }
+        if (this.cells[ICONS].innerHTML === "Save") { doSaveStaff(this) }
       })
     }
   })
@@ -87,15 +94,15 @@ function doAddStaff(row)
 {
   let stafftr = document.querySelector("#staffcells tr")
   let clone = stafftr.cloneNode(true)
-  let ccell0 = clone.cells[0]
-  let ccell4 = clone.cells[4]
+  let staffname = clone.cells[STAFFNAME]
+  let icons = clone.cells[ICONS]
 
-  ccell4.innerHTML = "Save"
+  icons.innerHTML = "Save"
   row.after(clone)
-  ccell4.addEventListener("click", function() {
+  icons.addEventListener("click", function() {
     doSaveStaff(clone)
   })
-  ccell0.focus()
+  staffname.focus()
 }
 
 async function doSaveStaff(row)
