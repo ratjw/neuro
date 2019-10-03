@@ -13,14 +13,16 @@ let _xScale,
 export function slider(evt, barChart, years)
 {
   const activePoint = barChart.getElementAtEvent(evt),
-    staff = STAFF.map(e => e.ramaid),
-    resident = RESIDENT.map(e => e.ramaid),
-    userStaff = staff.includes(USER),
-    userResident = resident.includes(USER),
+    staffid = STAFF.map(e => e.ramaid),
+    residentid = RESIDENT.map(e => e.ramaid),
+    userStaff = staffid.includes(USER),
+    userResident = residentid.includes(USER),
+    resid = RESIDENT.find(e => e.ramaid === USER),
+    userRname = resid && resid.residentname || '',
     admin = USER === '000000' || '005497'
 
   if (!activePoint.length) { return }
-  if (!(userStaff || userResident || admin)) { return }
+  if (!(userStaff || admin)) { return }
 
   const $dialogSlider = $('#dialogSlider'),
     slider = document.getElementById('slider'),
@@ -64,6 +66,8 @@ export function slider(evt, barChart, years)
   _begindate = begin
 
   if (!cidx || (cidx > 7)) { return }
+  if (userResident && (userRname !== rname)) { return }
+
   slider.value = value * scale
   begindate.innerHTML = thDate(ISOdate(new Date(begin)))
   enddate.innerHTML = thDate(ISOdate(new Date(thumb)))
