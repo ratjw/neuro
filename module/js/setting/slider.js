@@ -22,7 +22,7 @@ export function slider(evt, barChart, years)
     admin = USER === '000000' || '005497'
 
   if (!activePoint.length) { return }
-  if (!(userStaff || admin)) { return }
+  if (!(userStaff || userResident || admin)) { return }
 
   const $dialogSlider = $('#dialogSlider'),
     slider = document.getElementById('slider'),
