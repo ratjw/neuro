@@ -6,6 +6,7 @@ import { xRange } from '../setting/prepareData.js'
 import { STAFF } from "../util/updateBOOK.js"
 import { USER } from "../main.js"
 import { RESIDENT } from "../model/sqlDoResident.js"
+import { ADMIN, SECRETARY } from "../../../login.js"
 
 let _xScale,
     _begindate
@@ -19,10 +20,11 @@ export function slider(evt, barChart, years)
     userResident = residentid.includes(USER),
     resid = RESIDENT.find(e => e.ramaid === USER),
     userRname = resid && resid.residentname || '',
-    admin = USER === '000000' || '005497'
+    admin = USER === ADMIN,
+    secretary = USER === SECRETARY
 
   if (!activePoint.length) { return }
-  if (!(userStaff || userResident || admin)) { return }
+  if (!(userStaff || userResident || admin || secretary)) { return }
 
   const $dialogSlider = $('#dialogSlider'),
     slider = document.getElementById('slider'),

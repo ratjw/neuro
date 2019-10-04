@@ -3,6 +3,7 @@
 		$userid = !empty($_POST['userid']) ? $_POST['userid'] : '';
 		$pwd = !empty($_POST['pwd']) ? $_POST['pwd'] : '';
 		$browser = !empty($_POST['browser']) ? $_POST['browser'] : '';
+		$secretary = !empty($_POST['secretary']) ? $_POST['secretary'] : '';
 
 		$browserDoctor = "location:$browser";
 		$browserNurse = "location:nurse/nurse.html";
@@ -29,7 +30,7 @@
 
 			$staff = $resultz === "S";
       $resident = $resultz === "R";
-      $secretary = $userid === "005497" && $resultz === "G";
+      $secretary = $userid === $secretary && $resultz === "G";
 
       if ($staff || $resident || $secretary) {
 				header($browserDoctor);
