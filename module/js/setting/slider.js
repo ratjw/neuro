@@ -6,7 +6,7 @@ import { xRange } from '../setting/prepareData.js'
 import { STAFF } from "../util/updateBOOK.js"
 import { USER } from "../main.js"
 import { RESIDENT } from "../model/sqlDoResident.js"
-import { ADMIN, SECRETARY } from "../../../login.js"
+import { ADMIN, SECRETARY } from "../main.js"
 
 let _xScale,
     _begindate
@@ -119,7 +119,7 @@ export function updateEndDate(sliderval)
     off = slider.offsetWidth / (slidermax - slidermin),
     px =  (slider.valueAsNumber - slidermin) * off
 
-  thumbdate.style.top = slider.offsetHeight*3 + 'px';
+  thumbdate.style.top = slider.offsetHeight*2 + 'px';
   thumbdate.style.left = px + 'px';
   thumbdate.innerHTML = endval;
 }

@@ -113,6 +113,10 @@
 .copybutton { background-color: skyblue !important }
 .nodate { background-color: #EEEEFF }
 
+#dialogSlider {
+  padding: 0px;
+  overflow: hidden;
+}
 :root {
   --track: #6698FF;
   --progress: #43e5f7;

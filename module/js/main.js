@@ -4,9 +4,11 @@ import { userMobile } from "./control/startMobile.js"
 import { Alert, msie } from "./util/util.js"
 
 // from login.js
-export let USER = sessionStorage.getItem("userid")
+export let ADMIN = sessionStorage.getItem("admin")
+export let SECRETARY = sessionStorage.getItem("secretary")
 export let isMobile = sessionStorage.getItem("isMobile") === 'true'
 export let isPACS = !isMobile && msie()
+export let USER = sessionStorage.getItem("userid")
 
 document.getElementById("wrapper").style.display = "block"
 document.getElementById("mainwrapper").style.height = window.innerHeight

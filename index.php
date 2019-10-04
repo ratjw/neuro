@@ -38,10 +38,10 @@ h4 {
 }
 </style>
 
-<script src="login.js" type="module"></script>
+<script src="login.js"></script>
 
 </HEAD>
-<BODY>
+<BODY onload=login()>
 
 <p id="logo"><img src="logoRama.png"></p>
 
@@ -52,8 +52,7 @@ h4 {
 	<form id="form" method="post" action="login.php">
 		Login ID: <input id="userid" type="text" name="userid"
 					maxlength="6" size="6" value=""
-					oninput="namesix()" 
-					onpropertychange="namesix()">
+					oninput="namesix()" onpropertychange="namesix()">
 		<br>
 		<br>
 		Password: <input id="pwd" type="password" name="pwd"
