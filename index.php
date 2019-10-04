@@ -38,10 +38,10 @@ h4 {
 }
 </style>
 
-<script src="login.js"></script>
+<script src="login.js" type="module"></script>
 
 </HEAD>
-<BODY onload="login()">
+<BODY>
 
 <p id="logo"><img src="logoRama.png"></p>
 
@@ -64,6 +64,7 @@ h4 {
 		<br>
 		<br>
 		<input type="hidden" name="browser" id="browser" />
+		<input type="hidden" name="secretary" id="secretary" />
 	</form>
 </div>
 

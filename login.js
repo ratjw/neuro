@@ -12,19 +12,16 @@ function login()
 //		window.location = "https://" + window.host
 //	}
 
-	// mobile via vpn is in "mobilevpn"
-	// desktop via vpn or old browser is in "es5"
-	// Browsers that support module: Chrome/61, Firefox/60, Edge/16, Safari 10.1
+	// mobile via vpn is to "mobilevpn"
+	// desktop via vpn or old browser is to "es5"
+	// Browsers that support module: Chrome/61, Firefox/60, Safari 10.1
 	// (.*)$ is the second argument
 	var ua = navigator.userAgent
 	var isMobile = /Android|webOS|iPhone|iPad|BlackBerry|IEMobile/i.test(ua)
 	var Chrome = ua.match(/Chrome\/(.*)$/)
 	var Firefox = ua.match(/Firefox\/(.*)$/)
-	var Edge = ua.match(/Edge\/(.*)$/)
 	var Safari = ua.match(/Safari\/(.*)$/)
-	var module = (Edge && Edge.length > 1)
-              ? false
-              : (Chrome && Chrome.length > 1)
+	var module = (Chrome && Chrome.length > 1)
                 ? Chrome[1] >= "61"
                 : (Firefox && Firefox.length > 1)
                   ? Firefox[1] >= "60"
@@ -42,6 +39,7 @@ function login()
                 : "es5/es5.html"
 					
 	document.getElementById("browser").value = browser
+	document.getElementById("secretary").value = SECRETARY
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
 	sessionStorage.setItem('isMobile', isMobile)
   if (location.host === "localhost") {
@@ -54,7 +52,7 @@ function login()
 function namesix()
 {
 	var userid = document.getElementById("userid").value
-	if (/^\d{6}$/.test(userid)) {
+	if (/.{6}$/.test(userid)) {
 		sessionStorage.setItem('userid', userid)
 		document.getElementById("pwd").focus()
 	}
