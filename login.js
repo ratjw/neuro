@@ -1,3 +1,10 @@
+
+export const ADMIN = '000000'
+export const SECRETARY = '005497'
+
+window.login = login
+window.namesix = namesix
+
 function login()
 {
 	// Ridirect to https
@@ -33,14 +40,13 @@ function login()
                   ? "module/mobile.html"
                   : "module/desktop.html"
                 : "es5/es5.html"
-  var admin = '000000'
 					
 	document.getElementById("browser").value = browser
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
 	sessionStorage.setItem('isMobile', isMobile)
   if (location.host === "localhost") {
-    sessionStorage.setItem('userid', admin)
-    document.getElementById("userid").value = admin
+    sessionStorage.setItem('userid', ADMIN)
+    document.getElementById("userid").value = ADMIN
     document.getElementById("form").submit()
   }
 }
