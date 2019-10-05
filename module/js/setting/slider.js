@@ -1,30 +1,19 @@
 
-import { updateResearch } from "../model/sqlDoResident.js"
 import { ISOdate, thDate } from "../util/date.js"
 import { winWidth } from "../util/util.js"
 import { xRange } from '../setting/prepareData.js'
-import { STAFF } from "../util/updateBOOK.js"
+import { RESIDENT, updateResearch } from "../model/sqlDoResident.js"
+import { getPermission } from '../control/setClickAll.js'
 import { USER } from "../main.js"
-import { RESIDENT } from "../model/sqlDoResident.js"
-import { ADMIN, SECRETARY } from "../main.js"
 
 let _xScale,
     _begindate
 
 export function slider(evt, barChart, years)
 {
-  const activePoint = barChart.getElementAtEvent(evt),
-    staffid = STAFF.map(e => e.ramaid),
-    residentid = RESIDENT.map(e => e.ramaid),
-    userStaff = staffid.includes(USER),
-    userResident = residentid.includes(USER),
-    resid = RESIDENT.find(e => e.ramaid === USER),
-    userRname = resid && resid.residentname || '',
-    admin = USER === ADMIN,
-    secretary = USER === SECRETARY
+  const activePoint = barChart.getElementAtEvent(evt)
 
   if (!activePoint.length) { return }
-  if (!(userStaff || userResident || admin || secretary)) { return }
 
   const $dialogSlider = $('#dialogSlider'),
     slider = document.getElementById('slider'),
@@ -61,14 +50,13 @@ export function slider(evt, barChart, years)
     sliderbegin = pasttime * xScale,
     sliderthumb = thistime * xScale,
     begin = addMillisec(beginx, sliderbegin),
-    thumb = addMillisec(beginx, sliderthumb),
-    minvalue = 10
+    thumb = addMillisec(beginx, sliderthumb)
 
   _xScale = xScale
   _begindate = begin
 
   if (!cidx || (cidx > 7)) { return }
-  if (userResident && (userRname !== rname)) { return }
+  if (!getPermission('resBar', rname)) { return }
 
   slider.value = value * scale
   begindate.innerHTML = thDate(ISOdate(new Date(begin)))
@@ -88,7 +76,6 @@ export function slider(evt, barChart, years)
       text: "OK",
       click: function() {
         let newval = slider.value/scale
-        newval = newval < minvalue ? minvalue : newval
         updateResearch(barChart, newval, ridx, cidx)
         $dialogSlider.dialog("close")
       }

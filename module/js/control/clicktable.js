@@ -16,7 +16,7 @@ import { saveCaseNum } from "../save/saveCaseNum.js"
 import { saveHN } from "../save/saveHN.js"
 import { savePATIENT } from "../save/savePATIENT.js"
 
-import { selectRow, clearSelection } from "../get/selectRow.js"
+import { selectRow, clearSelection } from "../control/selectRow.js"
 import { getTHEATRE } from "../get/getTHEATRE.js"
 import { getROOM } from "../get/getROOM.js"
 import { getOPTIME } from "../get/getOPTIME.js"

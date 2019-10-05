@@ -11,13 +11,12 @@ css/menu.css
   }
 
 control/
-  startDesktop.js -> startMobile.js
-                      add: scaleViewport()
-                      out: some imports, sortable, setClickSetting
+  start.js -> isMobile ? scaleViewport() : sortable()
 
 menu/
-  setClickDesktopMenu.js -> setClickMobileMenu.js
-                              out: some menu
+  setClickAll.js
+    clickevent = isMobile ? clickMobile : clickDesktop
+    setClickSetting() => if (isMobile) { return }
 
 view/
   fillConsults()

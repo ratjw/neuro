@@ -11,7 +11,7 @@ import { fillConsults } from "../view/fillConsults.js"
 import { POINTER, clearEditcell } from "../control/edit.js"
 import { isSplit,  winWidth, winHeight, winResizeFix } from "../util/util.js"
 import { savePreviousCellService } from "./savePreviousCellService.js"
-import { clearSelection } from "../get/selectRow.js"
+import { clearSelection } from "../control/selectRow.js"
 import { clickCellSV } from "./clickCellSV.js"
 import { timer, resetTimerCounter } from "../control/timer.js"
 

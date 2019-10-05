@@ -1,16 +1,13 @@
 
 import { THEATRE } from "../control/const.js"
-//import { doStaff } from "../setting/doStaff.js"
-import { clicktable } from "./clicktable.js"
-import { clearAllEditing } from "./clearAllEditing.js"
-import { editcellEvent, clearEditcell, renewEditcell } from "./edit.js"
-import { resetTimer, resetTimerCounter } from "./timer.js"
-import { setClickMenu } from "../menu/setClickMobileMenu.js"
-//import { setClickSetting } from "./setClickSetting.js"
-import { setClickService } from "../service/monthpicker.js"
+import { clicktable } from "../control/clicktable.js"
+import { clearAllEditing } from "../control/clearAllEditing.js"
+import { editcellEvent, clearEditcell, renewEditcell } from "../control/edit.js"
+import { resetTimer, resetTimerCounter } from "../control/timer.js"
+import { setClickAll } from "../control/setClickAll.js"
 import { sqlStart } from "../model/sqlupdate.js"
-//import { sortable } from "./sort.js"
-import { clearSelection } from "../get/selectRow.js"
+import { sortable } from "../control/sort.js"
+import { clearSelection } from "../control/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { START, ISOdate, thDate } from "../util/date.js"
@@ -21,10 +18,10 @@ import { scrolltoToday } from "../view/scrolltoThisCase.js"
 import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
-import { notifyLINE } from '../menu/notifyLINE.js'
+import { isMobile } from "../main.js"
 
 // For staff & residents with login id / password from Get_staff_detail
-export function userMobile() {
+export function start() {
 	sqlStart().then(response => {
 		typeof response === "object"
 		? success(response)
@@ -38,7 +35,7 @@ export function userMobile() {
 function success(response) {
 
   // call sortable before render, otherwise it renders very slowly
-//  sortable()
+  isMobile ? scaleViewport() : sortable()
   updateBOOK(response)
   fillmain()
   scrolltoToday('maintbl')
@@ -55,14 +52,10 @@ function success(response) {
   dialogServiceEvent()
   wrapperEvent()
   documentEvent()
-  setClickMenu()
-//  setClickSetting()
-  setClickService()
+  setClickAll()
   overrideJqueryUI()
   resetTimer()
-//  notifyLINE()
 //  serverSentEvent()
-  scaleViewport()
 }
 
 // *** to do -> offline browsing by service worker ***
@@ -191,7 +184,7 @@ function overrideJqueryUI()
 
 function serverSentEvent()
 {
-  let evtSource = new EventSource('./php/sse.php')
+  let evtSource = new EventSource('../../php/sse.php')
 
   evtSource.onopen = function() {
     console.log("Connection to server opened.")

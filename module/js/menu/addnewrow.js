@@ -1,6 +1,6 @@
 
 import { HN } from "../control/const.js"
-import { clearSelection } from "../get/selectRow.js"
+import { clearSelection } from "../control/selectRow.js"
 import { createEditcell } from "../control/edit.js"
 import { blankRowData } from "../view/fillNewrowData.js"
 

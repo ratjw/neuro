@@ -121,8 +121,8 @@ export async function updateResearch(barChart, newval, ridx, cidx)
 {
   let ramaid = RESIDENT[ridx].ramaid
   let progress = RESEARCHBAR[cidx].progress
-  let progressval = newval
-
+  let minvalue = 10
+  let progressval = newval < minvalue ? minvalue : newval
   let sql = `sqlReturnResident=UPDATE resident
              SET research=JSON_SET(research,'$.${progress}',${progressval})
              WHERE ramaid=${ramaid};&training=${training}`

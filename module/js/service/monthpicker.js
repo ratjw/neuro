@@ -1,17 +1,7 @@
 
-import { winWidth, winHeight } from "../util/util.js"
 import { serviceReview } from "./serviceReview.js"
 
-export function setClickService()
-{
-  let service = document.querySelector("#clickserviceReview")
-
-  service.onclick =  monthpicker
-  service.onmouseover = monthpicker
-  service.onmouseout = hidemonthpicker
-}
-
-function monthpicker() {
+export function monthpicker() {
   let $monthpicker = $("#monthpicker"),
     $monthstart = $("#monthstart"),
     selectedYear = new Date().getFullYear(),
@@ -40,7 +30,7 @@ function monthpicker() {
   })
 }
 
-function hidemonthpicker()
+export function hidemonthpicker()
 {
   let picker = document.querySelector('#monthpicker')
 

@@ -3,6 +3,7 @@ import { winHeight, winWidth } from "../util/util.js"
 import { xRange, prepareData, prepareYears } from '../setting/prepareData.js'
 import { getResident } from "../model/sqlDoResident.js"
 import { slider } from '../setting/slider.js'
+import { getPermission } from '../control/setClickAll.js'
 
 export async function resResearch()
 {
@@ -99,7 +100,9 @@ export async function resResearch()
       }
   });
 
-  chartjs.onclick = function (event) {
-    slider(event, barChart, years)
+  if (getPermission('slider')) {
+    chartjs.onclick = function (event) {
+      slider(event, barChart, years)
+    }
   }
 }
