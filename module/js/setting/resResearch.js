@@ -31,18 +31,14 @@ export async function resResearch()
             callback: function(label, index, labels) {
               return years.range[index]
             },
-            'min': 0,
-            'max': xRange
+            min: 0,
+            max: xRange
           },
-          gridLines: {
-            color: "gray"
-          }
+          gridLines: { color: "gray" }
         }],
         yAxes: [{
           stacked: true,
-          gridLines: {
-            color: "lightGray"
-          }
+          gridLines: { color: "lightGray" }
         }]
       },
       tooltips: {
