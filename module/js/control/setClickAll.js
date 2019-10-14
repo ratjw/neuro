@@ -94,7 +94,7 @@ function setClickSetting()
     })
   })
 
-  if (!getPermission('setClickSetting')){
+  if (!getPermission('disable')){
     disable.forEach(e => document.querySelector(e).className = "disabled")
   }
 }
@@ -115,7 +115,7 @@ export function getPermission(submenu, rname)
     barname = RESIDENT.find(e => e.residentname === rname),
     barid = barname && barname.ramaid || '',
     permission = {
-      setClickSetting: [ADMIN, SECRETARY, ...staffid],
+      disable: [ADMIN, SECRETARY, ...staffid],
       slider: [ADMIN, SECRETARY, ...staffid, ...residentid],
       resBar: [ADMIN, SECRETARY, ...staffid, barid]
     }

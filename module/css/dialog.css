@@ -112,54 +112,37 @@
 .consultedcase,
 .copybutton { background-color: skyblue !important }
 .nodate { background-color: #EEEEFF }
-
+ 
 #dialogSlider {
-  padding: 0px;
-  overflow: hidden;
+  padding: 50px 15px 20px 0px;
 }
-:root {
-  --track: #6698FF;
-  --progress: #43e5f7;
-}
-/** Chrome*/
-input[type="range"] {
-  overflow: hidden;
+#dialogSlider table {
   width: 100%;
-  background-color: var(--track); 
-  -webkit-appearance: none;
 }
-
-input[type="range"]::-webkit-slider-runnable-track {
-  height: 20px;
-  -webkit-appearance: none;
-  color: var(--track);
-  margin-top: -1px;
+#dialogSlider .rangeGrip {
+  position: absolute;
+  top: -45px;
+  font-family: "MS Gothic";
+  font-size: 12px;
+  letter-spacing: -1px;
 }
-
-input[type="range"]::-webkit-slider-thumb {
-  width: 10px;
-  -webkit-appearance: none;
-  height: 20px;
-  cursor: ew-resize;
-  background-color: white;
-  border: 2px solid gray;
-  border-style: inset;
-  box-shadow: -2000px 0 0 2000px var(--progress);
+#dialogSlider div.vline {
+  position: absolute;
+  top: 0px;
+  border-left: 1px solid red;
 }
-/** FF*/
-input[type="range"]::-moz-range-progress {
-  background-color: var(--progress);
-  height: 20px;
+#dialogSlider span {
+  display: inline-block;
+  width: 20px;
+  font-family: "MS Gothic";
+  font-size: 12px;
+  letter-spacing: -1px;
 }
-input[type="range"]::-moz-range-track {  
-  background-color: var(--track);
+#begindate {
+  text-align: left;
 }
-/* IE*/
-input[type="range"]::-ms-fill-lower {
-  background-color: var(--progress);
-}
-input[type="range"]::-ms-fill-upper {  
-  background-color: var(--track);
+#enddate {
+  text-align: right;
 }
 
 #servicehead {

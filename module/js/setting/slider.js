@@ -1,114 +1,162 @@
 
 import { ISOdate, thDate } from "../util/date.js"
 import { winWidth } from "../util/util.js"
-import { xRange } from '../setting/prepareData.js'
+import { RESEARCHBAR, xRange } from '../setting/prepareData.js'
 import { RESIDENT, updateResearch } from "../model/sqlDoResident.js"
 import { getPermission } from '../control/setClickAll.js'
 import { USER } from "../main.js"
 
-let _xScale,
-    _begindate
+let _slidertotal,
+  _xScale,
+  _colors,
+  _begin,
+  _end,
+  _resText,
+  _ranges,
+  _sumranges,
+  _totalrange
 
-export function slider(evt, barChart, years)
+export function slider(evt, barChart, range)
 {
   const activePoint = barChart.getElementAtEvent(evt)
 
   if (!activePoint.length) { return }
 
   const $dialogSlider = $('#dialogSlider'),
-    slider = document.getElementById('slider'),
+    slider = document.querySelector('#slidertbl'),
+    slidertemplate = document.querySelector('#slidertemplate'),
     begindate = document.getElementById('begindate'),
     enddate = document.getElementById('enddate'),
-    thumbdate = document.querySelector('#thumbdate'),
-    root = document.documentElement,
 
-    cdata = activePoint[0]['_chart'].config.data,
-    ridx = activePoint[0]['_index'],
-    cidx = activePoint[0]['_datasetIndex'],
+    active = activePoint[0],
+    cdata = active['_chart'].config.data,
+    ridx = active['_index'],
+    cidx = active['_datasetIndex'],
     rname = cdata.labels[ridx],
-    cdatasets = cdata.datasets,
-    clabel = cdatasets[cidx].label,
-    color = cdatasets[cidx].backgroundColor[ridx],
-    cidxplus1 = cdatasets[cidx+1],
-    nextcolor = cidxplus1 && cidxplus1.backgroundColor[ridx] || "#FFFFFF",
-    value = cdatasets[cidx].data[ridx],
-    slidermin = Number(slider.min),      
-    slidermax = Number(slider.max),      
-    scale = slidermax / 2 / value,
-    // initial slider thumb is at the middle
+    cdatasets = cdata.datasets
 
-    yearmap = years.range.map(e => e - 543),
-    timemap = cdatasets.map(e => e.data[ridx]),
-    sumtime = timemap.map((e => i => e += i)(0)),
-    pasttime = sumtime[cidx-1],
-    thistime = sumtime[cidx],
-
-    beginx = new Date(yearmap[0].toString()),
-    endx = new Date(yearmap[yearmap.length-1], 11, 31),
-    xAxis = endx - beginx,
-    xScale = xAxis / xRange,
-    sliderbegin = pasttime * xScale,
-    sliderthumb = thistime * xScale,
-    begin = addMillisec(beginx, sliderbegin),
-    thumb = addMillisec(beginx, sliderthumb)
-
-  _xScale = xScale
-  _begindate = begin
-
-  if (!cidx || (cidx > 7)) { return }
+  if ((cidx === 0) || (cidx > 7)) { return }
   if (!getPermission('resBar', rname)) { return }
 
-  slider.value = value * scale
-  begindate.innerHTML = thDate(ISOdate(new Date(begin)))
-  enddate.innerHTML = thDate(ISOdate(new Date(thumb)))
-  root.style.setProperty('--progress', color)
-  root.style.setProperty('--track', nextcolor)
+  prepare_const(range, cdatasets, ridx)
+
+  let beginslider = new Date(_begin),
+    endslider = new Date(beginslider.getFullYear() + 5, 4, 31)
+  begindate.innerHTML = thDate(ISOdate(beginslider))
+  enddate.innerHTML = thDate(ISOdate(endslider))
+  enddate.style.right = '10px'
 
   $dialogSlider.dialog({
-  title: rname + " " + clabel,
+  title: rname,
     closeOnEscape: true,
     modal: true,
     show: 200,
     hide: 200,
-    width: winWidth(90),
+    width: winWidth(100),
     height: 'auto',
     buttons: [{
       text: "OK",
       click: function() {
-        let newval = slider.value/scale
-        updateResearch(barChart, newval, ridx, cidx)
+        updateResearch(barChart, ridx, _ranges)
         $dialogSlider.dialog("close")
       }
     }]
   })
 
-  let off = slider.offsetWidth / (slidermax - slidermin),
-    px =  ((slider.valueAsNumber - slidermin) * off);
+  slider.innerHTML = slidertemplate.innerHTML
+  prepareColumns()
 
-  enddate.style.left = px + 'px'
-  thumbdate.innerHTML = ''
+  $("#slidertbl").colResizable({
+    liveDrag: true, 
+    draggingClass: "rangeDrag", 
+    gripInnerHtml: "<div class='rangeGrip'></div>", 
+    onDrag: onDragGrip,
+    minWidth: 8
+  });	
 
-  slider.oninput = function() {
-    updateEndDate(slider.value/scale)
-  }
+  gripsDate()
+  verticalLine()
 }
 
-export function updateEndDate(sliderval)
+function prepare_const(range, cdatasets, ridx)
 {
-  let sliderthumb = sliderval * _xScale,
-    thumbval = addMillisec(_begindate, sliderthumb),
-    endval = thDate(ISOdate(new Date(thumbval))),
+  const research = RESIDENT.map(e => JSON.parse(e.research)),
+    resbar = RESEARCHBAR.map(e => e.progress).filter(e => e),
 
-    slider = document.querySelector('#slider'),
-    thumbdate = document.querySelector('#thumbdate'),
-    slidermin = Number(slider.min),      
-    slidermax = Number(slider.max),      
-    off = slider.offsetWidth / (slidermax - slidermin),
-    px =  (slider.valueAsNumber - slidermin) * off
+    timemap = cdatasets.map(e => e.data[ridx]),
+    sumtime = timemap.map((e => i => e += i)(0)),
+    begintime = sumtime[0],
+    endtime = sumtime[sumtime.length-1],
 
-  thumbdate.style.top = slider.offsetHeight*2 + 'px';
-  thumbdate.style.left = px + 'px';
-  thumbdate.innerHTML = endval;
+    yearmap = range.map(e => e - 543),
+    beginx = new Date(yearmap[0], 0, 1),
+    endx = new Date(yearmap[yearmap.length-1], 11, 31),
+    xAxis = endx - beginx,
+    xScale = xAxis / xRange,
+    sliderbegin = begintime * xScale,
+    sliderend = endtime * xScale
+
+  _xScale = xScale
+  _colors = cdatasets.map(e => e.backgroundColor[0]).filter(e => e !== '#FFFFFF')
+  _begin = addMillisec(beginx, sliderbegin)
+  _end = addMillisec(beginx, sliderend)
+  _slidertotal = sliderend - sliderbegin
+  _resText = resbar.map(e => research[ridx][e][1])
+  updateRanges(timemap.filter((e, i) => i && e))
+}
+
+function updateRanges(ranges)
+{
+  _ranges = ranges
+  _sumranges = ranges.map((e => i => e += i)(0))
+  _totalrange = _sumranges[_sumranges.length-1]
+}
+
+function prepareColumns()
+{
+  let slidertbl = document.getElementById('slidertbl'),
+    columns = [...slidertbl.querySelectorAll('td')],
+    tblwidth = slidertbl.offsetWidth,
+    colswidth = _ranges.map(e => e * tblwidth / _totalrange)
+
+  columns.forEach((e, i) => {
+    e.innerHTML = _resText[i]
+    e.style.width = colswidth[i] + 'px'
+    e.style.backgroundColor = _colors[i]
+  })
+}
+
+function gripsDate()
+{
+  let rangeGrip = [...document.querySelectorAll('.rangeGrip')],
+    gripthDate = getGripthDate(_sumranges)
+
+  rangeGrip.forEach((e, i) => e.innerHTML = gripthDate[i])
+}
+
+function onDragGrip(e)
+{
+  let slidertbl = document.getElementById('slidertbl'),
+    columns = [...slidertbl.querySelectorAll('td')],
+    colswidth = columns.map(e => parseFloat(e.style.width)),
+    sumwidth = colswidth.map((e => i => e += i)(0)),
+    totalwidth = sumwidth[sumwidth.length-1],
+    colsranges = colswidth.map(e => e * _totalrange / totalwidth),
+    rangeGrip = [...document.querySelectorAll('.rangeGrip')],
+    sumranges = colsranges.map((e => i => e += i)(0)),
+    gripthDate = getGripthDate(sumranges)
+
+  rangeGrip.forEach((e, i) => e.innerHTML = gripthDate[i])
+  updateRanges(colsranges)
+}
+
+function getGripthDate(sumranges)
+{
+  let gripmsec = sumranges.map(e => e * _xScale),
+  gripDate = gripmsec.map(e => addMillisec(_begin, e)),
+  gripISOdate = gripDate.map(e => ISOdate(e))
+
+  return gripISOdate.map(e => thDate(e))
 }
 
 function addMillisec(beginx, millisec)
@@ -116,4 +164,18 @@ function addMillisec(beginx, millisec)
   let begin = new Date(beginx.getTime())
 
   return new Date(begin.setTime(begin.getTime() + millisec))
+}
+
+function verticalLine()
+{
+  const slidertbl = document.getElementById('slidertbl'),
+    vline = document.querySelector('.vline'),
+    tblwidth = slidertbl.offsetWidth,
+    todaymsec = new Date() - _begin,
+    todayLine = todaymsec * tblwidth / _slidertotal,
+    tblheight = slidertbl.offsetHeight,
+    paddingtop = parseInt($('#dialogSlider').css('padding-top'))
+
+  vline.style.height = `${tblheight + paddingtop}px`
+  vline.style.left = todayLine + 'px'
 }

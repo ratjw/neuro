@@ -33,8 +33,8 @@ export function serviceReview(begin) {
 
   let resizeDialogSV = () => {
     $dialogService.dialog({
-      width: winWidth(95),
-      height: winHeight(95)
+      width: winWidth(100),
+      height: winHeight(100)
     })
     winResizeFix($servicetbl, $dialogService)
   }
@@ -47,8 +47,8 @@ export function serviceReview(begin) {
     closeText: "Save and Close",
     modal: true,
     hide: 200,
-    width: winWidth(95),
-    height: winHeight(95),
+    width: winWidth(100),
+    height: winHeight(100),
     close: function() {
       if (isSplit()) { staffqueue(titlename.innerHTML) }
       fillmain()

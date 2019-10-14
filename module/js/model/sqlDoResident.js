@@ -117,14 +117,19 @@ function showResident(response)
   viewResident()
 }
 
-export async function updateResearch(barChart, newval, ridx, cidx)
+export async function updateResearch(barChart, ridx, _ranges)
 {
-  let ramaid = RESIDENT[ridx].ramaid
-  let progress = RESEARCHBAR[cidx].progress
-  let minvalue = 10
-  let progressval = newval < minvalue ? minvalue : newval
-  let sql = `sqlReturnResident=UPDATE resident
-             SET research=JSON_SET(research,'$.${progress}',${progressval})
+  const ramaid = RESIDENT[ridx].ramaid,
+    progress = RESEARCHBAR.map(e => e.progress).filter(e => e),
+    slidertbl = document.getElementById('slidertbl'),
+    columns = [...slidertbl.querySelectorAll('td')],
+    columnsText = columns.map(e => e.innerHTML),
+    json = {}
+
+    progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
+    
+  const sql = `sqlReturnResident=UPDATE resident
+             SET research='${JSON.stringify(json)}'
              WHERE ramaid=${ramaid};&training=${training}`
 
   let response = await postData(MYSQLIPHP, sql)
@@ -138,29 +143,16 @@ export async function updateResearch(barChart, newval, ridx, cidx)
 
 function updateBar(barChart, ridx)
 {
-  let fulltrain = xRange / 2
-  let bardataset = barChart.data.datasets
-  let sumMonths = 0
-  let time = 0
-  let research = JSON.parse(RESIDENT[ridx].research)
-  let resbar = RESEARCHBAR.map(e => e.progress)
-
-  resbar.filter(e => e).forEach(key => {
-    let time = research[key]
-    if (sumMonths + time <= fulltrain) {
-      sumMonths += time
-    } else {
-      research[key] = fulltrain - sumMonths
-      sumMonths = fulltrain
-    }
-  })
+  let fulltrain = xRange / 2,
+    bardataset = barChart.data.datasets,
+    research = JSON.parse(RESIDENT[ridx].research),
+    resbar = RESEARCHBAR.map(e => e.progress)
 
   bardataset.forEach((e, i) => {
     if (i) {
-      e.data[ridx] = research[resbar[i]]
+      e.data[ridx] = research[resbar[i]][0]
     }
   })
 
   barChart.update()
 }
-

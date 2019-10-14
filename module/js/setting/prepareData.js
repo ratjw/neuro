@@ -1,10 +1,12 @@
 
+import { getResident } from "../model/sqlDoResident.js"
 import { RESIDENT } from "../model/sqlDoResident.js"
 
 // xRange (xAxis length) is the span of 10 years
 // Neurosurgery residency training is 5 years
-export const xRange = 2000
+export const xRange = 200
 export const training = 5
+
 export const RESEARCHBAR = [
   {label: "", progress: "", color: "#FFFFFF"},
   {label: "Proposal", progress: "proposal", color: "#DAA520"},
@@ -16,33 +18,22 @@ export const RESEARCHBAR = [
   {label: "Complete", progress: "complete", color: "red"}
 ]
 
-// training year end at 4 (end of May)
-const endmonth = 4
-let today,
-  thisY,
-  thisyear,
-  add,
-  yearadd,
-  firstDate,
-  lastDate,
-  interval
+const eduMonth = 5
+const eduDate = 1
+const eduYear = calcYearOne()
 
-function calcTime()
+export async function prepareDatasets()
 {
-  today = new Date()
-  thisY = today.getFullYear()
-  thisyear = thisY + 543
-  add = (today.getMonth() > endmonth) ? 1 : 0
-  yearadd = thisyear + add
-  firstDate = new Date(`${thisY + add - training}`)
-  lastDate = new Date(`${thisY + add + training}`)
-  interval = lastDate - firstDate
+  await getResident()
+
+  return {
+    data: prepareData(),
+    years: prepareYears()
+  }
 }
 
-export function prepareData()
+function prepareData()
 {
-  calcTime()
-
   return {
     labels: RESIDENT.map(e => e.residentname),
     datasets: calcDatasets()
@@ -52,47 +43,66 @@ export function prepareData()
 function calcDatasets()
 {
   // X axis is double the research time range, because half of it is the white bars
-  let tick = xRange / 2 / training,
-    month = tick / 12,
+  let year = xRange / 2 / training,
     enrollyears = RESIDENT.map(e => Number(e.enrollyear)),
-    research = RESIDENT.map(e => JSON.parse(e.research)),
-    resbar = RESEARCHBAR.map(e => e.progress).filter(e => e),
-    month60 = month*60
-
-  research.forEach(e => {
-    let sumMonths = 0
-    resbar.forEach(key => {
-      let time = e[key]
-      if (sumMonths + time <= month60) {
-        sumMonths += time
-      } else {
-        e[key] = month60 - sumMonths
-        sumMonths = month60
-      }
-    })
-  })
+    research = RESIDENT.map(e => JSON.parse(e.research))
 
   return RESEARCHBAR.map((r, i) => {
     if (i === 0) {
       return {
         label: r.label,
         backgroundColor: enrollyears.map(e => r.color),
-        data: enrollyears.map(e => (training + e - yearadd)*tick + tick/2)
+        data: enrollyears.map(e => calcBeginEdu(e - 543))
       }
     } else {
       return {
         label: r.label,
         backgroundColor: research.map(e => r.color),
-        data: research.map(e => e[r.progress])
+        data: research.map(e => e[r.progress][0])
       }
     }
   })
 }
 
-export function prepareYears()
+function calcYearOne()
+{
+  const today = new Date(),
+    beginEdu = new Date(today.getFullYear(), eduMonth, eduDate),
+    thisyear = today.getFullYear()
+
+  return ((today - beginEdu) > 0) ? thisyear + 1 : thisyear
+}
+
+function calcBeginEdu(year)
+{
+  const beginEdu = new Date(year, eduMonth, eduDate),
+    beginX = new Date(eduYear - training, 0, 1),
+    endX = new Date(eduYear + training, 0, 0),
+    timelag = (beginEdu - beginX) / (endX - beginX)
+
+  return timelag * xRange
+}
+
+function prepareYears()
 {
   return {
-    range: [...Array(training*2)].map((e,i) => yearadd - training + i),
-    today: (today - firstDate) / interval * xRange
+    range: prepareRange(),
+    today: prepareToday()
   }
+}
+
+function prepareRange()
+{
+  return [...Array(training*2)].map((e,i) => eduYear + 543 - training + i)
+}
+
+function prepareToday()
+{
+  const today = new Date(),
+    thisY = eduYear,
+    firstDate = new Date(`${thisY - training}`),
+    lastDate = new Date(`${thisY + training}`),
+    interval = lastDate - firstDate
+
+  return (today - firstDate) / interval * xRange
 }

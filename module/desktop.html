@@ -15,6 +15,7 @@
 <script src="js/jquery.mousewheel.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
 <script src="js/chart.min.js"></script>
+<script src="js/colResizable-1.6.min.js"></script>
 <script src="js/main.js" type="module"></script>
 
 </HEAD>
@@ -606,16 +607,6 @@
  </table>
 </div>
 
-<div id="dialogSlider">
-  <span id="begindate"></span>
-  <span id="enddate"></span>
-  <br>
-  <input type="range" min="0" max="1600" id="slider">
-  <br>
-  <br>
-  <span id="thumbdate"></span>
-</div>
-
 <table id="residentcells">
   <tbody>
    <tr>
@@ -630,6 +621,24 @@
 <div id="dialogResResearch">
  <canvas id="chartjs"></canvas>
 </div>
+
+<div id="dialogSlider">
+  <div class="vline"></div>
+  <table id="slidertbl"></table>
+  <span id="begindate"></span>
+  <span id="enddate"></span>
+</div>
+<template id="slidertemplate">
+   <tr contenteditable>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+   </tr>
+</template>
 
 <div id="dialogHoliday">
  <table id="holidaytbl">

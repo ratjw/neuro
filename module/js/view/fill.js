@@ -46,7 +46,10 @@ export function fillDatedCases(table, book)
     clone
 
   // No case
-  if (!blen) { book.push({"opdate" : START}) }
+  if (!blen) {
+    book.push({"opdate" : START})
+    q = 0
+  }
 
   // delete previous table lest it accumulates
   if (rows.length > 1) {

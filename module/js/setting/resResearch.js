@@ -1,26 +1,25 @@
 
 import { winHeight, winWidth } from "../util/util.js"
-import { xRange, prepareData, prepareYears } from '../setting/prepareData.js'
-import { getResident } from "../model/sqlDoResident.js"
+import { xRange, prepareDatasets } from '../setting/prepareData.js'
 import { slider } from '../setting/slider.js'
 import { getPermission } from '../control/setClickAll.js'
 
 export async function resResearch()
 {
-  let chartjs = document.getElementById("chartjs"),
+  const chartjs = document.getElementById("chartjs"),
     $dialogResResearch = $("#dialogResResearch"),
-    maxHeight = winHeight(90)
-
-  await getResident()
-
-  let data = prepareData()
-  let years = prepareYears()
+    maxHeight = winHeight(90),
+    datasets = await prepareDatasets(),
+    labels = datasets.data.labels,
+    sets = datasets.data.datasets,
+    range = datasets.years.range,
+    today = datasets.years.today
 
   let barChart = new Chart(chartjs, {
     type: 'horizontalBar',
     data: {
-      labels: data.labels,
-      datasets: data.datasets
+      labels: labels,
+      datasets: sets
     },
     options: {
       scales: {
@@ -29,7 +28,7 @@ export async function resResearch()
           stacked: true,
           ticks: {
             callback: function(label, index, labels) {
-              return years.range[index]
+              return range[index]
             },
             min: 0,
             max: xRange
@@ -44,7 +43,7 @@ export async function resResearch()
       tooltips: {
         enabled: false
       },
-      lineAtIndex: years.today,
+      lineAtIndex: today,
     }
   })
 
@@ -55,7 +54,7 @@ export async function resResearch()
     modal: true,
     show: 200,
     hide: 200,
-    width: winWidth(90),
+    width: winWidth(100),
     height: ($dialogResResearch.height() > maxHeight) ? maxHeight : 'auto',
     close: function() {
       $dialogResResearch.dialog('destroy')
@@ -98,7 +97,7 @@ export async function resResearch()
 
   if (getPermission('slider')) {
     chartjs.onclick = function (event) {
-      slider(event, barChart, years)
+      slider(event, barChart, range)
     }
   }
 }

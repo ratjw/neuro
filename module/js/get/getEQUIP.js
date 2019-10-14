@@ -50,7 +50,7 @@ export function getEQUIP(pointing)
 
   let resizeDialogEquip = () => {
     _$dialogEquip.dialog({
-      width: winWidth(95),
+      width: 620,
       height: winHeight(95)
     })
   }
