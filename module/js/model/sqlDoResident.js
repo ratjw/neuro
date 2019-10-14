@@ -136,6 +136,7 @@ export async function updateResearch(barChart, ridx, _ranges)
   if (typeof response === "object") {
     RESIDENT = response.RESIDENT
     updateBar(barChart, ridx)
+    $("#slidertbl").colResizable({ disable: true })
   } else {
     Alert("getResident", response)
   }  

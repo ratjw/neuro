@@ -6,17 +6,7 @@ import { RESIDENT, updateResearch } from "../model/sqlDoResident.js"
 import { getPermission } from '../control/setClickAll.js'
 import { USER } from "../main.js"
 
-let _slidertotal,
-  _xScale,
-  _colors,
-  _begin,
-  _end,
-  _resText,
-  _ranges,
-  _sumranges,
-  _totalrange
-
-export function slider(evt, barChart, range)
+export function slider(evt, barChart, yearRange)
 {
   const activePoint = barChart.getElementAtEvent(evt)
 
@@ -38,10 +28,11 @@ export function slider(evt, barChart, range)
   if ((cidx === 0) || (cidx > 7)) { return }
   if (!getPermission('resBar', rname)) { return }
 
-  prepare_const(range, cdatasets, ridx)
-
-  let beginslider = new Date(_begin),
+  const timemap = getTimemap(cdatasets, ridx),
+    beginSlider = getBeginSlider(yearRange, timemap),
+    beginslider = new Date(beginSlider),
     endslider = new Date(beginslider.getFullYear() + 5, 4, 31)
+
   begindate.innerHTML = thDate(ISOdate(beginslider))
   enddate.innerHTML = thDate(ISOdate(endslider))
   enddate.style.right = '10px'
@@ -57,104 +48,156 @@ export function slider(evt, barChart, range)
     buttons: [{
       text: "OK",
       click: function() {
-        updateResearch(barChart, ridx, _ranges)
+        const newTimeRanges = getNewTimeRanges(timemap)
+        updateResearch(barChart, ridx, newTimeRanges)
         $dialogSlider.dialog("close")
       }
     }]
   })
 
   slider.innerHTML = slidertemplate.innerHTML
-  prepareColumns()
+  prepareColumns(cdatasets, ridx)
 
   $("#slidertbl").colResizable({
     liveDrag: true, 
     draggingClass: "rangeDrag", 
     gripInnerHtml: "<div class='rangeGrip'></div>", 
-    onDrag: onDragGrip,
+    onDrag: function () { onDragGrip(yearRange, timemap) },
     minWidth: 8
   });	
 
-  gripsDate()
-  verticalLine()
+  gripsDate(yearRange, timemap)
+  verticalLine(yearRange, timemap)
 }
 
-function prepare_const(range, cdatasets, ridx)
+function getTimemap(cdatasets, ridx)
 {
-  const research = RESIDENT.map(e => JSON.parse(e.research)),
-    resbar = RESEARCHBAR.map(e => e.progress).filter(e => e),
+  return cdatasets.map(e => e.data[ridx])
+}
 
-    timemap = cdatasets.map(e => e.data[ridx]),
-    sumtime = timemap.map((e => i => e += i)(0)),
-    begintime = sumtime[0],
-    endtime = sumtime[sumtime.length-1],
+function getTimeRanges(timemap)
+{
+  return timemap.filter((e, i) => i && e)
+}
 
-    yearmap = range.map(e => e - 543),
+function getBeginSlider(yearRange, timemap)
+{
+  const yearmap = yearRange.map(e => e - 543),
     beginx = new Date(yearmap[0], 0, 1),
     endx = new Date(yearmap[yearmap.length-1], 11, 31),
     xAxis = endx - beginx,
     xScale = xAxis / xRange,
+
+    begintime = timemap[0],
+    sliderbegin = begintime * xScale
+
+  return addMillisec(beginx, sliderbegin)
+}
+
+function getResText(ridx)
+{
+  const research = RESIDENT.map(e => JSON.parse(e.research)),
+    resbar = RESEARCHBAR.map(e => e.progress).filter(e => e)
+
+  return resbar.map(e => research[ridx][e][1])
+}
+
+function getSumranges(timemap)
+{
+  const timeRanges = getTimeRanges(timemap)
+
+  return timeRanges.map((e => i => e += i)(0))
+}
+
+function getTotalrange(timemap)
+{
+  const timeRanges = getTimeRanges(timemap)
+
+  return timeRanges.reduce((a, e) => a + e)
+}
+
+function getXScale(yearRange)
+{
+  const yearmap = yearRange.map(e => e - 543),
+    beginx = new Date(yearmap[0], 0, 1),
+    endx = new Date(yearmap[yearmap.length-1], 11, 31),
+    xAxis = endx - beginx
+
+  return xAxis / xRange
+}
+
+function getSlidertotal(yearRange, timemap)
+{
+  const xScale = getXScale(yearRange),
+    sumtime = timemap.map((e => i => e += i)(0)),
+    begintime = sumtime[0],
+    endtime = sumtime[sumtime.length-1],
+
     sliderbegin = begintime * xScale,
     sliderend = endtime * xScale
 
-  _xScale = xScale
-  _colors = cdatasets.map(e => e.backgroundColor[0]).filter(e => e !== '#FFFFFF')
-  _begin = addMillisec(beginx, sliderbegin)
-  _end = addMillisec(beginx, sliderend)
-  _slidertotal = sliderend - sliderbegin
-  _resText = resbar.map(e => research[ridx][e][1])
-  updateRanges(timemap.filter((e, i) => i && e))
+  return sliderend - sliderbegin
 }
 
-function updateRanges(ranges)
-{
-  _ranges = ranges
-  _sumranges = ranges.map((e => i => e += i)(0))
-  _totalrange = _sumranges[_sumranges.length-1]
-}
-
-function prepareColumns()
+function prepareColumns(cdatasets, ridx)
 {
   let slidertbl = document.getElementById('slidertbl'),
     columns = [...slidertbl.querySelectorAll('td')],
     tblwidth = slidertbl.offsetWidth,
-    colswidth = _ranges.map(e => e * tblwidth / _totalrange)
+
+    resText = getResText(ridx),
+    colors = cdatasets.map(e => e.backgroundColor[0]).filter(e => e !== '#FFFFFF'),
+
+    timemap = getTimemap(cdatasets, ridx),
+    timeRanges = getTimeRanges(timemap),
+    totalrange = getTotalrange(timemap),
+    colswidth = timeRanges.map(e => e * tblwidth / totalrange)
 
   columns.forEach((e, i) => {
-    e.innerHTML = _resText[i]
+    e.innerHTML = resText[i]
     e.style.width = colswidth[i] + 'px'
-    e.style.backgroundColor = _colors[i]
+    e.style.backgroundColor = colors[i]
   })
 }
 
-function gripsDate()
+function gripsDate(yearRange, timemap)
 {
   let rangeGrip = [...document.querySelectorAll('.rangeGrip')],
-    gripthDate = getGripthDate(_sumranges)
+    sumranges = getSumranges(timemap),
+    gripthDate = getGripthDate(yearRange, timemap, sumranges)
 
   rangeGrip.forEach((e, i) => e.innerHTML = gripthDate[i])
 }
 
-function onDragGrip(e)
+function onDragGrip(yearRange, timemap)
+{
+  let newRanges = getNewTimeRanges(timemap),
+    sumNewRanges = newRanges.map((e => i => e += i)(0)),
+    gripthDate = getGripthDate(yearRange, timemap, sumNewRanges),
+    rangeGrip = [...document.querySelectorAll('.rangeGrip')]
+
+  rangeGrip.forEach((e, i) => e.innerHTML = gripthDate[i])
+}
+
+function getNewTimeRanges(timemap)
 {
   let slidertbl = document.getElementById('slidertbl'),
     columns = [...slidertbl.querySelectorAll('td')],
     colswidth = columns.map(e => parseFloat(e.style.width)),
     sumwidth = colswidth.map((e => i => e += i)(0)),
     totalwidth = sumwidth[sumwidth.length-1],
-    colsranges = colswidth.map(e => e * _totalrange / totalwidth),
-    rangeGrip = [...document.querySelectorAll('.rangeGrip')],
-    sumranges = colsranges.map((e => i => e += i)(0)),
-    gripthDate = getGripthDate(sumranges)
+    totalrange = getTotalrange(timemap)
 
-  rangeGrip.forEach((e, i) => e.innerHTML = gripthDate[i])
-  updateRanges(colsranges)
+  return colswidth.map(e => e * totalrange / totalwidth)
 }
 
-function getGripthDate(sumranges)
+function getGripthDate(yearRange, timemap, sumranges)
 {
-  let gripmsec = sumranges.map(e => e * _xScale),
-  gripDate = gripmsec.map(e => addMillisec(_begin, e)),
-  gripISOdate = gripDate.map(e => ISOdate(e))
+  let xScale = getXScale(yearRange),
+    gripmsec = sumranges.map(e => e * xScale),
+    beginSlider = getBeginSlider(yearRange, timemap),
+    gripDate = gripmsec.map(e => addMillisec(beginSlider, e)),
+    gripISOdate = gripDate.map(e => ISOdate(e))
 
   return gripISOdate.map(e => thDate(e))
 }
@@ -166,13 +209,15 @@ function addMillisec(beginx, millisec)
   return new Date(begin.setTime(begin.getTime() + millisec))
 }
 
-function verticalLine()
+function verticalLine(yearRange, timemap)
 {
   const slidertbl = document.getElementById('slidertbl'),
     vline = document.querySelector('.vline'),
     tblwidth = slidertbl.offsetWidth,
-    todaymsec = new Date() - _begin,
-    todayLine = todaymsec * tblwidth / _slidertotal,
+    beginSlider = getBeginSlider(yearRange, timemap),
+    todaymsec = new Date() - beginSlider,
+    slidertotal = getSlidertotal(yearRange, timemap),
+    todayLine = todaymsec * tblwidth / slidertotal,
     tblheight = slidertbl.offsetHeight,
     paddingtop = parseInt($('#dialogSlider').css('padding-top'))
 
