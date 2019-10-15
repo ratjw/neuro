@@ -44,6 +44,7 @@ export async function resResearch()
         enabled: false
       },
       lineAtIndex: today,
+      events: [],
       animation: {
         onComplete: barCaption
       }
@@ -106,9 +107,9 @@ Chart.helpers.extend(Chart.controllers.horizontalBar.prototype, {
     }
 });
 
-function barCaption(that)
+function barCaption(e)
 {
-  const chartInstance = that.chart,
+  const chartInstance = e.chart,
     ctx = chartInstance.ctx,
     chartdata = chartInstance.data.datasets,
     meta = chartdata.map((e, i) => chartInstance.controller.getDatasetMeta(i))
