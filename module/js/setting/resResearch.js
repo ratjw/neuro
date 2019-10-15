@@ -61,6 +61,7 @@ export async function resResearch()
     height: ($dialogResResearch.height() > maxHeight) ? maxHeight : 'auto',
     close: function() {
       $dialogResResearch.dialog('destroy')
+      barChart.destroy()
     }
   })
 
@@ -114,7 +115,12 @@ function barCaption(that)
 
   meta.forEach((e, i) => {
     e.data.forEach((bar, index) => {
-      ctx.fillText(chartdata[i].caption[index], bar._model.base, bar._model.y)
+      let caption = chartdata[i].caption[index],
+        width = bar._model.x - bar._model.base,
+        chars = width / 5.5
+
+      caption = caption.substring(0, chars)
+      ctx.fillText(caption, bar._model.base, bar._model.y)
     })
   })
 }

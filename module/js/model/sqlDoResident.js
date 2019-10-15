@@ -152,6 +152,7 @@ function updateBar(barChart, ridx)
   bardataset.forEach((e, i) => {
     if (i) {
       e.data[ridx] = research[resbar[i]][0]
+      e.caption[ridx] = research[resbar[i]][1]
     }
   })
 

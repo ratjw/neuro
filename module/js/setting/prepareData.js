@@ -52,15 +52,15 @@ function calcDatasets()
       return {
         label: r.label,
         backgroundColor: enrollyears.map(e => r.color),
-        caption: '',
-        data: enrollyears.map(e => calcBeginEdu(e - 543))
+        data: enrollyears.map(e => calcBeginEdu(e - 543)),
+        caption: research.map(e => '')
       }
     } else {
       return {
         label: r.label,
         backgroundColor: research.map(e => r.color),
-        caption: research.map(e => e[r.progress][1]),
-        data: research.map(e => e[r.progress][0])
+        data: research.map(e => e[r.progress][0]),
+        caption: research.map(e => e[r.progress][1])
       }
     }
   })
