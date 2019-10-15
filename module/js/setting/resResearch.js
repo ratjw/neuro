@@ -9,17 +9,17 @@ export async function resResearch()
   const chartjs = document.getElementById("chartjs"),
     $dialogResResearch = $("#dialogResResearch"),
     maxHeight = winHeight(90),
-    datasets = await prepareDatasets(),
-    labels = datasets.data.labels,
-    sets = datasets.data.datasets,
-    range = datasets.years.range,
-    today = datasets.years.today
+    prepdata = await prepareDatasets(),
+    labels = prepdata.data.labels,
+    prepsets = prepdata.data.datasets,
+    yearRange = prepdata.years.range,
+    today = prepdata.years.today
 
   let barChart = new Chart(chartjs, {
     type: 'horizontalBar',
     data: {
       labels: labels,
-      datasets: sets
+      datasets: prepsets
     },
     options: {
       scales: {
@@ -28,7 +28,7 @@ export async function resResearch()
           stacked: true,
           ticks: {
             callback: function(label, index, labels) {
-              return range[index]
+              return yearRange[index]
             },
             min: 0,
             max: xRange
@@ -44,6 +44,9 @@ export async function resResearch()
         enabled: false
       },
       lineAtIndex: today,
+      animation: {
+        onComplete: barCaption
+      }
     }
   })
 
@@ -61,43 +64,57 @@ export async function resResearch()
     }
   })
 
-  //Create the plug-in for vertical line on horizontal bar chart
-  var originalLineDraw = Chart.controllers.horizontalBar.prototype.draw;
-  Chart.helpers.extend(Chart.controllers.horizontalBar.prototype, {
-  
-      draw: function () {
-          originalLineDraw.apply(this, arguments);
-  
-          var chart = this.chart;
-          var ctx = chart.chart.ctx;
-  
-          var index = chart.config.options.lineAtIndex;
-          if (index) {
-  
-              var xaxis = chart.scales['x-axis-0'];
-              var yaxis = chart.scales['y-axis-0'];
-  
-              var x1 = xaxis.getPixelForValue(index);                       
-              var y1 = yaxis.top;                                                   
-  
-              var x2 = xaxis.getPixelForValue(index);                       
-              var y2 = yaxis.bottom;                                        
-  
-              ctx.save();
-              ctx.beginPath();
-              ctx.moveTo(x1, y1);
-              ctx.strokeStyle = 'red';
-              ctx.lineTo(x2, y2);
-              ctx.stroke();
-  
-              ctx.restore();
-          }
-      }
-  });
-
   if (getPermission('slider')) {
     chartjs.onclick = function (event) {
-      slider(event, barChart, range)
+      slider(event, barChart, yearRange)
     }
   }
+}
+
+//Create the plug-in for vertical line on horizontal bar chart
+var originalLineDraw = Chart.controllers.horizontalBar.prototype.draw;
+Chart.helpers.extend(Chart.controllers.horizontalBar.prototype, {
+
+    draw: function () {
+        originalLineDraw.apply(this, arguments);
+
+        var chart = this.chart;
+        var ctx = chart.chart.ctx;
+
+        var index = chart.config.options.lineAtIndex;
+        if (index) {
+
+            var xaxis = chart.scales['x-axis-0'];
+            var yaxis = chart.scales['y-axis-0'];
+
+            var x1 = xaxis.getPixelForValue(index);                       
+            var y1 = yaxis.top;                                                   
+
+            var x2 = xaxis.getPixelForValue(index);                       
+            var y2 = yaxis.bottom;                                        
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.strokeStyle = 'red';
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            ctx.restore();
+        }
+    }
+});
+
+function barCaption(that)
+{
+  const chartInstance = that.chart,
+    ctx = chartInstance.ctx,
+    chartdata = chartInstance.data.datasets,
+    meta = chartdata.map((e, i) => chartInstance.controller.getDatasetMeta(i))
+
+  meta.forEach((e, i) => {
+    e.data.forEach((bar, index) => {
+      ctx.fillText(chartdata[i].caption[index], bar._model.base, bar._model.y)
+    })
+  })
 }
