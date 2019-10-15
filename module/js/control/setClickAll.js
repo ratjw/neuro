@@ -17,7 +17,7 @@ import { inputHoliday, addHoliday, delHoliday } from "../setting/inputHoliday.js
 import { viewResident } from '../setting/viewResident.js'
 import { viewStaff } from '../setting/viewStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
-import { ADMIN, SECRETARY, USER } from "../main.js"
+import { ADMIN, USER } from "../main.js"
 import { STAFF } from "../util/updateBOOK.js"
 import { RESIDENT } from "../model/sqlDoResident.js"
 import { isMobile } from "../main.js"
@@ -115,15 +115,10 @@ export function getPermission(submenu, rname)
     barname = RESIDENT.find(e => e.residentname === rname),
     barid = barname && barname.ramaid || '',
     permission = {
-      disable: [ADMIN, SECRETARY, ...staffid],
-      slider: [ADMIN, SECRETARY, ...staffid, ...residentid],
-      resBar: [ADMIN, SECRETARY, ...staffid, barid]
+      disable: [...ADMIN, ...staffid],
+      slider: [...ADMIN, ...staffid, ...residentid],
+      resBar: [...ADMIN, ...staffid, barid]
     }
 
   return permission[submenu].includes(USER)
-}
-
-function disableSetting()
-{
-  return !(USER === ADMIN || STAFF.includes(USER) || USER === SECRETARY)
 }

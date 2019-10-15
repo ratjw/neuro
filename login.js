@@ -31,18 +31,18 @@ function login()
                   ? "module/mobile.html"
                   : "module/desktop.html"
                 : "es5/es5.html"
-  var ADMIN = '000000'
-  var SECRETARY = '005497'
+  var secretary = '005497'
+  var admin = '000000'
+  var ADMIN = [admin, '001198', secretary]
 					
   sessionStorage.setItem('admin', ADMIN)
-  sessionStorage.setItem('secretary', SECRETARY)
 	sessionStorage.setItem('isMobile', isMobile)
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
 	document.getElementById("browser").value = browser
-	document.getElementById("secretary").value = SECRETARY
+	document.getElementById("secretary").value = secretary
   if (location.host === "localhost") {
-    sessionStorage.setItem('userid', ADMIN)
-    document.getElementById("userid").value = ADMIN
+    sessionStorage.setItem('userid', admin)
+    document.getElementById("userid").value = admin
     document.getElementById("form").submit()
   }
 }

@@ -3,8 +3,7 @@ import { start } from "./control/start.js"
 import { Alert, msie } from "./util/util.js"
 
 // from login.js
-export let ADMIN = sessionStorage.getItem("admin")
-export let SECRETARY = sessionStorage.getItem("secretary")
+export let ADMIN = sessionStorage.getItem("admin").split(',')
 export let isMobile = sessionStorage.getItem("isMobile") === 'true'
 export let isPACS = !isMobile && msie()
 export let USER = sessionStorage.getItem("userid")
