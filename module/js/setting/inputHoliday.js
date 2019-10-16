@@ -56,12 +56,19 @@ export function inputHoliday()
   })
 
   datepicker($holidateth)
+  $holidateth.datepicker('option', 'onClose', checkComplete)
 
   // option holidays Eng: Thai
   $.each(HOLIDAYENGTHAI, function(key, val) {
     holidaylist += `<option value="${key}">${val}</option>`
   })
   $holidayname.html(holidaylist)
+  $("#buttonHoliday").hide()
+  $holidayname.on('change', checkComplete)
+
+  function checkComplete() {
+    if ($holidateth.val() && $holidayname.val()) { $("#buttonHoliday").show() }
+  }
 }
 
 function fillHoliday($holidaytbl)
@@ -73,6 +80,12 @@ function fillHoliday($holidaytbl)
       .appendTo($holidaytbl.find('tbody'))
         .filldataHoliday(this)
   });
+
+  document.querySelectorAll(".delholiday").forEach(function(item) {
+    item.addEventListener("click", function() {
+      delHoliday(this)
+    })
+  })
 }
 
 jQuery.fn.extend({
@@ -102,7 +115,7 @@ export function addHoliday()
   }
 }
 
-export function delHoliday(that)
+function delHoliday(that)
 {
   let  $row = $(that).closest("tr")
 
@@ -117,17 +130,15 @@ export function delHoliday(that)
       holidayEng = getHolidayEng(vname)
 
     sqlDelHoliday(vdate, holidayEng).then(response => {
-      let hasData = function () {
+      if (typeof response === "object") {
         setHOLIDAY(response)
         $(rows).each(function() {
           this.cells[DIAGNOSIS].style.backgroundImage = ""
         })
         $row.remove()
+      } else {
+        Alert ("delHoliday", response)
       }
-
-      typeof response === "object"
-      ? hasData()
-      : Alert ("delHoliday", response)
     })
   }
 }
@@ -142,7 +153,7 @@ function saveHoliday()
   if (!vdate || !vname) { return }
 
   sqlSaveHoliday(vdate, vname).then(response => {
-    let hasData = function () {
+    if (typeof response === "object") {
       setHOLIDAY(response)
       holidayInputBack($("#holidateth").closest("tr"))
       fillHoliday($("#holidaytbl"))
@@ -150,11 +161,9 @@ function saveHoliday()
       $(rows).each(function() {
         this.cells[DIAGNOSIS].style.backgroundImage = holiday(vdate)
       })
+    } else {
+      Alert ("saveHoliday", response)
     }
-
-    typeof response === "object"
-    ? hasData()
-    : Alert ("saveHoliday", response)
   })
 }
 

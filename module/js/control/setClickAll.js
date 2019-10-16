@@ -13,7 +13,7 @@ import { sendtoExcel } from "../menu/sendtoExcel.js"
 import { sendtoLINE } from "../menu/sendtoLINE.js"
 import { resEPA } from '../setting/resEPA.js'
 import { resResearch } from '../setting/resResearch.js'
-import { inputHoliday, addHoliday, delHoliday } from "../setting/inputHoliday.js"
+import { inputHoliday, addHoliday } from "../setting/inputHoliday.js"
 import { viewResident } from '../setting/viewResident.js'
 import { viewStaff } from '../setting/viewStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
@@ -86,12 +86,6 @@ function setClickSetting()
 
   $.each(onclick, function(key, val) {
     document.getElementById(key).onclick = val
-  })
-
-  document.querySelectorAll(".delholiday").forEach(function(item) {
-    item.addEventListener("click", function() {
-      delHoliday(this)
-    })
   })
 
   if (!getPermission('disable')){
