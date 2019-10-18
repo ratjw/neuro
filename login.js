@@ -27,9 +27,7 @@ function login()
                 ? "mobilevpn/mobilevpn.html"
                 : "es5/es5.html"
               : module
-                ? isMobile
-                  ? "module/mobile.html"
-                  : "module/desktop.html"
+                ? "module"
                 : "es5/es5.html"
   var secretary = '005497'
   var admin = '000000'

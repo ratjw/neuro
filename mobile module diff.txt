@@ -1,13 +1,10 @@
 
 Mobile files are different from desktop files in the followings:
 
-desktop.html -> mobile.html
-  add: narrow
-  comment out: some menu
-
 css/menu.css
   add @media (max-width: 600px) {
-    mobile cssmenu
+    mobile cssmenu: narrow => optimizing for narrow screens
+           display: none for some menu
   }
 
 control/

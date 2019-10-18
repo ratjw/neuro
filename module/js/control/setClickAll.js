@@ -70,7 +70,7 @@ function setClickSetting()
 {
   if (isMobile) { return }
 
-  let onclick = {
+  const onclick = {
     "clickresEPA": resEPA,
     "clickresResearch": resResearch,
     "clickaddResident": viewResident,
@@ -95,7 +95,7 @@ function setClickSetting()
 
 function setClickService()
 {
-  let service = document.querySelector("#clickserviceReview")
+  const service = document.querySelector("#clickserviceReview")
 
   service.onclick =  monthpicker
   service.onmouseover = monthpicker

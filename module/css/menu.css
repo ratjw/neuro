@@ -129,4 +129,10 @@
   #cssmenu > ul li > a {
     background-image: none;
   }
+  #addrow,
+  #postpone,
+  #postponecase,
+  #copyCase,
+  #delete,
+  #delcase { display: none; }
 }

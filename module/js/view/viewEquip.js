@@ -53,8 +53,10 @@ function viewEquipText(equipJSON)
 {
   let equip = []
 
-  $.each(equipJSON, function(key, value) {
-    equip.push(key + ":" + value)
+  Object.entries(equipJSON).forEach(([key, value]) => {
+    if (!(value in EQUIPICONS)) {
+      equip.push(key + ":" + value)
+    }
   })
   
   return equip.length ? equip.join('; ') : ''

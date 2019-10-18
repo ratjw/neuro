@@ -8,7 +8,8 @@ export async function resResearch()
 {
   const chartjs = document.getElementById("chartjs"),
     $dialogResResearch = $("#dialogResResearch"),
-    maxHeight = winHeight(90),
+    availHeight = winHeight(100),
+    maxHeight = availHeight > 1000 ? 1000 : availHeight,
     prepdata = await prepareDatasets(),
     labels = prepdata.data.labels,
     prepsets = prepdata.data.datasets,
@@ -43,15 +44,15 @@ export async function resResearch()
       tooltips: {
         enabled: false
       },
-      lineAtIndex: today,
-      events: [],
       animation: {
         onComplete: barCaption
-      }
+      },
+      lineAtIndex: today,
+      events: [],
+      maintainAspectRatio: false
     }
   })
 
-  $dialogResResearch.dialog({ height: 'auto' })
   $dialogResResearch.dialog({
     title: "Resident Research",
     closeOnEscape: true,
@@ -59,7 +60,7 @@ export async function resResearch()
     show: 200,
     hide: 200,
     width: winWidth(100),
-    height: ($dialogResResearch.height() > maxHeight) ? maxHeight : 'auto',
+    height: maxHeight,
     close: function() {
       $dialogResResearch.dialog('destroy')
       barChart.destroy()
