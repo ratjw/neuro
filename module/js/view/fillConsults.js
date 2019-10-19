@@ -1,9 +1,7 @@
 
-import { isMobile } from "../main.js"
-import { PATIENT, LARGESTDATE } from "../control/const.js"
-import { ISOdate, nextdates, numDate, thDate, START } from "../util/date.js"
+import { PATIENT } from "../control/const.js"
+import { nextdates } from "../util/date.js"
 import { STAFF } from "../util/updateBOOK.js"
-import { isSplit } from "../util/util.js"
 
 // refill after deleted or written over
 export function showStaffOnCall(opdate)
@@ -26,8 +24,6 @@ export function fillConsults(tableID = 'maintbl')
     dateoncall = start.startoncall,
     staffstart = start.staffname,
     sindex = staffoncall.findIndex(e => e.staffname === staffstart)
-
-  if (isMobile) { return }
 
   // find first date to begin
   while (dateoncall < firstsat) {

@@ -35,7 +35,8 @@ export function start() {
 function success(response) {
 
   // call sortable before render, otherwise it renders very slowly
-  isMobile ? scaleViewport() : sortable()
+//  isMobile ? scaleViewport() : 
+  sortable()
   updateBOOK(response)
   fillmain()
   scrolltoToday('maintbl')

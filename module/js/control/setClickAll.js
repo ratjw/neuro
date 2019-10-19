@@ -20,7 +20,6 @@ import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
 import { STAFF } from "../util/updateBOOK.js"
 import { RESIDENT } from "../model/sqlDoResident.js"
-import { isMobile } from "../main.js"
 
 export function setClickAll()
 {
@@ -31,21 +30,7 @@ export function setClickAll()
 
 function setClickMenu()
 {
-  const clickMobile = {
-    "clicksearchCases": searchCases,
-    "clickcaseAll": caseAll,
-    "clickallDeletedCases": allDeletedCases,
-    "clickeditHistory": editHistory,
-  //  "clickreadme": readme,
-  //  "addrow": addnewrow,
-  //  "postponecase": postponeCase,
-    "moveCase": moveCase,
-  //  "copyCase": copyCase,
-  //  "delcase": delCase,
-    "clicksendtoExcel": sendtoExcel,
-    "clicksendtoLINE": sendtoLINE
-  }
-  const clickDesktop = {
+  const clickMenu = {
     "clicksearchCases": searchCases,
     "clickcaseAll": caseAll,
     "clickallDeletedCases": allDeletedCases,
@@ -59,18 +44,15 @@ function setClickMenu()
     "clicksendtoExcel": sendtoExcel,
     "clicksendtoLINE": sendtoLINE
   }
-  const clickevent = isMobile ? clickMobile : clickDesktop
 
-  Object.entries(clickevent).forEach(([key, val]) => {
+  Object.entries(clickMenu).forEach(([key, val]) => {
     document.getElementById(key).addEventListener('click', val)
   })
 }
 
 function setClickSetting()
 {
-  if (isMobile) { return }
-
-  const onclick = {
+  const clickSetting = {
     "clickresEPA": resEPA,
     "clickresResearch": resResearch,
     "clickaddResident": viewResident,
@@ -84,7 +66,7 @@ function setClickSetting()
     "#clickaddStaff"
   ]
 
-  $.each(onclick, function(key, val) {
+  Object.entries(clickSetting).forEach(([key, val]) => {
     document.getElementById(key).onclick = val
   })
 

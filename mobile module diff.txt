@@ -2,32 +2,11 @@
 Mobile files are different from desktop files in the followings:
 
 css/menu.css
-  add @media (max-width: 600px) {
-    mobile cssmenu: narrow => optimizing for narrow screens
-           display: none for some menu
+  add @media (max-width: 1000px) {
+    some menu
+    display: none
   }
-
-control/
-  start.js -> isMobile ? scaleViewport() : sortable()
-
-menu/
-  setClickAll.js
-    clickevent = isMobile ? clickMobile : clickDesktop
-    setClickSetting() => if (isMobile) { return }
-
-view/
-  fillConsults()
-    if (isMobile) { return }
-
-_________________________________________________
-
-Mobile part don't need the following files:
-
-  control/
-    addStaff.js
-    inputHoliday.js
-    setClickSetting.js
-    sort.js
-
-  view/
-    viewAddStaff.js
+  add @media (max-width: 600px) {
+    some more menu
+    display: none
+  }
