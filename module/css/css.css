@@ -1,8 +1,8 @@
 /* to let table scrollable while dragging */
 html, body {
-    height: 100%;
-    overflow: hidden;
-    margin: 0px;
+  height: 100%;
+  overflow: hidden;
+  margin: 0px;
 }
 
 #wrapper {
