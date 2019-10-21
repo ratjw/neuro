@@ -153,7 +153,7 @@ function calcMulti(caption, width)
   Array.from(caption).forEach((e, i) => {
     chunk = remain.substring(0, i-x)
     if (context.measureText(chunk).width >= width) {
-      textline.push(remain.substring(0, i-x-1))
+      textline.push(remain.substring(0, i-x))
       remain = caption.slice(i)
       x = i
     }
