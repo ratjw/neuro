@@ -114,23 +114,24 @@ function barCaption(e)
     ctx = chartInstance.ctx,
     chartdata = chartInstance.data.datasets,
     meta = chartdata.map((e, i) => chartInstance.controller.getDatasetMeta(i)),
-    charH = 10
+    charH = 10,
+    padding = 3
 
   ctx.font = `${charH}px Lucida`
   meta.forEach((e, i) => {
     e.data.forEach((bar, index) => {
       let caption = chartdata[i].caption[index],
-        base = bar._model.base,
+        base = bar._model.base + padding,
         x = bar._model.x,
         y = bar._model.y,
-        width = x - base,
+        width = x - base - padding,
         context = calcMulti(caption, width)
 
       if (context.length === 1) {
         context.forEach(tex => ctx.fillText(tex, base, y))
       }
       else if (context.length === 2) {
-        context.forEach((tex, x) => ctx.fillText(tex, base, y + (x*charH - charH/2)
+        context.forEach((tex, x) => ctx.fillText(tex, base, y + (x*charH - charH/2)))
       }
       else if (context.length === 3) {
         context.forEach((tex, x) => ctx.fillText(tex, base, y + (x-1)*charH))
@@ -141,12 +142,23 @@ function barCaption(e)
 
 function calcMulti(caption, width)
 {
-  const chartjs = document.getElementById("chartjs"),
+  let chartjs = document.getElementById("chartjs"),
     context = chartjs.getContext('2d'),
     length = context.measureText(caption),
-    lines = Math.ceil(length / width),
-    lines = lines > 3 ? 3 : lines,
-    textline = []
+    remain = caption,
+    textline = [],
+    chunk = "",
+    x = 0
 
-  textline[1] = 
+  Array.from(caption).forEach((e, i) => {
+    chunk = remain.substring(0, i-x)
+    if (context.measureText(chunk).width >= width) {
+      textline.push(remain.substring(0, i-x-1))
+      remain = caption.slice(i)
+      x = i
+    }
+  })
+  textline.push(remain)
+
+  return textline.slice(0, 3)
 }
