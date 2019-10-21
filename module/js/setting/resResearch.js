@@ -119,7 +119,7 @@ function barCaption(e)
     e.data.forEach((bar, index) => {
       let caption = chartdata[i].caption[index],
         width = bar._model.x - bar._model.base,
-        chars = width / 5.5
+        chars = Math.floor(width / 7)
 
       caption = caption.substring(0, chars)
       ctx.fillText(caption, bar._model.base, bar._model.y)

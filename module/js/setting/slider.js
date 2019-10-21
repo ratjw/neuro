@@ -46,7 +46,7 @@ export function slider(evt, barChart, yearRange)
     width: winWidth(100),
     height: 'auto',
     buttons: [{
-      text: "OK",
+      text: "Save",
       click: function() {
         const newTimeRanges = getNewTimeRanges(timemap)
         updateResearch(barChart, ridx, newTimeRanges)

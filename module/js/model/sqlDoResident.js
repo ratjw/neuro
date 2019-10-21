@@ -123,7 +123,7 @@ export async function updateResearch(barChart, ridx, _ranges)
     progress = RESEARCHBAR.map(e => e.progress).filter(e => e),
     slidertbl = document.getElementById('slidertbl'),
     columns = [...slidertbl.querySelectorAll('td')],
-    columnsText = columns.map(e => e.innerHTML),
+    columnsText = columns.map(e => e.textContent),
     json = {}
 
     progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
