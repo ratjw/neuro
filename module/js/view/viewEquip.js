@@ -1,41 +1,32 @@
 
 const EQUIPICONS = {
-    Fluoroscope: "Fluoroscope",
-    "Navigator frameless": "Navigator",
-    "Navigator with frame": "Navigator",
-    "O-arm": "Oarm",
-    Robotics: "Robotics",
-    Microscope: "Microscope",
-    "Pentaro 900": "Pentaro900",
-    ICG: "Microscope",
-    Endoscope: "Endoscope",
-    Excell: "CUSA",
-    Soring: "CUSA",
-    Sonar: "CUSA",
-    ultrasound: "Ultrasound",
-    Doppler: "Ultrasound",
-    Duplex: "Ultrasound",
-    CN5: "Monitor",
-    CN6: "Monitor",
-    CN7: "Monitor",
-    CN8: "Monitor",
-    CN9: "Monitor",
-    CN10: "Monitor",
-    CN11: "Monitor",
-    CN12: "Monitor",
-    SSEP: "Monitor",
-    EMG: "Monitor",
-    MEP: "Monitor"
+    Fluoroscope: "fluoroscope",
+    "Navigator frameless": "navigator",
+    "Navigator with frame": "navigator",
+    "O-arm": "oarm",
+    Robotics: "robotics",
+    Microscope: "microscope",
+    "Pentaro 900": "pentaro900",
+    ICG: "microscope",
+    Endoscope: "endoscope",
+    Excell: "cusa",
+    Soring: "cusa",
+    Sonar: "cusa",
+    ultrasound: "ultrasound",
+    Doppler: "ultrasound",
+    Duplex: "ultrasound",
+    CN5: "monitor",
+    CN6: "monitor",
+    CN7: "monitor",
+    CN8: "monitor",
+    CN9: "monitor",
+    CN10: "monitor",
+    CN11: "monitor",
+    CN12: "monitor",
+    SSEP: "monitor",
+    EMG: "monitor",
+    MEP: "monitor"
 }
-
-const EQUIPICONSHOWN = [
-  "Fluoroscope",
-  "Navigator",
-  "Microscope",
-  "CUSA",
-  "Endoscope",
-  "Monitor"
-]
 
 // Add all equipments in one string to show in 1 cell
 export function viewEquip(equip)
@@ -51,7 +42,7 @@ export function viewEquip(equip)
 
 function viewEquipText(equipJSON)
 {
-  let equip = []
+  const equip = []
 
   Object.entries(equipJSON).forEach(([key, value]) => {
     if (!(value in EQUIPICONS)) {
@@ -64,51 +55,27 @@ function viewEquipText(equipJSON)
 
 function viewEquipImage(equipJSON)
 {
-  let equipPics = [],
-    img = []
+  const imgEquipShow = document.querySelector("#imgEquipShow"),
+    imgEquip = document.createElement("div")
 
-  Object.values(equipJSON).forEach(value => {
-    if (typeof value === 'string') { value = value.split() }
-    value.forEach(e => {
+  imgEquip.innerHTML = imgEquipShow.innerHTML
+  const imgEquipAll = imgEquip.querySelectorAll("img")
+
+  Object.values(equipJSON).forEach(v => {
+    if (typeof v === 'string') { v = v.split() }
+    v.forEach(e => {
       if (e in EQUIPICONS) {
-        equipPics.push(EQUIPICONS[e])
-      } 
+        let icon = EQUIPICONS[e],
+          imgAll = [...imgEquipAll],
+          equipPic = imgAll.find(e => e.classList.contains(icon))
+        equipPic.classList.remove('imgpale')
+        equipPic.classList.remove('hide')
+        if (icon === 'pentaro900') {
+          imgAll.find(e => e.classList.contains('microscope')).classList.add('hide')
+        }
+      }
     })
   })
 
-  // remove duplicated pics
-  equipPics = [...new Set(equipPics)]
-
-  // display 6 pics: pale the not-checked ones
-  // filtering to show the remainders 
-  EQUIPICONSHOWN.forEach((item) => {
-    if ((item === "Microscope") && (equipPics.includes("Pentaro900"))) {
-      item = "Pentaro900"
-    }
-    if (equipPics.includes(item)) {
-      img.push(`<img src="css/pic/equip/${item}.jpg">`)
-      equipPics = equipPics.filter(e => e !== item)
-    } else {
-      img.push(`<img class="imgpale"  src="css/pic/equip/${item}.jpg">`)
-    }
-  })
-
-  // Remainders in equipPics
-  if (equipPics.length) {
-    img = img.concat(equipImg(equipPics))
-  }
-
-  return img.join(' ')
-}
-
-// the remainder of equipPics
-function equipImg(equipPics)
-{
-  let img = []
-
-  equipPics.forEach(function(item) {
-    img.push(`<img src="css/pic/equip/${item}.jpg">`)
-  })
-
-  return img
+  return imgEquip.innerHTML
 }
