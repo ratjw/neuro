@@ -102,15 +102,16 @@ function fillEquip()
 
 function fillMatchValue(_JsonEquip)
 {
-  Object.entries(_JsonEquip).forEach(([key, val]) => {
+  Object.entries(_JsonEquip).forEach(([key, v]) => {
     let title = document.querySelector(`#dialogEquip div[title='${key}']`)
 
     if (!title) { return }
 
     // convert string to array
-    if (typeof val === 'string') { val = val.split() }
+    if (typeof v === 'string') { v = v.split() }
+    if (!Array.isArray(v)) { return }
 
-    let remain = fillRadioCheckbox(title, val)
+    let remain = fillRadioCheckbox(title, v)
     if (remain.length) {
       remain = fillText(title, remain)
     }
