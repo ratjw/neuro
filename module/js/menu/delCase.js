@@ -36,7 +36,7 @@ export function delCase() {
       typeof response === "object"
       ? hasData()
       : Alert ("delCase", response)
-    }).catch(error => {})
+    }).catch(error => alert(error.stack))
   }
 
   clearSelection()

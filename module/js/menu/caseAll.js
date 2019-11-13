@@ -10,5 +10,5 @@ export function caseAll() {
     typeof response === "object"
     ? pagination($("#dialogAll"), $("#alltbl"), response, "All Saved Cases")
     : Alert("caseAll", response)
-  }).catch(error => {})
+	}).catch(error => alert(error.stack))
 }

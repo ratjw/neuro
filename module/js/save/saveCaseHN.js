@@ -99,7 +99,7 @@ let  wanting = {...waiting},
       };
 
       typeof response === "object" ? hasData() : noData()
-    }).catch(error => { })
+    }).catch(error => alert(error.stack))
 
     $dialogMoveCaseHN.dialog("close")
   }
@@ -117,7 +117,7 @@ let  wanting = {...waiting},
       };
 
       typeof response === "object" ? hasData() : noData()
-    }).catch(error => { })
+    }).catch(error => alert(error.stack))
 
     $dialogMoveCaseHN.dialog("close")
   }

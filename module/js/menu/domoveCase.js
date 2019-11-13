@@ -18,5 +18,5 @@ export function domoveCase(allOldCases, allNewCases, moverow, thisrow)
     typeof response === "object"
     ? hasData()
     : Alert ("moveCase", response)
-  }).catch(error => {})
+	}).catch(error => alert(error.stack))
 }

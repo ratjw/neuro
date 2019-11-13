@@ -173,7 +173,7 @@ export function sortable () {
           typeof response === "object"
           ? hasData()
           : Alert("Sortable", response)
-        }).catch(error => {})
+        }).catch(error => alert(error.stack))
       }
 
       doSorting()

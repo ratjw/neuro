@@ -75,5 +75,5 @@ export function saveService(pointed, column, newcontent) {
       pointed.innerHTML = OLDCONTENT
       // return to previous content
     }
-  }).catch(error => {})
+  }).catch(error => alert(error.stack))
 }

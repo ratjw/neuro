@@ -31,7 +31,7 @@ function saveContentQN(pointed, column, newcontent)
       pointed.innerHTML = OLDCONTENT
       // return to previous content
     }
-  }).catch(error => {})
+  }).catch(error => alert(error.stack))
 }
 
 function saveContentNoQN(pointed, column, newcontent)
@@ -49,5 +49,5 @@ function saveContentNoQN(pointed, column, newcontent)
     };
 
     typeof response === "object" ? hasData() : noData()
-  }).catch(error => {  })
+  }).catch(error => alert(error.stack))
 }

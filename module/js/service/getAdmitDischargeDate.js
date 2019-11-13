@@ -13,7 +13,7 @@ export function getAdmitDischargeDate() {
       setSERVICE(response.SERVICE)
       fillAdmitDischargeDate()
     }
-  }).catch(error => {})
+  }).catch(error => alert(error.stack))
 }
 
 let fillAdmitDischargeDate = function () {

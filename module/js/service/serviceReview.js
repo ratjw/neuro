@@ -83,7 +83,7 @@ export function serviceReview(begin) {
     } else {
       Alert("getServiceOneMonth", response)
     }
-  }).catch(error => {})
+  }).catch(error => alert(error.stack))
 
   $exportService.on("click", event => {
     event.preventDefault()

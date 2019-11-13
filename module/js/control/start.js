@@ -26,7 +26,7 @@ export function start() {
 		typeof response === "object"
 		? success(response)
 		: failed(response)
-	}).catch(error => {})
+	}).catch(error => alert(error.stack))
 
 	document.oncontextmenu = () => false
 }

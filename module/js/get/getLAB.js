@@ -137,7 +137,7 @@ function saveLab()
       // failed save, roll back
       fillLab()
     }
-  }).catch(error => {})
+	}).catch(error => alert(error.stack))
 }
 
 function cancelAllLab()
@@ -151,5 +151,5 @@ function cancelAllLab()
       // failed cancel, roll back
       fillLab()
     }
-  }).catch(error => {})
+  }).catch(error => alert(error.stack))
 }

@@ -222,7 +222,7 @@ function getEditedBy()
     } else {
       Alert("getEditedby", response)
     }
-  }).catch(error => {})
+	}).catch(error => alert(error.stack))
 }
 
 function checkEquip()
@@ -271,7 +271,7 @@ function saveEquip()
       // failed save, roll back
       fillEquip()
     }
-  }).catch(error => {})
+  }).catch(error => alert(error.stack))
 }
 
 function cancelAllEquip()
@@ -285,5 +285,5 @@ function cancelAllEquip()
       // failed cancel, roll back
       fillEquip()
     }
-  }).catch(error => {})
+  }).catch(error => alert(error.stack))
 }

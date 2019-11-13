@@ -91,5 +91,5 @@ export function searchDB()
     } else {
       Alert("Search: " + search, response)
     }
-  }).catch(error => {})
+	}).catch(error => alert(error.stack))
 }

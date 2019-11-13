@@ -12,5 +12,5 @@ export function editHistory()
     typeof response === "object"
     ? viewCaseHistory(row, hn, response)
     : Alert("caseHistory", response)
-  }).catch(error => {})
+	}).catch(error => alert(error.stack))
 }

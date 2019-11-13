@@ -14,5 +14,5 @@ export function docopyCase(allNewCases, moverow, thisrow)
     typeof response === "object"
     ? updateBOOK(response)
     : Alert ("copyCase", response)
-  }).catch(error => {})
+	}).catch(error => alert(error.stack))
 }

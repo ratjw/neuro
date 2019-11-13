@@ -39,5 +39,5 @@ export function saveOpRoom(pointed, newcontent) {
     typeof response === "object"
     ? hasData()
     : Alert ("saveOpRoom", response)
-  }).catch(error => {})
+  }).catch(error => alert(error.stack))
 }

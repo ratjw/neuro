@@ -40,6 +40,6 @@ export function postponeCase()
       typeof response === "object"
       ? hasData()
       : Alert ("postponeCase", response)
-    }).catch(error => {})
+    }).catch(error => alert(error.stack))
   }
 }

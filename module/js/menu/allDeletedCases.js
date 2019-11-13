@@ -13,7 +13,7 @@ export function allDeletedCases()
     } else {
       Alert("allDeletedCases", response)
     }
-  }).catch(error => {})
+	}).catch(error => alert(error.stack))
 }
 
 export function toUndelete(thisdate) 
@@ -42,7 +42,7 @@ export function toUndelete(thisdate)
       } else {
         Alert("toUndelete", response)
       }
-    }).catch(error => {})
+    }).catch(error => alert(error.stack))
 
     $('#dialogAllDeleted').dialog("close")
   })

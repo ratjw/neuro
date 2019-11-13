@@ -19,5 +19,5 @@ export function saveThisHN(pointed, content)
       pointed.innerHTML = ""
       // unsuccessful entry
     }
-  }).catch(error => { })
+  }).catch(error => alert(error.stack))
 }
