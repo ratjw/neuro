@@ -63,6 +63,7 @@ function viewEquipImage(equipJSON)
 
   Object.values(equipJSON).forEach(v => {
     if (typeof v === 'string') { v = v.split() }
+    if (!Array.isArray(v)) { return }
     v.forEach(e => {
       if (e in EQUIPICONS) {
         let icon = EQUIPICONS[e],
