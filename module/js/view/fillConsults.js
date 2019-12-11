@@ -16,15 +16,18 @@ export function fillConsults(tableID = 'maintbl')
 {
   let table = document.getElementById(tableID),
     saturdayS = table.querySelectorAll("tr.Saturday"),
-    saturdays = [...new Set(saturdayS)],
-    firstsat = saturdays.length && saturdays[0].dataset.opdate || "",
+    saturdayA = Array.from(saturdayS),
+    saturdateS = saturdayA.map(e => e.dataset.opdate),
+    saturdates = [...new Set(saturdateS)],
+    firstsat = saturdates.length && saturdates[0] || "",
     staffoncall = STAFF.filter(staff => (staff.oncall === "1")),
     slen = staffoncall.length,
     start = staffoncall.filter(staff => staff.startoncall)
       .reduce((a, b) => a.startoncall > b.startoncall ? a : b, 0),
     dateoncall = start.startoncall,
     staffstart = start.staffname,
-    sindex = staffoncall.findIndex(e => e.staffname === staffstart)
+    sindex = staffoncall.findIndex(e => e.staffname === staffstart),
+    prevDate = saturdates[0]
 
   // find first date to begin
   while (dateoncall < firstsat) {
@@ -32,9 +35,12 @@ export function fillConsults(tableID = 'maintbl')
     sindex = (sindex + 1) % slen
   }
 
-  Array.from(saturdays).forEach(e => {
+  saturdayA.forEach((e, i) => {
+    if (e.dataset.opdate !== prevDate) {
+      sindex = (sindex + 1) % slen
+      prevDate = e.dataset.opdate
+    }
     dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname)
-    sindex = (sindex + 1) % slen
   })
 }
 
