@@ -15,7 +15,8 @@ export function showStaffOnCall(opdate)
 export function fillConsults(tableID = 'maintbl')
 {
   let table = document.getElementById(tableID),
-    saturdays = table.querySelectorAll("tr.Saturday"),
+    saturdayS = table.querySelectorAll("tr.Saturday"),
+    saturdays = [...new Set(saturdayS)],
     firstsat = saturdays.length && saturdays[0].dataset.opdate || "",
     staffoncall = STAFF.filter(staff => (staff.oncall === "1")),
     slen = staffoncall.length,
