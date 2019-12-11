@@ -29,6 +29,11 @@ export function fillConsults(tableID = 'maintbl')
     sindex = staffoncall.findIndex(e => e.staffname === staffstart),
     prevDate = saturdates[0]
 
+  // find dateoncall before firstsat
+  while (dateoncall > firstsat) {
+    dateoncall = nextdates(dateoncall, -7 * slen)
+  }
+
   // find first date to begin
   while (dateoncall < firstsat) {
     dateoncall = nextdates(dateoncall, 7)
