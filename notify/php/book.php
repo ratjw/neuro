@@ -20,7 +20,8 @@ function book($mysqli)
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
             patient,dob,diagnosis,treatment,lab,equipment,contact,qn
           FROM book 
-          WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
+          WHERE YEARWEEK(opdate) = YEARWEEK(CURDATE())
+             OR YEARWEEK(opdate) = YEARWEEK(CURDATE() + INTERVAL 1 WEEK)
             AND deleted = 0 AND waitnum > 0
           ORDER BY opdate, theatre='',theatre, oproom is null,oproom,
             casenum is null,casenum, optime='',optime, waitnum;";
@@ -33,30 +34,7 @@ function book($mysqli)
     $book[] = $rowi;
   }
 
-  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
-            patient,dob,diagnosis,treatment,lab,equipment,contact,qn
-          FROM book 
-          WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
-            AND deleted = 0 AND waitnum < 0
-          ORDER BY opdate,waitnum DESC;";
-          // Consult cases have negative waitnum.
-          // Greater waitnum (less negative) are placed first, sorted by DESC
-
-  if (!$result = $mysqli->query ($sql)) {
-    return $mysqli->error;
-  }
-  while ($rowi = $result->fetch_assoc()) {
-    $consult[] = $rowi;
-  }
-
-  // current() = array.toString()
-  if ($result = $mysqli->query ("SELECT now();")) {
-    $time = current($result->fetch_row());
-  }
-
   $allarray["BOOK"] = $book;
-  $allarray["CONSULT"] = $consult;
-  $allarray["QTIME"] = $time;
 
   return $allarray;
 }
