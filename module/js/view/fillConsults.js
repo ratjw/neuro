@@ -15,10 +15,9 @@ export function showStaffOnCall(opdate)
 export function fillConsults(tableID = 'maintbl')
 {
   let table = document.getElementById(tableID),
-    saturdayS = table.querySelectorAll("tr.Saturday"),
-    saturdayA = Array.from(saturdayS),
-    saturdateS = saturdayA.map(e => e.dataset.opdate),
-    saturdates = [...new Set(saturdateS)],
+    saturdayRows = Array.from(table.querySelectorAll("tr.Saturday")),
+    saturdatess = saturdayRows.map(e => e.dataset.opdate),
+    saturdates = [...new Set(saturdatess)],
     firstsat = saturdates.length && saturdates[0] || "",
     staffoncall = STAFF.filter(staff => (staff.oncall === "1")),
     slen = staffoncall.length,
@@ -40,7 +39,7 @@ export function fillConsults(tableID = 'maintbl')
     sindex = (sindex + 1) % slen
   }
 
-  saturdayA.forEach((e, i) => {
+  saturdayRows.forEach((e, i) => {
     if (e.dataset.opdate !== prevDate) {
       sindex = (sindex + 1) % slen
       prevDate = e.dataset.opdate
