@@ -31,10 +31,10 @@
 		"imageFile" => new CURLFile($subdir . $filename)
 	);
 
-//  curl($line_api, $data, $line_token);
-  curl($line_api, $data, $line_token1);
-  curl($line_api, $data, $line_token2);
-  curl($line_api, $data, $line_token3);
+  curl($line_api, $data, $line_token);
+//  curl($line_api, $data, $line_token1);
+//  curl($line_api, $data, $line_token2);
+//  curl($line_api, $data, $line_token3);
 
 function curl($line_api, $data, $line_token)
 {

@@ -1,5 +1,5 @@
 
-import { start } from "./control/start.js"
+import { start } from "./start.js"
 
 export let USER = '000000'//sessionStorage.getItem("userid")
 

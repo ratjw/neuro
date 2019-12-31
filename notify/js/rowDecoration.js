@@ -1,6 +1,6 @@
 
-import { OPDATE, DIAGNOSIS, LARGESTDATE } from "../control/const.js"
-import { putThdate } from "../util/date.js"
+import { OPDATE, DIAGNOSIS, LARGESTDATE } from "./const.js"
+import { putThdate } from "./date.js"
 import { holiday } from "./holiday.js"
 
 // for row, and 1st column colors

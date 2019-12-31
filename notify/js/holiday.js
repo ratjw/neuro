@@ -1,5 +1,5 @@
 
-import { HOLIDAY } from "../util/updateBOOK.js"
+import { HOLIDAY } from "./updateBOOK.js"
 
 export function holiday(date)
 {

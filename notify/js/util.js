@@ -1,5 +1,5 @@
 
-import { LARGESTDATE } from "../control/const.js"
+import { LARGESTDATE } from "./const.js"
 
 // Make dialog box dialogAlert containing error message
 export function Alert(title, message) {
