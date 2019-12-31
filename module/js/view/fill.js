@@ -17,7 +17,7 @@ export function fillmain()
   let table = document.getElementById("maintbl"),
 
     x = BOOK.findIndex(e => e.opdate >= LARGESTDATE),
-    book = BOOK.slice(0, x),
+    book = x < 0 ? BOOK : BOOK.slice(0, x),
 
     today = new Date(),
     nextyear = today.getFullYear() + 2,

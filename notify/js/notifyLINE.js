@@ -53,7 +53,6 @@ function sendNotifyLINE(ifFriday)
   })
 
   notifywrapper.style.display = 'block'
-  wrapper.remove()
   capture.style.width = '1000px'
 
   let rows = capture.querySelectorAll('tr')
