@@ -11,8 +11,10 @@ export function holiday(date)
 
   let monthdate = date.substring(5),
     dayofweek = (new Date(date)).getDay(),
+    Sun = dayofweek === 0,
     Mon = dayofweek === 1,
     Tue = dayofweek === 2,
+    Sat = dayofweek === 6,
 
   // Thai official holiday & Compensation
   govHoliday = {
@@ -50,5 +52,8 @@ export function holiday(date)
 
   if (govHoliday[monthdate]) {
     return `url('css/pic/holiday/${govHoliday[monthdate]}.png')`
+  }
+  if (Sun || Sat) {
+    return 'weekend'
   }
 }

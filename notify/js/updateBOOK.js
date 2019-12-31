@@ -13,9 +13,6 @@ export let BOOK = [],
   HOLIDAY = [],
   TIMESTAMP = ""
 
-export function setSTAFF(staff) { STAFF = staff }
-export function setHOLIDAY(holiday) { HOLIDAY = holiday }
-
 let table = document.getElementById('maintbl')
 
 // Save data got from server
