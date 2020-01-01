@@ -1,13 +1,17 @@
 
-import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "./const.js"
+import { postData, MYSQLIPHP } from "./fetch.js"
+import { fillmain } from "./fill.js"
+import { updateBOOK } from "./updateBOOK.js"
+import { holiday } from './holiday.js'
+import { Alert } from "./util.js"
 import { ISOdate, nextdates } from './date.js'
-import { string25 } from './util.js'
-
-const LINENOTIFY = "line/lineNotify.php"
+import { sendNotifyLINE } from './sendNotifyLINE.js'
 
 export function notifyLINE()
 {
-  let today = new Date(),
+  let maintbl = document.querySelector('#maintbl'),
+    rows = maintbl.querySelectorAll('tr'),
+    today = new Date(),
     day = today.getDay(),
     todate = ISOdate(today),
     tomorrow = nextdates(todate, 1),
@@ -15,21 +19,27 @@ export function notifyLINE()
     thisSatdate = ISOdate(new Date(thisSatday)),
     nextMonday = nextdates(thisSatdate, 2),
     nextSatdate = nextdates(thisSatdate, 7),
-    ifFriday = day === 5,
-    ifWeekEnd = day === 6 || day === 0,
-    begindate = ifFriday ? nextMonday : tomorrow,
-    enddate = ifFriday ? nextSatdate : thisSatdate
+    Friday = day === 5,
+    weekEnd = day === 6 || day === 0,
+    begindate = Friday ? nextMonday : tomorrow,
+    enddate = Friday ? nextSatdate : thisSatdate,
+    isHoliday = holiday(todate)
 
-  if (ifWeekEnd) { return }
-  selectCases(begindate, enddate)
-  sendNotifyLINE(ifFriday)
+  if (weekEnd || isHoliday) { return }
+  if (!inMemory(rows, begindate)) { start() }
+  selectCases(rows, begindate, enddate)
+  sendNotifyLINE(Friday)
 }
 
-function selectCases(begindate, enddate)
+function inMemory(rows, begindate)
 {
-  let maintbl = document.querySelector('#maintbl'),
-    rows = maintbl.querySelectorAll('tr')
+  let opdates = [...rows].map(e => e.dataset.opdate)
 
+  return opdates.includes(begindate)
+}
+
+function selectCases(rows, begindate, enddate)
+{
   rows.forEach(e => {
     let edate = e.dataset.opdate
     if (edate >= begindate && edate < enddate) {
@@ -38,57 +48,25 @@ function selectCases(begindate, enddate)
   })
 }
 
-function sendNotifyLINE(ifFriday)
-{
-  let wrapper = document.querySelector("#wrapper"),
-    notifywrapper = document.querySelector("#notifywrapper"),
-    capture = document.querySelector("#capture"),
-    tbody = capture.querySelector("tbody"),
-    selected = document.querySelectorAll(".selected"),
-    template = document.querySelector('#capturerow')
-
-  tbody.innerHTML = template.innerHTML
-  selected.forEach(e => {
-    capture.querySelector("tbody").appendChild(e.cloneNode(true))
-  })
-
-  notifywrapper.style.display = 'block'
-  capture.style.width = '1000px'
-
-  let rows = capture.querySelectorAll('tr')
-
-  rows.forEach(e => e.classList.remove('selected'))
-  rows.forEach(tr => {
-    let cell = tr.cells
-
-    if (cell.length && cell[0].nodeName !== 'TH') {
-      let hn = cell[HN].innerHTML,
-        patient = cell[PATIENT].innerHTML
-      // Sat. สัปดาห์ Consult has no HN
-      cell[OPDATE].innerHTML = cell[OPDATE].innerHTML.replace(' ', '<br>')
-      cell[PATIENT].innerHTML = hn ? (hn + '<br>' + patient.split(" ")[0]) : ''
-      cell[DIAGNOSIS].innerHTML = string25(cell[DIAGNOSIS].innerHTML)
-      cell[TREATMENT].innerHTML = string25(cell[TREATMENT].innerHTML)
-      cell[EQUIPMENT].innerHTML = cell[EQUIPMENT].innerHTML.replace(/\<br\>/g, '')
-      equipImage(cell[EQUIPMENT])
-    }
-  })
-
-  html2canvas(capture).then(function(canvas) {
-    $.post(LINENOTIFY, {
-      'user': 'ตารางผ่าตัด',
-      'message': ifFriday ? 'สัปดาห์หน้า' : 'สัปดาห์นี้',
-      'image': canvas.toDataURL('image/png', 1.0)
-    })
-  })
+function start() {
+  postData(MYSQLIPHP, "start=''").then(response => {
+    typeof response === "object"
+    ? success(response)
+    : failed(response)
+  }).catch(error => alert(error.stack))
 }
 
-function equipImage(equip)
-{
-  equip.childNodes.forEach(e => (e.nodeName === '#text') && e.remove())
-  equip.querySelectorAll('img').forEach(e => {
-    if (e.className === 'imgpale') {
-      e.src = e.src.replace('.jpg', 'pale.jpg')
-    }
-  })
+// Success fetch data from server
+function success(response) {
+  updateBOOK(response)
+  fillmain()
+
+  notifyLINE()
+}
+
+function failed(response) {
+  let title = "Server Error",
+    error = error + "<br><br>Response from server has no data"
+
+  Alert(title, error + "No localStorage backup")
 }

@@ -1,10 +1,4 @@
 
-import { sqlStart } from "./sqlupdate.js"
-import { fillmain } from "./fill.js"
-import { updateBOOK } from "./updateBOOK.js"
-import { holiday } from './holiday.js'
-import { ISOdate } from './date.js'
-import { Alert } from "./util.js"
 import { notifyLINE } from './notifyLINE.js'
 
 // msec in a day
@@ -22,40 +16,6 @@ setTimeout(run, msecRemain)
 
 function run()
 {
-  setInterval(start, OneDay)
-  start()
-}
-
-function start() {
-  if (workday()) {
-    sqlStart().then(response => {
-      typeof response === "object"
-      ? success(response)
-      : failed(response)
-    }).catch(error => alert(error.stack))
-  }
-}
-
-function workday()
-{
-  let today = new Date(),
-    todate = ISOdate(today)
-
-  return !holiday(todate)
-}
-
-// Success return from server
-function success(response) {
-  updateBOOK(response)
-  fillmain()
-
+  setInterval(notifyLINE, OneDay)
   notifyLINE()
-}
-
-// *** to do -> offline browsing by service worker ***
-function failed(response) {
-  let title = "Server Error",
-    error = error + "<br><br>Response from server has no data"
-
-  Alert(title, error + "No localStorage backup")
 }
