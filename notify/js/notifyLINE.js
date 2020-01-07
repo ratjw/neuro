@@ -26,7 +26,7 @@ export function notifyLINE()
     isHoliday = holiday(todate)
 
   if (weekEnd || isHoliday) { return }
-  if (!inMemory(rows, begindate)) { start() }
+  start()
   selectCases(rows, begindate, enddate)
   sendNotifyLINE(Friday)
 }

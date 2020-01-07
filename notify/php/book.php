@@ -12,10 +12,7 @@ function book($mysqli)
 
   $rowi = array();
   $book = array();
-  $consult = array();
   $time = array();
-  $wait = array();
-  $staff = array();
 
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
             patient,dob,diagnosis,treatment,lab,equipment,contact,qn
