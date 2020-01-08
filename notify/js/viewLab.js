@@ -14,10 +14,8 @@ function viewLabText(labJSON)
 {
   let lab = []
 
-  $.each(labJSON, function(key, value) {
-    if (value) {
-      lab.push(key + ":" + value)
-    }
+  Object.entries(labJSON).forEach(([key, value]) => {
+    if (value) { lab.push(key + ":" + value) }
   })
 
   // convert to string

@@ -1,8 +1,8 @@
 <?php
 
-	$user = $_POST['user'];
-	$message = $_POST['message'];
-	$image = $_POST['image'];
+	$user = isset($_POST['user']) ? $_POST['user'] : "";
+	$message = isset($_POST['message']) ? $_POST['message'] : "";
+	$image = isset($_POST['image']) ? $_POST['image'] : "";
 
 	$message = $user . "\n" . $message;
 	$subdir = "imagefile/";
