@@ -12,7 +12,6 @@ function book($mysqli)
 
   $rowi = array();
   $book = array();
-  $time = array();
 
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
             patient,dob,diagnosis,treatment,lab,equipment,contact,qn

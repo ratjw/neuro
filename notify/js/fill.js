@@ -17,7 +17,7 @@ export function fillmain()
     book = x < 0 ? BOOK : BOOK.slice(0, x),
 
     today = new Date(),
-    nextyear = today.getFullYear() + 2,
+    nextyear = today.getFullYear() + 1,
     month = today.getMonth(),
     todate = today.getDate(),
     until = ISOdate((new Date(nextyear, month, todate))),
