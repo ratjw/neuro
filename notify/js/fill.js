@@ -1,14 +1,17 @@
 
 import { LARGESTDATE } from "./const.js"
-import { START, ISOdate, nextdates } from "./date.js"
+import { ISOdate, nextdates } from "./date.js"
 import { BOOK } from "./updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData, fillNewrowData } from "./fillNewrowData.js"
 
+const today = new Date()
+const start = ISOdate(new Date(today.getFullYear(), today.getMonth(), 1))
+
 // Render Main table
 // Consults and dialogAll tables use this too
-// START 1st date of last month
-// until date is the last row of the table, not of the book
+// "start" 1st date of this month
+// "until" date is the last row of the table, not of the book
 export function fillmain()
 {
   let table = document.getElementById("maintbl"),
@@ -17,10 +20,10 @@ export function fillmain()
     book = x < 0 ? BOOK : BOOK.slice(0, x),
 
     today = new Date(),
-    nextyear = today.getFullYear() + 1,
+    year = today.getFullYear(),
     month = today.getMonth(),
     todate = today.getDate(),
-    until = ISOdate((new Date(nextyear, month, todate))),
+    until = ISOdate((new Date(year, month + 1, todate))),
 
     date = fillDatedCases(table, book)
 
@@ -33,23 +36,23 @@ export function fillDatedCases(table, book)
     rows = table.rows,
     head = table.rows[0],
 
-    q = book.findIndex(e => e.opdate >= START),
+    q = book.findIndex(e => e.opdate >= start),
     blen = book.length,
 
-    date = START,
+    date = start,
     madedate,
     qdate,
     clone
 
   // No case
-  if (!blen) { book.push({"opdate" : START}) }
+  if (!blen) { book.push({"opdate" : start}) }
 
   // delete previous table lest it accumulates
   if (rows.length > 1) {
     Array.from(table.querySelectorAll('tr')).slice(1).forEach(e => e.remove())
   }
 
-  // from START to end of waiting list with opdate
+  // from start to end of waiting list with opdate
   for (q; q < blen; q++) {
     qdate = book[q].opdate
     if (qdate < LARGESTDATE) {
