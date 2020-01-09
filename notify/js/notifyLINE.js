@@ -60,8 +60,6 @@ function start() {
 function success(response) {
   updateBOOK(response)
   fillmain()
-
-  notifyLINE()
 }
 
 function failed(response) {
