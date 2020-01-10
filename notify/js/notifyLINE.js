@@ -9,7 +9,8 @@ import { sendNotifyLINE } from './sendNotifyLINE.js'
 
 export function notifyLINE()
 {
-  let today = new Date(),
+
+  const today = new Date(),
     day = today.getDay(),
     todate = ISOdate(today),
     weekEnd = day === 6 || day === 0,
@@ -31,23 +32,7 @@ function start() {
 function success(response) {
   updateBOOK(response)
   fillmain()
-
-  let maintbl = document.querySelector('#maintbl'),
-    rows = maintbl.querySelectorAll('tr'),
-    today = new Date(),
-    day = today.getDay(),
-    todate = ISOdate(today),
-    tomorrow = nextdates(todate, 1),
-    thisSatday = today.setDate(today.getDate() + 6 - today.getDay() % 7),
-    thisSatdate = ISOdate(new Date(thisSatday)),
-    nextMonday = nextdates(thisSatdate, 2),
-    nextSatdate = nextdates(thisSatdate, 7),
-    Friday = day === 5,
-    begindate = Friday ? nextMonday : tomorrow,
-    enddate = Friday ? nextSatdate : thisSatdate
-
-  selectCases(rows, begindate, enddate)
-  sendNotifyLINE(Friday)
+  sendNotify()
 }
 
 function failed(response) {
@@ -57,12 +42,48 @@ function failed(response) {
   Alert(title, error + "No localStorage backup")
 }
 
-function selectCases(rows, begindate, enddate)
+function sendNotify()
 {
-  rows.forEach(e => {
-    let edate = e.dataset.opdate
-    if (edate >= begindate && edate < enddate) {
-      e.classList.add('selected')
-    }
+  const today = new Date(),
+    day = today.getDay(),
+    todate = ISOdate(today),
+    tomorrow = nextdates(todate, 1),
+    thisSaturday = getDayOfThisWeek(6),
+    nextMonday = getDayOfNextWeek(1),
+    nextSaturday = getDayOfNextWeek(6),
+    Friday = day === 5,
+    begindate = Friday ? nextMonday : tomorrow,
+    enddate = Friday ? nextSaturday : thisSaturday,
+    message = Friday ? 'สัปดาห์หน้า' : 'สัปดาห์นี้',
+    selectedRows = selectRows(begindate, enddate)
+
+  selectedRows.forEach(e => e.classList.add('selected'))
+  sendNotifyLINE(message)
+}
+
+function getDayOfThisWeek(dayOfWeek)
+{
+  const now = new Date(),
+    theDay = now.setDate(now.getDate() + (dayOfWeek + 7 - now.getDay()) % 7)
+
+  return ISOdate(new Date(theDay))
+}
+
+function getDayOfNextWeek(dayOfWeek)
+{
+  const now = new Date(),
+    theDay = now.setDate(now.getDate() + dayOfWeek + 7 - now.getDay())
+
+  return ISOdate(new Date(theDay))
+}
+
+function selectRows(begindate, enddate)
+{
+  const maintbl = document.querySelector('#maintbl'),
+    rows = maintbl.querySelectorAll('tr')
+
+  return [...rows].filter(row => {
+    let opdate = row.dataset.opdate
+    return opdate >= begindate && opdate < enddate 
   })
 }

@@ -4,7 +4,7 @@ import { string25 } from './util.js'
 
 const LINENOTIFY = "line/lineNotify.php"
 
-export function sendNotifyLINE(Friday)
+export function sendNotifyLINE(message)
 {
   let wrapper = document.querySelector("#wrapper"),
     notifywrapper = document.querySelector("#notifywrapper"),
@@ -43,7 +43,7 @@ export function sendNotifyLINE(Friday)
   html2canvas(capture).then(function(canvas) {
     $.post(LINENOTIFY, {
       'user': 'ตารางผ่าตัด',
-      'message': Friday ? 'สัปดาห์หน้า' : 'สัปดาห์นี้',
+      'message': message,
       'image': canvas.toDataURL('image/png', 1.0)
     })
   })

@@ -5,16 +5,14 @@ import { BOOK } from "./updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData, fillNewrowData } from "./fillNewrowData.js"
 
-const today = new Date()
-const start = ISOdate(new Date(today.getFullYear(), today.getMonth(), 1))
-
 // Render Main table
 // Consults and dialogAll tables use this too
-// "start" 1st date of this month
-// "until" date is the last row of the table, not of the book
+// "start" on today, may have no case several days at the beginning
+// "until" next Saturday, may have no case several days at the end
+
 export function fillmain()
 {
-  let table = document.getElementById("maintbl"),
+  const table = document.getElementById("maintbl"),
 
     x = BOOK.findIndex(e => e.opdate >= LARGESTDATE),
     book = x < 0 ? BOOK : BOOK.slice(0, x),
@@ -32,7 +30,10 @@ export function fillmain()
 
 export function fillDatedCases(table, book)
 {
-  let tbody = table.querySelector("tbody"),
+
+  let today = new Date(),
+    start = ISOdate(new Date()),
+    tbody = table.querySelector("tbody"),
     rows = table.rows,
     head = table.rows[0],
 
