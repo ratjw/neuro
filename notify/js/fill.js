@@ -30,15 +30,20 @@ export function fillDatedCases(table, begindate, book)
     head = table.rows[0],
 
     q = book.findIndex(e => e.opdate >= begindate),
-    blen = book.length,
 
+    blen,
     date = begindate,
     madedate,
     qdate,
     clone
 
   // No case
-  if (!blen) { book.push({"opdate" : begindate}) }
+  if (q < 0) {
+    q = 0
+    book.push({"opdate" : begindate})
+  }
+
+  blen = book.length
 
   // delete previous table lest it accumulates
   if (rows.length > 1) {
