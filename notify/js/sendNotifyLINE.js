@@ -6,8 +6,7 @@ const LINENOTIFY = "line/lineNotify.php"
 
 export function sendNotifyLINE(message)
 {
-  let wrapper = document.querySelector("#wrapper"),
-    notifywrapper = document.querySelector("#notifywrapper"),
+  let notifywrapper = document.querySelector("#notifywrapper"),
     capture = document.querySelector("#capture"),
     tbody = capture.querySelector("tbody"),
     selected = document.querySelectorAll(".selected"),

@@ -17,6 +17,7 @@ if (msecRemain < 0)
 // set timer to start at 18.00
 setTimeout(run, msecRemain)
 notifyLINE()
+
 function run()
 {
   setInterval(notifyLINE, OneDay)
