@@ -2,30 +2,31 @@
 include "connect.php";
 require_once "book.php";
 
-	if (isset($_POST['start'])) {
-		echo start($mysqli);
+  $input = json_decode(file_get_contents('php://input'), true);
+
+	if (isset($input['begindate'])) {
+		echo start($mysqli, $input['begindate'], $input['enddate']);
 	}
-	else if (isset($_POST['nosqlReturnbook']))
-	{
+	else if (isset($input['nosqlReturnbook'])) {
 		echo json_encode(book($mysqli));
 	}
-	else if (isset($_POST['sqlReturnbook'])) {
-		echo returnbook($mysqli, $_POST['sqlReturnbook']);
+	else if (isset($input['sqlReturnbook'])) {
+		echo returnbook($mysqli, $input['sqlReturnbook']);
 	}
-	else if (isset($_POST['sqlReturnService'])) {
-		echo returnService($mysqli, $_POST['sqlReturnService']);
+	else if (isset($input['sqlReturnService'])) {
+		echo returnService($mysqli, $input['sqlReturnService']);
 	}
-	else if (isset($_POST['sqlReturnData'])) {
-		echo returnData($mysqli, $_POST['sqlReturnData']);
+	else if (isset($input['sqlReturnData'])) {
+		echo returnData($mysqli, $input['sqlReturnData']);
 	}
-	else if (isset($_POST['sqlReturnStaff'])) {
-		echo returnStaff($mysqli, $_POST['sqlReturnStaff']);
+	else if (isset($input['sqlReturnStaff'])) {
+		echo returnStaff($mysqli, $input['sqlReturnStaff']);
 	}
 
-function start($mysqli)
+function start($mysqli, $begindate, $enddate)
 {
 	$data = array();
-	$data = book($mysqli);
+	$data = book($mysqli, $begindate, $enddate);
 	$data["STAFF"] = getStaff($mysqli);
 	$data["HOLIDAY"] = getHoliday($mysqli);
 	return json_encode($data);

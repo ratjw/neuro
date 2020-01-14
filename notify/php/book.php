@@ -6,7 +6,7 @@
 
 // waitnum < 0    : consult cases
 // waitnum > 0    : booking cases
-function book($mysqli)
+function book($mysqli, $begindate, $enddate)
 {
   date_default_timezone_set("Asia/Bangkok");
 
@@ -16,9 +16,9 @@ function book($mysqli)
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
             patient,dob,diagnosis,treatment,lab,equipment,contact,qn
           FROM book 
-          WHERE YEARWEEK(opdate) = YEARWEEK(CURDATE())
-             OR YEARWEEK(opdate) = YEARWEEK(CURDATE() + INTERVAL 1 WEEK)
-            AND deleted = 0 AND waitnum > 0
+          WHERE opdate BETWEEN '$begindate' AND '$enddate'
+            AND deleted = 0
+            AND waitnum > 0
           ORDER BY opdate, theatre='',theatre, oproom is null,oproom,
             casenum is null,casenum, optime='',optime, waitnum;";
             // The one with blank/null will be the last, sorted by ASC

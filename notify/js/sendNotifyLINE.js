@@ -1,10 +1,10 @@
 
 import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "./const.js"
 import { string25 } from './util.js'
+import { Alert } from "./util.js"
+import { postData, LINENOTIFY } from "./fetch.js"
 
-const LINENOTIFY = "line/lineNotify.php"
-
-export function sendNotifyLINE(message)
+export async function sendNotifyLINE(message)
 {
   let notifywrapper = document.querySelector("#notifywrapper"),
     capture = document.querySelector("#capture"),
@@ -39,13 +39,13 @@ export function sendNotifyLINE(message)
     }
   })
 
-  html2canvas(capture).then(function(canvas) {
-    $.post(LINENOTIFY, {
-      'user': 'ตารางผ่าตัด',
-      'message': message,
-      'image': canvas.toDataURL('image/png', 1.0)
-    })
-  })
+  let canvas = await html2canvas(capture)
+  
+  postData(LINENOTIFY, {
+    "user": "ตารางผ่าตัด",
+    "message": message,
+    "image": canvas.toDataURL("image/png", 1.0)
+  }).catch(error => alert(error.stack))
 }
 
 function equipImage(equip)

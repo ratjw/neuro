@@ -30,7 +30,10 @@ export async function notifyLINE()
 
 async function start(begindate, enddate)
 {
-  let response = await postData(MYSQLIPHP, "start=''")
+  let response = await postData(MYSQLIPHP, {
+    "begindate": begindate,
+    "enddate": enddate
+  })
   
   if (typeof response === "object") {
     updateBOOK(response)

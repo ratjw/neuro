@@ -10,43 +10,35 @@ import { blankRowData, fillNewrowData } from "./fillNewrowData.js"
 // "start" on today, may have no case several days at the beginning
 // "until" next Saturday, may have no case several days at the end
 
-export function fillmain()
+export function fillmain(begindate, enddate)
 {
   const table = document.getElementById("maintbl"),
 
     x = BOOK.findIndex(e => e.opdate >= LARGESTDATE),
     book = x < 0 ? BOOK : BOOK.slice(0, x),
 
-    today = new Date(),
-    year = today.getFullYear(),
-    month = today.getMonth(),
-    todate = today.getDate(),
-    until = ISOdate((new Date(year, month + 1, todate))),
+    date = fillDatedCases(table, begindate, book)
 
-    date = fillDatedCases(table, book)
-
-  fillBlankDates(table, date, until)
+  fillBlankDates(table, date, enddate)
 }
 
-export function fillDatedCases(table, book)
+export function fillDatedCases(table, begindate, book)
 {
 
-  let today = new Date(),
-    start = ISOdate(new Date()),
-    tbody = table.querySelector("tbody"),
+  let tbody = table.querySelector("tbody"),
     rows = table.rows,
     head = table.rows[0],
 
-    q = book.findIndex(e => e.opdate >= start),
+    q = book.findIndex(e => e.opdate >= begindate),
     blen = book.length,
 
-    date = start,
+    date = begindate,
     madedate,
     qdate,
     clone
 
   // No case
-  if (!blen) { book.push({"opdate" : start}) }
+  if (!blen) { book.push({"opdate" : begindate}) }
 
   // delete previous table lest it accumulates
   if (rows.length > 1) {

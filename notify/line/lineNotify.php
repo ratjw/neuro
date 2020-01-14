@@ -1,8 +1,13 @@
 <?php
 
-	$user = isset($_POST['user']) ? $_POST['user'] : "";
-	$message = isset($_POST['message']) ? $_POST['message'] : "";
-	$image = isset($_POST['image']) ? $_POST['image'] : "";
+//	$user = isset($_POST['user']) ? $_POST['user'] : "";
+//	$message = isset($_POST['message']) ? $_POST['message'] : "";
+//	$image = isset($_POST['image']) ? $_POST['image'] : "";
+
+  $input = json_decode(file_get_contents('php://input'), true);
+	$user = $input['user'];
+	$message = $input['message'];
+	$image = $input['image'];
 
 	$message = $user . "\n" . $message;
 	$subdir = "imagefile/";
