@@ -5,7 +5,7 @@ import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 
 export function sqlSaveTheatre(allOldCases, allNewCases, theatre, oproom, qn)
 {
-  let sql = "sqlReturnbook="
+  let sql = ""
 
   if (oproom) {
     sql += updateCasenum(allOldCases)
@@ -23,7 +23,9 @@ export function sqlSaveTheatre(allOldCases, allNewCases, theatre, oproom, qn)
     }
   })
 
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  });
 }
 
 function sqlNewTheatre(theatre, casenum, qn)

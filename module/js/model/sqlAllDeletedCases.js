@@ -4,19 +4,19 @@ import { sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { USER } from "../main.js"
 
 export function sqlAllDeletedCases() {
-  let sql = `sqlReturnData=SELECT editdatetime, b.* 
-                FROM book b 
-                    LEFT JOIN bookhistory bh ON b.qn = bh.qn 
-                WHERE editdatetime>DATE_ADD(NOW(), INTERVAL -3 MONTH) 
-                    AND b.deleted>0 
-                    AND bh.action='delete' 
-                ORDER BY editdatetime DESC;`
+  const datesub = "DATE_SUB(NOW(), INTERVAL 3 MONTH)"
+  const sel = "editdatetime, b.*"
+  const from = "book b LEFT JOIN bookhistory bh ON b.qn = bh.qn" 
+  const where = "editdatetime>${datesub} AND b.deleted>0 AND bh.action='delete'"
+  const order = "editdatetime DESC"
 
-  return postData(MYSQLIPHP, sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnData": `SELECT ${sel} FROM ${from} WHERE ${where} ORDER BY ${order};`
+  })
 }
 
 export function sqlUndelete(allCases, oproom, qn, del) {
-  let sql = "sqlReturnbook="
+  let sql = ""
 
   allCases.forEach((item, i) => {
     if (item === qn) {
@@ -28,5 +28,7 @@ export function sqlUndelete(allCases, oproom, qn, del) {
     }
   })
 
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  });
 }

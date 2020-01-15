@@ -5,7 +5,7 @@ import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 
 export function sqlSaveOpTime(allCases, oproom, optime, qn)
 {
-  let sql = "sqlReturnbook="
+  let sql = ""
 
   allCases.forEach((e, i) => {
     if (oproom) {
@@ -19,7 +19,9 @@ export function sqlSaveOpTime(allCases, oproom, optime, qn)
     }
   })
 
-  return postData(MYSQLIPHP, sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  })
 }
 
 function sqlNewTime(optime, casenum, qn)

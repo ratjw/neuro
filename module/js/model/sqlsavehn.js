@@ -7,17 +7,19 @@ import { URIcomponent, getTitlename } from "../util/util.js"
 
 export function sqlMoveCaseHN(pointed, waiting, wanting)
 {
-  let  sql = `sqlReturnbook=UPDATE book SET deleted=1,editor='${USER}' WHERE qn=${waiting.qn};`
+  let  sql = `UPDATE book SET deleted=1,editor='${USER}' WHERE qn=${waiting.qn};`
            + sqlCaseHN(pointed, waiting, wanting)
 
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  });
 }
 
 export function sqlCopyCaseHN(pointed, waiting, wanting)
 {
-  let  sql = "sqlReturnbook=" + sqlCaseHN(pointed, waiting, wanting)
-
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sqlCaseHN(pointed, waiting, wanting)
+  });
 }
 
 function sqlCaseHN(pointed, waiting, wanting)

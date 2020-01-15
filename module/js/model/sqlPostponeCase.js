@@ -7,7 +7,7 @@ export function sqlPostponeCase(allCases, row, thisdate) {
   let waitnum = row.dataset.waitnum,
     oproom = row.dataset.oproom,
     qn = row.dataset.qn,
-    sql = `sqlReturnbook=UPDATE book SET opdate='${thisdate}',
+    sql = `UPDATE book SET opdate='${thisdate}',
         waitnum=${waitnum},theatre='',oproom=null,optime='',casenum=null,
         admit=null,discharge=null,editor='${USER}' WHERE qn=${qn};`
 
@@ -15,5 +15,7 @@ export function sqlPostponeCase(allCases, row, thisdate) {
     sql += updateCasenum(allCases.filter(e => e !== qn))
   }
 
-  return postData(MYSQLIPHP, sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  })
 }

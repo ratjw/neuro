@@ -8,35 +8,38 @@ const GETIPD = "php/getipd.php"
 
 export function sqlSaveOnChangeService(column, content, qn)
 {
-  let sql = sqlColumn(column, URIcomponent(content), qn)
-      + sqlOneMonth()
-
-  return postData(MYSQLIPHP, sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnService": sqlItem(column, URIcomponent(content), qn) + sqlOneMonth()
+  })
 }
 
 export function sqlGetServiceOneMonth() {
   let sql = "sqlReturnData=" + sqlOneMonth()
 
-  return postData(MYSQLIPHP, sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnData": sqlOneMonth()
+  })
 }
 
 export function sqlGetIPD() {
-  let sql = `from=${serviceFromDate}&to=${serviceToDate}&sql=${sqlOneMonth()}`
-
-  return postData(GETIPD, sql)
+  return postData(GETIPD, {
+    "from": `${serviceFromDate}`,
+    "to": `${serviceToDate}`,
+    "sql": `${sqlOneMonth()}`
+  })
 }
 
 export function sqlSaveService(column, content, qn) {
-  let sql = `sqlReturnService=${sqlItem(column, content, qn)}${sqlOneMonth()}`
-
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {
+    "sqlReturnService": `${sqlItem(column, content, qn)}${sqlOneMonth()}`
+  );
 }
 
 export function sqlGetUpdateService()
 {
-  let sql = "sqlReturnService=" + sqlOneMonth()
-
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {
+    "sqlReturnService": sqlOneMonth()
+  });
 }
 
 function sqlOneMonth()

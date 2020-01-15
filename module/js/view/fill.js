@@ -1,6 +1,6 @@
 
 import { LARGESTDATE } from "../control/const.js"
-import { START, ISOdate, nextdates } from "../util/date.js"
+import { ISOdate, nextdates } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { hoverPicArea } from "../util/util.js"
@@ -10,46 +10,42 @@ import { fillNewrowData } from "./fillNewrowData.js"
 
 // Render Main table
 // Consults and dialogAll tables use this too
-// START 1st date of last month
-// until date is the last row of the table, not of the book
-export function fillmain()
+// start at 1st date of last month
+// end at two years (the last row of the table, not of the book)
+export function fillmain(begindate, enddate)
 {
   let table = document.getElementById("maintbl"),
 
     x = BOOK.findIndex(e => e.opdate >= LARGESTDATE),
     book = x < 0 ? BOOK : BOOK.slice(0, x),
 
-    today = new Date(),
-    nextyear = today.getFullYear() + 2,
-    month = today.getMonth(),
-    todate = today.getDate(),
-    until = ISOdate((new Date(nextyear, month, todate))),
+    date = fillDatedCases(table, book, begindate)
 
-    date = fillDatedCases(table, book)
-
-  fillBlankDates(table, date, until)
+  fillBlankDates(table, date, enddate)
   hoverPicArea()
 }
 
-export function fillDatedCases(table, book)
+export function fillDatedCases(table, book, begindate)
 {
   let tbody = table.querySelector("tbody"),
     rows = table.rows,
     head = table.rows[0],
 
-    q = book.findIndex(e => e.opdate >= START),
-    blen = book.length,
-
-    date = START,
+    blen,
+    date = begindate,
     madedate,
     qdate,
-    clone
+    clone,
+
+    q = book.findIndex(e => e.opdate >= begindate)
 
   // No case
-  if (!blen) {
-    book.push({"opdate" : START})
+  if (q < 0) {
+    book.push({"opdate" : begindate})
     q = 0
   }
+
+  blen = book.length
 
   // delete previous table lest it accumulates
   if (rows.length > 1) {
