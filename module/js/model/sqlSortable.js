@@ -1,5 +1,5 @@
 
-import { sqlReturnbook } from "./sqlReturnbook.js"
+import { postData, MYSQLIPHP } from "./fetch.js"
 import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
 
@@ -27,5 +27,7 @@ export function sqlSortable(allOldCases, allNewCases, moverow, thisrow)
         : sqlCaseNum(null, e)
   })
 
-  return sqlReturnbook(sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  });
 }

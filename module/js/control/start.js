@@ -20,31 +20,22 @@ import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
 import { isMobile } from "../main.js"
 
-export let BEGINDATE
-export let ENDDATE
-
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
-  setBOOKRange()
+  const today = new Date(),
+    year = today.getFullYear(),
+    month = today.getMonth(),
+    todate = today.getDate(),
+    begindate = ISOdate(new Date(year, month-1, 1)),
+    enddate = ISOdate(new Date(year+2, month, todate))
 
-	sqlStart().then(response => {
+	sqlStart(begindate, enddate).then(response => {
 		typeof response === "object"
 		? success(response)
 		: failed(response)
 	}).catch(error => alert(error.stack))
 
-  document.oncontextmenu = () => false
-}
-
-function setBOOKRange()
-{
-  const today = new Date(),
-    year = today.getFullYear(),
-    month = today.getMonth(),
-    todate = today.getDate()
-
-	BEGINDATE = ISOdate(new Date(year, month-1, 1))
-  ENDDATE = ISOdate(new Date(year+2, month, todate))
+	document.oncontextmenu = () => false
 }
 
 // Success return from server
@@ -78,9 +69,9 @@ function success(response) {
 // *** to do -> offline browsing by service worker ***
 function failed(response) {
   let title = "Server Error",
-    error = "<br><br>Response from server has no data<br><br>No localStorage backup"
+    error = error + "<br><br>Response from server has no data"
 
-  Alert(title, error)
+  Alert(title, error + "No localStorage backup")
 }
 
 function dialogServiceEvent()

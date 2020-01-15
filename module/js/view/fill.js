@@ -7,42 +7,41 @@ import { hoverPicArea } from "../util/util.js"
 import { blankRowData } from "../view/fillNewrowData.js"
 import { viewOneDay } from "./viewOneDay.js"
 import { fillNewrowData } from "./fillNewrowData.js"
-import { BEGINDATE, ENDDATE } from "../control/start.js"
 
 // Render Main table
 // Consults and dialogAll tables use this too
 // start at 1st date of last month
 // end at two years (the last row of the table, not of the book)
-export function fillmain()
+export function fillmain(begindate, enddate)
 {
   let table = document.getElementById("maintbl"),
 
     x = BOOK.findIndex(e => e.opdate >= LARGESTDATE),
     book = x < 0 ? BOOK : BOOK.slice(0, x),
 
-    date = fillDatedCases(table, book)
+    date = fillDatedCases(table, book, begindate)
 
-  fillBlankDates(table, date)
+  fillBlankDates(table, date, enddate)
   hoverPicArea()
 }
 
-export function fillDatedCases(table, book)
+export function fillDatedCases(table, book, begindate)
 {
   let tbody = table.querySelector("tbody"),
     rows = table.rows,
     head = table.rows[0],
 
     blen,
-    date = BEGINDATE,
+    date = begindate,
     madedate,
     qdate,
     clone,
 
-    q = book.findIndex(e => e.opdate >= BEGINDATE)
+    q = book.findIndex(e => e.opdate >= begindate)
 
   // No case
   if (q < 0) {
-    book.push({"opdate" : BEGINDATE})
+    book.push({"opdate" : begindate})
     q = 0
   }
 
@@ -115,13 +114,13 @@ let objectDiff = function(o1, o2) {
   }, {})
 }
 
-export function fillBlankDates(table, date)
+export function fillBlankDates(table, date, until)
 {
   let tbody = table.querySelector("tbody"),
     head = table.rows[0]
 
   // from end of waiting list with opdate to 2 years
-  while (date < ENDDATE) {
+  while (date < until) {
     date = nextdates(date, 1)
     if (((new Date(date)).getDay())%7 === 1) {
       let clone = head.cloneNode(true)

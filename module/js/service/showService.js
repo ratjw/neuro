@@ -7,8 +7,7 @@ import { coloring } from "./coloring.js"
 import { getAdmitDischargeDate } from "./getAdmitDischargeDate.js"
 import { SERVICE, seteditableSV, serviceFromDate } from "./setSERVICE.js"
 import { viewProfile } from "./viewProfile.js"
-import { thDate, putThdate, putNameAge } from "../util/date.js"
-import { BEGINDATE } from "../control/start.js"
+import { START, thDate, putThdate, putNameAge } from "../util/date.js"
 
 export function showService() {
   let $servicetbl = $("#servicetbl"),
@@ -21,7 +20,7 @@ export function showService() {
   //delete previous servicetbl lest it accumulates
   $servicetbl.find("tr").slice(1).remove()
   $servicetbl.show()
-  seteditableSV(serviceFromDate >= BEGINDATE)
+  seteditableSV(serviceFromDate >= START)
 
   $.each( SERVICE, function() {
     if (this.staffname !== staffname) {

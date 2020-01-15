@@ -10,8 +10,7 @@ export let RESIDENT = []
 export async function getResident()
 {
   let response = await postData(MYSQLIPHP, {
-    "sqlReturnResident": "",
-    "training": `${training}`
+    "sqlReturnResident": `&training=${training}`
   })
   if (typeof response === "object") {
     RESIDENT = response.RESIDENT

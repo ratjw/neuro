@@ -1,5 +1,5 @@
 
-import { sqlReturnbook } from "./sqlReturnbook.js"
+import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
@@ -34,7 +34,9 @@ export function sqlcopyCase(allNewCases, moverow, thisrow) {
     }
   }
 
-  return sqlReturnbook(sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sqlInsert(row)
+  })
 }
 
 function sqlInsert(row)

@@ -1,5 +1,5 @@
 
-import { sqlReturnbook } from "./sqlReturnbook.js"
+import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { updateCasenum } from "./sqlSaveCaseNum.js"
 
@@ -15,5 +15,7 @@ export function sqlPostponeCase(allCases, row, thisdate) {
     sql += updateCasenum(allCases.filter(e => e !== qn))
   }
 
-  return sqlReturnbook(sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  })
 }

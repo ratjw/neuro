@@ -1,5 +1,5 @@
 
-import { sqlReturnbook } from "./sqlReturnbook.js"
+import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { calcWaitnum } from "../util/calcWaitnum.js"
 import { isConsults } from "../util/util.js"
@@ -7,7 +7,9 @@ import { isConsults } from "../util/util.js"
 export function sqlSaveContentQN(column, content, qn) {
   let sql = `UPDATE book SET ${column}='${content}',editor='${USER}' WHERE qn=${qn};`
 
-  return sqlReturnbook(sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  });
 }
 
 export function sqlSaveContentNoQN(pointed, column, content) {
@@ -29,5 +31,7 @@ export function sqlSaveContentNoQN(pointed, column, content) {
 
   sql = `INSERT INTO book SET waitnum=${waitnum},opdate='${opdate}',${sql1}${column}='${content}',editor='${USER}';`
 
-  return sqlReturnbook(sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  });
 }

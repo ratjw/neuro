@@ -2,7 +2,6 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { USER } from "../main.js"
-import { sqlReturnbook } from "./sqlReturnbook.js"
 
 export function sqlAllDeletedCases() {
   const datesub = "DATE_SUB(NOW(), INTERVAL 3 MONTH)"
@@ -29,5 +28,7 @@ export function sqlUndelete(allCases, oproom, qn, del) {
     }
   })
 
-  sqlReturnbook(sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  });
 }

@@ -1,9 +1,7 @@
 
+import { postData, MYSQLIPHP } from "./fetch.js"
 import { updateCasenum } from "./sqlSaveCaseNum.js"
 import { USER } from "../main.js"
-import { sqlReturnbook } from "./sqlReturnbook.js"
-import { BEGINDATE, ENDDATE } from "../control/start.js"
-import { postData, MYSQLIPHP } from "./fetch.js"
 
 // In database, not actually delete the case but SET deleted=1
 export function sqlDeleteCase(allCases, oproom, qn, del) {
@@ -14,10 +12,6 @@ export function sqlDeleteCase(allCases, oproom, qn, del) {
   }
 
   return postData(MYSQLIPHP, {
-    "sqlReturnbook": sql,
-    "begindate": BEGINDATE,
-    "enddate": ENDDATE
+    "sqlReturnbook": sql
   })
-
-//  return await sqlReturnbook(sql)
 }

@@ -1,5 +1,5 @@
 
-import { sqlReturnbook } from "./sqlReturnbook.js"
+import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 
@@ -23,7 +23,9 @@ export function sqlSaveTheatre(allOldCases, allNewCases, theatre, oproom, qn)
     }
   })
 
-  return sqlReturnbook(sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  });
 }
 
 function sqlNewTheatre(theatre, casenum, qn)

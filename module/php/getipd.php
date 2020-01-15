@@ -3,17 +3,13 @@ include "connect.php";
 require_once "book.php";
 require_once "mysqli.php";
 
-  $input = json_decode(file_get_contents('php://input'), true);
-
 $neuroStaffs = [
   "004415", "003391", "007841", "008146", "004606", "006599", "006805"
 ];
 
-	$begindate = $input["begindate"];
-	$enddate = $input["enddate"];
-	$from = $input["from"];
-	$to = $input["to"];
-	$sql = $input["sql"];
+	$from = $_POST["from"];
+	$to = $_POST["to"];
+	$sql = $_POST["sql"];
 
 	$result = $mysqli->query ("SELECT hn, admit, discharge, qn
 		FROM book
@@ -57,7 +53,7 @@ $neuroStaffs = [
 	}
 
  	if ($update) {
-		echo returnService($mysqli, $sql, $begindate, $enddate);
+		echo returnService($mysqli, $sql);
 	}
 
 //use json encode-decode to convert XML to assoc array

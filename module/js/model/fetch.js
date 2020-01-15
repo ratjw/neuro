@@ -1,18 +1,17 @@
 
 export const MYSQLIPHP = "php/mysqli.php"
-export const LINENOTIFY = "line/lineNotify.php"
 
 export async function postData(url = ``, data, signal) {
   const response = await fetch(url, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: {"Content-Type": "application/x-www-form-urlencoded"},
     signal: signal,
-    body: JSON.stringify(data)
+    body: data
   })
-  const error = response.clone()
+  const text = await response.text()
   try {
-    return await response.json()
+    return JSON.parse(text)
   } catch(e) {
-    return await error.text()
+    return text
   }
 }

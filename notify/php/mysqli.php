@@ -7,6 +7,9 @@ require_once "book.php";
 	if (isset($input['begindate'])) {
 		echo start($mysqli, $input['begindate'], $input['enddate']);
 	}
+	else if (isset($input['nosqlReturnbook'])) {
+		echo json_encode(book($mysqli));
+	}
 	else if (isset($input['sqlReturnbook'])) {
 		echo returnbook($mysqli, $input['sqlReturnbook']);
 	}

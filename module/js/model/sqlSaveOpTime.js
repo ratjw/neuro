@@ -1,5 +1,5 @@
 
-import { sqlReturnbook } from "./sqlReturnbook.js"
+import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 
@@ -19,7 +19,9 @@ export function sqlSaveOpTime(allCases, oproom, optime, qn)
     }
   })
 
-  return sqlReturnbook(sql)
+  return postData(MYSQLIPHP, {
+    "sqlReturnbook": sql
+  })
 }
 
 function sqlNewTime(optime, casenum, qn)
