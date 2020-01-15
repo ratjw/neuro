@@ -49,7 +49,6 @@ COLUMN = {
 NAMEOFDAYTHAI = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์"],
 THAIMONTH   = ["มค.", "กพ.", "มีค.", "เมย.", "พค.", "มิย.", "กค.", "สค.", "กย.", "ตค.", "พย.", "ธค."],
 LARGESTDATE = "9999-12-31",
-PACS = 'http://synapse/explore.asp?path=/All Patients/InternalPatientUID=',
 
 COMPLICATION = {
   admitted: "Readmission",

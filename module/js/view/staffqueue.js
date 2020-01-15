@@ -2,7 +2,7 @@
 import { OPDATE } from "../control/const.js"
 import { ISOdate } from "../util/date.js"
 import { BOOK, CONSULT } from "../util/updateBOOK.js"
-import { isSplit, hoverPicArea } from "../util/util.js"
+import { isSplit } from "../util/util.js"
 import { splitPane } from "./splitPane.js"
 import { fillDatedCases, fillBlankDates, makenextrow } from "./fill.js"
 import { fillConsults } from "./fillConsults.js"
@@ -34,7 +34,6 @@ export function staffqueue(staffname) {
 
   fillConsults('queuetbl')
   if (!qtable.closest('div').scrollTop && !refill) { scrolltoToday('queuetbl') }
-  hoverPicArea()
 }
 
 function reNumberNodateRows()

@@ -10,7 +10,6 @@ export function addnewrow() {
     clone = row.cloneNode(true),
     cells = clone.querySelectorAll("td")
 
-  cells[HN].classList.remove("pacs")
   Array.from(clone.querySelectorAll("td:not(:first-child)")).forEach(e => e.innerHTML = "")
   row.classList.remove("selected")
   row.after(clone)

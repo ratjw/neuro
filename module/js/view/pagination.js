@@ -1,6 +1,6 @@
 
 import { rowDecoration } from "./rowDecoration.js"
-import { LARGESTDATE, PACS } from "../control/const.js"
+import { LARGESTDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { ISOdate, thDate, nextdates, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
@@ -77,12 +77,6 @@ export function pagination($dialog, $maintbl, book, search)
 
   //for resizing dialogs in landscape / portrait view
   $(window).on("resize", resizeDialog )
-
-  $dialog.find('.pacs').on("click", function() {
-    if (isPACS) {
-      window.open(PACS + this.innerHTML)
-    }
-  })
 
   function showOneWeek(book, firstday, offset) {
     $('.fixed').remove()

@@ -407,6 +407,3 @@ tr.Wednesday td:first-child::before { content: "พุธ "; }
 tr.Thursday td:first-child::before { content: "พฤหัส "; }
 tr.Friday td:first-child::before { content: "ศุกร์ "; }
 tr.Saturday td:first-child::before { content: "เสาร์ "; }
-
-td.pacs { background-image: url(pic/general/pacs.png); }
-td.pacs2 { background-image: url(pic/general/pacs2.png); }

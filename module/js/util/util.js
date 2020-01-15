@@ -155,56 +155,6 @@ export function winResizeFix($this, $container) {
   hide && $fix.hide()
 }
 
-export function inPicArea(evt, pointing) {
-  let $pointing = $(pointing),
-    x = evt.pageX,
-    y = evt.pageY,
-    square = picArea(pointing),
-    top = square.top,
-    right = square.right,
-    bottom = square.bottom,
-    left = square.left,
-    inX = (left < x) && (x < right),
-    inY = (top < y) && (y < bottom)
-
-  return inX && inY
-}
-
-function picArea(pointing) {
-  let $pointing = $(pointing),
-    right = $pointing.offset().left + $pointing.width(),
-    bottom = $pointing.offset().top + $pointing.height(),
-    left = right - 25,
-    top = bottom - 25
-
-  return {
-    top: top,
-    bottom: bottom,
-    left: left,
-    right: right
-  }
-}
-
-// Simulate hover on icon by changing background pics
-export function hoverPicArea()
-{
-  let  tdClass = "td.pacs",
-    pale = ["pacs"],
-    bold = ["pacs2"]
-
-  $(tdClass)
-    .mousemove(function(event) {
-      if (inPicArea(event, this)) {
-        this.classList.replace(pale, bold)
-      } else {
-        this.classList.replace(bold, pale)
-      }
-    })
-    .mouseout(function (event) {
-      this.classList.replace(bold, pale)
-    })
-}
-
 // Make dialog box dialogAlert containing error message
 export function Alert(title, message) {
   let $dialogAlert = $("#dialogAlert")

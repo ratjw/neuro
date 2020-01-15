@@ -1,10 +1,9 @@
 
 import { rowDecoration } from "./rowDecoration.js"
-import { OPDATE, PACS } from "../control/const.js"
+import { OPDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { ISOdate, numDate, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
-import { isPACS } from "../main.js"
 import { exportFindToExcel } from "../util/excel.js"
 
 export function onePage($dialogFind, $findtbl, found, search)
@@ -60,12 +59,6 @@ export function onePage($dialogFind, $findtbl, found, search)
     winResizeFix($findtbl, $dialogFind)
   }
 
-  $dialogFind.find('.pacs').off("click").on("click", function() {
-    if (isPACS) {
-      window.open(PACS + this.innerHTML)
-    }
-  })
-
   //scroll to todate when there many cases
   let today = new Date(),
     todate = ISOdate(today),
@@ -91,7 +84,6 @@ jQuery.fn.extend({
     } else {
       rowDecoration(this[0], q.opdate)
     }
-    q.hn && isPACS && (cells[2].className = "pacs")
 
 ;   [ putThdate(q.opdate),
       q.staffname,

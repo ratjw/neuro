@@ -63,7 +63,6 @@ export function savePreviousCell() {
 }
 
 // Set up editcell for keyin or menu/spinner selection
-// redirect click to openPACS
 export function editPresentCell(evt, pointing) {
   let column = pointing && pointing.cellIndex
 

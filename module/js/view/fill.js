@@ -3,7 +3,6 @@ import { LARGESTDATE } from "../control/const.js"
 import { START, ISOdate, nextdates } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
-import { hoverPicArea } from "../util/util.js"
 import { blankRowData } from "../view/fillNewrowData.js"
 import { viewOneDay } from "./viewOneDay.js"
 import { fillNewrowData } from "./fillNewrowData.js"
@@ -28,7 +27,6 @@ export function fillmain()
     date = fillDatedCases(table, book)
 
   fillBlankDates(table, date, until)
-  hoverPicArea()
 }
 
 export function fillDatedCases(table, book)
