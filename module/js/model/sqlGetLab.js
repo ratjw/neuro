@@ -1,6 +1,7 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
+import { sqlReturnbook } from "./sqlReturnbook.js"
 
 export function sqlGetLab(qn)  {
 
@@ -14,16 +15,12 @@ export function sqlGetLab(qn)  {
 export function sqlSaveLab(lab, qn) {
   let sql = `UPDATE book SET lab='${lab}',editor='${USER}' WHERE qn='${qn}';`
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sql
-  });
+  return sqlReturnbook(sql)
 }
 
 export function sqlCancelAllLab(qn)
 {
   let sql = `UPDATE book SET lab=NULL,editor='${USER}' WHERE qn='${qn}';`
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sql
-  })
+  return sqlReturnbook(sql)
 }

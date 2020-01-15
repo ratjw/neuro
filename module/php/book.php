@@ -6,7 +6,7 @@
 
 // waitnum < 0    : consult cases
 // waitnum > 0    : booking cases
-function book($mysqli)
+function book($mysqli, $begindate, $enddate)
 {
   date_default_timezone_set("Asia/Bangkok");
 
@@ -20,8 +20,9 @@ function book($mysqli)
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
             patient,dob,diagnosis,treatment,lab,equipment,contact,qn
           FROM book 
-          WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
-            AND deleted = 0 AND waitnum > 0
+          WHERE opdate BETWEEN '$begindate' AND '$enddate'
+            AND deleted = 0
+            AND waitnum > 0
           ORDER BY opdate, theatre='',theatre, oproom is null,oproom,
             casenum is null,casenum, optime='',optime, waitnum;";
             // The one with blank/null will be the last, sorted by ASC
@@ -36,8 +37,9 @@ function book($mysqli)
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
             patient,dob,diagnosis,treatment,lab,equipment,contact,qn
           FROM book 
-          WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
-            AND deleted = 0 AND waitnum < 0
+          WHERE opdate BETWEEN '$begindate' AND '$enddate'
+            AND deleted = 0
+            AND waitnum < 0
           ORDER BY opdate,waitnum DESC;";
           // Consult cases have negative waitnum.
           // Greater waitnum (less negative) are placed first, sorted by DESC

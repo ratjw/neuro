@@ -1,5 +1,5 @@
 
-import { postData, MYSQLIPHP } from "./fetch.js"
+import { sqlReturnbook } from "./sqlReturnbook.js"
 import { USER } from "../main.js"
 import { calcWaitnum } from "../util/calcWaitnum.js"
 import { getOpdate } from "../util/date.js"
@@ -10,16 +10,12 @@ export function sqlMoveCaseHN(pointed, waiting, wanting)
   let  sql = `UPDATE book SET deleted=1,editor='${USER}' WHERE qn=${waiting.qn};`
            + sqlCaseHN(pointed, waiting, wanting)
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sql
-  });
+  return sqlReturnbook(sql)
 }
 
 export function sqlCopyCaseHN(pointed, waiting, wanting)
 {
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sqlCaseHN(pointed, waiting, wanting)
-  });
+  return sqlReturnbook(sql)
 }
 
 function sqlCaseHN(pointed, waiting, wanting)

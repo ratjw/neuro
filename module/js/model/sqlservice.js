@@ -3,13 +3,16 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { URIcomponent } from "../util/util.js"
 import { serviceFromDate, serviceToDate } from "../service/setSERVICE.js"
+import { BEGINDATE, ENDDATE } from "../control/start.js"
 
 const GETIPD = "php/getipd.php"
 
 export function sqlSaveOnChangeService(column, content, qn)
 {
   return postData(MYSQLIPHP, {
-    "sqlReturnService": sqlItem(column, URIcomponent(content), qn) + sqlOneMonth()
+    "sqlReturnService": sqlItem(column, URIcomponent(content), qn) + sqlOneMonth(),
+    "begindate": BEGINDATE,
+    "enddate": ENDDATE
   })
 }
 
@@ -31,14 +34,18 @@ export function sqlGetIPD() {
 
 export function sqlSaveService(column, content, qn) {
   return postData(MYSQLIPHP, {
-    "sqlReturnService": `${sqlItem(column, content, qn)}${sqlOneMonth()}`
-  );
+    "sqlReturnService": `${sqlItem(column, content, qn)}${sqlOneMonth()}`,
+    "begindate": BEGINDATE,
+    "enddate": ENDDATE
+  });
 }
 
 export function sqlGetUpdateService()
 {
   return postData(MYSQLIPHP, {
-    "sqlReturnService": sqlOneMonth()
+    "sqlReturnService": sqlOneMonth(),
+    "begindate": BEGINDATE,
+    "enddate": ENDDATE
   });
 }
 
@@ -50,11 +57,6 @@ function sqlOneMonth()
             AND waitnum<>0
             AND hn
           ORDER BY s.number,opdate,oproom,casenum,waitnum;`
-}
-
-function sqlColumn(column, content, qn)
-{
-  return "sqlReturnService=" + sqlItem(column, content, qn)
 }
 
 function sqlDefaults(qn)

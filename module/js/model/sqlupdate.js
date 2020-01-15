@@ -2,11 +2,13 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { URIcomponent } from "../util/util.js"
 import { USER } from "../main.js"
+import { sqlReturnbook } from "./sqlReturnbook.js"
+import { BEGINDATE, ENDDATE } from "../control/start.js"
 
 export function sqlStart(begindate, enddate) {
   return postData(MYSQLIPHP, {
-    "begindate": begindate,
-    "enddate": enddate
+    "begindate": BEGINDATE,
+    "enddate": ENDDATE
   });
 }
 
@@ -17,19 +19,10 @@ export function sqldoUpdate()
   });
 }
 
-export function sqlGetUpdate()
-{
-  return postData(MYSQLIPHP, {
-    "nosqlReturnbook": ""
-  });
-}
-
 export function sqlSaveOnChange(column, content, qn)
 {
   const set = `${column}='${URIcomponent(content)}',editor='${USER}'`
   const where = `qn=${qn};`
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": `UPDATE book SET ${set} WHERE ${where};`
-  })
+  return sqlReturnbook(sql)
 }
