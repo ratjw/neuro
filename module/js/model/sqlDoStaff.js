@@ -16,14 +16,12 @@ export function sqlDoSaveStaff(row)
   if (!staffname) { return "<br>Incomplete Entry" }
 
   let add = encodeURIComponent('+'),
-    sql = `UPDATE staff SET number=number${add}1
-             WHERE number>${rownum-1};
-           INSERT INTO staff (number,staffname,ramaid,oncall,startoncall)
-             VALUES(${rownum},'${staffname}','${ramaid}',${oncall},${startoncall});`
+    sql = `sqlReturnStaff=UPDATE staff SET number=number${add}1
+               WHERE number>${rownum-1};
+             INSERT INTO staff (number,staffname,ramaid,oncall,startoncall)
+               VALUES(${rownum},'${staffname}','${ramaid}',${oncall},${startoncall});`
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnStaff": sql
-  })
+  return postData(MYSQLIPHP, sql)
 }
 
 export function sqlDoUpdateStaff(row)
@@ -40,12 +38,10 @@ export function sqlDoUpdateStaff(row)
   if (confirm(`Confirm update?\n\n${staffname}`)) {
     startoncall = startoncall ? `'${startoncall}'` : null
 
-    let sql = `UPDATE staff SET staffname='${staffname}',ramaid='${ramaid}',
+    let sql = `sqlReturnStaff=UPDATE staff SET staffname='${staffname}',ramaid='${ramaid}',
                oncall=${oncall},startoncall=${startoncall} WHERE number=${number};`
 
-    return postData(MYSQLIPHP, {
-      "sqlReturnStaff": sql
-    })
+    return postData(MYSQLIPHP, sql)
   }
 }
 

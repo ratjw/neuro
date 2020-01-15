@@ -11,7 +11,7 @@ export function sqlSortable(allOldCases, allNewCases, moverow, thisrow)
     thisOpdate = thisrow.dataset.opdate,
     theatre = thisrow.dataset.theatre || "",
     thisroom = thisrow.dataset.oproom || null,
-    sql = ""
+    sql = "sqlReturnbook="
 
   if (allOldCases.length && moveroom) {
     sql += updateCasenum(allOldCases)
@@ -27,7 +27,5 @@ export function sqlSortable(allOldCases, allNewCases, moverow, thisrow)
         : sqlCaseNum(null, e)
   })
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sql
-  });
+  return postData(MYSQLIPHP, sql);
 }

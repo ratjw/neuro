@@ -4,7 +4,7 @@ import { USER } from "../main.js"
 
 export function sqlSaveCaseNum(allCases, casenum, qn)
 {
-  let sql = ""
+  let sql = "sqlReturnbook="
 
   if (casenum === "") {
     sql += sqlCaseNum(null, qn)
@@ -20,9 +20,7 @@ export function sqlSaveCaseNum(allCases, casenum, qn)
     }
   })
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sql
-  })
+  return postData(MYSQLIPHP, sql)
 }
 
 export function sqlCaseNum(casenum, qn)

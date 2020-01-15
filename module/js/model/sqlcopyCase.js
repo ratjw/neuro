@@ -8,7 +8,8 @@ import { getLargestWaitnum, URIcomponent } from "../util/util.js"
 import { BOOK } from "../util/updateBOOK.js"
 
 export function sqlcopyCase(allNewCases, moverow, thisrow) {
-  let thisdate = thisrow.dataset.opdate,
+  let sql = "sqlReturnbook=",
+    thisdate = thisrow.dataset.opdate,
     thistheatre = thisrow.dataset.theatre,
     thisroom = thisrow.dataset.oproom,
     row = moverow.cloneNode(true),
@@ -34,9 +35,9 @@ export function sqlcopyCase(allNewCases, moverow, thisrow) {
     }
   }
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sqlInsert(row)
-  })
+  sql += sqlInsert(row)
+
+  return postData(MYSQLIPHP, sql)
 }
 
 function sqlInsert(row)

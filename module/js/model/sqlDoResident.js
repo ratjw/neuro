@@ -9,9 +9,9 @@ export let RESIDENT = []
 
 export async function getResident()
 {
-  let response = await postData(MYSQLIPHP, {
-    "sqlReturnResident": `&training=${training}`
-  })
+  let sql = `sqlReturnResident=&training=${training}`
+
+  let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
     RESIDENT = response.RESIDENT
   } else {
@@ -58,12 +58,10 @@ export async function saveResident(row)
     return
   }
 
-  let sql = `INSERT INTO resident (ramaid,residentname,enrollyear,research)
+  let sql = `sqlReturnResident=INSERT INTO resident (ramaid,residentname,enrollyear,research)
                VALUES('${ramaid}','${residentname}','${enrollyear}','${research}');&training=${training}`
 
-  let response = await postData(MYSQLIPHP, {
-    "sqlReturnResident": sql
-  })
+  let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
     showResident(response)
   } else {
@@ -82,12 +80,10 @@ export async function updateResident(row)
   if (!residentname || !enrollyear) { return "<br>Incomplete Entry" }
 
   if (confirm("ต้องการแก้ไขข้อมูลนี้")) {
-    let sql = `UPDATE resident
+    let sql = `sqlReturnResident=UPDATE resident
                SET ramaid='${newramaid}',residentname='${residentname}',enrollyear='${enrollyear}'
                WHERE ramaid=${oldramaid};&training=${training}`
-    let response = await postData(MYSQLIPHP, {
-      "sqlReturnResident": sql
-    })
+    let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
     } else {
@@ -104,11 +100,9 @@ export async function deleteResident(row)
   if (!ramaid) { return "<br>No Number" }
 
   if (confirm("ต้องการลบข้อมูลนี้หรือไม่")) {
-    let sql = `DELETE FROM resident 
+    let sql = `sqlReturnResident=DELETE FROM resident 
                WHERE ramaid=${ramaid};&training=${training}`
-    let response = await postData(MYSQLIPHP, {
-      "sqlReturnResident": sql
-    })
+    let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
     } else {
@@ -134,13 +128,11 @@ export async function updateResearch(barChart, ridx, _ranges)
 
     progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
     
-  const sql = `UPDATE resident
+  const sql = `sqlReturnResident=UPDATE resident
              SET research='${JSON.stringify(json)}'
              WHERE ramaid=${ramaid};&training=${training}`
 
-  let response = await postData(MYSQLIPHP, {
-    "sqlReturnResident": sql
-  })
+  let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
     RESIDENT = response.RESIDENT
     updateBar(barChart, ridx)

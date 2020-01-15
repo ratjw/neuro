@@ -5,7 +5,7 @@ import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
 
 export function sqlmoveCase(allOldCases, allNewCases, moverow, thisrow) {
-  let sql = "",
+  let sql = "sqlReturnbook=",
     thisdate = thisrow.dataset.opdate,
     thistheatre = thisrow.dataset.theatre,
     thisroom = thisrow.dataset.oproom,
@@ -27,7 +27,5 @@ export function sqlmoveCase(allOldCases, allNewCases, moverow, thisrow) {
     }
   })
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sql
-  })
+  return postData(MYSQLIPHP, sql)
 }

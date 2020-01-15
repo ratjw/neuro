@@ -8,7 +8,7 @@ import { blankRowData, fillNewrowData } from "./fillNewrowData.js"
 // Render Main table
 // Consults and dialogAll tables use this too
 // "start" on today, may have no case several days at the beginning
-// "until" next Saturday from start
+// "until" next Saturday, may have no case several days at the end
 
 export function fillmain(begindate, enddate)
 {
@@ -29,13 +29,13 @@ export function fillDatedCases(table, begindate, book)
     rows = table.rows,
     head = table.rows[0],
 
+    q = book.findIndex(e => e.opdate >= begindate),
+
     blen,
     date = begindate,
     madedate,
     qdate,
-    clone,
-
-    q = book.findIndex(e => e.opdate >= begindate)
+    clone
 
   // No case
   if (q < 0) {
@@ -77,6 +77,24 @@ export function fillDatedCases(table, begindate, book)
   }
 
   return date
+}
+
+let groupBy = function(items, key) {
+  return items.reduce((result, item) => {
+    (result[item[key]] = result[item[key]] || []).push(item)
+    return result
+  }, {})
+}
+
+let objectDiff = function(o1, o2) {
+  return Object.keys(o2).reduce((diff, key) => {
+    if (JSON.stringify({key: o1[key]}) === JSON.stringify({key: o2[key]}))
+      return diff
+    return {
+      ...diff,
+      [key]: o2[key]
+    }
+  }, {})
 }
 
 export function fillBlankDates(table, date, until)

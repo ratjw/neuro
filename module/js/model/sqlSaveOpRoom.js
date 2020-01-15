@@ -5,7 +5,7 @@ import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 
 export function sqlSaveOpRoom(allOldCases, allNewCases, oldoproom, newoproom, qn)
 {
-  let sql = ""
+  let sql = "sqlReturnbook="
 
   if (allOldCases.length && oldoproom) {
     sql += updateCasenum(allOldCases)
@@ -26,9 +26,7 @@ export function sqlSaveOpRoom(allOldCases, allNewCases, oldoproom, newoproom, qn
     })
   }
 
-  return postData(MYSQLIPHP, {
-    "sqlReturnbook": sql
-  })
+  return postData(MYSQLIPHP, sql)
 }
 
 function sqlNewRoom(oproom, casenum, qn)

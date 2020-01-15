@@ -10,7 +10,7 @@ import { sortable } from "../control/sort.js"
 import { clearSelection } from "../control/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
-import { ISOdate, thDate } from "../util/date.js"
+import { START, ISOdate, thDate } from "../util/date.js"
 import { BOOK, TIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { htmlStafflist, htmlLab, htmlEquipment } from "../control/html.js"
@@ -22,14 +22,7 @@ import { isMobile } from "../main.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
-  const today = new Date(),
-    year = today.getFullYear(),
-    month = today.getMonth(),
-    todate = today.getDate(),
-    begindate = ISOdate(new Date(year, month-1, 1)),
-    enddate = ISOdate(new Date(year+2, month, todate))
-
-	sqlStart(begindate, enddate).then(response => {
+	sqlStart().then(response => {
 		typeof response === "object"
 		? success(response)
 		: failed(response)

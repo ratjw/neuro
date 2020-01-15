@@ -21,14 +21,14 @@ export async function notifyLINE()
     enddate = thisWeek ? thisSaturday : nextSaturday,
     message = thisWeek ? 'สัปดาห์นี้' : 'สัปดาห์หน้า'
 
-  if (await getDB(begindate, enddate)) {
+  if (await start(begindate, enddate)) {
     fillmain(begindate, enddate)
     selectRows(begindate, enddate).forEach(e => e.classList.add('selected'))
     sendNotifyLINE(message)
   }
 }
 
-async function getDB(begindate, enddate)
+async function start(begindate, enddate)
 {
   let response = await postData(MYSQLIPHP, {
     "begindate": begindate,

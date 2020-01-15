@@ -15,7 +15,11 @@ if (msecRemain < 0)
   msecRemain = msecRemain + OneDay
 
 // set timer to start at 18.00
-setTimeout(() => {
+setTimeout(run, msecRemain)
+notifyLINE()
+
+function run()
+{
   setInterval(notifyLINE, OneDay)
   notifyLINE()
-}, msecRemain)
+}
