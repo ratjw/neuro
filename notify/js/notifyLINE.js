@@ -3,7 +3,6 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { fillmain } from "./fill.js"
 import { updateBOOK } from "./updateBOOK.js"
 import { holiday } from './holiday.js'
-import { Alert } from "./util.js"
 import { ISOdate, nextdates } from './date.js'
 import { sendNotifyLINE } from './sendNotifyLINE.js'
 
@@ -39,7 +38,7 @@ async function start(begindate, enddate)
     updateBOOK(response)
     return true
   } else {
-    Alert("Database Error", `<br><br>${response}`)
+    alert(`Database Error\n\n${response}`)
   }
 }
 

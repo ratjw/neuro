@@ -53,7 +53,7 @@ function viewEquipText(equipJSON)
 {
   let equip = []
 
-  $.each(equipJSON, function(key, value) {
+  Object.entries(equipJSON).forEach(([key, value]) => {
     equip.push(key + ":" + value)
   })
   

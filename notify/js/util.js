@@ -1,25 +1,6 @@
 
 import { LARGESTDATE } from "./const.js"
 
-// Make dialog box dialogAlert containing error message
-export function Alert(title, message) {
-  let $dialogAlert = $("#dialogAlert")
-
-  $dialogAlert.css({
-    "fontSize":" 14px",
-    "textAlign" : "center"
-  })
-  $dialogAlert.html(message)
-  $dialogAlert.dialog({
-    title: title,
-    closeOnEscape: true,
-    modal: true,
-    hide: 200,
-    minWidth: 400,
-    height: 230
-  }).fadeIn();
-}
-
 export function string25(longtext)
 {
   let result1 = stringChopper(longtext, 25),

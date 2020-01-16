@@ -1,7 +1,6 @@
 
 import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "./const.js"
 import { string25 } from './util.js'
-import { Alert } from "./util.js"
 import { postData, LINENOTIFY } from "./fetch.js"
 
 export async function sendNotifyLINE(message)
