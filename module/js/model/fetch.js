@@ -8,10 +8,10 @@ export async function postData(url = ``, data, signal) {
     signal: signal,
     body: data
   })
-  const text = await response.text()
+  const result = response.clone()
   try {
-    return JSON.parse(text)
+    return await response.json()
   } catch(e) {
-    return text
+    return await result.text()
   }
 }

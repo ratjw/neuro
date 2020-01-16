@@ -19,35 +19,30 @@ export function fillmain()
     book = x < 0 ? BOOK : BOOK.slice(0, x),
 
     today = new Date(),
-    nextyear = today.getFullYear() + 2,
+    year = today.getFullYear(),
     month = today.getMonth(),
     todate = today.getDate(),
-    until = ISOdate((new Date(nextyear, month, todate))),
+    until = ISOdate((new Date(year + 2, month, todate))),
 
-    date = fillDatedCases(table, book)
+    lastcase = fillDatedCases(table, book)
 
-  fillBlankDates(table, date, until)
+  fillBlankDates(table, lastcase, until)
 }
 
 export function fillDatedCases(table, book)
 {
+  // No case
+  if (!book.length) { book.push({"opdate" : START}) }
+
   let tbody = table.querySelector("tbody"),
     rows = table.rows,
     head = table.rows[0],
-
     q = book.findIndex(e => e.opdate >= START),
     blen = book.length,
-
     date = START,
     madedate,
     qdate,
     clone
-
-  // No case
-  if (!blen) {
-    book.push({"opdate" : START})
-    q = 0
-  }
 
   // delete previous table lest it accumulates
   if (rows.length > 1) {
