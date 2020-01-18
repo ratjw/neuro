@@ -1,5 +1,5 @@
 
-import { postData, MYSQLIPHP } from "./fetch.js"
+import { postData } from "./fetch.js"
 
 const SEARCH  = "php/search.php"
 

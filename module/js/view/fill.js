@@ -14,9 +14,8 @@ import { fillNewrowData } from "./fillNewrowData.js"
 export function fillmain()
 {
   let table = document.getElementById("maintbl"),
+    book = getBookWithOpdate(),
     until = getUntilDate(),
-    x = BOOK.findIndex(e => e.opdate >= LARGESTDATE),
-    book = x < 0 ? BOOK : BOOK.slice(0, x),
 
     // fill main table to the last case of booking
     lastcase = fillDatedCases(table, book)
@@ -24,6 +23,14 @@ export function fillmain()
   // fill blank rows to two years from now
   fillBlankDates(table, lastcase, until)
 }
+
+// truncate the cases without opdate
+function getBookWithOpdate()
+{
+  const i = BOOK.findIndex(e => e.opdate >= LARGESTDATE)
+
+  return i < 0 ? BOOK : BOOK.slice(0, i)
+}    
 
 // two years from now
 function getUntilDate()
