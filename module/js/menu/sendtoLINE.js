@@ -2,6 +2,7 @@
 import { USER, isMobile } from "../main.js"
 import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "../control/const.js"
 import { string25 } from '../util/util.js'
+import { sqlSendToLINE } from '../model/sqlSendToLINE.js'
 
 const LINENOTIFY = "line/lineNotify.php"
 
@@ -60,11 +61,16 @@ export function sendtoLINE()
     buttonLINE.classList.add('waiting')
     setTimeout(function() {
       html2canvas(capture).then(function(canvas) {
+        sqlSendToLINE(message, canvas).then(response => console.log(response))
+/*
         $.post(LINENOTIFY, {
           'user': USER,
           'message': message,
           'image': canvas.toDataURL('image/png', 1.0)
+        }, function(response) {
+          console.log(response)
         })
+*/
         capture.style.display = 'none'
         closeNotify()
       })
