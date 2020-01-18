@@ -4,7 +4,7 @@ import { URIcomponent } from "../util/util.js"
 import { USER } from "../main.js"
 
 export function sqlStart() {
-  return postData(MYSQLIPHP, "start=''");
+  return postData(MYSQLIPHP, "start='2020-01-19'");
 }
 
 export function sqldoUpdate()
