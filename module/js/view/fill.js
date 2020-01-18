@@ -1,6 +1,6 @@
 
 import { LARGESTDATE } from "../control/const.js"
-import { START, ISOdate, nextdates } from "../util/date.js"
+import { START_DATE, ISOdate, nextdates } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData } from "../view/fillNewrowData.js"
@@ -9,37 +9,44 @@ import { fillNewrowData } from "./fillNewrowData.js"
 
 // Render Main table
 // Consults and dialogAll tables use this too
-// START 1st date of last month
+// START_DATE 1st date of last month
 // until date is the last row of the table, not of the book
 export function fillmain()
 {
   let table = document.getElementById("maintbl"),
-
+    until = getUntilDate(),
     x = BOOK.findIndex(e => e.opdate >= LARGESTDATE),
     book = x < 0 ? BOOK : BOOK.slice(0, x),
 
-    today = new Date(),
-    year = today.getFullYear(),
-    month = today.getMonth(),
-    todate = today.getDate(),
-    until = ISOdate((new Date(year + 2, month, todate))),
-
+    // fill main table to the last case of booking
     lastcase = fillDatedCases(table, book)
 
+  // fill blank rows to two years from now
   fillBlankDates(table, lastcase, until)
+}
+
+// two years from now
+function getUntilDate()
+{
+  const today = new Date(),
+  year = today.getFullYear(),
+  month = today.getMonth(),
+  todate = today.getDate()
+
+  return ISOdate((new Date(year + 2, month, todate)))
 }
 
 export function fillDatedCases(table, book)
 {
   // No case
-  if (!book.length) { book.push({"opdate" : START}) }
+  if (!book.length) { book.push({"opdate" : START_DATE}) }
 
   let tbody = table.querySelector("tbody"),
     rows = table.rows,
     head = table.rows[0],
-    q = book.findIndex(e => e.opdate >= START),
+    q = book.findIndex(e => e.opdate >= START_DATE),
     blen = book.length,
-    date = START,
+    date = START_DATE,
     madedate,
     qdate,
     clone
@@ -49,7 +56,7 @@ export function fillDatedCases(table, book)
     Array.from(table.querySelectorAll('tr')).slice(1).forEach(e => e.remove())
   }
 
-  // from START to end of waiting list with opdate
+  // from START_DATE to end of waiting list with opdate
   for (q; q < blen; q++) {
     qdate = book[q].opdate
     if (qdate < LARGESTDATE) {

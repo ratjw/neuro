@@ -10,7 +10,7 @@ import { sortable } from "../control/sort.js"
 import { clearSelection } from "../control/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
-import { START, ISOdate, thDate } from "../util/date.js"
+import { START_DATE, ISOdate, thDate } from "../util/date.js"
 import { BOOK, TIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { htmlStafflist, htmlLab, htmlEquipment } from "../control/html.js"
@@ -62,9 +62,9 @@ function success(response) {
 // *** to do -> offline browsing by service worker ***
 function failed(response) {
   let title = "Server Error",
-    error = error + "<br><br>Response from server has no data"
+    error = "<br><br>Response from server has no data"
 
-  Alert(title, error + "No localStorage backup")
+  Alert(title, error)
 }
 
 function dialogServiceEvent()

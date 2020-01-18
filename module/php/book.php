@@ -9,18 +9,18 @@
 function book($mysqli)
 {
   date_default_timezone_set("Asia/Bangkok");
-  if (session_id() == "") session_start();
 
+  if (session_id() == "") session_start();
+  $start = $_SESSION['START_DATE'];
   $rowi = array();
   $book = array();
   $consult = array();
   $time = array();
-  $start = $_SESSION['start'];
 
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
             patient,dob,diagnosis,treatment,lab,equipment,contact,qn
           FROM book 
-          WHERE opdate >= $start
+          WHERE opdate >= '$start'
             AND deleted = 0 AND waitnum > 0
           ORDER BY opdate, theatre='',theatre, oproom is null,oproom,
             casenum is null,casenum, optime='',optime, waitnum;";
@@ -36,7 +36,7 @@ function book($mysqli)
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
             patient,dob,diagnosis,treatment,lab,equipment,contact,qn
           FROM book 
-          WHERE opdate >= $start
+          WHERE opdate >= '$start'
             AND deleted = 0 AND waitnum < 0
           ORDER BY opdate,waitnum DESC;";
           // Consult cases have negative waitnum.

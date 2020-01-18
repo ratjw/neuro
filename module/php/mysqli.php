@@ -3,7 +3,8 @@ include "connect.php";
 require_once "book.php";
 
 	if (isset($_POST['start'])) {
-    $_SESSION['start'] = $_POST['start'];
+    if (session_id() == "") session_start();
+    $_SESSION['START_DATE'] = $_POST['start'];
 		echo start($mysqli);
 	}
 	else if (isset($_POST['nosqlReturnbook']))

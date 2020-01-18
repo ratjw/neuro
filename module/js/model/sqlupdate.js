@@ -1,10 +1,11 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
+import { START_DATE } from "../util/date.js"
 import { URIcomponent } from "../util/util.js"
 import { USER } from "../main.js"
 
 export function sqlStart() {
-  return postData(MYSQLIPHP, "start='2020-01-19'");
+  return postData(MYSQLIPHP, `start=${START_DATE}`);
 }
 
 export function sqldoUpdate()
