@@ -24,11 +24,9 @@ html, body {
 
 #maincontainer {
   height: 100%;
-  width: 100%;
   overflow: auto;
   box-sizing: border-box;
   border: solid 2px silver;
-  resize: horizontal;
 }
 
 #queuewrapper {
@@ -42,6 +40,24 @@ html, body {
   border-top: solid 2px silver;
   border-right: solid 2px silver;
   border-left: solid 2px snow;
+}
+
+#titlebar {
+  height: 40px;
+  background-color: #7799AA;
+}
+
+#titlename {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  width: 100px;
+  line-height: 35px;
+  margin-left: 25px;
+}
+
+#queuetbl {
+  margin-bottom: 100px;
 }
 
 table {
@@ -198,24 +214,6 @@ td.consult::after {
 #queuetbl th:nth-child(9) { width: 30%; }
 #queuetbl th:nth-child(10) { width: 30%; }
 #queuetbl th:nth-child(13) { width: 30%; }
-
-#queuetbl {
-  margin-bottom: 100px;
-}
-
-#titlebar {
-  height: 40px;
-  background-color: #7799AA;
-}
-
-#titlename {
-  font-size: 20px;
-  font-weight: bold;
-  color: white;
-  width: 100px;
-  line-height: 35px;
-  margin-left: 25px;
-}
 
 #servicetbl th:nth-child(1) { width: 1%; }
 #servicetbl th:nth-child(2) { width: 2%; }

@@ -2,20 +2,20 @@
 export function splitPane(mtable, qtable) {
   let mcontainer = mtable.closest('div'),
     qcontainer = qtable.closest('div'),
-    mwrapper = mcontainer,
     qwrapper = qcontainer.parentElement,
     menuHeight = document.getElementById("cssmenu").offsetHeight,
-    titleHeight = document.getElementById("titlebar").offsetHeight,
+    titlebar = document.getElementById("titlebar"),
     firstvisiblerow = findFirstVisibleRow(mcontainer, mtable)
 
-  mwrapper.style.height = '100%' - menuHeight + 'px'
-  mwrapper.style.width = "50%"
+//  mwrapper.style.height = '100%' - menuHeight + 'px'
+  mcontainer.style.resize = 'horizontal'
+  mcontainer.style.width = "80%"
 
   qwrapper.style.display = "block"
-  qwrapper.style.height = '100%' - menuHeight + 'px'
-  qwrapper.style.width = "50%"
+//  qwrapper.style.height = '100%' - menuHeight + 'px'
+//  qwrapper.style.width = "50%"
 
-  qcontainer.style.height = mcontainer.offsetHeight - titleHeight + 'px'
+  qcontainer.style.height = mcontainer.offsetHeight - titlebar.offsetHeight + 'px'
 
 //  initResize(mwrapper)
 //  document.querySelector('.ui-resizable-e').style.height = mtable.offsetHeight
@@ -23,8 +23,8 @@ export function splitPane(mtable, qtable) {
 
   document.getElementById("clickclosequeue").onclick = function() {
     qwrapper.style.display = 'none'
-    mwrapper.style.height = "100%" - menuHeight
-    mwrapper.style.width = "100%"
+//    mwrapper.style.height = "100%" - menuHeight
+    mcontainer.style.width = "100%"
 
     scrollToFirstVisible(mcontainer, firstvisiblerow)
   }
