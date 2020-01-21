@@ -2,7 +2,7 @@
 export function splitPane(mtable, qtable) {
   let mcontainer = mtable.closest('div'),
     qcontainer = qtable.closest('div'),
-    mwrapper = mcontainer.parentElement,
+    mwrapper = mcontainer,
     qwrapper = qcontainer.parentElement,
     menuHeight = document.getElementById("cssmenu").offsetHeight,
     titleHeight = document.getElementById("titlebar").offsetHeight,
@@ -17,8 +17,8 @@ export function splitPane(mtable, qtable) {
 
   qcontainer.style.height = mcontainer.offsetHeight - titleHeight + 'px'
 
-  initResize(mwrapper)
-  document.querySelector('.ui-resizable-e').style.height = mtable.offsetHeight
+//  initResize(mwrapper)
+//  document.querySelector('.ui-resizable-e').style.height = mtable.offsetHeight
   scrollToFirstVisible(mcontainer, firstvisiblerow)
 
   document.getElementById("clickclosequeue").onclick = function() {
@@ -47,8 +47,7 @@ function scrollToFirstVisible(mcontainer, firstvisiblerow)
 }
 
 let initResize = function (wrapper) {
-  $(wrapper).resizable(
-  {
+  $(wrapper).resizable({
     autoHide: true,
     handles: 'e',
     resize: function(e, ui) 

@@ -12,18 +12,36 @@ html, body {
   font-family: sans-serif;
 }
 
-#mainwrapper {
-  float: left;
-  height: 100%;
+#cssmenu {
   width: 100%;
 }
 
+#mainwrapper {
+  float: left;
+  width: 100%;
+  display: flex;
+}
+
 #maincontainer {
-  height: 96%;
+  height: 100%;
   width: 100%;
   overflow: auto;
   box-sizing: border-box;
   border: solid 2px silver;
+  resize: horizontal;
+}
+
+#queuewrapper {
+  float: right;
+  flex: 1 1 0;
+}
+
+#queuecontainer {
+  overflow: auto;
+  box-sizing: border-box;
+  border-top: solid 2px silver;
+  border-right: solid 2px silver;
+  border-left: solid 2px snow;
 }
 
 table {
@@ -121,18 +139,6 @@ td.consult::after {
   font-size: 12px;
   content: 'สัปดาห์ Consult\A'attr(data-consult);
   white-space: pre;
-}
-
-#queuewrapper {
-  float: right;
-}
-
-#queuecontainer {
-  overflow: auto;
-  box-sizing: border-box;
-  border-top: solid 2px silver;
-  border-right: solid 2px silver;
-  border-left: solid 2px snow;
 }
 
 #queuetbl th:nth-child(3),
@@ -276,6 +282,7 @@ td.consult::after {
 
 #notifywrapper,
 #wrapper,
+#queuewrapper,
 #tblcells,
 #queuetbl th:nth-child(2), #queuetbl td:nth-child(2),
 #queuetbl th:nth-child(3), #queuetbl td:nth-child(3),

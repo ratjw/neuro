@@ -7,9 +7,12 @@ export let ADMIN = sessionStorage.getItem("admin").split(',')
 export let isMobile = sessionStorage.getItem("isMobile") === 'true'
 export let USER = sessionStorage.getItem("userid")
 
-document.getElementById("wrapper").style.display = "block"
-document.getElementById("mainwrapper").style.height = window.innerHeight
-  - document.getElementById("cssmenu").style.height
+let wrapper = document.getElementById("wrapper")
+let mcontainer = document.getElementById("mainwrapper")
+let cssmenu = document.getElementById("cssmenu")
+
+wrapper.style.display = "block"
+mcontainer.style.height = wrapper.clientHeight - cssmenu.clientHeight + 'px'
 
 ; /^\d{6}$/.test(USER)
   ? start()
