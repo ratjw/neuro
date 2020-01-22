@@ -33,7 +33,7 @@ export function postponeCase()
       let hasData = function () {
         updateBOOK(response)
         if (isSplit()) {
-          locateFound('queuecontainer', 'queuetbl', qn)
+          locateFound('queuetblContainer', 'queuetbl', qn)
         }
       }
 

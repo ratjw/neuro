@@ -264,9 +264,9 @@ export function renewEditcell()
   if (!POINTER) { return }
 
   let whereisEditcell = editcellLocation()
-  let id = (whereisEditcell === "maincontainer")
+  let id = (whereisEditcell === "maintblContainer")
          ? "maintbl"
-     : (whereisEditcell === "queuecontainer")
+     : (whereisEditcell === "queuetblContainer")
      ? "queuetbl"
      : (whereisEditcell === "dialogService")
      ? "servicetbl"

@@ -8,11 +8,11 @@ export let isMobile = sessionStorage.getItem("isMobile") === 'true'
 export let USER = sessionStorage.getItem("userid")
 
 let wrapper = document.getElementById("wrapper")
-let mwrapper = document.getElementById("mainwrapper")
+let mcontainer = document.getElementById("maintblContainer")
 let cssmenu = document.getElementById("cssmenu")
 
 wrapper.style.display = "block"
-mwrapper.style.height = wrapper.clientHeight - cssmenu.clientHeight + 'px'
+mcontainer.style.height = wrapper.clientHeight - cssmenu.clientHeight + 'px'
 
 ; /^\d{6}$/.test(USER)
   ? start()

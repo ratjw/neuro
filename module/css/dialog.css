@@ -30,10 +30,22 @@
   height: 30px;
 }
 
+.ui-resizable-handle {
+  position: absolute;
+  font-size: 0.1px;
+  display: block;
+}
+.ui-resizable-disabled .ui-resizable-handle,
+.ui-resizable-autohide .ui-resizable-handle {
+    display: none;
+}
 .ui-resizable-e { 
+  display: block;
   cursor: e-resize; 
   width: 10px; 
   top: 0; 
+  right: -5px;
+  height: 100%;
 }
 
 .ui-icon:hover {

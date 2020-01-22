@@ -2,35 +2,28 @@
 export function splitPane(mtable, qtable) {
   let mcontainer = mtable.closest('div'),
     qcontainer = qtable.closest('div'),
+    mwrapper = mcontainer.parentElement,
     qwrapper = qcontainer.parentElement,
-    menuHeight = document.getElementById("cssmenu").offsetHeight,
     titlebar = document.getElementById("titlebar"),
     firstvisiblerow = findFirstVisibleRow(mcontainer, mtable)
 
-//  mwrapper.style.height = '100%' - menuHeight + 'px'
-  mcontainer.style.resize = 'horizontal'
-  mcontainer.style.width = "80%"
-
   qwrapper.style.display = "block"
-//  qwrapper.style.height = '100%' - menuHeight + 'px'
-//  qwrapper.style.width = "50%"
-
+  mwrapper.style.width = "50%"
+  qwrapper.style.width = "50%"
   qcontainer.style.height = mcontainer.offsetHeight - titlebar.offsetHeight + 'px'
 
-//  initResize(mwrapper)
-//  document.querySelector('.ui-resizable-e').style.height = mtable.offsetHeight
-  scrollToFirstVisible(mcontainer, firstvisiblerow)
+  initResize(mwrapper)
+  scrollToFirstVisibleRow(mcontainer, firstvisiblerow)
 
   document.getElementById("clickclosequeue").onclick = function() {
+    mwrapper.style.width = "100%"
     qwrapper.style.display = 'none'
-//    mwrapper.style.height = "100%" - menuHeight
-    mcontainer.style.width = "100%"
 
-    scrollToFirstVisible(mcontainer, firstvisiblerow)
+    scrollToFirstVisibleRow(mcontainer, firstvisiblerow)
   }
 }
 
-// e.offsetTop > scrolledTop - 2 :: to make sure if the decimal was rounded
+// e.offsetTop > scrolledTop - 2 :: to make sure if the decimal was rounded off
 function findFirstVisibleRow(mcontainer, mtable)
 {
   let scrolledTop = mcontainer.scrollTop,
@@ -39,7 +32,7 @@ function findFirstVisibleRow(mcontainer, mtable)
   return Array.from(rows).find(e => e.offsetTop > scrolledTop - 2)
 }
 
-function scrollToFirstVisible(mcontainer, firstvisiblerow)
+function scrollToFirstVisibleRow(mcontainer, firstvisiblerow)
 {
   $(mcontainer).animate({
     scrollTop: firstvisiblerow.offsetTop

@@ -137,9 +137,9 @@ function documentEvent()
   });
 
   window.addEventListener('resize', () => {
-    $("#mainwrapper").css("height", window.innerHeight - $("#cssmenu").height())
-    $("#queuecontainer").css({
-      "height": $("#mainwrapper").height() - $("#titlebar").height()
+    $("#mainqueueWrapper").css("height", window.innerHeight - $("#cssmenu").height())
+    $("#queuetblContainer").css({
+      "height": $("#mainqueueWrapper").height() - $("#titlebar").height()
     })
   })
 }

@@ -28,6 +28,9 @@ export function fillConsults(tableID = 'maintbl')
     sindex = staffoncall.findIndex(e => e.staffname === staffstart),
     prevDate = saturdates[0]
 
+  // queuetbl have no opdated case
+  if (!firstsat) return
+
   // find dateoncall before firstsat
   while (dateoncall > firstsat) {
     dateoncall = nextdates(dateoncall, -7 * slen)

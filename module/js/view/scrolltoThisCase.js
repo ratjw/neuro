@@ -8,9 +8,9 @@ export function scrolltoThisCase(qn)
 {
   let showtbl, showqueuetbl
 
-  showtbl = locateFound("maincontainer", "maintbl", qn)
+  showtbl = locateFound("maintblContainer", "maintbl", qn)
   if (isSplit()) {
-    showqueuetbl = locateFound("queuecontainer", "queuetbl", qn)
+    showqueuetbl = locateFound("queuetblContainer", "queuetbl", qn)
   }
   return showtbl || showqueuetbl
 }
