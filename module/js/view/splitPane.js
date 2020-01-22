@@ -7,9 +7,10 @@ export function splitPane(mtable, qtable) {
     titlebar = document.getElementById("titlebar"),
     firstvisiblerow = findFirstVisibleRow(mcontainer, mtable)
 
-  qwrapper.style.display = "block"
+//  mcontainer.style.resize = "horizontal"
   mwrapper.style.width = "50%"
   qwrapper.style.width = "50%"
+  qwrapper.style.display = "block"
   qcontainer.style.height = mcontainer.offsetHeight - titlebar.offsetHeight + 'px'
 
   initResize(mwrapper)

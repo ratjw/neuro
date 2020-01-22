@@ -17,7 +17,7 @@ const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
   IMAGE3 = `<img class="image3" src="css/pic/general/delete.png">`,
   IMAGEALL = `${IMAGE1}${IMAGE2}${IMAGE3}`
 
-export function viewStaff()
+export function settingStaff()
 {
   const IMAGE = {
     image1: doAddStaff,
@@ -85,6 +85,8 @@ jQuery.fn.extend({
       q.ramaid,
       q.oncall,
       q.startoncall,
+      q.startoncall,
+      q.startoncall,
       IMAGEALL
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
@@ -140,5 +142,5 @@ function showStaff(response)
   setSTAFF(response.STAFF)
   htmlStafflist()
   fillConsults()
-  viewStaff()
+  settingStaff()
 }

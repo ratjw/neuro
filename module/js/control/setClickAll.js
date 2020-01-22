@@ -14,8 +14,8 @@ import { sendtoLINE } from "../menu/sendtoLINE.js"
 import { resEPA } from '../setting/resEPA.js'
 import { resResearch } from '../setting/resResearch.js'
 import { inputHoliday, addHoliday } from "../setting/inputHoliday.js"
-import { viewResident } from '../setting/viewResident.js'
-import { viewStaff } from '../setting/viewStaff.js'
+import { settingResident } from '../setting/settingResident.js'
+import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
 import { STAFF } from "../util/updateBOOK.js"
@@ -53,17 +53,16 @@ function setClickMenu()
 function setClickSetting()
 {
   const clickSetting = {
-    "clickresEPA": resEPA,
     "clickresResearch": resResearch,
-    "clickaddResident": viewResident,
-    "clickaddStaff": viewStaff,
-    "clicksetHoliday": inputHoliday,
+    "clickSetResident": settingResident,
+    "clickSetStaff": settingStaff,
+    "clickSetHoliday": inputHoliday,
     "addholiday": addHoliday
   },
   disable = [
     "#clickresEPA",
-    "#clickaddResident",
-    "#clickaddStaff"
+    "#clickSetResident",
+    "#clickSetStaff"
   ]
 
   Object.entries(clickSetting).forEach(([key, val]) => {

@@ -1,7 +1,7 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
-import { RAMAID, RNAME, ENYEAR, ICONS, viewResident } from "../setting/viewResident.js"
+import { RAMAID, RNAME, ENYEAR, ICONS, settingResident } from "../setting/settingResident.js"
 import { xRange, training, RESEARCHBAR } from '../setting/prepareData.js'
 import { resResearch } from '../setting/resResearch.js'
 
@@ -114,7 +114,7 @@ export async function deleteResident(row)
 function showResident(response)
 {
   RESIDENT = response.RESIDENT
-  viewResident()
+  settingResident()
 }
 
 export async function updateResearch(barChart, ridx, _ranges)

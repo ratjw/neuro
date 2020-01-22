@@ -2,7 +2,7 @@
 import { STAFF } from "../util/updateBOOK.js"
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { URIcomponent } from "../util/util.js"
-import { NUMBER, STAFFNAME, RAMAID, ONCALL, STARTONCALL, ICONS } from '../setting/viewStaff.js'
+import { NUMBER, STAFFNAME, RAMAID, ONCALL, STARTONCALL, ICONS } from '../setting/settingStaff.js'
 
 export function sqlDoSaveStaff(row)
 {

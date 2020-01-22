@@ -14,7 +14,7 @@ const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
   IMAGE3 = `<img class="image3" src="css/pic/general/delete.png">`,
   IMAGEALL = `${IMAGE1}${IMAGE2}${IMAGE3}`
 
-export async function viewResident()
+export async function settingResident()
 {
   const IMAGES = {
     image1: addResident,
