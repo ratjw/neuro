@@ -260,29 +260,32 @@ td.consult::after {
 #findtbl th:nth-child(10) { width: 12%; }
 
 #stafftbl td:nth-child(1) { width: 10px; }
-#stafftbl td:nth-child(2) { width: 90px; }
-#stafftbl td:nth-child(3) { width: 70px; }
+#stafftbl td:nth-child(2) { width: 80px; }
+#stafftbl td:nth-child(3) { width: 60px; }
 #stafftbl td:nth-child(4) { width: 50px; }
-#stafftbl td:nth-child(5) { width: 70px; }
-#stafftbl td:nth-child(6) { width: 70px; }
-#stafftbl td:nth-child(7) { width: 70px; }
+#stafftbl td:nth-child(5) { width: 80px; }
+#stafftbl td:nth-child(6) { width: 80px; }
+#stafftbl td:nth-child(7) { width: 80px; }
 #stafftbl td:nth-child(8) { width: 50px; }
 
 #stafftbl td:nth-child(1) { text-align: center; }
 #stafftbl td:nth-child(3) { text-align: center; }
+#stafftbl td:nth-child(4) { text-align: center; }
 #stafftbl td:nth-child(5) { text-align: center; }
+#stafftbl td:nth-child(6) { text-align: center; }
+#stafftbl td:nth-child(7) { text-align: center; }
 
 #actionIcons {
   text-align: center;
 }
 #actionIcons span {
   display: inline-block;
-  vertical-align: top;
-  width: 120px;
+  width: 100px;
+  font-size: small;
 }
 #actionIcons span img {
-  vertical-align: middle;
-  width: 25px;
+  vertical-align: bottom;
+  width: 20px;
 }
 
 #researchtbl { width: 100% }

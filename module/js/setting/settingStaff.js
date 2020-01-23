@@ -14,16 +14,18 @@ export const NUMBER = 0,
               NOEND = 6,
               ICONS = 7
 
-const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
-  IMAGE2 = `<img class="image2" src="css/pic/general/update.png">`,
-  IMAGE3 = `<img class="image3" src="css/pic/general/delete.png">`,
-  IMAGE4 = `<img class="image4" src="css/pic/general/cancel.png">`
+const IMAGE1 = `<img id="image1" src="css/pic/general/add.png">`,
+  IMAGE2 = `<img id="image2" src="css/pic/general/save.png">`,
+  IMAGE3 = `<img id="image3" src="css/pic/general/update.png">`,
+  IMAGE4 = `<img id="image4" src="css/pic/general/delete.png">`,
+  IMAGE5 = `<img id="image5" src="css/pic/general/cancel.png">`
 
 const IMAGE = {
   image1: doAddStaff,
-  image2: doUpdateStaff,
-  image3: doDeleteStaff,
-  image4: settingStaff
+  image2: doSaveStaff,
+  image3: doUpdateStaff,
+  image4: doDeleteStaff,
+  image5: settingStaff
 }
 
 export function settingStaff()
@@ -31,9 +33,10 @@ export function settingStaff()
   const $actionIcons = $("#actionIcons"),
     note = [
       `${IMAGE1} Add`,
-      `${IMAGE2} Update`,
-      `${IMAGE3} Delete`,
-      `${IMAGE4} Cancel`
+      `${IMAGE2} Save`,
+      `${IMAGE3} Update`,
+      `${IMAGE4} Delete`,
+      `${IMAGE5} Cancel`
     ],
 
     $dialogStaff = $("#dialogStaff"),
@@ -52,11 +55,30 @@ export function settingStaff()
         .appendTo($stafftbltbody)
           .filldataStaff(i, item)
     })
-    $("#dialogStaff").off("click", "img").on("click", "img", function() {
-      IMAGE[this.className].call(this, this.closest("tr"))
+    $("#dialogStaff").one("click", "img", function() {
+      IMAGE[this.id].call(this, this.closest("tr"))
+    })
+    let $cells = $("#dialogStaff td").filter(function() {
+      return this.cellIndex && this.cellIndex < 7
+    })
+    $cells.one("click", function() {
+      this.closest('tr').cells[ICONS].innerHTML = `${IMAGE3}${IMAGE5}`
+      $(this).one("click", "img", function() {
+        IMAGE[this.id].call(this, this.closest("tr"))
+      })
+    })
+    $cells.each(function() {
+      if (this.cellIndex < 3) {
+        this.contentEditable = 'true'
+        $(this).one(function() { this.focus() })
+      }
+    })
+    $cells.each(function() {
+      if (this.cellIndex > 2) {
+        this.innerHTML = inputDatepicker(this)
+      }
     })
   }
-
   $actionIcons.find('span').each(function(i) {
     this.innerHTML = note[i]
   })
@@ -82,11 +104,11 @@ jQuery.fn.extend({
 ;   [ q.number,
       q.staffname,
       q.ramaid,
-      q.oncall,
+      q.oncall ? 'Yes' : 'No',
       q.startoncall,
       q.startoncall,
       q.startoncall,
-      `${IMAGE1}${IMAGE3}`
+      `${IMAGE1}${IMAGE4}`
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
@@ -96,15 +118,16 @@ function doAddStaff(row)
   let stafftr = document.querySelector("#staffcells tr")
   let clone = stafftr.cloneNode(true)
   let staffname = clone.cells[STAFFNAME]
+  let ramaid = clone.cells[RAMAID]
   let icons = clone.cells[ICONS]
 
-  icons.innerHTML = `${IMAGE2}${IMAGE4}`
+  staffname.contentEditable = 'true'
+  ramaid.contentEditable = 'true'
+  icons.innerHTML = `${IMAGE2}${IMAGE5}`
   row.after(clone)
-  icons.querySelectorAll('img').forEach(img => 
-    img.addEventListener("click", function() {
-      IMAGE[img.className].call(img, img.closest("tr"))
-    })
-  )
+  $("icons img").one("click", "img", function() {
+    IMAGE[this.id].call(this, this.closest("tr"))
+  })
   staffname.focus()
 }
 
