@@ -60,7 +60,6 @@ function setClickSetting()
     "addholiday": addHoliday
   },
   disable = [
-    "#clickresEPA",
     "#clickSetResident",
     "#clickSetStaff"
   ]

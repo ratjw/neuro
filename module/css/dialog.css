@@ -30,15 +30,6 @@
   height: 30px;
 }
 
-.ui-resizable-handle {
-  position: absolute;
-  font-size: 0.1px;
-  display: block;
-}
-.ui-resizable-disabled .ui-resizable-handle,
-.ui-resizable-autohide .ui-resizable-handle {
-    display: none;
-}
 .ui-resizable-e { 
   display: block;
   cursor: e-resize; 
@@ -418,14 +409,6 @@
   padding: 7px;
   margin-left: 5px;
 }
-
-#researchtbl { width: 100% }
-
-#residenttbl td:nth-child(4) { text-align: center; }
-
-#stafftbl td:nth-child(1) { text-align: center; }
-#stafftbl td:nth-child(3) { text-align: center; }
-#stafftbl td:nth-child(5) { text-align: center; }
 
 #dialogHoliday table td {
   padding: 0 10px;

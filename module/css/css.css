@@ -12,11 +12,6 @@ html, body {
   font-family: sans-serif;
 }
 
-#cssmenu,
-#mainqueuewrapper {
-  width: 100%;
-}
-
 #mainwrapper,
 #queuewrapper {
   float: left;
@@ -263,6 +258,36 @@ td.consult::after {
 #findtbl th:nth-child(8) { width: 12%; }
 #findtbl th:nth-child(9) { width: 12%; }
 #findtbl th:nth-child(10) { width: 12%; }
+
+#stafftbl td:nth-child(1) { width: 10px; }
+#stafftbl td:nth-child(2) { width: 90px; }
+#stafftbl td:nth-child(3) { width: 70px; }
+#stafftbl td:nth-child(4) { width: 50px; }
+#stafftbl td:nth-child(5) { width: 70px; }
+#stafftbl td:nth-child(6) { width: 70px; }
+#stafftbl td:nth-child(7) { width: 70px; }
+#stafftbl td:nth-child(8) { width: 50px; }
+
+#stafftbl td:nth-child(1) { text-align: center; }
+#stafftbl td:nth-child(3) { text-align: center; }
+#stafftbl td:nth-child(5) { text-align: center; }
+
+#actionIcons {
+  text-align: center;
+}
+#actionIcons span {
+  display: inline-block;
+  vertical-align: top;
+  width: 120px;
+}
+#actionIcons span img {
+  vertical-align: middle;
+  width: 25px;
+}
+
+#researchtbl { width: 100% }
+
+#residenttbl td:nth-child(4) { text-align: center; }
 
 #notifywrapper,
 #wrapper,

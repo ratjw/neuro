@@ -10,39 +10,42 @@ export const NUMBER = 0,
               RAMAID = 2,
               ONCALL = 3,
               STARTONCALL = 4,
-              ICONS = 5
+              NOBEGIN = 5,
+              NOEND = 6,
+              ICONS = 7
 
 const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
   IMAGE2 = `<img class="image2" src="css/pic/general/update.png">`,
   IMAGE3 = `<img class="image3" src="css/pic/general/delete.png">`,
-  IMAGEALL = `${IMAGE1}${IMAGE2}${IMAGE3}`
+  IMAGE4 = `<img class="image4" src="css/pic/general/cancel.png">`
+
+const IMAGE = {
+  image1: doAddStaff,
+  image2: doUpdateStaff,
+  image3: doDeleteStaff,
+  image4: settingStaff
+}
 
 export function settingStaff()
 {
-  const IMAGE = {
-    image1: doAddStaff,
-    image2: doUpdateStaff,
-    image3: doDeleteStaff
-  }
+  const $actionIcons = $("#actionIcons"),
+    note = [
+      `${IMAGE1} Add`,
+      `${IMAGE2} Update`,
+      `${IMAGE3} Delete`,
+      `${IMAGE4} Cancel`
+    ],
 
-  const $dialogStaff = $("#dialogStaff"),
+    $dialogStaff = $("#dialogStaff"),
     $stafftbltbody = $("#stafftbl tbody"),
     $stafftbltr = $("#stafftbl tr"),
     $staffcellstr = $('#staffcells tr'),
     maxHeight = winHeight(90)
 
-  $stafftbltr.slice(1).remove()
+  $stafftbltr.slice(2).remove()
 
   if (!STAFF.length) {
-    let $clone = $staffcellstr.clone(),
-      clone = $clone[0],
-      cells = clone.cells,
-      $save = $clone.find("td").eq(ICONS)
-    $clone.appendTo($stafftbltbody)
-;   ["", "", "", "", "", "Save"].forEach((e, i) => { clone.cells[i].innerHTML = e })
-    $save.one("click", function() {
-      doSaveStaff(clone)
-    })
+    doAddStaff($stafftbltr[1])
   } else {
     $.each( STAFF, (i, item) => {
       $staffcellstr.clone()
@@ -54,6 +57,10 @@ export function settingStaff()
     })
   }
 
+  $actionIcons.find('span').each(function(i) {
+    this.innerHTML = note[i]
+  })
+
   $dialogStaff.dialog({ height: 'auto' })
   $dialogStaff.dialog({
     title: "Neurosurgery Staff",
@@ -63,14 +70,6 @@ export function settingStaff()
     hide: 200,
     width: "auto",
     height: ($dialogStaff.height() > maxHeight) ? maxHeight : 'auto'
-  })
-  .off('keydown').on('keydown', event => {
-    let keycode = event.which || window.Event.keyCode
-    if (keycode === 13) {
-      $("#stafftbl tr").each(function() {
-        if (this.cells[ICONS].innerHTML === "Save") { doSaveStaff(this) }
-      })
-    }
   })
 }
 
@@ -87,7 +86,7 @@ jQuery.fn.extend({
       q.startoncall,
       q.startoncall,
       q.startoncall,
-      IMAGEALL
+      `${IMAGE1}${IMAGE3}`
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
@@ -99,11 +98,13 @@ function doAddStaff(row)
   let staffname = clone.cells[STAFFNAME]
   let icons = clone.cells[ICONS]
 
-  icons.innerHTML = "Save"
+  icons.innerHTML = `${IMAGE2}${IMAGE4}`
   row.after(clone)
-  icons.addEventListener("click", function() {
-    doSaveStaff(clone)
-  })
+  icons.querySelectorAll('img').forEach(img => 
+    img.addEventListener("click", function() {
+      IMAGE[img.className].call(img, img.closest("tr"))
+    })
+  )
   staffname.focus()
 }
 
