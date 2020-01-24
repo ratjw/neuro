@@ -3,7 +3,7 @@ import { PROFILESHEET, OPERATION, RADIOSURG, ENDOVASC, THAIMONTH } from "../cont
 import { editableSV } from "./setSERVICE.js"
 import { htmlProfile } from '../control/html.js'
 import { URIcomponent, winHeight, radioHack, deepEqual } from "../util/util.js"
-import { numDate, thDate, datepicker } from '../util/date.js'
+import { thDate_2_numDate, ISOdate_2_thDate, datepicker } from '../util/date.js'
 import { saveService } from './savePreviousCellService.js'
 import { saveProfile } from './saveProfile.js'
 
@@ -163,13 +163,13 @@ function divProcedure(procedure, item, suffix, i)
     e.name = e.name + suffix + i
     if (item && item[i]) {
       let iname = item[i][inputname],
-        date = new Date(numDate(iname))
+        date = new Date(thDate_2_numDate(iname))
       if (inputname === 'opdateth') {
         e.id = e.id + suffix + i
         if ((i === 0) && !iname) {
           datepicker($(e))
           $(e).datepicker("setDate", new Date(_opdate))
-          e.value = thDate(_opdate)
+          e.value = ISOdate_2_thDate(_opdate)
         } else {
           if (!isNaN(date)) {
             datepicker($(e))

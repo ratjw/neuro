@@ -263,9 +263,9 @@ td.consult::after {
 #stafftbl td:nth-child(2) { width: 80px; }
 #stafftbl td:nth-child(3) { width: 60px; }
 #stafftbl td:nth-child(4) { width: 50px; }
-#stafftbl td:nth-child(5) { width: 80px; }
-#stafftbl td:nth-child(6) { width: 80px; }
-#stafftbl td:nth-child(7) { width: 80px; }
+#stafftbl td:nth-child(5) { width: 90px; }
+#stafftbl td:nth-child(6) { width: 90px; }
+#stafftbl td:nth-child(7) { width: 90px; }
 #stafftbl td:nth-child(8) { width: 50px; }
 
 #stafftbl td:nth-child(1) { text-align: center; }

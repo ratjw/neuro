@@ -7,7 +7,7 @@ import { sqlSaveService } from "../model/sqlservice.js"
 import { getBOOKrowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { URIcomponent, Alert } from "../util/util.js"
-import { thDate } from "../util/date.js"
+import { ISOdate_2_thDate } from "../util/date.js"
 import { reViewService } from "./showService.js"
 import { coloring } from "./coloring.js"
 import { setSERVICE, SERVICE } from "./setSERVICE.js"
@@ -63,7 +63,7 @@ export function saveService(pointed, column, newcontent) {
         reViewService()
       } else if (pointed.cellIndex === TREATMENTSV) {
         let serviceq = getBOOKrowByQN(SERVICE, qn),
-          opdateth = thDate(serviceq.opdate),
+          opdateth = ISOdate_2_thDate(serviceq.opdate),
           treatment = serviceq.treatment
         pointed.innerHTML = viewProfile(serviceq.profile, opdateth, treatment)
         row.dataset.treatment = serviceq.treatment

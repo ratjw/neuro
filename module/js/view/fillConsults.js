@@ -47,7 +47,7 @@ export function fillConsults(tableID = 'maintbl')
       sindex = (sindex + 1) % slen
       prevDate = e.dataset.opdate
     }
-    dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname)
+    dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname) // TypeError: staffoncall[sindex] is undefined
   })
 }
 

@@ -1,5 +1,5 @@
 
-import { ISOdate, thDate } from "../util/date.js"
+import { dateObj_2_ISOdate, ISOdate_2_thDate } from "../util/date.js"
 import { winWidth } from "../util/util.js"
 import { RESEARCHBAR, xRange } from '../setting/prepareData.js'
 import { RESIDENT, updateResearch } from "../model/sqlDoResident.js"
@@ -33,8 +33,8 @@ export function slider(evt, barChart, yearRange)
     beginslider = new Date(beginSlider),
     endslider = new Date(beginslider.getFullYear() + 5, 4, 31)
 
-  begindate.innerHTML = thDate(ISOdate(beginslider))
-  enddate.innerHTML = thDate(ISOdate(endslider))
+  begindate.innerHTML = ISOdate_2_thDate(dateObj_2_ISOdate(beginslider))
+  enddate.innerHTML = ISOdate_2_thDate(dateObj_2_ISOdate(endslider))
   enddate.style.right = '10px'
 
   $dialogSlider.dialog({
@@ -197,9 +197,9 @@ function getGripthDate(yearRange, timemap, sumranges)
     gripmsec = sumranges.map(e => e * xScale),
     beginSlider = getBeginSlider(yearRange, timemap),
     gripDate = gripmsec.map(e => addMillisec(beginSlider, e)),
-    gripISOdate = gripDate.map(e => ISOdate(e))
+    gripISOdate = gripDate.map(e => dateObj_2_ISOdate(e))
 
-  return gripISOdate.map(e => thDate(e))
+  return gripISOdate.map(e => ISOdate_2_thDate(e))
 }
 
 function addMillisec(beginx, millisec)

@@ -3,15 +3,19 @@ import { htmlStafflist } from "../control/html.js"
 import { sqlDoSaveStaff, sqlDoUpdateStaff, sqlDoDeleteStaff } from "../model/sqlDoStaff.js"
 import { STAFF, setSTAFF } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
+import { datepicker } from "../util/date.js"
 import { fillConsults } from "../view/fillConsults.js"
+
+export const YES = 'Yes',
+              NO = 'No'
 
 export const NUMBER = 0,
               STAFFNAME = 1,
               RAMAID = 2,
               ONCALL = 3,
               STARTONCALL = 4,
-              NOBEGIN = 5,
-              NOEND = 6,
+              BEGINNO = 5,
+              ENDNO = 6,
               ICONS = 7
 
 const IMAGE1 = `<img id="image1" src="css/pic/general/add.png">`,
@@ -55,29 +59,13 @@ export function settingStaff()
         .appendTo($stafftbltbody)
           .filldataStaff(i, item)
     })
-    $("#dialogStaff").one("click", "img", function() {
+    $("#dialogStaff").off("click", "img").on("click", "img", function() {
       IMAGE[this.id].call(this, this.closest("tr"))
     })
     let $cells = $("#dialogStaff td").filter(function() {
       return this.cellIndex && this.cellIndex < 7
     })
-    $cells.one("click", function() {
-      this.closest('tr').cells[ICONS].innerHTML = `${IMAGE3}${IMAGE5}`
-      $(this).one("click", "img", function() {
-        IMAGE[this.id].call(this, this.closest("tr"))
-      })
-    })
-    $cells.each(function() {
-      if (this.cellIndex < 3) {
-        this.contentEditable = 'true'
-        $(this).one(function() { this.focus() })
-      }
-    })
-    $cells.each(function() {
-      if (this.cellIndex > 2) {
-        this.innerHTML = inputDatepicker(this)
-      }
-    })
+    setClickCells($cells)
   }
   $actionIcons.find('span').each(function(i) {
     this.innerHTML = note[i]
@@ -104,7 +92,7 @@ jQuery.fn.extend({
 ;   [ q.number,
       q.staffname,
       q.ramaid,
-      q.oncall ? 'Yes' : 'No',
+      Number(q.oncall) ? YES : NO,
       q.startoncall,
       q.startoncall,
       q.startoncall,
@@ -113,19 +101,62 @@ jQuery.fn.extend({
   }
 })
 
+function setClickCells($cells)
+{
+  $cells.each(function() {
+    $(this).off("click").on("click", function() {
+      setUpdateIcons(this)
+      if (this.cellIndex < 3) {
+        this.contentEditable = 'true'
+        this.focus()
+      }
+      else if (this.cellIndex === 3) {
+        this.innerHTML = (this.innerHTML === YES) ? NO : YES
+      }
+      else if (this.cellIndex > 3) {
+        inputDatepicker(this)
+      }
+    })
+  })
+}
+
+function setUpdateIcons(thiscell)
+{
+  thiscell.closest('tr').cells[ICONS].innerHTML = `${IMAGE3}${IMAGE5}`
+  $(thiscell).off("click", "img").on("click", "img", function() {
+    IMAGE[this.id].call(this, this.closest("tr"))
+  })
+}
+
+function inputDatepicker(cell)
+{
+  let input = document.createElement('input')
+
+  input.style.width = '80px'
+  cell.innerHTML = ''
+  cell.appendChild(input)
+  datepicker($(input))
+  $(input).datepicker('option', 'onClose', function() {
+    cell.innerHTML = input.value
+  })
+  input.focus()
+}
+
 function doAddStaff(row)
 {
   let stafftr = document.querySelector("#staffcells tr")
   let clone = stafftr.cloneNode(true)
   let staffname = clone.cells[STAFFNAME]
   let ramaid = clone.cells[RAMAID]
+  let oncall = clone.cells[ONCALL]
   let icons = clone.cells[ICONS]
 
   staffname.contentEditable = 'true'
   ramaid.contentEditable = 'true'
+  oncall.innerHTML = YES
   icons.innerHTML = `${IMAGE2}${IMAGE5}`
   row.after(clone)
-  $("icons img").one("click", "img", function() {
+  $("icons img").off("click", "img").on("click", "img", function() {
     IMAGE[this.id].call(this, this.closest("tr"))
   })
   staffname.focus()
