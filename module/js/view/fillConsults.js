@@ -16,20 +16,22 @@ export function fillConsults(tableID = 'maintbl')
 {
   let table = document.getElementById(tableID),
     saturdayRows = Array.from(table.querySelectorAll("tr.Saturday")),
-    saturdatess = saturdayRows.map(e => e.dataset.opdate),
-    saturdates = [...new Set(saturdatess)],
+    saturdateAll = saturdayRows.map(e => e.dataset.opdate),
+    saturdates = [...new Set(saturdateAll)],
     firstsat = saturdates.length && saturdates[0] || "",
     staffoncall = STAFF.filter(staff => (staff.oncall === "1")),
     slen = staffoncall.length,
-    start = staffoncall.filter(staff => staff.startoncall)
+    latestStart = staffoncall.filter(staff => staff.startoncall)
       .reduce((a, b) => a.startoncall > b.startoncall ? a : b, 0),
-    dateoncall = start.startoncall,
-    staffstart = start.staffname,
-    sindex = staffoncall.findIndex(e => e.staffname === staffstart),
-    prevDate = saturdates[0]
+    dateoncall = latestStart.startoncall,
+    staffstart = latestStart.staffname,
+    sindex = staffoncall.findIndex(e => e.staffname === staffstart)
 
   // queuetbl have no opdated case
   if (!firstsat) return
+
+  // wrong staff setting
+  if (sindex === -1) return
 
   // find dateoncall before firstsat
   while (dateoncall > firstsat) {
@@ -42,12 +44,14 @@ export function fillConsults(tableID = 'maintbl')
     sindex = (sindex + 1) % slen
   }
 
+  let prevDate = firstsat
   saturdayRows.forEach((e, i) => {
     if (e.dataset.opdate !== prevDate) {
       sindex = (sindex + 1) % slen
       prevDate = e.dataset.opdate
     }
-    dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname) // TypeError: staffoncall[sindex] is undefined
+    dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname)
+    // TypeError: staffoncall[sindex] is undefined ???
   })
 }
 
