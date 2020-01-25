@@ -6,16 +6,13 @@ import { Alert, winHeight } from "../util/util.js"
 import { datepicker } from "../util/date.js"
 import { fillConsults } from "../view/fillConsults.js"
 
-export const YES = 'Yes',
-              NO = 'No'
-
 export const NUMBER = 0,
               STAFFNAME = 1,
               RAMAID = 2,
               ONCALL = 3,
               STARTONCALL = 4,
-              BEGINNO = 5,
-              ENDNO = 6,
+              SKIPBEGIN = 5,
+              SKIPEND = 6,
               ICONS = 7
 
 const IMAGE1 = `<img id="image1" src="css/pic/general/add.png">`,
@@ -25,11 +22,11 @@ const IMAGE1 = `<img id="image1" src="css/pic/general/add.png">`,
   IMAGE5 = `<img id="image5" src="css/pic/general/cancel.png">`
 
 const IMAGE = {
-  image1: doAddStaff,
-  image2: doSaveStaff,
-  image3: doUpdateStaff,
-  image4: doDeleteStaff,
-  image5: settingStaff
+  image1: [doAddStaff],
+  image2: [doSaveStaff, sqlDoSaveStaff, 'doSaveStaff'],
+  image3: [doUpdateStaff, sqlDoUpdateStaff, 'doUpdateStaff'],
+  image4: [doDeleteStaff, sqlDoDeleteStaff, 'doDeleteStaff'],
+  image5: [settingStaff]
 }
 
 export function settingStaff()
@@ -60,7 +57,7 @@ export function settingStaff()
           .filldataStaff(i, item)
     })
     $("#dialogStaff").off("click", "img").on("click", "img", function() {
-      IMAGE[this.id].call(this, this.closest("tr"))
+      IMAGE[this.id].call(null, this.closest("tr"))
     })
     let $cells = $("#dialogStaff td").filter(function() {
       return this.cellIndex && this.cellIndex < 7
@@ -92,7 +89,7 @@ jQuery.fn.extend({
 ;   [ q.number,
       q.staffname,
       q.ramaid,
-      Number(q.oncall) ? YES : NO,
+      q.oncall,
       q.startoncall,
       q.startoncall,
       q.startoncall,
@@ -106,14 +103,10 @@ function setClickCells($cells)
   $cells.each(function() {
     $(this).off("click").on("click", function() {
       setUpdateIcons(this)
-      if (this.cellIndex < 3) {
+      if (this.cellIndex < 4) {
         this.contentEditable = 'true'
         this.focus()
-      }
-      else if (this.cellIndex === 3) {
-        this.innerHTML = (this.innerHTML === YES) ? NO : YES
-      }
-      else if (this.cellIndex > 3) {
+    } else {
         inputDatepicker(this)
       }
     })
@@ -151,9 +144,7 @@ function doAddStaff(row)
   let oncall = clone.cells[ONCALL]
   let icons = clone.cells[ICONS]
 
-  staffname.contentEditable = 'true'
-  ramaid.contentEditable = 'true'
-  oncall.innerHTML = YES
+  [staffname, ramaid, oncall].forEach(e => e.contentEditable = 'true')
   icons.innerHTML = `${IMAGE2}${IMAGE5}`
   row.after(clone)
   $("icons img").off("click", "img").on("click", "img", function() {
@@ -162,34 +153,40 @@ function doAddStaff(row)
   staffname.focus()
 }
 
+async function doStaffFunction(row, sqlDo, alertMessage)
+{
+  let response = await sqlDoStaffFunction(row)
+  if (typeof response !== "object") {
+    response && Alert("doSaveStaff", response)
+  }
+  showStaff(response)
+}
+
 async function doSaveStaff(row)
 {
   let response = await sqlDoSaveStaff(row)
-  if (typeof response === "object") {
-    showStaff(response)
-  } else {
+  if (typeof response !== "object") {
     response && Alert("doSaveStaff", response)
   }
+  showStaff(response)
 }
 
 async function doUpdateStaff(row)
 {
   let response = await sqlDoUpdateStaff(row)
-  if (typeof response === "object") {
-    showStaff(response)
-  } else {
+  if (typeof response !== "object") {
     response && Alert("doUpdateStaff", response)
   }
+  showStaff(response)
 }
 
 async function doDeleteStaff(row)
 {
   let response = await sqlDoDeleteStaff(row)
-  if (typeof response === "object") {
-    showStaff(response)
-  } else {
+  if (typeof response !== "object") {
     response && Alert("doDeleteStaff", response)
   }
+  showStaff(response)
 }
 
 function showStaff(response)

@@ -108,76 +108,8 @@ td img.imgpale {
 #capture th:nth-child(12), #capture td:nth-child(12) { width: 30%; }
 #capture th:nth-child(13), #capture td:nth-child(13) { display: none; }
 
-#maintbl td:first-child { font-size: 12px; }
-
-#maintbl th:nth-child(2),
-#maintbl td:nth-child(2) { width: 0px; font-size: 0px; }
-#maintbl.showColumn2 th:nth-child(2),
-#maintbl.showColumn2 td:nth-child(2) { width: 30px; font-size: xx-small; }
-#maintbl td:nth-child(2) { text-align: center; }
-
-#maintbl th:nth-child(3) { font-size: xx-small; padding: 0px; }
-#maintbl td:nth-child(3) { font-size: 14px; padding: 0px; }
-#maintbl td:nth-child(3) { text-align: center; }
-
-#maintbl th:nth-child(4) { font-size: xx-small; padding: 0px; }
-#maintbl td:nth-child(4) { font-size: xx-small; padding: 0px; }
-#maintbl td:nth-child(4) { text-align: center; }
-
-#maintbl th:nth-child(5) { font-size: xx-small; padding: 0px; }
-#maintbl td:nth-child(5) { font-size: 14px; padding: 0px; }
-#maintbl td:nth-child(5) { text-align: center; }
-
-#maintbl td:nth-child(6) { font-size: 12px; }
-#maintbl td:nth-child(7) { font-size: 12px; }
-#maintbl td:nth-child(8) { font-size: 12px; }
-
-td.consult::after { 
-  color: #999999;
-  font-size: 12px;
-  content: 'สัปดาห์ Consult\A'attr(data-consult);
-  white-space: pre;
-}
-
-#queuetbl th:nth-child(3),
-#queuetbl th:nth-child(4),
-#queuetbl th:nth-child(5),
-#queuetbl td:nth-child(3),
-#queuetbl td:nth-child(4),
-#queuetbl td:nth-child(5) { font-size: xx-small; padding: 0px; }
-
-#queuetbl tr.nodate td:first-child::before {
-  font-size: 14px;
-  content: attr(data-number);
-}
-
-#queuetbl td:nth-child(1),
-#queuetbl td:nth-child(6),
-#queuetbl td:nth-child(7),
-#queuetbl td:nth-child(8) { font-size: 12px; }
-
-#servicetbl td:nth-child(2),
-#servicetbl td:nth-child(8),
-#servicetbl td:nth-child(9),
-#deletedtbl td:nth-child(1),
-#deletedtbl td:nth-child(2),
-#deletedtbl td:nth-child(3),
-#deletedtbl td:nth-child(8),
-#deletedtbl td:nth-child(9),
-#historytbl td:nth-child(1),
-#historytbl td:nth-child(2),
-#historytbl td:nth-child(3),
-#historytbl td:nth-child(4),
-#historytbl td:nth-child(11),
-#historytbl td:nth-child(12),
-#findtbl td,
-#alltbl td { font-size: 12px; }
-
-#servicetbl td:nth-child(1),
-#historytbl td:nth-child(2),
-#historytbl td:nth-child(3) { text-align: center; }
-
 #maintbl th:nth-child(1) { width: 3%; }
+#maintbl th:nth-child(2) { width: 0px; font-size: 0px; }
 #maintbl th:nth-child(3) { width: 1%; }
 #maintbl th:nth-child(4) { width: 1%; }
 #maintbl th:nth-child(5) { width: 1%; }
@@ -189,12 +121,56 @@ td.consult::after {
 #maintbl th:nth-child(12) { width: 15%; }
 #maintbl th:nth-child(13) { width: 20%; }
 
-#queuetbl th:nth-child(1) { width: 3%; }
-#queuetbl th:nth-child(7) { width: 3%; }
+#maintbl td:nth-child(1) { font-size: 12px; }
+#maintbl td:nth-child(2) { font-size: 0px; }
+#maintbl th:nth-child(3) { font-size: xx-small; padding: 0px; }
+#maintbl td:nth-child(3) { font-size: 14px; padding: 0px; }
+#maintbl td:nth-child(3) { text-align: center; }
+#maintbl th:nth-child(4) { font-size: xx-small; padding: 0px; }
+#maintbl td:nth-child(4) { font-size: xx-small; padding: 0px; }
+#maintbl td:nth-child(4) { text-align: center; }
+#maintbl th:nth-child(5) { font-size: xx-small; padding: 0px; }
+#maintbl td:nth-child(5) { font-size: 14px; padding: 0px; }
+#maintbl td:nth-child(5) { text-align: center; }
+#maintbl td:nth-child(6) { font-size: 12px; }
+#maintbl td:nth-child(7) { font-size: 12px; }
+#maintbl td:nth-child(8) { font-size: 12px; }
+
+#maintbl th:nth-child(11), #maintbl td:nth-child(11) { display: none; }
+
+#maintbl.showColumn2 th:nth-child(2) { width: 30px; font-size: xx-small; }
+#maintbl.showColumn2 td:nth-child(2) { font-size: xx-small; text-align: center; }
+
+td.consult::after { 
+  color: #999999;
+  font-size: 12px;
+  content: 'สัปดาห์ Consult\A'attr(data-consult);
+  white-space: pre;
+}
+
+#queuetbl tr.nodate td:first-child::before {
+  font-size: 14px;
+  content: attr(data-number);
+}
+
+#queuetbl th:nth-child(1) { width: 2%; }
+#queuetbl th:nth-child(2), #queuetbl td:nth-child(2) { display: none; }
+#queuetbl th:nth-child(3), #queuetbl td:nth-child(3) { display: none; }
+#queuetbl th:nth-child(4), #queuetbl td:nth-child(4) { display: none; }
+#queuetbl th:nth-child(5), #queuetbl td:nth-child(5) { display: none; }
+#queuetbl th:nth-child(6) { width: 2%; }
+#queuetbl th:nth-child(7) { width: 2%; }
 #queuetbl th:nth-child(8) { width: 4%; }
 #queuetbl th:nth-child(9) { width: 30%; }
 #queuetbl th:nth-child(10) { width: 30%; }
+#queuetbl th:nth-child(11), #queuetbl td:nth-child(11) { display: none; }
+#queuetbl th:nth-child(12), #queuetbl td:nth-child(12) { display: none; }
 #queuetbl th:nth-child(13) { width: 30%; }
+
+#queuetbl td:nth-child(1) { font-size: 12px; }
+#queuetbl td:nth-child(6) { font-size: 12px; }
+#queuetbl td:nth-child(7) { font-size: 12px; }
+#queuetbl td:nth-child(8) { font-size: 12px; }
 
 #servicetbl th:nth-child(1) { width: 1%; }
 #servicetbl th:nth-child(2) { width: 2%; }
@@ -213,6 +189,11 @@ td.consult::after {
   padding-left: 10px;
   background-color: #DDFFFF;
 }
+#servicetbl td:nth-child(1) { text-align: center; }
+#servicetbl td:nth-child(2) { font-size: 12px; }
+#servicetbl td:nth-child(8) { font-size: 12px; }
+#servicetbl td:nth-child(9) { font-size: 12px; }
+
 
 #historytbl th:nth-child(1) { width: 5%; }
 #historytbl th:nth-child(2) { width: 10px; }
@@ -227,6 +208,13 @@ td.consult::after {
 #historytbl th:nth-child(11) { width: 30px; }
 #historytbl th:nth-child(12) { width: 50px; }
 
+#historytbl td:nth-child(1) { font-size: 12px; }
+#historytbl td:nth-child(2) { font-size: 12px; text-align: center; }
+#historytbl td:nth-child(3) { font-size: 12px; text-align: center; }
+#historytbl td:nth-child(4) { font-size: 12px; }
+#historytbl td:nth-child(11) { font-size: 12px; }
+#historytbl td:nth-child(12) { font-size: 12px; }
+
 #deletedtbl th:nth-child(1) { width: 5%; }
 #deletedtbl th:nth-child(2) { width: 5%; }
 #deletedtbl th:nth-child(3) { width: 50px; }
@@ -236,6 +224,12 @@ td.consult::after {
 #deletedtbl th:nth-child(7) { width: 20%; }
 #deletedtbl th:nth-child(8) { width: 40px; }
 #deletedtbl th:nth-child(9) { width: 70px; }
+
+#deletedtbl td:nth-child(1) { font-size: 12px; }
+#deletedtbl td:nth-child(2) { font-size: 12px; }
+#deletedtbl td:nth-child(3) { font-size: 12px; }
+#deletedtbl td:nth-child(8) { font-size: 12px; }
+#deletedtbl td:nth-child(9) { font-size: 12px; }
 
 #alltbl th:nth-child(1) { width: 30px; }
 #alltbl th:nth-child(2) { width: 50px; }
@@ -248,6 +242,8 @@ td.consult::after {
 #alltbl th:nth-child(9) { width: 12%; }
 #alltbl th:nth-child(10) { width: 12%; }
 
+#alltbl td { font-size: 12px; }
+
 #findtbl th:nth-child(1) { width: 30px; }
 #findtbl th:nth-child(2) { width: 50px; }
 #findtbl th:nth-child(3) { width: 50px; }
@@ -259,21 +255,26 @@ td.consult::after {
 #findtbl th:nth-child(9) { width: 12%; }
 #findtbl th:nth-child(10) { width: 12%; }
 
-#stafftbl td:nth-child(1) { width: 10px; }
-#stafftbl td:nth-child(2) { width: 80px; }
+#findtbl td { font-size: 12px; }
+
+#stafftbl th:nth-child(1) { display: none; }
+#stafftbl th:nth-child(2) { width: 80px; }
+#stafftbl th:nth-child(3) { width: 60px; }
+#stafftbl th:nth-child(4) { width: 50px; }
+#stafftbl th:nth-child(5) { width: 90px; }
+#stafftbl th:nth-child(6) { width: 90px; }
+#stafftbl th:nth-child(7) { width: 90px; }
+#stafftbl th:nth-child(8) { width: 50px; }
+
+#stafftbl td { text-align: center; }
+#stafftbl td:nth-child(1) { display: none; }
+#stafftbl td:nth-child(2) { width: 80px; text-align: left; }
 #stafftbl td:nth-child(3) { width: 60px; }
 #stafftbl td:nth-child(4) { width: 50px; }
 #stafftbl td:nth-child(5) { width: 90px; }
 #stafftbl td:nth-child(6) { width: 90px; }
 #stafftbl td:nth-child(7) { width: 90px; }
 #stafftbl td:nth-child(8) { width: 50px; }
-
-#stafftbl td:nth-child(1) { text-align: center; }
-#stafftbl td:nth-child(3) { text-align: center; }
-#stafftbl td:nth-child(4) { text-align: center; }
-#stafftbl td:nth-child(5) { text-align: center; }
-#stafftbl td:nth-child(6) { text-align: center; }
-#stafftbl td:nth-child(7) { text-align: center; }
 
 #actionIcons {
   text-align: center;
@@ -288,21 +289,12 @@ td.consult::after {
   width: 20px;
 }
 
-#researchtbl { width: 100% }
-
 #residenttbl td:nth-child(4) { text-align: center; }
 
 #notifywrapper,
 #wrapper,
 #queuewrapper,
 #tblcells,
-#maintbl th:nth-child(11), #maintbl td:nth-child(11),
-#queuetbl th:nth-child(2), #queuetbl td:nth-child(2),
-#queuetbl th:nth-child(3), #queuetbl td:nth-child(3),
-#queuetbl th:nth-child(4), #queuetbl td:nth-child(4),
-#queuetbl th:nth-child(5), #queuetbl td:nth-child(5),
-#queuetbl th:nth-child(11), #queuetbl td:nth-child(11),
-#queuetbl th:nth-child(12), #queuetbl td:nth-child(12),
 #dialogService, #servicecells,
 #monthpicker button.ui-datepicker-current,
 #monthpicker .ui-datepicker-calendar,
