@@ -257,24 +257,15 @@ td.consult::after {
 
 #findtbl td { font-size: 12px; }
 
-#stafftbl th:nth-child(1) { display: none; }
-#stafftbl th:nth-child(2) { width: 80px; }
-#stafftbl th:nth-child(3) { width: 60px; }
-#stafftbl th:nth-child(4) { width: 50px; }
-#stafftbl th:nth-child(5) { width: 90px; }
-#stafftbl th:nth-child(6) { width: 90px; }
-#stafftbl th:nth-child(7) { width: 90px; }
-#stafftbl th:nth-child(8) { width: 50px; }
-
-#stafftbl td { text-align: center; }
-#stafftbl td:nth-child(1) { display: none; }
-#stafftbl td:nth-child(2) { width: 80px; text-align: left; }
-#stafftbl td:nth-child(3) { width: 60px; }
-#stafftbl td:nth-child(4) { width: 50px; }
+#stafftbl td:nth-child(1) { width: 80px; }
+#stafftbl td:nth-child(2) { width: 60px; }
+#stafftbl td:nth-child(3) { width: 50px; }
+#stafftbl td:nth-child(4) { width: 90px; }
 #stafftbl td:nth-child(5) { width: 90px; }
 #stafftbl td:nth-child(6) { width: 90px; }
-#stafftbl td:nth-child(7) { width: 90px; }
-#stafftbl td:nth-child(8) { width: 50px; }
+
+#stafftbl td { text-align: center; }
+#stafftbl td:nth-child(1) { text-align: left; }
 
 #actionIcons {
   text-align: center;
@@ -282,7 +273,14 @@ td.consult::after {
 #actionIcons span {
   display: inline-block;
   width: 100px;
-  font-size: small;
+  border: 1px solid lightgray;
+  border-style: outset;
+  border-radius: 5px;
+  padding: 5px 0px;
+  margin: 5px 20px;
+}
+#actionIcons span:hover {
+  border: 2px solid lightgray;
 }
 #actionIcons span img {
   vertical-align: bottom;

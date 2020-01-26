@@ -2,7 +2,8 @@
 import { STAFF } from "../util/updateBOOK.js"
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { URIcomponent } from "../util/util.js"
-import { NUMBER, STAFFNAME, RAMAID, ONCALL, STARTONCALL, ICONS
+import {
+  STAFFNAME, RAMAID, ONCALL, STARTONCALL, SKIPBEGIN, SKIPEND
 } from '../setting/settingStaff.js'
 
 export function sqlDoSaveStaff(row)
@@ -13,36 +14,23 @@ export function sqlDoSaveStaff(row)
   let ramaid = cell[RAMAID].textContent
   let oncall = cell[ONCALL].textContent
   let startoncall = cell[STARTONCALL].textContent ? `'${cell[STARTONCALL].textContent}'` : null
-  let add = encodeURIComponent('+')
-  let sql = `sqlReturnStaff=UPDATE staff SET number=number${add}1
-               WHERE number>${rownum-2};
-             INSERT INTO staff (number,staffname,ramaid,oncall,startoncall)
-               VALUES(${rownum-1},'${staffname}','${ramaid}',${oncall},${startoncall});`
+  let skipbegin = cell[SKIPBEGIN].textContent ? `'${cell[SKIPBEGIN].textContent}'` : null
+  let skipend = cell[SKIPEND].textContent ? `'${cell[SKIPEND].textContent}'` : null
+  let sql
 
-  if (!staffname) { return "<br>Incomplete Entry" }
+  if (add) {
+    let fields = `staffname,ramaid,oncall,startoncall,skipbegin,skipend`
+    let values = `'${staffname}','${ramaid}',${oncall},${startoncall},${skipbegin},${skipend}`
+    sql = `sqlReturnStaff=INSERT INTO staff (${fields}) VALUES(${values});`
+  } else {
+    let data1 = `staffname='${staffname}',oncall=${oncall},startoncall=${startoncall}`
+    let data2 = `skipbegin=${skipbegin},skipend=${skipend}`
+    sql = `sqlReturnStaff=UPDATE staff SET ${data1}${data2} WHERE ramaid=${ramaid};`
+  }
+
+  if (!staffname || !ramaid || !oncall) { return "<br>Incomplete Entry" }
 
   return postData(MYSQLIPHP, sql)
-}
-
-export function sqlDoUpdateStaff(row)
-{
-  let cell = row.cells
-  let number = cell[NUMBER].textContent
-  let staffname = cell[STAFFNAME].textContent
-  let ramaid = cell[RAMAID].textContent
-  let oncall = cell[ONCALL].textContent === 'Yes' ? 1 : 0
-  let startoncall = cell[STARTONCALL].textContent ? `'${cell[STARTONCALL].textContent}'` : null
-  let data = `staffname='${staffname}',ramaid='${ramaid}',oncall=${oncall},startoncall=${startoncall}`
-
-  if (!number || !staffname) { return "<br>Incomplete Entry" }
-
-  if (confirm(`Confirm update?\n\n${data}`)) {
-    startoncall = startoncall ? `'${startoncall}'` : null
-
-    let sql = `sqlReturnStaff=UPDATE staff SET ${data} WHERE number=${number};`
-
-    return postData(MYSQLIPHP, sql)
-  }
 }
 
 export function sqlDoDeleteStaff(row)

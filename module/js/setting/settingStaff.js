@@ -1,45 +1,21 @@
 
 import { htmlStafflist } from "../control/html.js"
-import { sqlDoSaveStaff, sqlDoUpdateStaff, sqlDoDeleteStaff } from "../model/sqlDoStaff.js"
+import { sqlDoSaveStaff, sqlDoDeleteStaff } from "../model/sqlDoStaff.js"
 import { STAFF, setSTAFF } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
 import { datepicker } from "../util/date.js"
 import { fillConsults } from "../view/fillConsults.js"
 
-export const NUMBER = 0,
-              STAFFNAME = 1,
-              RAMAID = 2,
-              ONCALL = 3,
-              STARTONCALL = 4,
-              SKIPBEGIN = 5,
-              SKIPEND = 6,
-              ICONS = 7
-
-const IMAGE1 = `<img id="image1" src="css/pic/general/add.png">`,
-  IMAGE2 = `<img id="image2" src="css/pic/general/save.png">`,
-  IMAGE3 = `<img id="image3" src="css/pic/general/update.png">`,
-  IMAGE4 = `<img id="image4" src="css/pic/general/delete.png">`,
-  IMAGE5 = `<img id="image5" src="css/pic/general/cancel.png">`
-
-const IMAGE = {
-  image1: [doAddStaff],
-  image2: [doSaveStaff, sqlDoSaveStaff, 'doSaveStaff'],
-  image3: [doUpdateStaff, sqlDoUpdateStaff, 'doUpdateStaff'],
-  image4: [doDeleteStaff, sqlDoDeleteStaff, 'doDeleteStaff'],
-  image5: [settingStaff]
-}
+export const STAFFNAME = 0,
+              RAMAID = 1,
+              ONCALL = 2,
+              STARTONCALL = 3,
+              SKIPBEGIN = 4,
+              SKIPEND = 5
 
 export function settingStaff()
 {
-  const $actionIcons = $("#actionIcons"),
-    note = [
-      `${IMAGE1} Add`,
-      `${IMAGE2} Save`,
-      `${IMAGE3} Update`,
-      `${IMAGE4} Delete`,
-      `${IMAGE5} Cancel`
-    ],
-
+  const 
     $dialogStaff = $("#dialogStaff"),
     $stafftbltbody = $("#stafftbl tbody"),
     $stafftbltr = $("#stafftbl tr"),
@@ -56,17 +32,10 @@ export function settingStaff()
         .appendTo($stafftbltbody)
           .filldataStaff(i, item)
     })
-    $("#dialogStaff").off("click", "img").on("click", "img", function() {
-      IMAGE[this.id].call(null, this.closest("tr"))
-    })
-    let $cells = $("#dialogStaff td").filter(function() {
-      return this.cellIndex && this.cellIndex < 7
-    })
-    setClickCells($cells)
+
+    $staffcellstr.clone().appendTo($stafftbltbody)
+    setClickCells()
   }
-  $actionIcons.find('span').each(function(i) {
-    this.innerHTML = note[i]
-  })
 
   $dialogStaff.dialog({ height: 'auto' })
   $dialogStaff.dialog({
@@ -86,38 +55,28 @@ jQuery.fn.extend({
     let row = this[0]
     let cells = row.cells
 
-;   [ q.number,
-      q.staffname,
+;   [ q.staffname,
       q.ramaid,
       q.oncall,
       q.startoncall,
       q.startoncall,
-      q.startoncall,
-      `${IMAGE1}${IMAGE4}`
+      q.startoncall
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
 
 function setClickCells($cells)
 {
-  $cells.each(function() {
+  $("#dialogStaff td").each(function() {
     $(this).off("click").on("click", function() {
-      setUpdateIcons(this)
-      if (this.cellIndex < 4) {
+      if (this.cellIndex < 3) {
         this.contentEditable = 'true'
         this.focus()
-    } else {
+      } else {
         inputDatepicker(this)
       }
+      activateButtons(this)
     })
-  })
-}
-
-function setUpdateIcons(thiscell)
-{
-  thiscell.closest('tr').cells[ICONS].innerHTML = `${IMAGE3}${IMAGE5}`
-  $(thiscell).off("click", "img").on("click", "img", function() {
-    IMAGE[this.id].call(this, this.closest("tr"))
   })
 }
 
@@ -135,6 +94,16 @@ function inputDatepicker(cell)
   input.focus()
 }
 
+function activateButtons(cell)
+{
+  const row = cell.closest('td'),
+    saveStaff = document.querySelector('#saveStaff'),
+    cancelStaff = document.querySelector('#cancelStaff')
+
+  saveStaff.addEventListener('click', doSaveStaff)
+  cancelStaff.addEventListener('click', settingStaff)
+}
+
 function doAddStaff(row)
 {
   let stafftr = document.querySelector("#staffcells tr")
@@ -145,7 +114,7 @@ function doAddStaff(row)
   let icons = clone.cells[ICONS]
 
   [staffname, ramaid, oncall].forEach(e => e.contentEditable = 'true')
-  icons.innerHTML = `${IMAGE2}${IMAGE5}`
+  icons.innerHTML = IMAGE2
   row.after(clone)
   $("icons img").off("click", "img").on("click", "img", function() {
     IMAGE[this.id].call(this, this.closest("tr"))
@@ -153,11 +122,11 @@ function doAddStaff(row)
   staffname.focus()
 }
 
-async function doStaffFunction(row, sqlDo, alertMessage)
+async function doStaffFunction(row, sqlDo, message)
 {
-  let response = await sqlDoStaffFunction(row)
+  let response = await sqlDo(row)
   if (typeof response !== "object") {
-    response && Alert("doSaveStaff", response)
+    response && Alert(message, response)
   }
   showStaff(response)
 }
@@ -191,7 +160,7 @@ async function doDeleteStaff(row)
 
 function showStaff(response)
 {
-  setSTAFF(response.STAFF)
+  setSTAFF(response ? response.STAFF : STAFF)
   htmlStafflist()
   fillConsults()
   settingStaff()
