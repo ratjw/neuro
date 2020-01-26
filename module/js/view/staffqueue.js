@@ -1,6 +1,6 @@
  
 import { OPDATE } from "../control/const.js"
-import { dateObj_2_ISOdate } from "../util/date.js"
+import { objDate_2_ISOdate } from "../util/date.js"
 import { BOOK, CONSULT } from "../util/updateBOOK.js"
 import { isSplit } from "../util/util.js"
 import { splitPane } from "./splitPane.js"
@@ -21,7 +21,7 @@ export function staffqueue(staffname) {
 
   if (staffname === "Consults") {
     book = CONSULT
-    until = dateObj_2_ISOdate(new Date())
+    until = objDate_2_ISOdate(new Date())
 
     date = fillDatedCases(qtable, book)
 

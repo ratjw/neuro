@@ -1,12 +1,12 @@
 
 import { saveCaseHN } from "./saveCaseHN.js"
 import { saveThisHN } from "./saveThisHN.js"
-import { dateObj_2_ISOdate } from "../util/date.js"
+import { objDate_2_ISOdate } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 
 export function saveHN(pointed, content) {
   // waiting list after today
-  let todate = dateObj_2_ISOdate(new Date())
+  let todate = objDate_2_ISOdate(new Date())
   let waiting = BOOK.find(q => (q.opdate > todate) && (q.hn === content))
 
   if (waiting) {

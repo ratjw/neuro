@@ -8,6 +8,7 @@ import { STAFF } from "../util/updateBOOK.js"
 export function htmlStafflist() {
   let stafflist = '',
       staffmenu = ''
+
   STAFF.forEach(each => {
     stafflist += `<li><div>${each.staffname}</div></li>`
     staffmenu += `<li class="w100"><a class="clickStaff ${each.staffname}">

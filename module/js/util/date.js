@@ -3,10 +3,10 @@ import { LARGESTDATE, THAIMONTH } from "../control/const.js"
 
 // start at 1st date of last month
 const today = new Date()
-export const START_DATE = dateObj_2_ISOdate(new Date(today.getFullYear(), today.getMonth()-1, 1))
+export const START_DATE = objDate_2_ISOdate(new Date(today.getFullYear(), today.getMonth()-1, 1))
 
 // Javascript Date Object to MySQL date (ISOdate 2014-05-11)
-export function dateObj_2_ISOdate(date) {
+export function objDate_2_ISOdate(date) {
   if (!date) { return date }
 
   let mm = date.getMonth() + 1,
@@ -37,7 +37,7 @@ export function ISOdate_2_thDate(opdate) {
 }
 
 // Thai date (11 พค. 2557) to ISOdate (2014-05-11)
-export function thDate_2_numDate(opdate) {
+export function thDate_2_ISOdate(opdate) {
   if (!opdate) { return "" }
 
   let date = opdate.split(" "),
@@ -61,13 +61,13 @@ export function nextdates(date, days) {
   let next = new Date(date);
     next.setDate(next.getDate() + days);
 
-  return dateObj_2_ISOdate(next);
+  return objDate_2_ISOdate(next);
 }
 
 // change Thai date from table to ISO date
 export function getOpdate (date) {
-  // Undefined date will be taken care by thDate_2_numDate
-  return (String(date) === "") ? LARGESTDATE : thDate_2_numDate(date)
+  // Undefined date will be taken care by thDate_2_ISOdate
+  return (String(date) === "") ? LARGESTDATE : thDate_2_ISOdate(date)
 }
 
 // change date in book to show on table taking care of LARGESTDATE
@@ -131,7 +131,7 @@ export function datepicker($datepicker)
     dateFormat: "dd M yy",
     monthNames: [ "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", 
             "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" ],
-    // use Short names to be consistent with the month converted by thDate_2_numDate()
+    // use Short names to be consistent with the month converted by thDate_2_ISOdate()
     monthNamesShort: THAIMONTH,
     yearSuffix: new Date().getFullYear() +  543,
     beforeShow: function (input, inst) {

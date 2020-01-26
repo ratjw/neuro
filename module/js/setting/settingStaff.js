@@ -1,9 +1,8 @@
 
 import { htmlStafflist } from "../control/html.js"
-import { sqlDoSaveStaff, sqlDoDeleteStaff } from "../model/sqlDoStaff.js"
+import { sqlDoSaveStaff } from "../model/sqlDoStaff.js"
 import { STAFF, setSTAFF } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
-import { datepicker } from "../util/date.js"
 import { fillConsults } from "../view/fillConsults.js"
 
 export const STAFFNAME = 0,
@@ -34,7 +33,6 @@ export function settingStaff()
     })
 
     $staffcellstr.clone().appendTo($stafftbltbody)
-    setClickCells()
   }
 
   $dialogStaff.dialog({ height: 'auto' })
@@ -47,36 +45,44 @@ export function settingStaff()
     width: "auto",
     height: ($dialogStaff.height() > maxHeight) ? maxHeight : 'auto'
   })
+
+  setClickCells()
+  deactivateButtons()
 }
 
 jQuery.fn.extend({
   filldataStaff : function (i, q) {
 
-    let row = this[0]
-    let cells = row.cells
+    const row = this[0]
+    const cells = row.cells
 
+    row.dataset.number = q.number
 ;   [ q.staffname,
       q.ramaid,
       q.oncall,
       q.startoncall,
-      q.startoncall,
-      q.startoncall
+      q.skipbegin,
+      q.skipend
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
 
-function setClickCells($cells)
+function setClickCells()
 {
   $("#dialogStaff td").each(function() {
-    $(this).off("click").on("click", function() {
-      if (this.cellIndex < 3) {
-        this.contentEditable = 'true'
-        this.focus()
-      } else {
-        inputDatepicker(this)
-      }
-      activateButtons(this)
-    })
+    if (this.cellIndex < 3) {
+      inputEditable(this)
+    } else {
+      inputDatepicker(this)
+    }
+  })
+}
+
+function inputEditable(cell)
+{
+  cell.removeEventListener("click", null)
+  cell.addEventListener("click", () => {
+    activateButtons(cell)
   })
 }
 
@@ -84,51 +90,38 @@ function inputDatepicker(cell)
 {
   let input = document.createElement('input')
 
-  input.style.width = '80px'
-  cell.innerHTML = ''
-  cell.appendChild(input)
-  datepicker($(input))
-  $(input).datepicker('option', 'onClose', function() {
-    cell.innerHTML = input.value
+  $(cell).on('click', function() {
+    input.style.width = '80px'
+    input.value = cell.innerHTML
+    cell.innerHTML = ''
+    cell.appendChild(input)
+    $(input).datepicker({ dateFormat: "dd M yy" })
+    $(input).datepicker('setDate', input.value)
+    $(input).datepicker('option', 'onClose', function() {
+      cell.innerHTML = input.value
+    })
+    input.focus()
+    activateButtons(cell)
   })
-  input.focus()
 }
 
 function activateButtons(cell)
 {
-  const row = cell.closest('td'),
+  const row = cell.closest('tr'),
     saveStaff = document.querySelector('#saveStaff'),
     cancelStaff = document.querySelector('#cancelStaff')
 
-  saveStaff.addEventListener('click', doSaveStaff)
+  saveStaff.addEventListener('click', function() { doSaveStaff(row) })
   cancelStaff.addEventListener('click', settingStaff)
 }
 
-function doAddStaff(row)
+function deactivateButtons()
 {
-  let stafftr = document.querySelector("#staffcells tr")
-  let clone = stafftr.cloneNode(true)
-  let staffname = clone.cells[STAFFNAME]
-  let ramaid = clone.cells[RAMAID]
-  let oncall = clone.cells[ONCALL]
-  let icons = clone.cells[ICONS]
+  const saveStaff = document.querySelector('#saveStaff'),
+    cancelStaff = document.querySelector('#cancelStaff')
 
-  [staffname, ramaid, oncall].forEach(e => e.contentEditable = 'true')
-  icons.innerHTML = IMAGE2
-  row.after(clone)
-  $("icons img").off("click", "img").on("click", "img", function() {
-    IMAGE[this.id].call(this, this.closest("tr"))
-  })
-  staffname.focus()
-}
-
-async function doStaffFunction(row, sqlDo, message)
-{
-  let response = await sqlDo(row)
-  if (typeof response !== "object") {
-    response && Alert(message, response)
-  }
-  showStaff(response)
+  saveStaff.removeEventListener('click', function() { doSaveStaff(row) })
+  cancelStaff.removeEventListener('click', settingStaff)
 }
 
 async function doSaveStaff(row)
@@ -137,29 +130,7 @@ async function doSaveStaff(row)
   if (typeof response !== "object") {
     response && Alert("doSaveStaff", response)
   }
-  showStaff(response)
-}
 
-async function doUpdateStaff(row)
-{
-  let response = await sqlDoUpdateStaff(row)
-  if (typeof response !== "object") {
-    response && Alert("doUpdateStaff", response)
-  }
-  showStaff(response)
-}
-
-async function doDeleteStaff(row)
-{
-  let response = await sqlDoDeleteStaff(row)
-  if (typeof response !== "object") {
-    response && Alert("doDeleteStaff", response)
-  }
-  showStaff(response)
-}
-
-function showStaff(response)
-{
   setSTAFF(response ? response.STAFF : STAFF)
   htmlStafflist()
   fillConsults()

@@ -2,7 +2,7 @@
 import { rowDecoration } from "./rowDecoration.js"
 import { LARGESTDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
-import { dateObj_2_ISOdate, ISOdate_2_thDate, nextdates, putThdate } from "../util/date.js"
+import { objDate_2_ISOdate, ISOdate_2_thDate, nextdates, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 
 export function pagination($dialog, $maintbl, book, search)
@@ -107,14 +107,14 @@ export function pagination($dialog, $maintbl, book, search)
           ? new Date(date.replace(/-/g, "/"))
           : new Date();
     today.setDate(today.getDate() - today.getDay() + 1);
-    return dateObj_2_ISOdate(today);
+    return objDate_2_ISOdate(today);
   }
 
   function getNextSunday(date)
   {
     let today = new Date(date);
     today.setDate(today.getDate() - today.getDay() + 7);
-    return dateObj_2_ISOdate(today);
+    return objDate_2_ISOdate(today);
   }
 
   function getBookOneWeek(book, Monday, Sunday)

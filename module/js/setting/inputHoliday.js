@@ -1,6 +1,6 @@
 
 import { DIAGNOSIS, THAIMONTH } from "../control/const.js"
-import { thDate_2_numDate, putThdate, datepicker } from "../util/date.js"
+import { thDate_2_ISOdate, putThdate, datepicker } from "../util/date.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { HOLIDAY, setHOLIDAY } from "../util/updateBOOK.js"
 import { holiday } from "../view/holiday.js"
@@ -124,7 +124,7 @@ function delHoliday(that)
   } else {
     let  $cell = $row.find("td"),
       vdateth = $cell[0].innerHTML,
-      vdate = thDate_2_numDate(vdateth),
+      vdate = thDate_2_ISOdate(vdateth),
       vname = $cell[1].innerHTML.replace(/<button.*$/, ""),
       rows = getTableRowsByDate('maintbl', vdate),
       holidayEng = getHolidayEng(vname)
@@ -146,7 +146,7 @@ function delHoliday(that)
 function saveHoliday()
 {
   let  vdateth = document.getElementById("holidateth").value,
-    vdate = thDate_2_numDate(vdateth),
+    vdate = thDate_2_ISOdate(vdateth),
     vname = document.getElementById("holidayname").value,
     rows = getTableRowsByDate('maintbl', vdate)
 

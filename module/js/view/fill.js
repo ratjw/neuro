@@ -1,6 +1,6 @@
 
 import { LARGESTDATE } from "../control/const.js"
-import { START_DATE, dateObj_2_ISOdate, nextdates } from "../util/date.js"
+import { START_DATE, objDate_2_ISOdate, nextdates } from "../util/date.js"
 import { BOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData } from "../view/fillNewrowData.js"
@@ -40,7 +40,7 @@ function getUntilDate()
   month = today.getMonth(),
   todate = today.getDate()
 
-  return dateObj_2_ISOdate((new Date(year + 2, month, todate)))
+  return objDate_2_ISOdate((new Date(year + 2, month, todate)))
 }
 
 export function fillDatedCases(table, book)

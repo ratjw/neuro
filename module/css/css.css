@@ -267,22 +267,15 @@ td.consult::after {
 #stafftbl td { text-align: center; }
 #stafftbl td:nth-child(1) { text-align: left; }
 
-#actionIcons {
-  text-align: center;
+#stafftbl input { border: 0; }
+
+#actionIcons button {
+  margin: 5px 10px;
 }
-#actionIcons span {
-  display: inline-block;
-  width: 100px;
-  border: 1px solid lightgray;
-  border-style: outset;
+#actionIcons button:hover {
   border-radius: 5px;
-  padding: 5px 0px;
-  margin: 5px 20px;
 }
-#actionIcons span:hover {
-  border: 2px solid lightgray;
-}
-#actionIcons span img {
+#actionIcons button span img {
   vertical-align: bottom;
   width: 20px;
 }
