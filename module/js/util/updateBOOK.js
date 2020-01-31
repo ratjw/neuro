@@ -34,4 +34,10 @@ export function updateBOOK(response) {
 
   if (isSplit()) { staffqueue(titlename.innerHTML) }
   renewEditcell()
+
+  STAFF.forEach(staff => {
+    staff.startoncall = JSON.parse(staff.startoncall)
+    staff.skipbegin = JSON.parse(staff.skipbegin)
+    staff.skipend = JSON.parse(staff.skipend)
+  })
 }

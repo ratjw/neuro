@@ -1,6 +1,6 @@
 
 import { PATIENT } from "../control/const.js"
-import { nextdates } from "../util/date.js"
+import { objDate_2_ISOdate, nextdates } from "../util/date.js"
 import { STAFF } from "../util/updateBOOK.js"
 
 // refill after deleted or written over
@@ -19,10 +19,9 @@ export function fillConsults(tableID = 'maintbl')
     saturdateAll = saturdayRows.map(e => e.dataset.opdate),
     saturdates = [...new Set(saturdateAll)],
     firstsat = saturdates.length && saturdates[0] || "",
-    staffoncall = STAFF.filter(staff => (staff.oncall === "1")),
+    staffoncall = STAFF.filter(staff => (staff.oncall > '0')),
     slen = staffoncall.length,
-    latestStart = staffoncall.filter(staff => staff.startoncall)
-      .reduce((a, b) => a.startoncall > b.startoncall ? a : b, 0),
+    latestStart = getStartoncall(staffoncall),
     dateoncall = latestStart.startoncall,
     staffstart = latestStart.staffname,
     sindex = staffoncall.findIndex(e => e.staffname === staffstart)
@@ -53,6 +52,14 @@ export function fillConsults(tableID = 'maintbl')
     dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname)
     // TypeError: staffoncall[sindex] is undefined ???
   })
+}
+
+function getStartoncall(staffoncall)
+{
+  let staffs = [...staffoncall]
+
+  return staffs.filter(staff => staff.startoncall && staff.startoncall.date)
+            .reduce((a, b) => a.startoncall > b.startoncall ? a : b, 0)
 }
 
 function dataAttr(pointing, staffname)

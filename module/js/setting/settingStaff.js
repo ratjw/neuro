@@ -14,7 +14,8 @@ export const STAFFNAME = 0,
 
 export function settingStaff()
 {
-  const 
+  const actionIcons = document.querySelector('#actionIcons'),
+    actionTemplate = document.querySelector('#actionTemplate'),
     $dialogStaff = $("#dialogStaff"),
     $stafftbltbody = $("#stafftbl tbody"),
     $stafftbltr = $("#stafftbl tr"),
@@ -35,6 +36,8 @@ export function settingStaff()
     $staffcellstr.clone().appendTo($stafftbltbody)
   }
 
+  actionIcons.innerHTML = actionTemplate.innerHTML
+
   $dialogStaff.dialog({ height: 'auto' })
   $dialogStaff.dialog({
     title: "Neurosurgery Staff",
@@ -47,7 +50,6 @@ export function settingStaff()
   })
 
   setClickCells()
-  deactivateButtons()
 }
 
 jQuery.fn.extend({
@@ -80,23 +82,19 @@ function setClickCells()
 
 function inputEditable(cell)
 {
-  cell.removeEventListener("click", null)
-  cell.addEventListener("click", () => {
-    activateButtons(cell)
-  })
+  cell.removeEventListener("click", activateButtons)
+  cell.addEventListener("click", () => activateButtons(cell))
 }
 
 function inputDatepicker(cell)
 {
   let input = document.createElement('input')
 
-  $(cell).on('click', function() {
+  $(cell).off('click').on('click', function() {
     input.style.width = '80px'
     input.value = cell.innerHTML
     cell.innerHTML = ''
     cell.appendChild(input)
-    $(input).datepicker({ dateFormat: "dd M yy" })
-    $(input).datepicker('setDate', input.value)
     $(input).datepicker('option', 'onClose', function() {
       cell.innerHTML = input.value
     })
@@ -111,17 +109,10 @@ function activateButtons(cell)
     saveStaff = document.querySelector('#saveStaff'),
     cancelStaff = document.querySelector('#cancelStaff')
 
-  saveStaff.addEventListener('click', function() { doSaveStaff(row) })
+  saveStaff.removeEventListener("click", doSaveStaff)
+  cancelStaff.removeEventListener("click", settingStaff)
+  saveStaff.addEventListener('click', () => doSaveStaff(row))
   cancelStaff.addEventListener('click', settingStaff)
-}
-
-function deactivateButtons()
-{
-  const saveStaff = document.querySelector('#saveStaff'),
-    cancelStaff = document.querySelector('#cancelStaff')
-
-  saveStaff.removeEventListener('click', function() { doSaveStaff(row) })
-  cancelStaff.removeEventListener('click', settingStaff)
 }
 
 async function doSaveStaff(row)
