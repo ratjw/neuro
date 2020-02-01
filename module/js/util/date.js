@@ -139,8 +139,6 @@ export function datepicker($datepicker)
         // prevent using Buddhist year from <input>
         $(this).datepicker("setDate",
           new Date(inst.currentYear, inst.currentMonth, inst.currentDay))
-      } else {
-        $(this).datepicker("setDate", new Date())
       }
       $datepicker.one("click", function() {
         if (input.value) {

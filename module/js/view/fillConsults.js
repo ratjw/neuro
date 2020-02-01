@@ -1,15 +1,9 @@
 
 import { PATIENT } from "../control/const.js"
 import { objDate_2_ISOdate, nextdates } from "../util/date.js"
-import { STAFF } from "../util/updateBOOK.js"
+import { JSONparsedSTAFF } from "../util/JSONparsedSTAFF.js"
 
-// refill after deleted or written over
-export function showStaffOnCall(opdate)
-{
-  if (new Date(opdate).getDay() === 6) {
-    fillConsults()
-  }
-}
+const UNIXEPOCH = '1970-01-01'
 
 // The staff who has latest startoncall date, is to start
 export function fillConsults(tableID = 'maintbl')
@@ -19,9 +13,14 @@ export function fillConsults(tableID = 'maintbl')
     saturdateAll = saturdayRows.map(e => e.dataset.opdate),
     saturdates = [...new Set(saturdateAll)],
     firstsat = saturdates.length && saturdates[0] || "",
-    staffoncall = STAFF.filter(staff => (staff.oncall > '0')),
+    staffs = JSONparsedSTAFF(),
+    staffoncall = staffs.filter(staff => (staff.oncall > '0')),
     slen = staffoncall.length,
-    latestStart = getStartoncall(staffoncall),
+    parsedStartDate = parseDate(staffoncall)
+
+  if (!parsedStartDate) return
+
+  let startoncall = getStartoncall(parsedStartDate),
     dateoncall = latestStart.startoncall,
     staffstart = latestStart.staffname,
     sindex = staffoncall.findIndex(e => e.staffname === staffstart)
@@ -50,16 +49,21 @@ export function fillConsults(tableID = 'maintbl')
       prevDate = e.dataset.opdate
     }
     dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname)
-    // TypeError: staffoncall[sindex] is undefined ???
   })
+}
+
+function parseDate(parsedStartDate)
+{
+  return parsedStartDate.forEach(staff => {
+             let date = staff.startoncall && staff.startoncall.date || UNIXEPOCH
+             staff.startdate = Date.parse(date)
+           })
 }
 
 function getStartoncall(staffoncall)
 {
-  let staffs = [...staffoncall]
-
-  return staffs.filter(staff => staff.startoncall && staff.startoncall.date)
-            .reduce((a, b) => a.startoncall > b.startoncall ? a : b, 0)
+  return staffs.filter(staff => staff.startdate)
+            .reduce((a, b) => a.startdate > b.startdate ? a : b, 0)
 }
 
 function dataAttr(pointing, staffname)

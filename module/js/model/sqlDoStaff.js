@@ -13,9 +13,9 @@ export function sqlDoSaveStaff(row)
   const staffname = cell[STAFFNAME].textContent
   const ramaid = cell[RAMAID].textContent
   const oncall = cell[ONCALL].textContent
-  const startoncall = getDateContent(cell[STARTONCALL].textContent)
-  const skipbegin = getDateContent(cell[SKIPBEGIN].textContent)
-  const skipend = getDateContent(cell[SKIPEND].textContent)
+  const startoncall = getDateContent(cell[STARTONCALL])
+  const skipbegin = getDateContent(cell[SKIPBEGIN])
+  const skipend = getDateContent(cell[SKIPEND])
   let sql
 
   if (number) {
@@ -33,11 +33,10 @@ export function sqlDoSaveStaff(row)
   return postData(MYSQLIPHP, sql)
 }
 
-function getDateContent(date)
+function getDateContent(cell)
 {
-  if (!date) return null
-
-  let data = {"date": date}
+  let date = cell.querySelector('input').value,
+    data = {"date": date}
 
   return `'${JSON.stringify(data)}'`
 }

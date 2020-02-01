@@ -4,6 +4,8 @@ import { sqlDoSaveStaff } from "../model/sqlDoStaff.js"
 import { STAFF, setSTAFF } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
+import { JSONparsedSTAFF } from "../util/JSONparsedSTAFF.js"
+import { thDate_2_ISOdate, datepicker } from "../util/date.js"
 
 export const STAFFNAME = 0,
               RAMAID = 1,
@@ -20,14 +22,15 @@ export function settingStaff()
     $stafftbltbody = $("#stafftbl tbody"),
     $stafftbltr = $("#stafftbl tr"),
     $staffcellstr = $('#staffcells tr'),
-    maxHeight = winHeight(90)
+    maxHeight = winHeight(90),
+    staffs = JSONparsedSTAFF()
 
   $stafftbltr.slice(2).remove()
 
-  if (!STAFF.length) {
+  if (!staffs.length) {
     doAddStaff($stafftbltr[1])
   } else {
-    $.each( STAFF, (i, item) => {
+    $.each( staffs, (i, item) => {
       $staffcellstr.clone()
         .appendTo($stafftbltbody)
           .filldataStaff(i, item)
@@ -62,9 +65,9 @@ jQuery.fn.extend({
 ;   [ q.staffname,
       q.ramaid,
       q.oncall,
-      q.startoncall,
-      q.skipbegin,
-      q.skipend
+      q.startoncall && q.startoncall.date,
+      q.skipbegin && q.skipbegin.date,
+      q.skipend && q.skipend.date
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
@@ -72,15 +75,14 @@ jQuery.fn.extend({
 function setClickCells()
 {
   $("#dialogStaff td").each(function() {
-    if (this.cellIndex < 3) {
-      inputEditable(this)
-    } else {
+    if (this.cellIndex > 2) {
       inputDatepicker(this)
     }
+    eventClick(this)
   })
 }
 
-function inputEditable(cell)
+function eventClick(cell)
 {
   cell.removeEventListener("click", activateButtons)
   cell.addEventListener("click", () => activateButtons(cell))
@@ -88,19 +90,16 @@ function inputEditable(cell)
 
 function inputDatepicker(cell)
 {
-  let input = document.createElement('input')
+  let input = document.createElement('input'),
+    cellDate = cell.innerHTML,
+    date = cellDate && new Date(thDate_2_ISOdate(cellDate))
 
-  $(cell).off('click').on('click', function() {
-    input.style.width = '80px'
-    input.value = cell.innerHTML
-    cell.innerHTML = ''
-    cell.appendChild(input)
-    $(input).datepicker('option', 'onClose', function() {
-      cell.innerHTML = input.value
-    })
-    input.focus()
-    activateButtons(cell)
-  })
+  input.style.width = '80px'
+  cell.innerHTML = ''
+  cell.appendChild(input)
+  datepicker($(input))
+  if (date) { $(input).datepicker('setDate', date) }
+  input.value = cellDate
 }
 
 function activateButtons(cell)
@@ -122,7 +121,7 @@ async function doSaveStaff(row)
     response && Alert("doSaveStaff", response)
   }
 
-  setSTAFF(response ? response.STAFF : STAFF)
+  if (response) { setSTAFF(response.STAFF) }
   htmlStafflist()
   fillConsults()
   settingStaff()
