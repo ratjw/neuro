@@ -133,24 +133,21 @@ export function datepicker($datepicker)
             "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" ],
     // use Short names to be consistent with the month converted by thDate_2_ISOdate()
     monthNamesShort: THAIMONTH,
-    yearSuffix: new Date().getFullYear() +  543,
+    yearSuffix: new Date().getFullYear() + 543,
     beforeShow: function (input, inst) {
-      if (inst.selectedYear) {
-        // prevent using Buddhist year from <input>
-        $(this).datepicker("setDate",
-          new Date(inst.currentYear, inst.currentMonth, inst.currentDay))
+      if (inst.selectedYear !== inst.currentYear) {
+        inst.selectedDay = inst.currentDay
+        inst.selectedMonth = inst.currentMonth
+        inst.selectedYear = inst.currentYear
       }
-      $datepicker.one("click", function() {
-        if (input.value) {
-          $datepicker.val(input.value.slice(0, -4) + (inst.selectedYear + 543))
-        }
-      })
     },
     onChangeMonthYear: function (year, month, inst) {
+      let oldInput = inst.input[0].value
       $(this).datepicker("setDate",
         new Date(inst.selectedYear, inst.selectedMonth, inst.selectedDay))
       inst.settings.yearSuffix = inst.selectedYear + 543
       $datepicker.val($datepicker.val().slice(0, -4) + (inst.selectedYear + 543))
+      if (!oldInput) { inst.input[0].value = oldInput }
     },
     onSelect: function (input, inst) {
       $datepicker.val(input.slice(0, -4) + (inst.selectedYear + 543))

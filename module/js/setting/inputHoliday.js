@@ -1,6 +1,7 @@
 
 import { DIAGNOSIS, THAIMONTH } from "../control/const.js"
-import { thDate_2_ISOdate, putThdate, datepicker } from "../util/date.js"
+import { thDate_2_ISOdate, putThdate } from "../util/date.js"
+import { datePicker } from "../util/datePicker.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { HOLIDAY, setHOLIDAY } from "../util/updateBOOK.js"
 import { holiday } from "../view/holiday.js"
@@ -55,7 +56,7 @@ export function inputHoliday()
     }
   })
 
-  datepicker($holidateth)
+  datePicker($holidateth)
   $holidateth.datepicker('option', 'onClose', checkComplete)
 
   // option holidays Eng: Thai

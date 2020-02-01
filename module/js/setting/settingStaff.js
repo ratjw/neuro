@@ -91,7 +91,7 @@ function eventClick(cell)
 function inputDatepicker(cell)
 {
   let input = document.createElement('input'),
-    cellDate = cell.innerHTML,
+    cellDate = cell.textContent,
     date = cellDate && new Date(thDate_2_ISOdate(cellDate))
 
   input.style.width = '80px'
