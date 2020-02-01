@@ -53,6 +53,7 @@ export function settingStaff()
   })
 
   setClickCells()
+  $dialogStaff.find('.ui-datepicker-year').css('display', 'block')
 }
 
 jQuery.fn.extend({
@@ -90,16 +91,13 @@ function eventClick(cell)
 
 function inputDatepicker(cell)
 {
-  let input = document.createElement('input'),
-    cellDate = cell.textContent,
-    date = cellDate && new Date(thDate_2_ISOdate(cellDate))
+  let input = document.createElement('input')
 
   input.style.width = '80px'
+  input.value = cell.textContent
   cell.innerHTML = ''
   cell.appendChild(input)
-  datepicker($(input))
-  if (date) { $(input).datepicker('setDate', date) }
-  input.value = cellDate
+  $(input).datepicker({ dateFormat: "d-M-yy" })
 }
 
 function activateButtons(cell)

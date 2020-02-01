@@ -310,8 +310,7 @@ td.consult::after {
 #dialogPatient, #patientcells,
 #dialogHoliday, #holidaycells,
 #holidayInput,
-td img.hide, 
-.ui-datepicker-year {
+td img.hide {
   display: none;
 }
 

@@ -20,8 +20,8 @@ export function fillConsults(tableID = 'maintbl')
 
   if (!parsedStartDate) return
 
-  let startoncall = getStartoncall(parsedStartDate),
-    dateoncall = latestStart.startoncall,
+  let latestStart = getLatestStart(parsedStartDate),
+    dateoncall = objDate_2_ISOdate(new Date(latestStart.startdate)),
     staffstart = latestStart.staffname,
     sindex = staffoncall.findIndex(e => e.staffname === staffstart)
 
@@ -52,15 +52,17 @@ export function fillConsults(tableID = 'maintbl')
   })
 }
 
-function parseDate(parsedStartDate)
+function parseDate(staffs)
 {
-  return parsedStartDate.forEach(staff => {
-             let date = staff.startoncall && staff.startoncall.date || UNIXEPOCH
-             staff.startdate = Date.parse(date)
-           })
+  staffs.forEach(staff => {
+    let date = staff.startoncall && staff.startoncall.date || UNIXEPOCH
+    staff.startdate = Date.parse(date)
+  })
+
+  return staffs
 }
 
-function getStartoncall(staffoncall)
+function getLatestStart(staffs)
 {
   return staffs.filter(staff => staff.startdate)
             .reduce((a, b) => a.startdate > b.startdate ? a : b, 0)
