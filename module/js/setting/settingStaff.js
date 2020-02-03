@@ -5,7 +5,7 @@ import { STAFF, setSTAFF } from "../util/updateBOOK.js"
 import { Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { JSONparsedSTAFF } from "../util/JSONparsedSTAFF.js"
-import { thDate_2_ISOdate, datepicker } from "../util/date.js"
+import { thDate_2_ISOdate } from "../util/date.js"
 
 export const STAFFNAME = 0,
               RAMAID = 1,
@@ -97,7 +97,7 @@ function inputDatepicker(cell)
   input.value = cell.textContent
   cell.innerHTML = ''
   cell.appendChild(input)
-  $(input).datepicker({ dateFormat: "d-M-yy" })
+  $(input).datepicker({ dateFormat: "d M yy" })
 }
 
 function activateButtons(cell)

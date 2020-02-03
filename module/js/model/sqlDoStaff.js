@@ -36,7 +36,8 @@ export function sqlDoSaveStaff(row)
 function getDateContent(cell)
 {
   let date = cell.querySelector('input').value,
-    data = {"date": date}
+    now = Date.now(),
+    data = {[now]: date}
 
-  return `'${JSON.stringify(data)}'`
+  return date ? `'${JSON.stringify(data)}'` : null
 }

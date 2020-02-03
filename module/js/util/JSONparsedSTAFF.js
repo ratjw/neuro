@@ -7,8 +7,8 @@ export function JSONparsedSTAFF()
 
   staffs.forEach(staff => {
     staff.startoncall = JSON.parse(staff.startoncall)
-    staff.skipbegin = JSON.parse(staff.skipbegin)
-    staff.skipend = JSON.parse(staff.skipend)
+    staff.exchange = JSON.parse(staff.exchange)
+    staff.skip = JSON.parse(staff.skip)
   })
 
   return staffs

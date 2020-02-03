@@ -1,4 +1,5 @@
 
+import { THAIMONTHFULL } from "../control/const.js"
 import { serviceReview } from "./serviceReview.js"
 
 export function monthpicker() {
@@ -12,8 +13,7 @@ export function monthpicker() {
     altFormat: "yy-mm-dd",
     autoSize: true,
     dateFormat: "MM yy",
-    monthNames: [ "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", 
-                  "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" ],
+    monthNames: THAIMONTHFULL,
     onChangeMonthYear: function (year, month, inst) {
       $(this).datepicker("setDate", new Date(inst.selectedYear, inst.selectedMonth, 1))
       inst.drawYear = inst.drawYear + 543

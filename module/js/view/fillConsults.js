@@ -16,14 +16,14 @@ export function fillConsults(tableID = 'maintbl')
     staffs = JSONparsedSTAFF(),
     staffoncall = staffs.filter(staff => (staff.oncall > '0')),
     slen = staffoncall.length,
-    parsedStartDate = parseDate(staffoncall)
+    startStaffs = staffoncall.filter(staff => staff.startoncall)
 
-  if (!parsedStartDate) return
+  if (!startStaffs.length) { return }
 
-  let latestStart = getLatestStart(parsedStartDate),
-    dateoncall = objDate_2_ISOdate(new Date(latestStart.startdate)),
-    staffstart = latestStart.staffname,
-    sindex = staffoncall.findIndex(e => e.staffname === staffstart)
+  let latestStart = getLatestStart(startStaffs),
+    dateoncall = objDate_2_ISOdate(new Date(latestStart.startDate)),
+    staffStart = latestStart.staffname,
+    sindex = staffoncall.findIndex(e => e.staffname === staffStart)
 
   // queuetbl have no opdated case
   if (!firstsat) return
@@ -52,20 +52,18 @@ export function fillConsults(tableID = 'maintbl')
   })
 }
 
-function parseDate(staffs)
-{
-  staffs.forEach(staff => {
-    let date = staff.startoncall && staff.startoncall.date || UNIXEPOCH
-    staff.startdate = Date.parse(date)
-  })
-
-  return staffs
-}
-
+// find latest entry within each staff (maxKey) and get the date value for startDate
+// then store maxKey to startKey, store date value to startDate
+// return the staff of the latest key
 function getLatestStart(staffs)
 {
-  return staffs.filter(staff => staff.startdate)
-            .reduce((a, b) => a.startdate > b.startdate ? a : b, 0)
+  staffs.forEach(staff => {
+    let maxKey = Math.max(...Object.keys(staff.startoncall))
+    staff.startKey = maxKey
+    staff.startDate = staff.startoncall[maxKey]
+  })
+
+  return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)
 }
 
 function dataAttr(pointing, staffname)
