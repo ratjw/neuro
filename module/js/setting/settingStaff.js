@@ -73,14 +73,12 @@ jQuery.fn.extend({
       staff.skip ? getSkipDate(staff.skip, 'begin') : "",
       staff.skip ? getSkipDate(staff.skip, 'end') : ""
     ].forEach((e, i) => {
-      if (i < START) {
+      if (i <= START) {
         cells[i].innerHTML = e
         cells[i].dataset.content = e
-      }
-      else if ((i === START) && (staff.oncall === 1)) {
-        cells[i].innerHTML = e
-        cells[i].dataset.content = e
-        inputDatepicker(cells[i])
+        if (i === START) {
+          inputDatepicker(cells[i])
+        }
       }
       else if (i === SKIPBEGIN) {
         begincell = cells[i]
