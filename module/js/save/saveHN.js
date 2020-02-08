@@ -2,12 +2,13 @@
 import { saveCaseHN } from "./saveCaseHN.js"
 import { saveThisHN } from "./saveThisHN.js"
 import { objDate_2_ISOdate } from "../util/date.js"
-import { BOOK } from "../util/updateBOOK.js"
+import { getBOOK } from "../util/updateBOOK.js"
 
 export function saveHN(pointed, content) {
   // waiting list after today
-  let todate = objDate_2_ISOdate(new Date())
-  let waiting = BOOK.find(q => (q.opdate > todate) && (q.hn === content))
+  const todate = objDate_2_ISOdate(new Date())
+  const book = getBOOK()
+  const waiting = book.find(q => (q.opdate > todate) && (q.hn === content))
 
   if (waiting) {
     // already having case in waiting list

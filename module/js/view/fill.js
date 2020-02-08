@@ -1,7 +1,7 @@
 
 import { LARGESTDATE } from "../control/const.js"
 import { START_DATE, objDate_2_ISOdate, nextdates } from "../util/date.js"
-import { BOOK } from "../util/updateBOOK.js"
+import { getBOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData } from "../view/fillNewrowData.js"
 import { viewOneDay } from "./viewOneDay.js"
@@ -27,9 +27,10 @@ export function fillmain()
 // truncate the cases without opdate
 function getBookWithOpdate()
 {
-  const i = BOOK.findIndex(e => e.opdate >= LARGESTDATE)
+  const book = getBOOK()
+  const i = book.findIndex(e => e.opdate >= LARGESTDATE)
 
-  return i < 0 ? BOOK : BOOK.slice(0, i)
+  return i < 0 ? book : book.slice(0, i)
 }    
 
 // two years from now

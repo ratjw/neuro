@@ -1,7 +1,7 @@
  
 import { OPDATE } from "../control/const.js"
 import { objDate_2_ISOdate } from "../util/date.js"
-import { BOOK, CONSULT } from "../util/updateBOOK.js"
+import { getBOOK, getCONSULT } from "../util/updateBOOK.js"
 import { isSplit } from "../util/util.js"
 import { splitPane } from "./splitPane.js"
 import { fillDatedCases, fillBlankDates, makenextrow } from "./fill.js"
@@ -20,14 +20,14 @@ export function staffqueue(staffname) {
   if (!isSplit()) { splitPane(mtable, qtable) }
 
   if (staffname === "Consults") {
-    book = CONSULT
+    book = getCONSULT()
     until = objDate_2_ISOdate(new Date())
 
     date = fillDatedCases(qtable, book)
 
     fillBlankDates(qtable, date, until)
   } else {
-    book = BOOK.filter(e => e.staffname === staffname)
+    book = getBOOK().filter(e => e.staffname === staffname)
     fillDatedCases(qtable, book)
     reNumberNodateRows()
   }

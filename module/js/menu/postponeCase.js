@@ -2,7 +2,7 @@
 import { LARGESTDATE } from "../control/const.js"
 import { sqlPostponeCase } from "../model/sqlPostponeCase.js"
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
-import { BOOK, updateBOOK } from "../util/updateBOOK.js"
+import { getBOOK, updateBOOK } from "../util/updateBOOK.js"
 import { Alert, getLargestWaitnum, isSplit } from "../util/util.js"
 import { clearSelection } from "../control/selectRow.js"
 import { locateFound } from "../view/scrolltoThisCase.js"
@@ -24,7 +24,7 @@ export function postponeCase()
     allCases = sameDateRoomTableQNs(tableID, row)
   }
 
-  row.dataset.waitnum = Math.ceil(getLargestWaitnum(BOOK, staffname)) + 1
+  row.dataset.waitnum = getLargestWaitnum(getBOOK(), staffname) + 1
   doPostponeCase(LARGESTDATE)
   clearSelection()
 

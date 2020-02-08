@@ -11,7 +11,7 @@ import { clearSelection } from "../control/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { START_DATE, objDate_2_ISOdate } from "../util/date.js"
-import { BOOK, TIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
+import { getTIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { htmlStafflist, htmlLab, htmlEquipment } from "../control/html.js"
 import { scrolltoToday } from "../view/scrolltoThisCase.js"
@@ -194,8 +194,9 @@ function serverSentEvent()
   }
 
   evtSource.onmessage = function(e) {
-    let data = JSON.parse(e.data)
-    if (data.QTIME > TIMESTAMP) {
+    const data = JSON.parse(e.data)
+    const timestamp = getTIMESTAMP()
+    if (data.QTIME > timestamp) {
       if (dialogServiceShowing()) {
         sqlGetServiceOneMonth().then(response => {
           if (typeof response === "object") {

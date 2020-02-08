@@ -1,19 +1,20 @@
 
 import { LABSHEET, EQUIPSHEET} from "../control/const.js"
 import { staffqueue } from "../view/staffqueue.js"
-import { JSONparsedSTAFF } from "../util/JSONparsedSTAFF.js"
+import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
 
 // stafflist for enter name in Staff column
 // staffmenu for dropdown sub-menu
 export function htmlStafflist() {
   let stafflist = '',
       staffmenu = '',
-      staffs = JSONparsedSTAFF()
+      staffs = getSTAFFparsed()
 
   staffs.forEach(each => {
-    stafflist += `<li><div>${each.staffname}</div></li>`
-    staffmenu += `<li class="w100"><a class="clickStaff ${each.staffname}">
-                 <span>${each.staffname}</span></a></li>`
+    let name = each.profile.staffname
+    stafflist += `<li><div>${name}</div></li>`
+    staffmenu += `<li class="w100"><a class="clickStaff ${name}">
+                 <span>${name}</span></a></li>`
   })
   staffmenu += `<li class="w100"><a class="clickStaff Consults"><span>Consults</span></a></li>`
   document.getElementById("stafflist").innerHTML = stafflist

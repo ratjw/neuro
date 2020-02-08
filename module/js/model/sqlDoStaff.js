@@ -1,43 +1,91 @@
 
 import {
-  STAFFNAME, RAMAID, ONCALL, STARTONCALL, SKIPBEGIN, SKIPEND
+  STAFFNAME, RAMAID, ONCALL, START, SKIPBEGIN, SKIPEND
 } from '../setting/settingStaff.js'
-import { STAFF } from "../util/updateBOOK.js"
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { URIcomponent } from "../util/util.js"
+import { checkKeyExist } from "../util/getSTAFFparsed.js"
 
 export function sqlDoSaveStaff(row)
 {
-  const number = row.dataset.number
+  const id = row.dataset.id
   const cell = row.cells
-  const staffname = cell[STAFFNAME].textContent
-  const ramaid = cell[RAMAID].textContent
-  const oncall = cell[ONCALL].textContent
-  const startoncall = getDateContent(cell[STARTONCALL])
-  const skipbegin = getDateContent(cell[SKIPBEGIN])
-  const skipend = getDateContent(cell[SKIPEND])
-  let sql
+  const sql = id ? sqlUpdate(id, cell) : sqlInsert(cell)
 
-  if (number) {
-    const data1 = `staffname='${staffname}',oncall=${oncall},startoncall=${startoncall},`
-    const data2 = `skipbegin=${skipbegin},skipend=${skipend}`
-    sql = `sqlReturnStaff=UPDATE staff SET ${data1}${data2} WHERE ramaid=${ramaid};`
-  } else {
-    const fields = `staffname,ramaid,oncall,startoncall,skipbegin,skipend`
-    const values = `'${staffname}','${ramaid}',${oncall},${startoncall},${skipbegin},${skipend}`
-    sql = `sqlReturnStaff=INSERT INTO staff (${fields}) VALUES(${values});`
-  }
-
-  if (!staffname || !ramaid || !oncall) { return "<br>Incomplete Entry" }
+  if (!sql) { return "<br>Incomplete Entry" }
 
   return postData(MYSQLIPHP, sql)
 }
 
-function getDateContent(cell)
+function sqlUpdate(id, cell)
 {
-  let date = cell.querySelector('input').value,
-    now = Date.now(),
-    data = {[now]: date}
+  const data = [
+    getTextContent(cell[STAFFNAME], 'staffname'),
+    getTextContent(cell[RAMAID], 'ramaid'),
+    getTextContent(cell[ONCALL], 'oncall'),
+    getDateContent(id, cell[START], 'start'),
+    getSkipContent(id, cell[SKIPBEGIN], cell[SKIPEND], 'skip'),
+  ]
 
-  return date ? `'${JSON.stringify(data)}'` : null
+  const sql = data.reduce((result, item) => {
+                result += item && (result ? `,${item}` : `${item}`)
+                return result
+              }, "")
+
+  if (!sql) { return '' }
+
+  return `sqlReturnStaff=UPDATE staff SET profile=json_set(profile,${sql}) WHERE id=${id};`
+}
+
+function sqlInsert(cell)
+{
+  const staffname = cell[STAFFNAME].textContent
+  const ramaid = cell[RAMAID].textContent
+  const oncall = cell[ONCALL].textContent
+  const values = `JSON_OBJECT("staffname","${staffname}","ramaid","${ramaid}","oncall",${oncall})`
+
+  if (!staffname || !ramaid || !oncall) { return "" }
+
+  return `sqlReturnStaff=INSERT INTO staff (profile) VALUES (${values});`
+}
+
+function getTextContent(cell, field) {
+  const oldcontent = cell.dataset.content
+  const newcontent = cell.textContent
+
+  return oldcontent === newcontent ? '' : `"$.${field}","${newcontent}"`
+}
+
+function getDateContent(id, cell, field)
+{
+  const oldcontent = cell.dataset.content
+  const newcontent = cell.querySelector('input').value
+  const notnew = oldcontent === newcontent
+  const now = Date.now()
+  const keyExist = checkKeyExist(id, field)
+
+  return notnew
+        ? ''
+        : keyExist
+           ? `'$.${field}."${now}"',"${newcontent}"`
+           : `'$.${field}',JSON_OBJECT("${now}", "${newcontent}")`
+}
+
+function getSkipContent(id, begin, end, field)
+{
+  const beginOldContent = begin.dataset.content
+  const endOldContent = end.dataset.content
+  const beginNewcontent = begin.querySelector('input').value
+  const endNewcontent = end.querySelector('input').value
+  const beginend = `"begin","${beginNewcontent}", "end","${endNewcontent}"`
+
+  const notnew = (beginOldContent === beginNewcontent) && (endOldContent === endNewcontent)
+  const now = Date.now()
+  const keyExist = checkKeyExist(id, field)
+
+  return notnew || !beginNewcontent || !endNewcontent
+    ? ''
+    : keyExist
+      ? `'$.${field}."${now}"',JSON_OBJECT(${beginend})`
+      : `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
 }

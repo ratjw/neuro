@@ -1,6 +1,6 @@
 
 import { sqlAllDeletedCases, sqlUndelete } from "../model/sqlAllDeletedCases.js"
-import { BOOK, CONSULT, updateBOOK } from "../util/updateBOOK.js"
+import { getBOOK, getCONSULT, updateBOOK } from "../util/updateBOOK.js"
 import { Alert, reposition } from "../util/util.js"
 import { viewAllDeletedCases } from "../view/viewAllDeletedCases.js"
 import { scrolltoThisCase } from "../view/scrolltoThisCase.js"
@@ -30,7 +30,7 @@ export function toUndelete(thisdate)
       staffname = row.dataset.staffname,
       qn = row.dataset.qn,
 
-      book = (waitnum < 0)? CONSULT : BOOK,
+      book = (waitnum < 0)? getCONSULT() : getBOOK(),
       allCases = sameDateRoomBookQNs(book, opdate, oproom)
 
     allCases.splice(casenum, 0, qn)

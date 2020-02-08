@@ -1,9 +1,8 @@
 
 import { PATIENT } from "../control/const.js"
 import { objDate_2_ISOdate, nextdates } from "../util/date.js"
-import { JSONparsedSTAFF } from "../util/JSONparsedSTAFF.js"
-
-const UNIXEPOCH = '1970-01-01'
+import { getLatestKey, getLatestValue } from "../util/util.js"
+import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
 
 // The staff who has latest startoncall date, is to start
 export function fillConsults(tableID = 'maintbl')
@@ -13,17 +12,17 @@ export function fillConsults(tableID = 'maintbl')
     saturdateAll = saturdayRows.map(e => e.dataset.opdate),
     saturdates = [...new Set(saturdateAll)],
     firstsat = saturdates.length && saturdates[0] || "",
-    staffs = JSONparsedSTAFF(),
-    staffoncall = staffs.filter(staff => (staff.oncall > '0')),
+    staffs = getSTAFFparsed(),
+    staffoncall = staffs.filter(staff => (staff.profile.oncall > 0)),
     slen = staffoncall.length,
-    startStaffs = staffoncall.filter(staff => staff.startoncall)
+    startStaffs = staffoncall.filter(staff => staff.profile.start)
 
   if (!startStaffs.length) { return }
 
   let latestStart = getLatestStart(startStaffs),
     dateoncall = objDate_2_ISOdate(new Date(latestStart.startDate)),
-    staffStart = latestStart.staffname,
-    sindex = staffoncall.findIndex(e => e.staffname === staffStart)
+    staffStart = latestStart.profile.staffname,
+    sindex = staffoncall.findIndex(e => e.profile.staffname === staffStart)
 
   // queuetbl have no opdated case
   if (!firstsat) return
@@ -48,7 +47,7 @@ export function fillConsults(tableID = 'maintbl')
       sindex = (sindex + 1) % slen
       prevDate = e.dataset.opdate
     }
-    dataAttr(e.cells[PATIENT], staffoncall[sindex].staffname)
+    dataAttr(e.cells[PATIENT], staffoncall[sindex].profile.staffname)
   })
 }
 
@@ -58,9 +57,8 @@ export function fillConsults(tableID = 'maintbl')
 function getLatestStart(staffs)
 {
   staffs.forEach(staff => {
-    let maxKey = Math.max(...Object.keys(staff.startoncall))
-    staff.startKey = maxKey
-    staff.startDate = staff.startoncall[maxKey]
+    staff.startKey = getLatestKey(staff.profile.start)
+    staff.startDate = getLatestValue(staff.profile.start)
   })
 
   return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)

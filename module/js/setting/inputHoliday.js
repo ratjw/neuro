@@ -3,8 +3,8 @@ import { DIAGNOSIS, THAIMONTH } from "../control/const.js"
 import { thDate_2_ISOdate, putThdate } from "../util/date.js"
 import { datePicker } from "../util/datePicker.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
-import { HOLIDAY, setHOLIDAY } from "../util/updateBOOK.js"
-import { holiday } from "../view/holiday.js"
+import { getHOLIDAY, setHOLIDAY } from "../util/updateBOOK.js"
+import { findHoliday } from "../view/findHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
 import { Alert } from "../util/util.js"
 
@@ -76,7 +76,7 @@ function fillHoliday($holidaytbl)
 {
   $holidaytbl.find('tr').slice(1).remove()
 
-  $.each( HOLIDAY, function(i) {
+  $.each( getHOLIDAY(), function(i) {
     $('#holidaycells tr').clone()
       .appendTo($holidaytbl.find('tbody'))
         .filldataHoliday(this)
@@ -160,7 +160,7 @@ function saveHoliday()
       fillHoliday($("#holidaytbl"))
       $("#buttonHoliday").hide()
       $(rows).each(function() {
-        this.cells[DIAGNOSIS].style.backgroundImage = holiday(vdate)
+        this.cells[DIAGNOSIS].style.backgroundImage = findHoliday(vdate)
       })
     } else {
       Alert ("saveHoliday", response)

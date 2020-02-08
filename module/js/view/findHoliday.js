@@ -1,10 +1,11 @@
 
-import { HOLIDAY } from "../util/updateBOOK.js"
+import { getHOLIDAY } from "../util/updateBOOK.js"
 
-export function holiday(date)
+export function findHoliday(date)
 {
   // Buddhist holiday and compensation for religious day on weekend
-  let Buddhist = HOLIDAY.find(day => day.holidate === date)
+  const holiday = getHOLIDAY()
+  const Buddhist = holiday.find(day => day.holidate === date)
   if (Buddhist) {
     return `url('css/pic/holiday/${Buddhist.dayname}.png')`
   }

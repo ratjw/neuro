@@ -186,12 +186,10 @@ export function clearMouseoverTR()
   $(".copyCase").removeClass("copyCase")
 }
 
-// The second parameter (, 0) ensure a default value if arrayAfter .map is empty
+// The second parameter (, 0) ensure a default value if array.map is empty
 export function getLargestWaitnum(book, staffname)
 {
-  let dateStaff = book.filter(function(q) {
-    return (q.staffname === staffname) && (q.opdate === LARGESTDATE)
-  })
+  let dateStaff = book.filter(q => (q.staffname === staffname) && (q.opdate === LARGESTDATE))
 
   return Math.max(...dateStaff.map(q => q.waitnum), 0)
 }
@@ -293,4 +291,12 @@ export function stringChopper(longtext, width)
   result1 = result1.split('<br>')
 
   return result1
+}
+
+export function getLatestKey(object){
+  return Math.max(...Object.keys(object))
+}
+
+export function getLatestValue(object){
+  return object[Math.max(...Object.keys(object))]
 }

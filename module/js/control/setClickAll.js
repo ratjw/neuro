@@ -18,7 +18,7 @@ import { settingResident } from '../setting/settingResident.js'
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
-import { STAFF } from "../util/updateBOOK.js"
+import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
 import { RESIDENT } from "../model/sqlDoResident.js"
 
 export function setClickAll()
@@ -84,7 +84,7 @@ function setClickService()
 
 export function getPermission(submenu, rname)
 {
-  const staffid = STAFF.map(e => e.ramaid),
+  const staffid = getSTAFFparsed().map(e => e.profile.ramaid),
     residentid = RESIDENT.map(e => e.ramaid),
     barname = RESIDENT.find(e => e.residentname === rname),
     barid = barname && barname.ramaid || '',

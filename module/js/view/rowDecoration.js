@@ -1,7 +1,7 @@
 
 import { OPDATE, DIAGNOSIS, LARGESTDATE } from "../control/const.js"
 import { putThdate } from "../util/date.js"
-import { holiday } from "./holiday.js"
+import { findHoliday } from "./findHoliday.js"
 
 // for row, and 1st column colors
 const NAMEOFDAYFULL = ["Sunday", "Monday", "Tuesday",
@@ -16,7 +16,7 @@ export function rowDecoration(row, date)
 
   cells[OPDATE].innerHTML = putThdate(date)
   if (date < LARGESTDATE) {
-    cells[DIAGNOSIS].style.backgroundImage = holiday(date) || 'none'
+    cells[DIAGNOSIS].style.backgroundImage = findHoliday(date) || 'none'
   }
 }
 
