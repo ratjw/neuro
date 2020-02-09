@@ -1,67 +1,119 @@
 
 import { PATIENT } from "../control/const.js"
 import { objDate_2_ISOdate, nextdates } from "../util/date.js"
-import { getLatestKey, getLatestValue } from "../util/util.js"
-import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
+import { getSTAFFparsed, getStaffOncall, getLatestStart } from "../util/getSTAFFparsed.js"
 
 // The staff who has latest startoncall date, is to start
 export function fillConsults(tableID = 'maintbl')
 {
   let table = document.getElementById(tableID),
     saturdayRows = Array.from(table.querySelectorAll("tr.Saturday")),
-    saturdateAll = saturdayRows.map(e => e.dataset.opdate),
-    saturdates = [...new Set(saturdateAll)],
-    firstsat = saturdates.length && saturdates[0] || "",
-    staffs = getSTAFFparsed(),
-    staffoncall = staffs.filter(staff => (staff.profile.oncall > 0)),
-    slen = staffoncall.length,
-    startStaffs = staffoncall.filter(staff => staff.profile.start)
-
-  if (!startStaffs.length) { return }
-
-  let latestStart = getLatestStart(startStaffs),
-    dateoncall = objDate_2_ISOdate(new Date(latestStart.startDate)),
-    staffStart = latestStart.profile.staffname,
-    sindex = staffoncall.findIndex(e => e.profile.staffname === staffStart)
+    saturdateRows = saturdayRows.map(e => e.dataset.opdate),
+    saturdates = [...new Set(saturdateRows)],
+    satlength = saturdates.length
 
   // queuetbl have no opdated case
-  if (!firstsat) return
+  if (!satlength) { return }
 
-  // wrong staff setting
-  if (sindex === -1) return
+  let firstsat = saturdates[0],
+    lastsat = saturdates[saturdates.length-1],
+    startStaff = getLatestStart()
 
-  // find dateoncall before firstsat
-  while (dateoncall > firstsat) {
-    dateoncall = nextdates(dateoncall, -7 * slen)
+  // no start date is set
+  if (!startStaff) { return }
+
+  let startDate = objDate_2_ISOdate(new Date(startStaff.startDate)),
+    startName = startStaff.profile.staffname,
+    startEnum = startStaff.profile.oncall,
+    start = new Date(startDate)
+
+  // get first Saturday from startDate
+  if (start.getDay() !== 6) {
+    start.setDate(start.getDate() - start.getDay() + 6)
   }
 
-  // find first date to begin
-  while (dateoncall < firstsat) {
-    dateoncall = nextdates(dateoncall, 7)
-    sindex = (sindex + 1) % slen
+  let saturdays = [],
+    staffs = getStaffOncall(),
+    staffnames = staffs.map(e => e.profile.staffname),
+    stafflen = staffnames.length,
+    startsat = objDate_2_ISOdate(start),
+    sat = startsat
+
+  if (firstsat < startsat) {
+    while (firstsat < sat) {
+      sat = nextdates(sat, 7)
+      startEnum = (stafflen + startEnum - 1) % stafflen
+    }
+  } else {
+    while (sat < firstsat) {
+      saturdays.push(sat)
+      sat = nextdates(sat, 7)
+    }
   }
 
+  let allSaturdays = saturdays.length ? [...saturdays, ...saturdates] : saturdates,
+    allLen = allSaturdays.length,
+    lenx = allLen + 20,
+    allStaffOncall = [],
+    n = startEnum - 1,
+    rotated = staffnames.map((e, i) => staffnames[(i + n) % stafflen])
+
+  while (allStaffOncall.length < lenx) {
+    allStaffOncall = [...allStaffOncall, ...rotated]
+  }
+
+  staffs.forEach(staff => {
+    if (staff.profile.skip) {
+      allStaffOncall = truncateSkip(allSaturdays, allStaffOncall, staff)
+    }
+  })
+
+  let i = allSaturdays.indexOf(firstsat)
   let prevDate = firstsat
+
+  allStaffOncall = allStaffOncall.slice(i)
   saturdayRows.forEach((e, i) => {
     if (e.dataset.opdate !== prevDate) {
-      sindex = (sindex + 1) % slen
       prevDate = e.dataset.opdate
     }
-    dataAttr(e.cells[PATIENT], staffoncall[sindex].profile.staffname)
+    dataAttr(e.cells[PATIENT], allStaffOncall[i])
   })
 }
 
-// find latest entry within each staff (maxKey) and get the date value for startDate
-// then store maxKey to startKey, store date value to startDate
-// return the staff of the latest key
-function getLatestStart(staffs)
+function truncateSkip(allSaturdays, allStaffOncall, staff)
 {
-  staffs.forEach(staff => {
-    staff.startKey = getLatestKey(staff.profile.start)
-    staff.startDate = getLatestValue(staff.profile.start)
+  let staffname = staff.profile.staffname
+  let skipSat = getSkipSat(allSaturdays, staff)
+
+  for (let i=0; i<allStaffOncall.length; i++) {
+    if (allStaffOncall[i] === staffname && skipSat.includes(allSaturdays[i])) {
+      allStaffOncall.splice(i, 1)
+    }
+  }
+
+  return allStaffOncall
+}
+
+function getSkipSat(allSaturdays, staff)
+{
+  let skip = staff.profile.skip
+  let skipSat = []
+
+  Object.entries(skip).forEach(([key, val]) => {
+    if (val.end > allSaturdays[0]) {
+      delete skip[key]
+    }
+  })
+  Object.entries(skip).forEach(([key, val]) => {
+    let begin = val.begin
+    let end = val.end
+    let allSat = [...allSaturdays]
+    let skipped = allSat.filter(e => (e >= begin) && (e <= end))
+
+    skipSat = [...skipSat, ...skipped]
   })
 
-  return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)
+  return [...new Set(skipSat)]
 }
 
 function dataAttr(pointing, staffname)

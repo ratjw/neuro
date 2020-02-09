@@ -59,7 +59,8 @@ export function nextdates(date, days) {
   if (!date) { return date }
 
   let next = new Date(date);
-    next.setDate(next.getDate() + days);
+
+  next.setDate(next.getDate() + days);
 
   return objDate_2_ISOdate(next);
 }

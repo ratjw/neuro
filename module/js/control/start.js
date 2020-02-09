@@ -155,7 +155,7 @@ function doPrevent(evt)
     if (d[0].isContentEditable) {
       doPrevent = false
     } else if (d.is("input")) {
-      let type = d.attr("type")
+      let type = d.attr("type") || "text"
       if (type) {
         type = type.toLowerCase()
       }

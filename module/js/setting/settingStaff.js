@@ -73,12 +73,12 @@ jQuery.fn.extend({
       staff.skip ? getSkipDate(staff.skip, 'begin') : "",
       staff.skip ? getSkipDate(staff.skip, 'end') : ""
     ].forEach((e, i) => {
-      if (i <= START) {
+      if (i < START) {
         cells[i].innerHTML = e
         cells[i].dataset.content = e
-        if (i === START) {
-          inputDatepicker(cells[i])
-        }
+      }
+      else if (i === START) {
+        inputDatepicker(cells[i])
       }
       else if (i === SKIPBEGIN) {
         begincell = cells[i]
@@ -164,8 +164,8 @@ async function doSaveStaff(row)
     setSTAFF(response.STAFF)
     htmlStafflist()
     fillConsults()
-    settingStaff()
   } else {
-    response && Alert("doSaveStaff", response)
+    alert("doSaveStaff\n\n" + response)
   }
+  settingStaff()
 }
