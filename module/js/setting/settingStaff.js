@@ -36,7 +36,7 @@ export function settingStaff()
   }
   // create a blank row for adding a staff
   $staffcellstr.clone().appendTo($stafftbltbody)
-    .find('td').each(function() { this.dataset.content = '' })
+    .find('td').each(function() { this.dataset.val = '' })
 
   actionIcons.innerHTML = actionTemplate.innerHTML
 
@@ -65,7 +65,8 @@ jQuery.fn.extend({
     let begindate = ''
     let start = getLatestStart(),
       startStaff = start.profile.staffname,
-      startdate = start.startDate
+      startKey = start.startKey,
+      startDate = start.startDate
 
     row.dataset.id = q.id
 
@@ -78,15 +79,16 @@ jQuery.fn.extend({
     ].forEach((e, i) => {
       if (i < START) {
         cells[i].innerHTML = e
-        cells[i].dataset.content = e
+        cells[i].dataset.val = e
       }
       else if (i === START) {
         if (e === startStaff) {
-          cells[i].innerHTML = startdate
-          cells[i].dataset.content = startdate
+          cells[i].innerHTML = startDate
+          cells[i].dataset.key = startKey
+          cells[i].dataset.val = startDate
         } else {
           cells[i].innerHTML = ''
-          cells[i].dataset.content = ''
+          cells[i].dataset.val = ''
         }
         inputDatepicker(cells[i])
       }
@@ -96,14 +98,14 @@ jQuery.fn.extend({
       }
       else if (i === SKIPEND) {
         cells[i].innerHTML = showActiveDate(e)
-        cells[i].dataset.content = showActiveDate(e)
+        cells[i].dataset.val = showActiveDate(e)
         inputDatepicker(cells[i])
         if (cells[i].innerHTML) {
           begincell.innerHTML = begindate
-          begincell.dataset.content = begindate
+          begincell.dataset.val = begindate
         } else {
           begincell.innerHTML = ''
-          begincell.dataset.content = ''
+          begincell.dataset.val = ''
         }
         inputDatepicker(begincell)
       }
@@ -152,8 +154,8 @@ function getEditingStaff($tbody)
   $tbody.find('tr').each(function(i, row) {
     $(row).find('td').each(function(i) {
       let input = this.querySelector('input')
-      let content = input ? input.value : this.textContent
-      if (content !== this.dataset.content) {
+      let val = input ? input.value : this.textContent
+      if (val !== this.dataset.val) {
           doSaveStaff(row)
           return false
         }

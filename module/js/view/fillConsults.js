@@ -20,7 +20,8 @@ export function fillConsults(tableID = 'maintbl')
   // no start date is set
   if (!startStaff) { return }
 
-  let allSaturdays = getAllSaturdays(startStaff, tableFirstSat, tableSaturdates),
+  let startFirstSat = getFirstSat(startStaff),
+    allSaturdays = getAllSaturdays(startStaff, tableFirstSat, tableSaturdates),
     allLen = allSaturdays.length + 20,
     allStaffOncall = getAllStaffOncall(startStaff, allLen)
 
@@ -30,10 +31,16 @@ export function fillConsults(tableID = 'maintbl')
     }
   })
 
-  let i = allSaturdays.indexOf(tableFirstSat)
-  let prevDate = tableFirstSat
+  if (startFirstSat < tableFirstSat) {
+    let i = allSaturdays.indexOf(tableFirstSat)
 
-  allStaffOncall = allStaffOncall.slice(i)
+    allStaffOncall = allStaffOncall.slice(i)
+  }
+  else if (startFirstSat > tableFirstSat) {
+    
+  }
+
+  let prevDate = tableFirstSat
   tableSaturdayRows.forEach((e, i) => {
     if (e.dataset.opdate !== prevDate) {
       prevDate = e.dataset.opdate
@@ -42,10 +49,8 @@ export function fillConsults(tableID = 'maintbl')
   })
 }
 
-function getAllSaturdays(startStaff, tableFirstSat, tableSaturdates)
+function getAllSaturdays(startFirstSat, tableFirstSat, tableSaturdates)
 {
-  let startFirstSat = getFirstSat(startStaff)
-
   if (startFirstSat === tableFirstSat) {
     return tableSaturdates
   }

@@ -25,7 +25,7 @@ function sqlUpdate(id, cell)
     getTextContent(cell[RAMAID], 'ramaid'),
     getOncallNum(cell[ONCALL], 'oncall'),
     getDateContent(id, cell[START], 'start'),
-    getSkipContent(id, cell[SKIPBEGIN], cell[SKIPEND], 'skip'),
+    getSkipContent(id, cell, 'skip'),
   ]
   let remove = data.filter(e => e.includes('JSON_REMOVE'))
   let jsonremove = ''
@@ -72,14 +72,14 @@ function sqlInsert(cell)
 }
 
 function getTextContent(cell, field) {
-  const oldcontent = cell.dataset.content
+  const oldcontent = cell.dataset.val
   const newcontent = cell.textContent
 
   return oldcontent === newcontent ? '' : `"$.${field}","${newcontent}"`
 }
 
 function getOncallNum(cell, field) {
-  const oldcontent = cell.dataset.content
+  const oldcontent = cell.dataset.val
   const newcontent = cell.textContent
 
   return oldcontent === newcontent ? '' : `"$.${field}",${newcontent}`
@@ -89,7 +89,7 @@ function getDateContent(id, cell, field)
 {
   const newinput = cell.querySelector('input')
   const newcontent = newinput ? newinput.value : ''
-  const oldcontent = cell.dataset.content
+  const oldcontent = cell.dataset.val
   const notnew = oldcontent === newcontent
 
   if (notnew) {
@@ -103,7 +103,7 @@ function getDateContent(id, cell, field)
      return `'$.${field}',JSON_OBJECT("${now}", "${newcontent}")`
   }
 
-  const key = getKey(id, field, value)
+  const key = cell.startKey
   const remove = oldcontent && !newcontent
 
   if (remove) {
@@ -112,14 +112,16 @@ function getDateContent(id, cell, field)
   return `'$.${field}."${now}"',"${newcontent}"`
 }
 
-function getSkipContent(id, begin, end, field)
+function getSkipContent(id, cell, field)
 {
+  const begin = cell[SKIPBEGIN]
+  const end = cell[SKIPEND]
   const begininput = begin.querySelector('input')
   const endinput = end.querySelector('input')
   const beginNewContent = begininput ? begininput.value : ''
   const endNewContent = endinput ? endinput.value : ''
-  const beginOldContent = begin.dataset.content
-  const endOldContent = end.dataset.content
+  const beginOldContent = begin.dataset.val
+  const endOldContent = end.dataset.val
 
   const keyExist = checkKeyExist(id, field)
   const now = Date.now()
@@ -129,7 +131,7 @@ function getSkipContent(id, begin, end, field)
     return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
   }
 
-  const key = getKey(id, field, beginOldContent, endOldContent)
+  const key = cell.startKey
   const deleteBegin = !beginNewContent && beginOldContent
   const deleteEnd = !endNewContent && endOldContent
 
@@ -154,20 +156,4 @@ function getSkipContent(id, begin, end, field)
   return updateBegin || updateEnd
           ? `'$.${field}."${key}"',JSON_OBJECT(${beginend})`
           : `'$.${field}."${now}"',JSON_OBJECT(${beginend})`
-}
-
-function getKey(id, field, val1, val2)
-{
-  const staffs = getSTAFFparsed()
-  const staff = staffs.filter(e => e.id === id)[0]
-  const key = Object.entries(staff.profile[field])
-                .find(([key, val]) => {
-                  if (typeof val === "object") {
-                    if ((val.begin === val1) && (val.end === val2)) { return key }
-                  } else {
-                    if (val === val1) { return key }
-                  }
-                })
-
-  return key[0]
 }
