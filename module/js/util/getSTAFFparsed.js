@@ -11,7 +11,7 @@ export function getSTAFFparsed()
   return staffs
 }
 
-export function checkKeyExist(id, field)
+export function checkFieldExist(id, field)
 {
   const staffs = getSTAFFparsed()
   const staff = staffs.filter(e => e.id === id)

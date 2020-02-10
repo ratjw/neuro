@@ -4,7 +4,7 @@ import {
 } from '../setting/settingStaff.js'
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { URIcomponent } from "../util/util.js"
-import { checkKeyExist } from "../util/getSTAFFparsed.js"
+import { checkFieldExist } from "../util/getSTAFFparsed.js"
 import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
 
 export function sqlDoSaveStaff(row)
@@ -96,10 +96,10 @@ function getDateContent(id, cell, field)
     return ''
   }
 
-  const keyExist = checkKeyExist(id, field)
+  const fieldExist = checkFieldExist(id, field)
   const now = Date.now()
 
-  if (!keyExist) {
+  if (!fieldExist) {
      return `'$.${field}',JSON_OBJECT("${now}", "${newcontent}")`
   }
 
@@ -136,11 +136,11 @@ function getSkipContent(id, cell, field)
     return ''
   }
 
-  const keyExist = checkKeyExist(id, field)
+  const fieldExist = checkFieldExist(id, field)
   const now = Date.now()
   const beginend = `"begin","${beginNewContent}", "end","${endNewContent}"`
 
-  if (!keyExist) {
+  if (!fieldExist) {
     return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
   }
 

@@ -31,13 +31,10 @@ export function fillConsults(tableID = 'maintbl')
     }
   })
 
-  let dateStaffname = {}
-  allSaturdays.forEach((e, i) => {
-    dateStaffname[e] = allStaffOncall[i]
-  })
+  allSaturdays.forEach((e, i) => allSaturdays[e] = allStaffOncall[i])
 
   tableSaturdayRows.forEach(e => {
-    dataAttr(e.cells[PATIENT], dateStaffname[e.dataset.opdate])
+    dataAttr(e.cells[PATIENT], allSaturdays[e.dataset.opdate])
   })
 }
 
