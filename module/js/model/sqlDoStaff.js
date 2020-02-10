@@ -123,21 +123,8 @@ function getSkipContent(id, cell, field)
   const beginOldContent = begin.dataset.val
   const endOldContent = end.dataset.val
 
-  const keyExist = checkKeyExist(id, field)
-  const now = Date.now()
-  const beginend = `"begin","${beginNewContent}", "end","${endNewContent}"`
-
-  if (!keyExist) {
-    return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
-  }
-
-  const key = cell.startKey
   const deleteBegin = !beginNewContent && beginOldContent
   const deleteEnd = !endNewContent && endOldContent
-
-  if (deleteBegin && deleteEnd) {
-    return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
-  }
 
   const newBegin = beginOldContent !== beginNewContent
   const newEnd = endOldContent !== endNewContent
@@ -147,6 +134,20 @@ function getSkipContent(id, cell, field)
 
   if (notnew || noBegin || noEnd) {
     return ''
+  }
+
+  const keyExist = checkKeyExist(id, field)
+  const now = Date.now()
+  const beginend = `"begin","${beginNewContent}", "end","${endNewContent}"`
+
+  if (!keyExist) {
+    return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
+  }
+
+  const key = cell.startKey
+
+  if (deleteBegin && deleteEnd) {
+    return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
   }
 
   const existedBeginEnd = beginOldContent && endOldContent

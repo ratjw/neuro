@@ -21,7 +21,7 @@ export function fillConsults(tableID = 'maintbl')
   if (!startStaff) { return }
 
   let startFirstSat = getFirstSat(startStaff),
-    allSaturdays = getAllSaturdays(startStaff, tableFirstSat, tableSaturdates),
+    allSaturdays = getAllSaturdays(startFirstSat, tableSaturdates),
     allLen = allSaturdays.length + 20,
     allStaffOncall = getAllStaffOncall(startStaff, allLen)
 
@@ -31,38 +31,28 @@ export function fillConsults(tableID = 'maintbl')
     }
   })
 
-  if (startFirstSat < tableFirstSat) {
-    let i = allSaturdays.indexOf(tableFirstSat)
+  let dateStaffname = {}
+  allSaturdays.forEach((e, i) => {
+    dateStaffname[e] = allStaffOncall[i]
+  })
 
-    allStaffOncall = allStaffOncall.slice(i)
-  }
-  else if (startFirstSat > tableFirstSat) {
-    
-  }
-
-  let prevDate = tableFirstSat
-  tableSaturdayRows.forEach((e, i) => {
-    if (e.dataset.opdate !== prevDate) {
-      prevDate = e.dataset.opdate
-    }
-    dataAttr(e.cells[PATIENT], allStaffOncall[i])
+  tableSaturdayRows.forEach(e => {
+    dataAttr(e.cells[PATIENT], dateStaffname[e.dataset.opdate])
   })
 }
 
-function getAllSaturdays(startFirstSat, tableFirstSat, tableSaturdates)
+function getAllSaturdays(startFirstSat, tableSaturdates)
 {
-  if (startFirstSat === tableFirstSat) {
-    return tableSaturdates
-  }
-  if (startFirstSat < tableFirstSat) {
-    let prevSaturdays = getPrevSaturdays(tableFirstSat, startFirstSat)
+  let satDays = [],
+    sat = startFirstSat,
+    last = tableSaturdates[tableSaturdates.length-1]
 
-    return [...prevSaturdays, ...tableSaturdates]
-  }
+  do {
+    satDays.push(sat)
+    sat = nextdates(sat, 7)
+  } while (sat <= last)
 
-  let i = tableSaturdates.indexOf(startFirstSat)
-
-  return tableSaturdates.slice(i)
+  return satDays
 }
 
 function getAllStaffOncall(startStaff, allLen)
@@ -92,18 +82,6 @@ function getFirstSat(startStaff)
   }
   
   return obj_2_ISO(start)
-}
-
-function getPrevSaturdays(tableFirstSat, sat)
-{
-  let satDays = []
-
-  while (sat < tableFirstSat) {
-    satDays.push(sat)
-    sat = nextdates(sat, 7)
-  }
-
-  return satDays
 }
 
 function truncateSkip(allSaturdays, allStaffOncall, staff)
