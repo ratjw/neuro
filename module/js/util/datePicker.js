@@ -10,7 +10,7 @@ export function datePicker($datepicker)
     // display full names on calendar title
     monthNames: THAIMONTHFULL,
     // Input/Output short names
-    // to be consistent with the month converted by thDate_2_ISOdate()
+    // to be consistent with the month converted by th_2_ISO()
     monthNamesShort: THAIMONTH,
     beforeShow: function (input, inst) {
       // prevent using Buddhist year from <input>

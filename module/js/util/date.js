@@ -3,10 +3,10 @@ import { LARGESTDATE, THAIMONTH } from "../control/const.js"
 
 // start at 1st date of last month
 const today = new Date()
-export const START_DATE = objDate_2_ISOdate(new Date(today.getFullYear(), today.getMonth()-1, 1))
+export const START_DATE = obj_2_ISO(new Date(today.getFullYear(), today.getMonth()-1, 1))
 
 // Javascript Date Object to MySQL date (ISOdate 2014-05-11)
-export function objDate_2_ISOdate(date) {
+export function obj_2_ISO(date) {
   if (!date) { return date }
 
   let mm = date.getMonth() + 1,
@@ -19,7 +19,7 @@ export function objDate_2_ISOdate(date) {
 } 
 
 // ISOdate (2014-05-11) to Thai date (11 พค. 2557) 
-export function ISOdate_2_thDate(opdate) {
+export function ISO_2_th(opdate) {
   if (!opdate) { return opdate }
 
   // LARGESTDATE (9999-12-31)
@@ -37,7 +37,7 @@ export function ISOdate_2_thDate(opdate) {
 }
 
 // Thai date (11 พค. 2557) to ISOdate (2014-05-11)
-export function thDate_2_ISOdate(opdate) {
+export function th_2_ISO(opdate) {
   if (!opdate) { return "" }
 
   let date = opdate.split(" "),
@@ -62,20 +62,20 @@ export function nextdates(date, days) {
 
   next.setDate(next.getDate() + days);
 
-  return objDate_2_ISOdate(next);
+  return obj_2_ISO(next);
 }
 
 // change Thai date from table to ISO date
 export function getOpdate (date) {
-  // Undefined date will be taken care by thDate_2_ISOdate
-  return (String(date) === "") ? LARGESTDATE : thDate_2_ISOdate(date)
+  // Undefined date will be taken care by th_2_ISO
+  return (String(date) === "") ? LARGESTDATE : th_2_ISO(date)
 }
 
 // change date in book to show on table taking care of LARGESTDATE
 export function putThdate (date) {
   if (!date) { return date }
 
-  return (String(date) === LARGESTDATE) ? "" : ISOdate_2_thDate(date)
+  return (String(date) === LARGESTDATE) ? "" : ISO_2_th(date)
 }
 
 export function putNameAge(q)

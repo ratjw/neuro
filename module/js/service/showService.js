@@ -7,7 +7,7 @@ import { coloring } from "./coloring.js"
 import { getAdmitDischargeDate } from "./getAdmitDischargeDate.js"
 import { SERVICE, seteditableSV, serviceFromDate } from "./setSERVICE.js"
 import { viewProfile } from "./viewProfile.js"
-import { START_DATE, ISOdate_2_thDate, putThdate, putNameAge } from "../util/date.js"
+import { START_DATE, ISO_2_th, putThdate, putNameAge } from "../util/date.js"
 
 export function showService() {
   let $servicetbl = $("#servicetbl"),
@@ -94,7 +94,7 @@ jQuery.fn.extend({
   filldataService : function(q, scase) {
     let  row = this[0],
       cells = row.cells,
-      opdateth = ISOdate_2_thDate(q.opdate)
+      opdateth = ISO_2_th(q.opdate)
 
     cells[CASENUMSV].innerHTML = scase
     cells[HNSV].innerHTML = q.hn

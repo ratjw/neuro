@@ -2,7 +2,7 @@
 import { rowDecoration } from "./rowDecoration.js"
 import { OPDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
-import { objDate_2_ISOdate, thDate_2_ISOdate, putThdate } from "../util/date.js"
+import { obj_2_ISO, th_2_ISO, putThdate } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 import { exportFindToExcel } from "../util/excel.js"
 
@@ -61,12 +61,12 @@ export function onePage($dialogFind, $findtbl, found, search)
 
   //scroll to todate when there many cases
   let today = new Date(),
-    todate = objDate_2_ISOdate(today),
+    todate = obj_2_ISO(today),
     thishead
 
   $findtbl.find("tr").each(function() {
     thishead = this
-    return thDate_2_ISOdate(this.cells[OPDATE].innerHTML) < todate
+    return th_2_ISO(this.cells[OPDATE].innerHTML) < todate
   })
   $dialogFind.animate({
     scrollTop: $(thishead).offset().top - $dialogFind.height()

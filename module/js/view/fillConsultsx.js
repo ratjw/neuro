@@ -1,6 +1,6 @@
 
 import { PATIENT } from "../control/const.js"
-import { objDate_2_ISOdate, nextdates } from "../util/date.js"
+import { obj_2_ISO, nextdates } from "../util/date.js"
 import { getLatestKey, getLatestValue } from "../util/util.js"
 import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
 
@@ -20,7 +20,7 @@ export function fillConsults(tableID = 'maintbl')
   if (!startStaffs.length) { return }
 
   let latestStart = getLatestStart(startStaffs),
-    dateoncall = objDate_2_ISOdate(new Date(latestStart.startDate)),
+    dateoncall = obj_2_ISO(new Date(latestStart.startDate)),
     staffStart = latestStart.profile.staffname,
     sindex = staffoncall.findIndex(e => e.profile.staffname === staffStart)
 

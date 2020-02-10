@@ -87,70 +87,87 @@ function getOncallNum(cell, field) {
 
 function getDateContent(id, cell, field)
 {
-  const oldcontent = cell.dataset.content
   const newinput = cell.querySelector('input')
   const newcontent = newinput ? newinput.value : ''
+  const oldcontent = cell.dataset.content
   const notnew = oldcontent === newcontent
-  const now = Date.now()
-  const keyExist = checkKeyExist(id, field)
 
-  if (oldcontent && !newcontent) {
-    return removeStartKey(id, field, oldcontent)
+  if (notnew) {
+    return ''
   }
-  return notnew
-        ? ''
-        : keyExist
-           ? `'$.${field}."${now}"',"${newcontent}"`
-           : `'$.${field}',JSON_OBJECT("${now}", "${newcontent}")`
+
+  const keyExist = checkKeyExist(id, field)
+  const now = Date.now()
+
+  if (!keyExist) {
+     return `'$.${field}',JSON_OBJECT("${now}", "${newcontent}")`
+  }
+
+  const key = getKey(id, field, value)
+  const remove = oldcontent && !newcontent
+
+  if (remove) {
+    return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
+  }
+  return `'$.${field}."${now}"',"${newcontent}"`
 }
 
 function getSkipContent(id, begin, end, field)
 {
-  const beginOldContent = begin.dataset.content
-  const endOldContent = end.dataset.content
   const begininput = begin.querySelector('input')
   const endinput = end.querySelector('input')
   const beginNewContent = begininput ? begininput.value : ''
   const endNewContent = endinput ? endinput.value : ''
+  const beginOldContent = begin.dataset.content
+  const endOldContent = end.dataset.content
 
+  const keyExist = checkKeyExist(id, field)
+  const now = Date.now()
   const beginend = `"begin","${beginNewContent}", "end","${endNewContent}"`
+
+  if (!keyExist) {
+    return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
+  }
+
+  const key = getKey(id, field, beginOldContent, endOldContent)
   const deleteBegin = !beginNewContent && beginOldContent
   const deleteEnd = !endNewContent && endOldContent
 
-  const notnew = (beginOldContent === beginNewContent) && (endOldContent === endNewContent)
-  const now = Date.now()
-  const keyExist = checkKeyExist(id, field)
-
   if (deleteBegin && deleteEnd) {
-    return removeSkipKey(id, field, beginOldContent)
+    return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
   }
-  if ((deleteBegin && endNewContent) || (deleteEnd && beginNewContent)) {
+
+  const newBegin = beginOldContent !== beginNewContent
+  const newEnd = endOldContent !== endNewContent
+  const notnew = !newBegin && !newEnd
+  const noBegin = (deleteBegin && endNewContent)
+  const noEnd = (deleteEnd && beginNewContent)
+
+  if (notnew || noBegin || noEnd) {
     return ''
   }
 
-  return notnew
-    ? ''
-    : keyExist
-      ? `'$.${field}."${now}"',JSON_OBJECT(${beginend})`
-      : `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
+  const existedBeginEnd = beginOldContent && endOldContent
+  const updateBegin = newBegin && existedBeginEnd
+  const updateEnd = newEnd && existedBeginEnd
+
+  return updateBegin || updateEnd
+          ? `'$.${field}."${key}"',JSON_OBJECT(${beginend})`
+          : `'$.${field}."${now}"',JSON_OBJECT(${beginend})`
 }
 
-function removeStartKey(id, field, value)
+function getKey(id, field, val1, val2)
 {
   const staffs = getSTAFFparsed()
   const staff = staffs.filter(e => e.id === id)[0]
   const key = Object.entries(staff.profile[field])
-                .find(([key, val]) => (val === value) && key)[0]
+                .find(([key, val]) => {
+                  if (typeof val === "object") {
+                    if ((val.begin === val1) && (val.end === val2)) { return key }
+                  } else {
+                    if (val === val1) { return key }
+                  }
+                })
 
-  return `JSON_REMOVE'$.${field}."${key}"'`
-}
-
-function removeSkipKey(id, field, value)
-{
-  const staffs = getSTAFFparsed()
-  const staff = staffs.filter(e => e.id === id)[0]
-  const key = Object.entries(staff.profile[field])
-                .find(([key, val]) => (val.begin === value) && key)[0]
-
-  return `JSON_REMOVE'$.${field}."${key}"'`
+  return key[0]
 }

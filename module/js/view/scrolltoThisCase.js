@@ -1,7 +1,7 @@
 
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { isSplit } from "../util/util.js"
-import { objDate_2_ISOdate } from "../util/date.js"
+import { obj_2_ISO } from "../util/date.js"
 
 // Both main and staff tables
 export function scrolltoThisCase(qn)
@@ -18,7 +18,7 @@ export function scrolltoThisCase(qn)
 export function scrolltoToday(tableID)
 {
   let today = new Date(),
-    todate = objDate_2_ISOdate(today),
+    todate = obj_2_ISO(today),
     table = document.getElementById(tableID),
     rows = table.querySelectorAll('tr'),
     container = table.closest('div'),

@@ -1,6 +1,6 @@
 
 import { OPDATE, HN, PATIENT, DIAGNOSIS, TREATMENT, EQUIPMENT } from "../control/const.js"
-import { objDate_2_ISOdate, nextdates } from '../util/date.js'
+import { obj_2_ISO, nextdates } from '../util/date.js'
 import { string25 } from '../util/util.js'
 
 const LINENOTIFY = "line/lineNotify.php"
@@ -9,10 +9,10 @@ export function notifyLINE()
 {
   let today = new Date(),
     day = today.getDay(),
-    todate = objDate_2_ISOdate(today),
+    todate = obj_2_ISO(today),
     tomorrow = nextdates(todate, 1),
     thisSatday = today.setDate(today.getDate() + 6 - today.getDay() % 7),
-    thisSatdate = objDate_2_ISOdate(new Date(thisSatday)),
+    thisSatdate = obj_2_ISO(new Date(thisSatday)),
     nextMonday = nextdates(thisSatdate, 2),
     nextSatdate = nextdates(thisSatdate, 7),
     ifFriday = day === 5,

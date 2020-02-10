@@ -2,10 +2,10 @@
 import { htmlStafflist } from "../control/html.js"
 import { sqlDoSaveStaff } from "../model/sqlDoStaff.js"
 import { setSTAFF } from "../util/updateBOOK.js"
-import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
+import { getSTAFFparsed, getLatestStart } from "../util/getSTAFFparsed.js"
 import { getLatestValue, Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
-import { thDate_2_ISOdate } from "../util/date.js"
+import { obj_2_ISO, th_2_ISO } from "../util/date.js"
 
 export const STAFFNAME = 0,
               RAMAID = 1,
@@ -63,21 +63,31 @@ jQuery.fn.extend({
 
     let begincell = ''
     let begindate = ''
+    let start = getLatestStart(),
+      startStaff = start.profile.staffname,
+      startdate = start.startDate
 
     row.dataset.id = q.id
 
 ;   [ staff.staffname,
       staff.ramaid,
       staff.oncall,
-      getOncallDate(staff.start),
-      staff.skip ? getSkipDate(staff.skip, 'begin') : "",
-      staff.skip ? getSkipDate(staff.skip, 'end') : ""
+      staff.staffname,
+      getSkipDate(staff.skip, 'begin'),
+      getSkipDate(staff.skip, 'end')
     ].forEach((e, i) => {
       if (i < START) {
         cells[i].innerHTML = e
         cells[i].dataset.content = e
       }
       else if (i === START) {
+        if (e === startStaff) {
+          cells[i].innerHTML = startdate
+          cells[i].dataset.content = startdate
+        } else {
+          cells[i].innerHTML = ''
+          cells[i].dataset.content = ''
+        }
         inputDatepicker(cells[i])
       }
       else if (i === SKIPBEGIN) {
@@ -85,8 +95,8 @@ jQuery.fn.extend({
         begindate = e
       }
       else if (i === SKIPEND) {
-        cells[i].innerHTML = getActiveDate(e)
-        cells[i].dataset.content = getActiveDate(e)
+        cells[i].innerHTML = showActiveDate(e)
+        cells[i].dataset.content = showActiveDate(e)
         inputDatepicker(cells[i])
         if (cells[i].innerHTML) {
           begincell.innerHTML = begindate
@@ -101,23 +111,18 @@ jQuery.fn.extend({
   }
 })
 
-function getActiveDate(e)
+function showActiveDate(e)
 {
-  const today = new Date()
+  const today = obj_2_ISO(new Date())
 
-  return Date.parse(e) > Date.parse(today) ? e : ""
-}
-
-function getOncallDate(ondate)
-{
-  return ondate ? getLatestValue(ondate) : ""
+  return e > today ? e : ""
 }
 
 function getSkipDate(skip, at)
 {
-  const dates = getOncallDate(skip)
+  const dates = getLatestValue(skip)
 
-  return dates[at]
+  return dates? dates[at] : ''
 }
 
 // tabIndex = "-1" prevent input focus
