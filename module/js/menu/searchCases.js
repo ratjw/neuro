@@ -2,7 +2,7 @@
 /* to do !!!!!!!!!!!!!
 Search Exact Phrases      +
 Exclude a word            -
-Search in sepific column  :
+Search in specific column  :
 Forgotten words           *
 */
 

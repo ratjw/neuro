@@ -103,7 +103,7 @@ function getDateContent(id, cell, field)
      return `'$.${field}',JSON_OBJECT("${now}", "${newcontent}")`
   }
 
-  const key = cell.startKey
+  const key = cell.dataset.key
   const remove = oldcontent && !newcontent
 
   if (remove) {
@@ -144,7 +144,7 @@ function getSkipContent(id, cell, field)
     return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
   }
 
-  const key = cell.startKey
+  const key = cell.dataset.key
 
   if (deleteBegin && deleteEnd) {
     return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''

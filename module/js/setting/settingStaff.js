@@ -90,34 +90,40 @@ jQuery.fn.extend({
           cells[i].innerHTML = ''
           cells[i].dataset.val = ''
         }
-        inputDatepicker(cells[i])
+        if (staff.oncall) { inputDatepicker(cells[i]) }
       }
       else if (i === SKIPBEGIN) {
         begincell = cells[i]
         begindate = e
       }
       else if (i === SKIPEND) {
-        cells[i].innerHTML = showActiveDate(e)
-        cells[i].dataset.val = showActiveDate(e)
+        const activeDate = getActiveDate(e)
+        cells[i].innerHTML = activeDate
+        cells[i].dataset.val = activeDate
         inputDatepicker(cells[i])
-        if (cells[i].innerHTML) {
-          begincell.innerHTML = begindate
-          begincell.dataset.val = begindate
-        } else {
-          begincell.innerHTML = ''
-          begincell.dataset.val = ''
-        }
-        inputDatepicker(begincell)
+        showBegincell(activeDate, begincell, begindate)
       }
     })
   }
 })
 
-function showActiveDate(e)
+function getActiveDate(e)
 {
   const today = obj_2_ISO(new Date())
 
   return e > today ? e : ""
+}
+
+function showBegincell(activeDate, begincell, begindate)
+{
+  if (activeDate) {
+    begincell.innerHTML = begindate
+    begincell.dataset.val = begindate
+  } else {
+    begincell.innerHTML = ''
+    begincell.dataset.val = ''
+  }
+  inputDatepicker(begincell)
 }
 
 function getSkipDate(skip, at)
