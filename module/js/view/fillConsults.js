@@ -23,12 +23,23 @@ export function fillConsults(tableID = 'maintbl')
   let startFirstSat = getFirstSat(startStaff),
     allSaturdays = getAllSaturdays(startFirstSat, tableSaturdates),
     allLen = allSaturdays.length + 20,
-    allStaffOncall = getAllStaffOncall(startStaff, allLen)
+    allStaffOncall = getAllStaffOncall(startStaff, allLen),
+    staffsOncall =getStaffOncall()
 
-  getStaffOncall().forEach(staff => {
+  staffsOncall.forEach(staff => {
     if (staff.profile.skip) {
-      allStaffOncall = truncateSkip(allSaturdays, allStaffOncall, staff)
+      staff["skipSat"] = getSkipSat(allSaturdays, staff)
     }
+  })
+
+  allSaturdays.forEach((sat, i) => {
+    staffsOncall.forEach(staff => {
+      let matchname = staff.profile.staffname === allStaffOncall[i]
+      let matchskip = staff.skipSat && staff.skipSat.includes(sat)
+      if (matchname && matchskip) {
+        allStaffOncall.splice(i, 1)
+      }
+    })
   })
 
   allSaturdays.forEach((e, i) => allSaturdays[e] = allStaffOncall[i])
@@ -79,20 +90,6 @@ function getFirstSat(startStaff)
   }
   
   return obj_2_ISO(start)
-}
-
-function truncateSkip(allSaturdays, allStaffOncall, staff)
-{
-  let staffname = staff.profile.staffname
-  let skipSat = getSkipSat(allSaturdays, staff)
-
-  for (let i=0; i<allStaffOncall.length; i++) {
-    if (allStaffOncall[i] === staffname && skipSat.includes(allSaturdays[i])) {
-      allStaffOncall.splice(i, 1)
-    }
-  }
-
-  return allStaffOncall
 }
 
 function getSkipSat(allSaturdays, staff)

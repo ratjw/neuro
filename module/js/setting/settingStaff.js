@@ -3,7 +3,7 @@ import { htmlStafflist } from "../control/html.js"
 import { sqlDoSaveStaff } from "../model/sqlDoStaff.js"
 import { setSTAFF } from "../util/updateBOOK.js"
 import { getSTAFFparsed, getLatestStart } from "../util/getSTAFFparsed.js"
-import { getLatestValue, Alert, winHeight } from "../util/util.js"
+import { getLatestKey, Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
 
@@ -59,78 +59,61 @@ jQuery.fn.extend({
 
     const row = this[0]
     const cells = row.cells
-    const staff = q.profile
-
-    let begincell = ''
-    let begindate = ''
-    let start = getLatestStart(),
-      startStaff = start.profile.staffname,
-      startKey = start.startKey,
-      startDate = start.startDate
+    const qprofile = q.profile
 
     row.dataset.id = q.id
 
-;   [ staff.staffname,
-      staff.ramaid,
-      staff.oncall,
-      staff.staffname,
-      getSkipDate(staff.skip, 'begin'),
-      getSkipDate(staff.skip, 'end')
+;   [ qprofile.staffname,
+      qprofile.ramaid,
+      qprofile.oncall,
+      qprofile.staffname,
+      '',
+      ''
     ].forEach((e, i) => {
       if (i < START) {
-        cells[i].innerHTML = e
-        cells[i].dataset.val = e
+        showCell(cells[i], e)
       }
       else if (i === START) {
-        if (e === startStaff) {
-          cells[i].innerHTML = startDate
-          cells[i].dataset.key = startKey
-          cells[i].dataset.val = startDate
+        const start = getLatestStart()
+        if (e === start.profile.staffname) {
+          showCell(cells[i], start.startDate, start.startKey)
         } else {
-          cells[i].innerHTML = ''
-          cells[i].dataset.val = ''
+          showCell(cells[i], '')
         }
-        if (staff.oncall) { inputDatepicker(cells[i]) }
+        if (qprofile.oncall) { inputDatepicker(cells[i]) }
       }
       else if (i === SKIPBEGIN) {
-        begincell = cells[i]
-        begindate = e
-      }
-      else if (i === SKIPEND) {
-        const activeDate = getActiveDate(e)
-        cells[i].innerHTML = activeDate
-        cells[i].dataset.val = activeDate
-        inputDatepicker(cells[i])
-        showBegincell(activeDate, begincell, begindate)
+        const begincell = cells[SKIPBEGIN]
+        const key = getLatestKey(qprofile.skip)
+        const endDate = key ? getActiveDate(qprofile.skip[key]["end"]) : ''
+        const beginDate = endDate ? qprofile.skip[key]["begin"] : ''
+        const beginkey = endDate ? key : ''
+
+        showCell(begincell, beginDate, beginkey)
+        inputDatepicker(begincell)
+
+        showCell(cells[SKIPEND], endDate, key)
+        inputDatepicker(cells[SKIPEND])
       }
     })
   }
 })
 
+function showCell(cell, val, key)
+{
+  cell.innerHTML = val
+  cell.dataset.val = val
+  if (key) { cell.dataset.key = key }
+}
+
 function getActiveDate(e)
 {
+  if (!e) { return '' }
+
   const today = obj_2_ISO(new Date())
+  const date = obj_2_ISO(new Date(e))
 
-  return e > today ? e : ""
-}
-
-function showBegincell(activeDate, begincell, begindate)
-{
-  if (activeDate) {
-    begincell.innerHTML = begindate
-    begincell.dataset.val = begindate
-  } else {
-    begincell.innerHTML = ''
-    begincell.dataset.val = ''
-  }
-  inputDatepicker(begincell)
-}
-
-function getSkipDate(skip, at)
-{
-  const dates = getLatestValue(skip)
-
-  return dates? dates[at] : ''
+  return date > today ? e : ""
 }
 
 // tabIndex = "-1" prevent input focus

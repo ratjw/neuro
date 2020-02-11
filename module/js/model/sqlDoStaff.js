@@ -144,7 +144,7 @@ function getSkipContent(id, cell, field)
     return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
   }
 
-  const key = cell.dataset.key
+  const key = cell[SKIPEND].dataset.key
 
   if (deleteBegin && deleteEnd) {
     return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
