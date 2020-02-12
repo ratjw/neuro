@@ -32,9 +32,12 @@ export function exchangeOncall(pointing)
 
 async function changeOncall(pointing, opdate, id, staffname)
 {
+  let prevStaff = pointing.dataset.consult
+
+  if (staffname === prevStaff) { return }
+
   let key = pointing.dataset.exchangeKey
   let originConsult = pointing.dataset.originConsult
-  let prevStaff = pointing.dataset.consult
   let prevStaffID = getStaffID(prevStaff)
   let now = Date.now()
   let sql = 'sqlReturnStaff='

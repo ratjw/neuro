@@ -1,6 +1,7 @@
 
 import { getSTAFF } from "../util/updateBOOK.js"
 import { getLatestKey, getLatestValue } from "../util/util.js"
+import { START_DATE } from "../util/date.js"
 
 export function getSTAFFparsed()
 {
@@ -47,4 +48,28 @@ export function getStaffID(staffname)
   let staffs = getSTAFFparsed()
 
   return staffs.filter(staff => (staff.profile.staffname === staffname))[0]
+}
+
+export function getOncallExchange()
+{
+  let staffs = getSTAFFparsed()
+  let exchange = {}
+
+  staffs.forEach(staff => exchange[staff.profile.staffname] = staff.profile.exchange)
+
+  Object.entries(exchange).forEach(([key, val]) => {
+    if (!val || Object.entries(val).length === 0) {
+      delete exchange[key]
+    }
+  })
+
+  Object.entries(exchange).forEach(([key, val]) => {
+    Object.entries(val).forEach((k, date) => {
+      if (date < START_DATE) {
+        delete exchange[key][k]
+      }
+    })
+  })
+
+  return exchange
 }

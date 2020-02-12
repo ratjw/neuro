@@ -13,10 +13,11 @@ export function rowDecoration(row, date)
   let  cells = row.cells
 
   row.className = dayName(NAMEOFDAYFULL, date) || "nodate"
-
   cells[OPDATE].innerHTML = putThdate(date)
+
   if (date < LARGESTDATE) {
-    cells[DIAGNOSIS].style.backgroundImage = findHoliday(date) || 'none'
+    let img = findHoliday(date)
+    if (img) { cells[DIAGNOSIS].style.backgroundImage = img }
   }
 }
 

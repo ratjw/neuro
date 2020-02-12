@@ -1,7 +1,9 @@
 
 import { PATIENT } from "../control/const.js"
 import { obj_2_ISO, nextdates } from "../util/date.js"
-import { getSTAFFparsed, getStaffOncall, getLatestStart } from "../util/getSTAFFparsed.js"
+import {
+  getSTAFFparsed, getStaffOncall, getLatestStart, getOncallExchange
+} from "../util/getSTAFFparsed.js"
 
 // The staff who has latest startoncall date, is to start
 export function fillConsults(tableID = 'maintbl')
@@ -24,7 +26,7 @@ export function fillConsults(tableID = 'maintbl')
     allSaturdays = getAllSaturdays(startFirstSat, tableSaturdates),
     allLen = allSaturdays.length + 20,
     allStaffOncall = getAllStaffOncall(startStaff, allLen),
-    staffsOncall =getStaffOncall()
+    staffsOncall = getStaffOncall()
 
   staffsOncall.forEach(staff => {
     if (staff.profile.skip) {
@@ -46,6 +48,19 @@ export function fillConsults(tableID = 'maintbl')
 
   tableSaturdayRows.forEach(e => {
     dataAttr(e.cells[PATIENT], allSaturdays[e.dataset.opdate])
+  })
+
+  let exchange = getOncallExchange()
+  Object.entries(exchange).forEach(([staffname, obj]) => {
+    Object.values(obj).forEach(date => {
+      tableSaturdayRows.forEach(row => {
+        if (row.dataset.opdate === date) {
+          let cell = row.cells[PATIENT]
+          cell.dataset.originConsult = cell.dataset.consult
+          dataAttr(cell, staffname)
+        }
+      })
+    })
   })
 }
 

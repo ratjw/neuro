@@ -10,7 +10,6 @@ import { sortable } from "../control/sort.js"
 import { clearSelection } from "../control/selectRow.js"
 import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
-import { START_DATE, obj_2_ISO } from "../util/date.js"
 import { getTIMESTAMP, updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { htmlStafflist, htmlLab, htmlEquipment } from "../control/html.js"
@@ -74,6 +73,7 @@ function contextmenu(event)
   let oncall = /consult/.test(target.className)
 
   if (oncall) {
+    clearAllEditing()
     exchangeOncall(target)
   }
   return false
@@ -100,7 +100,6 @@ function wrapperEvent()
 
     resetTimerCounter()
     removeMarker()
-    clearList(target)
     showColumn2(target)
 
     if (target.closest('#cssmenu')) { return }
@@ -116,28 +115,10 @@ function removeMarker()
   $(".marker").removeClass("marker")
 }
 
-function clearList(target)
-{
-  const stafflist = document.querySelector('#stafflist')
-  const staffConsult = document.querySelector('#staffConsult')
-  
-  if (stafflist.style.visibility === 'visible') {
-    if (!target.closest('#stafflist')) {
-      stafflist.style.display = 'none'
-      clearEditcell()
-    }
-  }
-  
-  if (staffConsult.style.visibility === 'visible') {
-    if (!target.closest('#staffConsult')) {
-      staffConsult.style.display = 'none'
-    }
-  }
-}
-
 function showColumn2(target)
 {
-  const inCell = target.closest("th") || target.closest("td")
+  // (|| target) if click other than th and td
+  const inCell = target.closest("th") || target.closest("td") || target
 
   if (inCell.cellIndex === THEATRE) {
     let maintbl = document.querySelector("#maintbl")

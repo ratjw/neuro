@@ -1,6 +1,6 @@
 
 import { start } from "./control/start.js"
-import { Alert, msie } from "./util/util.js"
+import { Alert } from "./util/util.js"
 
 // from login.js
 export let ADMIN = sessionStorage.getItem("admin").split(',')
