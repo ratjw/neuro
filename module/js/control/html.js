@@ -6,19 +6,29 @@ import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
 // stafflist for enter name in Staff column
 // staffmenu for dropdown sub-menu
 export function htmlStafflist() {
-  let stafflist = '',
-      staffmenu = '',
-      staffs = getSTAFFparsed()
+  let staffs = getSTAFFparsed(),
+    stafflist = '',
+    staffmenu = '',
+    staffConsult = ''
 
   staffs.forEach(each => {
     let name = each.profile.staffname
     stafflist += `<li><div>${name}</div></li>`
-    staffmenu += `<li class="w100"><a class="clickStaff ${name}">
-                 <span>${name}</span></a></li>`
+    staffmenu += `<li class="w100">`
+               +  `<a class="clickStaff ${name}">`
+               +    ` <span>${name}</span>`
+               +  `</a>`
+               + `</li>`
+    if (each.profile.oncall) { staffConsult += `<li><div>${name}</div></li>` }
   })
-  staffmenu += `<li class="w100"><a class="clickStaff Consults"><span>Consults</span></a></li>`
+  staffmenu += `<li class="w100">`
+             +   `<a class="clickStaff Consults">`
+             +     `<span>Consults</span>`
+             +   `</a>`
+             + `</li>`
   document.getElementById("stafflist").innerHTML = stafflist
   document.getElementById("staffmenu").innerHTML = staffmenu
+  document.getElementById("staffConsult").innerHTML = staffConsult
 
   document.querySelectorAll(".clickStaff").forEach(item => {
     item.onclick = () => {

@@ -105,7 +105,7 @@ let keyin = function (evt, keycode) {
       return
   }
 
-  if ($("#stafflist").is(":visible")) {
+  if ($("#stafflist, #staffConsult").is(":visible")) {
     evt.preventDefault()
     return
   }

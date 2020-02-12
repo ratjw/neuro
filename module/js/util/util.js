@@ -293,14 +293,14 @@ export function stringChopper(longtext, width)
   return result1
 }
 
-export function getLatestKey(object){
-  if (!object) { return '' }
+export function getLatestKey(obj){
+  if (!obj || !Object.entries(obj).length) { return '' }
 
-  return Math.max(...Object.keys(object)) || ''
+  return Math.max(...Object.keys(obj)) || ''
 }
 
-export function getLatestValue(object){
-  if (!object) { return '' }
+export function getLatestValue(obj){
+  if (!obj || !Object.entries(obj).length) { return '' }
 
-  return object[Math.max(...Object.keys(object))] || ''
+  return obj[Math.max(...Object.keys(obj))] || ''
 }

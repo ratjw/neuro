@@ -9,8 +9,6 @@ import { moveCase } from "../menu/moveCase.js"
 import { copyCase } from "../menu/copyCase.js"
 import { editHistory } from "../menu/editHistory.js"
 import { delCase } from "../menu/delCase.js"
-import { sendtoExcel } from "../menu/sendtoExcel.js"
-import { sendtoLINE } from "../menu/sendtoLINE.js"
 import { resEPA } from '../setting/resEPA.js'
 import { resResearch } from '../setting/resResearch.js'
 import { inputHoliday, addHoliday } from "../setting/inputHoliday.js"
@@ -40,9 +38,7 @@ function setClickMenu()
     "postponecase": postponeCase,
     "moveCase": moveCase,
     "copyCase": copyCase,
-    "delcase": delCase,
-    "clicksendtoExcel": sendtoExcel,
-    "clicksendtoLINE": sendtoLINE
+    "delcase": delCase
   }
 
   Object.entries(clickMenu).forEach(([key, val]) => {

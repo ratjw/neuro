@@ -7,6 +7,7 @@ import { clearSelection } from "../control/selectRow.js"
 export function clearAllEditing()
 {
   $('#stafflist').hide();
+  $('#staffConsult').hide();
   clearEditcell()
   clearMouseoverTR()
   clearSelection()

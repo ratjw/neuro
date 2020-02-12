@@ -60,42 +60,38 @@ jQuery.fn.extend({
     const row = this[0]
     const cells = row.cells
     const qprofile = q.profile
+    const startCell = cells[START]
+    const beginCell = cells[SKIPBEGIN]
+    const endCell = cells[SKIPEND]
 
     row.dataset.id = q.id
 
 ;   [ qprofile.staffname,
       qprofile.ramaid,
-      qprofile.oncall,
-      qprofile.staffname,
-      '',
-      ''
+      qprofile.oncall
     ].forEach((e, i) => {
       if (i < START) {
         showCell(cells[i], e)
       }
-      else if (i === START) {
-        const start = getLatestStart()
-        if (e === start.profile.staffname) {
-          showCell(cells[i], start.startDate, start.startKey)
-        } else {
-          showCell(cells[i], '')
-        }
-        if (qprofile.oncall) { inputDatepicker(cells[i]) }
-      }
-      else if (i === SKIPBEGIN) {
-        const begincell = cells[SKIPBEGIN]
-        const key = getLatestKey(qprofile.skip)
-        const endDate = key ? getActiveDate(qprofile.skip[key]["end"]) : ''
-        const beginDate = endDate ? qprofile.skip[key]["begin"] : ''
-        const beginkey = endDate ? key : ''
-
-        showCell(begincell, beginDate, beginkey)
-        inputDatepicker(begincell)
-
-        showCell(cells[SKIPEND], endDate, key)
-        inputDatepicker(cells[SKIPEND])
-      }
     })
+
+    const start = getLatestStart()
+    if (qprofile.staffname === start.profile.staffname) {
+      showCell(startCell, start.startDate, start.startKey)
+    } else {
+      showCell(startCell, '')
+    }
+    if (qprofile.oncall) { inputDatepicker(startCell) }
+
+    const key = getLatestKey(qprofile.skip)
+    const endDate = key ? getActiveDate(qprofile.skip[key]["end"]) : ''
+    const beginDate = endDate ? qprofile.skip[key]["begin"] : ''
+
+    showCell(beginCell, beginDate, key)
+    inputDatepicker(beginCell)
+
+    showCell(endCell, endDate, key)
+    inputDatepicker(endCell)
   }
 })
 

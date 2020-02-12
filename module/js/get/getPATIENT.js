@@ -1,5 +1,5 @@
 
-import { createEditcell } from "../control/edit.js"
+import { createEditcell, clearEditcell } from "../control/edit.js"
 import { spinTime } from "../util/spinner.js"
 
 export function getPATIENT(pointing)

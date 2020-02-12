@@ -19,6 +19,7 @@ import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
 import { isMobile } from "../main.js"
+import { exchangeOncall } from "../control/exchangeOncall.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
@@ -28,7 +29,7 @@ export function start() {
 		: failed(response)
 	}).catch(error => alert(error.stack))
 
-	document.oncontextmenu = () => false
+	document.oncontextmenu = contextmenu
 }
 
 // Success return from server
@@ -67,6 +68,17 @@ function failed(response) {
   Alert(title, error)
 }
 
+function contextmenu(event)
+{
+  let target = event.target
+  let oncall = /consult/.test(target.className)
+
+  if (oncall) {
+    exchangeOncall(target)
+  }
+  return false
+}
+
 function dialogServiceEvent()
 {
 	document.getElementById("dialogService").addEventListener("wheel", resetTimerCounter)
@@ -78,41 +90,63 @@ function wrapperEvent()
 {
   document.getElementById("wrapper").addEventListener("wheel", () => {
     resetTimerCounter()
-    $(".marker").removeClass("marker")
+    removeMarker()
   })
   
   document.getElementById("wrapper").addEventListener("mousemove", resetTimerCounter)
 
   document.getElementById("wrapper").addEventListener("click", event => {
-    let target = event.target,
-      inCell = target.closest("th") || target.closest("td") || target,
-      stafflist = document.querySelector('#stafflist')
+    const target = event.target
 
     resetTimerCounter()
-    $(".marker").removeClass("marker")
+    removeMarker()
+    clearList(target)
+    showColumn2(target)
 
     if (target.closest('#cssmenu')) { return }
 
-    if (stafflist.style.visibility === 'visible') {
-      if (!target.closest('#stafflist')) {
-        stafflist.style.display = 'none'
-        clearEditcell()
-      }
-    }
-
-    if (inCell.cellIndex === THEATRE) {
-      let maintbl = document.querySelector("#maintbl")
-      if (maintbl.querySelectorAll("th")[THEATRE].offsetWidth < 10) {
-        maintbl.classList.add("showColumn2")
-      } else if (inCell.nodeName === "TH") {
-        maintbl.classList.remove("showColumn2")
-      }
-    }
-
-    clicktable(event, inCell)
+    clicktable(event, target)
 
     event.stopPropagation()
   })
+}
+
+function removeMarker()
+{
+  $(".marker").removeClass("marker")
+}
+
+function clearList(target)
+{
+  const stafflist = document.querySelector('#stafflist')
+  const staffConsult = document.querySelector('#staffConsult')
+  
+  if (stafflist.style.visibility === 'visible') {
+    if (!target.closest('#stafflist')) {
+      stafflist.style.display = 'none'
+      clearEditcell()
+    }
+  }
+  
+  if (staffConsult.style.visibility === 'visible') {
+    if (!target.closest('#staffConsult')) {
+      staffConsult.style.display = 'none'
+    }
+  }
+}
+
+function showColumn2(target)
+{
+  const inCell = target.closest("th") || target.closest("td")
+
+  if (inCell.cellIndex === THEATRE) {
+    let maintbl = document.querySelector("#maintbl")
+    if (maintbl.querySelectorAll("th")[THEATRE].offsetWidth < 10) {
+      maintbl.classList.add("showColumn2")
+    } else if (inCell.nodeName === "TH") {
+      maintbl.classList.remove("showColumn2")
+    }
+  }
 }
 
 function documentEvent()
