@@ -41,3 +41,10 @@ export function getLatestStart()
 
   return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)
 }
+
+export function getStaffID(staffname)
+{
+  let staffs = getSTAFFparsed()
+
+  return staffs.filter(staff => (staff.profile.staffname === staffname))[0]
+}

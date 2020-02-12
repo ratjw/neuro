@@ -1,54 +1,54 @@
 
 import {
   OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
-  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT, COLUMN
+  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT, COLUMNDATASET
 } from "../control/const.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { putNameAge } from "../util/date.js"
 import { viewLab } from "./viewLab.js"
 import { viewEquip } from "./viewEquip.js"
 
-export function fillNewrowData(row, q)
+export function fillNewrowData(row, bookq)
 {
-  setRowData(row, q)
+  setRowData(row, bookq)
 
-  Object.entries(q).forEach(([key, val]) => q[key] = (val || ''))
+  Object.entries(bookq).forEach(([key, val]) => bookq[key] = (val || ''))
 
-  Object.entries(COLUMN).forEach(([key, val]) => {
-    fillRow(row, q, key, val)
+  Object.entries(COLUMNDATASET).forEach(([key, val]) => {
+    fillRow(row, bookq, key, val)
   })
 }
 
-export function setRowData(row, q)
+export function setRowData(row, bookq)
 {
   let rowdata = row.dataset
 
-  Object.entries(q).forEach(([key, val]) => q[key] = (val || ''))
+  Object.entries(bookq).forEach(([key, val]) => bookq[key] = (val || ''))
 
-  Object.keys(COLUMN).forEach(k => rowdata[k] = q[k])
+  Object.keys(COLUMNDATASET).forEach(k => rowdata[k] = bookq[k])
 
-  rowdata.opdate = q.opdate
+  rowdata.opdate = bookq.opdate
 }
 
 export function blankRowData(row, opdate)
 {
   let rowdata = row.dataset
 
-  Object.keys(COLUMN).forEach(k => rowdata[k] = "")
+  Object.keys(COLUMNDATASET).forEach(k => rowdata[k] = "")
 
   rowdata.opdate = opdate
 }
 
-export function fillOldrowData(row, q)
+export function fillOldrowData(row, bookq)
 {
   let rowdata = row.dataset
 
-  Object.entries(q).forEach(([key, val]) => q[key] = (val || ''))
+  Object.entries(bookq).forEach(([key, val]) => bookq[key] = (val || ''))
 
-  Object.entries(COLUMN).forEach(([key, val]) => {
-    if (rowdata[key] !== q[key]) {
-      rowdata[key] = q[key]
-      fillRow(row, q, key, val)
+  Object.entries(COLUMNDATASET).forEach(([key, val]) => {
+    if (rowdata[key] !== bookq[key]) {
+      rowdata[key] = bookq[key]
+      fillRow(row, bookq, key, val)
     }
   })
 }
@@ -62,20 +62,20 @@ export function unfillOldrowData(row, opdate)
   blankRowData(row, opdate)
 }
 
-function fillRow(row, q, key, val)
+function fillRow(row, bookq, key, val)
 {
   let cells = row.cells
 
   if (val === PATIENT) {
-    cells[val].innerHTML = putNameAge(q)
+    cells[val].innerHTML = putNameAge(bookq)
   }
   else if (val === LAB) {
-    cells[val].innerHTML = viewLab(q.lab)
+    cells[val].innerHTML = viewLab(bookq.lab)
   }
   else if (val === EQUIPMENT) {
-    cells[val].innerHTML = viewEquip(q.equipment)
+    cells[val].innerHTML = viewEquip(bookq.equipment)
   }
   else if (val) {
-    cells[val].innerHTML = q[key]
+    cells[val].innerHTML = bookq[key]
   }
 }

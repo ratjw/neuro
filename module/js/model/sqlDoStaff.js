@@ -2,7 +2,7 @@
 import {
   STAFFNAME, RAMAID, ONCALL, START, SKIPBEGIN, SKIPEND
 } from '../setting/settingStaff.js'
-import { postData, MYSQLIPHP } from "./fetch.js"
+import { postData, MYSQLIPHP } from "../model/fetch.js"
 import { URIcomponent } from "../util/util.js"
 import { checkFieldExist } from "../util/getSTAFFparsed.js"
 import { getSTAFFparsed } from "../util/getSTAFFparsed.js"

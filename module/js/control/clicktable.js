@@ -33,8 +33,13 @@ export function clicktable(evt, target) {
   if (POINTER) {
     savePreviousCell()
   }
-  if ((target.nodeName === "TD") && (!POINTER || POINTER.cellIndex > PATIENT)) {
+
+  const onCell = (target.nodeName === "TD")
+  const textOnly = (!POINTER || POINTER.cellIndex > PATIENT)
+
+  if (onCell && textOnly) {
     editPresentCell(evt, target)
+    document.getElementById('staffConsult').style.display = 'none'
   } else {
     clearAllEditing()
   }

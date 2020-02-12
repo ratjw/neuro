@@ -28,7 +28,7 @@ FINALSV     = 6,
 ADMITSV     = 7,
 DISCHARGESV = 8,
 
-COLUMN = {
+COLUMNDATASET = {
   waitnum: null,
   theatre: THEATRE,
   oproom: OPROOM,
@@ -45,6 +45,8 @@ COLUMN = {
   contact: CONTACT,
   qn: null
 },
+
+CELLDATASET = [ "consult", "exchangeKey", "originConsult"],
 
 NAMEOFDAYTHAI = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์"],
 THAIMONTH = ["มค.", "กพ.", "มีค.", "เมย.", "พค.", "มิย.", "กค.", "สค.", "กย.", "ตค.", "พย.", "ธค."],

@@ -105,10 +105,10 @@ let keyin = function (evt, keycode) {
       return
   }
 
-  if ($("#stafflist, #staffConsult").is(":visible")) {
-    evt.preventDefault()
-    return
-  }
+//  if ($("#stafflist, #staffConsult").is(":visible")) {
+//    evt.preventDefault()
+//    return
+//  }
 }
 
 let mainTable9 = function (evt, editable, Shift) {

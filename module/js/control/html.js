@@ -19,7 +19,9 @@ export function htmlStafflist() {
                +    ` <span>${name}</span>`
                +  `</a>`
                + `</li>`
-    if (each.profile.oncall) { staffConsult += `<li><div>${name}</div></li>` }
+    if (each.profile.oncall) {
+      staffConsult += `<li data-id="${each.id}"><div>${name}</div></li>`
+    }
   })
   staffmenu += `<li class="w100">`
              +   `<a class="clickStaff Consults">`
