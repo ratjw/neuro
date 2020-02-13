@@ -5,10 +5,10 @@ import { allDeletedCases } from "../menu/allDeletedCases.js"
 import { readme } from "../menu/readme.js"
 import { addnewrow } from "../menu/addnewrow.js"
 import { postponeCase } from "../menu/postponeCase.js"
-import { moveCase } from "../menu/moveCase.js"
-import { copyCase } from "../menu/copyCase.js"
+import { moveCase } from "../menu/moveCopyCase.js"
+import { copyCase } from "../menu/moveCopyCase.js"
 import { editHistory } from "../menu/editHistory.js"
-import { delCase } from "../menu/delCase.js"
+import { deleteCase } from "../menu/deleteCase.js"
 import { resEPA } from '../setting/resEPA.js'
 import { resResearch } from '../setting/resResearch.js'
 import { inputHoliday, addHoliday } from "../setting/inputHoliday.js"
@@ -38,7 +38,7 @@ function setClickMenu()
     "postponecase": postponeCase,
     "moveCase": moveCase,
     "copyCase": copyCase,
-    "delcase": delCase
+    "deleteCase": deleteCase
   }
 
   Object.entries(clickMenu).forEach(([key, val]) => {

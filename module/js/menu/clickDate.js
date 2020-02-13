@@ -1,9 +1,11 @@
 
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
-import { clearMouseoverTR } from "../util/util.js"
+import { clearMouseoverTR, Alert} from "../util/util.js"
 import { clearSelection } from "../control/selectRow.js"
-import { domoveCase } from "./domoveCase.js"
-import { docopyCase } from "./docopyCase.js"
+import { sqlmoveCase } from "../model/sqlmoveCase.js"
+import { sqlcopyCase } from "../model/sqlcopyCase.js"
+import { updateBOOK } from "../util/updateBOOK.js"
+import { calcWaitnum } from "../util/calcWaitnum.js"
 
 export function clickDate(moverow, cell)
 {
@@ -44,4 +46,32 @@ export function clickDate(moverow, cell)
 
   clearMouseoverTR()
   clearSelection()
+}
+
+function domoveCase(allOldCases, allNewCases, moverow, thisrow)
+{
+  let thisopdate = thisrow.dataset.opdate
+
+  moverow.dataset.waitnum = calcWaitnum(thisopdate, thisrow, thisrow.nextElementSibling)
+
+  sqlmoveCase(allOldCases, allNewCases, moverow, thisrow).then(response => {
+    if (typeof response === "object") {
+      updateBOOK(response)
+    } else {
+      Alert ("moveCase", response)
+    }
+	}).catch(error => alert(error.stack))
+}
+
+function docopyCase(allNewCases, moverow, thisrow)
+{
+  let thisopdate = thisrow.dataset.opdate
+
+  moverow.dataset.waitnum = calcWaitnum(thisopdate, thisrow, thisrow.nextElementSibling)
+
+  sqlcopyCase(allNewCases, moverow, thisrow).then(response => {
+    typeof response === "object"
+    ? updateBOOK(response)
+    : Alert ("copyCase", response)
+	}).catch(error => alert(error.stack))
 }

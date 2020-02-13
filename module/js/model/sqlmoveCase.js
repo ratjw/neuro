@@ -1,10 +1,10 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
-import { USER } from "../main.js"
 import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
 
-export function sqlmoveCase(allOldCases, allNewCases, moverow, thisrow) {
+export function sqlmoveCase(allOldCases, allNewCases, moverow, thisrow)
+{
   let sql = "sqlReturnbook=",
     thisdate = thisrow.dataset.opdate,
     thistheatre = thisrow.dataset.theatre,

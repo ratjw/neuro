@@ -8,11 +8,9 @@ import { clearSelection } from "../control/selectRow.js"
 // not actually delete the case but set deleted = 1
 // Remove the row if more than one case on that date, or on staff table
 // Just blank the row if there is only one case
-export function delCase() {
+export function deleteCase() {
   let row = document.querySelector(".selected"),
     tableID = row.closest('table').id,
-    prevrow = row.previousElementSibling,
-    opdate = row.dataset.opdate,
     qn = row.dataset.qn,
     oproom = row.dataset.oproom,
     allCases = []
@@ -27,18 +25,11 @@ export function delCase() {
     allCases = sameDateRoomTableQNs(tableID, row)
   }
 
-  let deleteCase = function (del) {
-    sqlDeleteCase(allCases, oproom, qn, 1).then(response => {
-      let hasData = function () {
-        updateBOOK(response)
-      }
-
-      typeof response === "object"
-      ? hasData()
-      : Alert ("delCase", response)
-    }).catch(error => alert(error.stack))
-  }
-
   clearSelection()
-  deleteCase(1)
+
+  sqlDeleteCase(allCases, oproom, qn).then(response => {
+    typeof response === "object"
+    ? updateBOOK(response)
+    : Alert ("deleteCase", response)
+  }).catch(error => alert(error.stack))
 }

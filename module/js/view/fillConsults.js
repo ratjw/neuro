@@ -58,7 +58,7 @@ export function fillConsults(tableID = 'maintbl')
         if (rowdate === date) {
           const cell = row.cells[PATIENT]
           let original = cell.dataset.originConsult
-          if (!original) { original = cell.dataset.consult }
+          if (!original) {  cell.dataset.originConsult = cell.dataset.consult }
           dataAttr(cell, staffname)
         }
         else if (rowdate > date) {

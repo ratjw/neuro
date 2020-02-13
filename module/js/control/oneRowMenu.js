@@ -30,7 +30,7 @@ export function oneRowMenu()
 
   let Delete = qn || prevDate === opdate
   if (Delete) {
-    $("#delcase").html("<b>Confirm Delete </b><br>" + patient)
+    $("#deleteCase").html("<b>Confirm Delete </b><br>" + patient)
   }
   enable(Delete, "#delete")
 
