@@ -52,4 +52,5 @@ export function findHoliday(date)
   if (govHoliday[monthdate]) {
     return `url('css/pic/holiday/${govHoliday[monthdate]}.png')`
   }
+  return ''
 }

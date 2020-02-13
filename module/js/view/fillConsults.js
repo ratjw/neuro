@@ -8,7 +8,7 @@ import {
 // The staff who has latest startoncall date, is to start
 export function fillConsults(tableID = 'maintbl')
 {
-  let table = document.getElementById(tableID),
+  const table = document.getElementById(tableID),
     tableSaturdayRows = Array.from(table.querySelectorAll("tr.Saturday")),
     tableSaturdateRows = tableSaturdayRows.map(e => e.dataset.opdate),
     tableSaturdates = [...new Set(tableSaturdateRows)]
@@ -16,16 +16,16 @@ export function fillConsults(tableID = 'maintbl')
   // queuetbl have no opdated case
   if (!tableSaturdates.length) { return }
 
-  let tableFirstSat = tableSaturdates[0],
+  const tableFirstSat = tableSaturdates[0],
     startStaff = getLatestStart()
 
   // no start date is set
   if (!startStaff) { return }
 
-  let startFirstSat = getFirstSat(startStaff),
+  const startFirstSat = getFirstSat(startStaff),
     allSaturdays = getAllSaturdays(startFirstSat, tableSaturdates),
     allLen = allSaturdays.length + 20,
-    allStaffOncall = getAllStaffOncall(startStaff, allLen),
+    oncallList = getOncallList(startStaff, allLen),
     staffsOncall = getStaffOncall()
 
   staffsOncall.forEach(staff => {
@@ -36,28 +36,33 @@ export function fillConsults(tableID = 'maintbl')
 
   allSaturdays.forEach((sat, i) => {
     staffsOncall.forEach(staff => {
-      let matchname = staff.profile.staffname === allStaffOncall[i]
-      let matchskip = staff.skipSat && staff.skipSat.includes(sat)
+      const matchname = staff.profile.staffname === oncallList[i]
+      const matchskip = staff.skipSat && staff.skipSat.includes(sat)
       if (matchname && matchskip) {
-        allStaffOncall.splice(i, 1)
+        oncallList.splice(i, 1)
       }
     })
   })
 
-  allSaturdays.forEach((e, i) => allSaturdays[e] = allStaffOncall[i])
+  allSaturdays.forEach((e, i) => allSaturdays[e] = oncallList[i])
 
   tableSaturdayRows.forEach(e => {
     dataAttr(e.cells[PATIENT], allSaturdays[e.dataset.opdate])
   })
 
-  let exchange = getOncallExchange()
+  const exchange = getOncallExchange()
   Object.entries(exchange).forEach(([staffname, obj]) => {
     Object.values(obj).forEach(date => {
-      tableSaturdayRows.forEach(row => {
-        if (row.dataset.opdate === date) {
-          let cell = row.cells[PATIENT]
-          cell.dataset.originConsult = cell.dataset.consult
+      tableSaturdayRows.some(row => {
+        const rowdate = row.dataset.opdate
+        if (rowdate === date) {
+          const cell = row.cells[PATIENT]
+          let original = cell.dataset.originConsult
+          if (!original) { original = cell.dataset.consult }
           dataAttr(cell, staffname)
+        }
+        else if (rowdate > date) {
+          return true
         }
       })
     })
@@ -78,21 +83,20 @@ function getAllSaturdays(startFirstSat, tableSaturdates)
   return satDays
 }
 
-function getAllStaffOncall(startStaff, allLen)
+function getOncallList(startStaff, allLen)
 {
-  let staffs = getStaffOncall(),
+  const staffs = getStaffOncall(),
     staffnames = staffs.map(e => e.profile.staffname),
     stafflen = staffnames.length,
-    allStaffOncall = [],
-    startEnum = startStaff.profile.oncall,
-    n = startEnum - 1,
-    rotated = staffnames.map((e, i) => staffnames[(i + n) % stafflen])
+    num = startStaff.profile.oncall - 1,
+    rotated = staffnames.map((e, i) => staffnames[(i + num) % stafflen])
 
-  while (allStaffOncall.length < allLen) {
-    allStaffOncall = [...allStaffOncall, ...rotated]
+  let list = []
+  while (list.length < allLen) {
+    list = [...list, ...rotated]
   }
 
-  return allStaffOncall
+  return list
 }
 
 // get first Saturday from startDate

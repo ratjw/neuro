@@ -163,20 +163,14 @@ export function sortable () {
 
       if (!thisqn) { thisdrop.remove() }
 
-      // after sorting, must attach hover to the changed DOM elements
-      let doSorting = function() {
-        sqlSortable(allOldCases, allNewCases, moveitem, clonethisdrop).then(response => {
-          let hasData = function () {
-            updateBOOK(response)
-          }
+      sqlSortable(allOldCases, allNewCases, moveitem, clonethisdrop).then(response => {
+        if (typeof response === "object") {
+          updateBOOK(response)
+        } else {
+          Alert("Sortable", response)
+        }
+      }).catch(error => alert(error.stack))
 
-          typeof response === "object"
-          ? hasData()
-          : Alert("Sortable", response)
-        }).catch(error => alert(error.stack))
-      }
-
-      doSorting()
       resetTimerCounter()
       clearEditcell()
     }

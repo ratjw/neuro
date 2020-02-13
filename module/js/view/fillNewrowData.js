@@ -1,7 +1,7 @@
 
 import {
   OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
-  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT, COLUMNDATASET
+  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT, COLUMNDATASET, CELLDATASET
 } from "../control/const.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { putNameAge } from "../util/date.js"
@@ -37,6 +37,8 @@ export function blankRowData(row, opdate)
   Object.keys(COLUMNDATASET).forEach(k => rowdata[k] = "")
 
   rowdata.opdate = opdate
+
+//  CELLDATASET.forEach(data => delete row.cells[PATIENT].dataset[data])
 }
 
 export function fillOldrowData(row, bookq)
