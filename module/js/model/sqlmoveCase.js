@@ -3,25 +3,25 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { updateCasenum, sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
 
-export function sqlmoveCase(allOldCases, allNewCases, moverow, thisrow)
+export function sqlmoveCase(allOldCases, allNewCases, moverow, pasterow)
 {
   let sql = "sqlReturnbook=",
-    thisdate = thisrow.dataset.opdate,
-    thistheatre = thisrow.dataset.theatre,
-    thisroom = thisrow.dataset.oproom,
-    waitnum = moverow.dataset.waitnum,
+    newWaitnum = moverow.dataset.waitnum,
     moveroom = moverow.dataset.oproom,
-    moveqn = moverow.dataset.qn
+    moveqn = moverow.dataset.qn,
+    pastedate = pasterow.dataset.opdate,
+    pastetheatre = pasterow.dataset.theatre || "",
+    pasteroom = pasterow.dataset.oproom || null
 
-  if (moveroom) { sql += updateCasenum(allOldCases) }
+  if (allOldCases.length && moveroom) { sql += updateCasenum(allOldCases) }
 
   allNewCases.forEach((e, i) => {
     if (e === moveqn) {
-      thisroom
-      ? sql += sqlMover(waitnum, thisdate, thistheatre, thisroom, i + 1, moveqn)
-      : sql += sqlMover(waitnum, thisdate, thistheatre, null, null, moveqn)
+      pasteroom
+      ? sql += sqlMover(newWaitnum, pastedate, pastetheatre, pasteroom, i + 1, moveqn)
+      : sql += sqlMover(newWaitnum, pastedate, pastetheatre, null, null, moveqn)
     } else {
-      thisroom
+      pasteroom
       ? sql += sqlCaseNum(i + 1, e)
       : sql += sqlCaseNum(null, e)
     }
