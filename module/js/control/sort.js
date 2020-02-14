@@ -1,4 +1,5 @@
 
+import { PATIENT, CELLDATASET } from '../control/const.js'
 import { timer, resetTimerCounter } from "./timer.js"
 import { clearEditcell } from "./edit.js"
 import { clearMouseoverTR } from "../util/util.js"
@@ -126,7 +127,8 @@ export function sortable () {
 
       // clonemoveitem in case of if it's the only one row, replace it
       // otherwise the date is skipped
-      // clonethisdrop in case of it may be removed
+      // clonethisdrop in case of it may be removed by (!thisqn) thisdrop.remove()
+      // so that holiday background image and consult staffname still remain
       let clonemoveitem = moveitem.cloneNode(true),
         clonethisdrop = thisdrop.cloneNode(true),
         prevopdate = prevrow && prevrow.dataset.opdate,
@@ -138,6 +140,12 @@ export function sortable () {
       moveitem.dataset.opdate = thisdrop.dataset.opdate
       moveitem.dataset.oproom = thisdrop.dataset.oproom
       rowDecoration(moveitem, moveitem.dataset.opdate)
+
+      moveitem.cells[PATIENT].className = thisdrop.cells[PATIENT].className
+      CELLDATASET.forEach(e =>
+        moveitem.cells[PATIENT].dataset[e] = thisdrop.cells[PATIENT].dataset[e] || ''
+      )
+      
 
       allOldCases = sameDateRoomTableQNs(sender, clonemoveitem)
       allNewCases = sameDateRoomTableQNs(receiver, thisdrop)

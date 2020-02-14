@@ -103,6 +103,7 @@ export function refillDatedCases(table, oldbook, newbook)
 
   Object.keys(oldDiff).forEach(key => oldDiff[key] = [])
   allDiff = Object.assign({}, oldDiff, newDiff)
+
   Object.entries(allDiff).forEach(([opdate, rows]) => {
     viewOneDay(table, opdate, rows)
   })
