@@ -7,6 +7,7 @@ import { sqlcopyCase } from "../model/sqlcopyCase.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { calcWaitnum } from "../util/calcWaitnum.js"
 
+// not the same as sort because the row was not actually moved
 export function clickDate(moverow, cell)
 {
   let moveTableID = moverow.closest('table').id,

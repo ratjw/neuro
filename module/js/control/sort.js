@@ -125,15 +125,15 @@ export function sortable () {
         return
       }
 
-      // clonemoveitem in case of if it's the only one row, replace it
-      // otherwise the date is skipped
+      // not the same as movecase in clickDate because the row was actually moved
+      // clonemoveitem in case of if it's the only one row, the date is skipped
       // clonethisdrop in case of it may be removed by (!thisqn) thisdrop.remove()
-      // so that holiday background image and consult staffname still remain
       let clonemoveitem = moveitem.cloneNode(true),
         clonethisdrop = thisdrop.cloneNode(true),
         prevopdate = prevrow && prevrow.dataset.opdate,
         nextopdate = nextrow && nextrow.dataset.opdate,
         single = (prevopdate !== moveopdate) && (moveopdate !== nextopdate)
+        // the only one case of this date
 
       // make moveitem look alike thisdrop for sameDateRoom function
       moveitem.dataset.waitnum = calcWaitnum(thisopdate, previtem, nextitem)

@@ -46,6 +46,7 @@ COLUMNDATASET = {
   qn: null
 },
 
+// for CSS display 'สัปดาห์ Consult\A'attr(data-consult) at row.cells[PATIENT]
 CELLDATASET = ["originConsult", "consult", "exchangeKey"],
 
 NAMEOFDAYTHAI = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์"],
