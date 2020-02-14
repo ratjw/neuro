@@ -41,7 +41,7 @@ function mouseEvent(selected)
     $(this).removeClass("pasteDate")
   })
   $allRows.off("click").on("click", function(event) {
-    clickDate(selected, this)
+    clickDate(selected, this.closest("tr"))
     event.stopPropagation()
   })
 }

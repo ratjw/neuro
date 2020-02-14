@@ -7,24 +7,22 @@ import { sqlcopyCase } from "../model/sqlcopyCase.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { calcWaitnum } from "../util/calcWaitnum.js"
 
-// not the same as sort because the row was not actually moved
-export function clickDate(moverow, cell)
+export function clickDate(moverow, pasterow)
 {
   let moveTableID = moverow.closest('table').id,
     moveqn = moverow.dataset.qn,
 
-    thisrow = cell.closest("tr"),
-    thisTableID = thisrow.closest('table').id,
-    thisqn = thisrow.dataset.qn,
+    pasteTableID = pasterow.closest('table').id,
+    pasteqn = pasterow.dataset.qn,
     allOldCases,
     allNewCases,
-    thisindex
+    pasteindex
 
   // click the same case
-  if (thisqn === moveqn) { return }
+  if (pasteqn === moveqn) { return }
 
   allOldCases = sameDateRoomTableQNs(moveTableID, moverow)
-  allNewCases = sameDateRoomTableQNs(thisTableID, thisrow)
+  allNewCases = sameDateRoomTableQNs(pasteTableID, pasterow)
 
   // remove itself from old sameDateRoom
   allOldCases = allOldCases.filter(e => e !== moveqn)
@@ -36,26 +34,26 @@ export function clickDate(moverow, cell)
   }
 
   // insert itself into new sameDateRoom after the clicked row
-  thisindex = allNewCases.indexOf(thisqn)
-  allNewCases.splice(thisindex + 1, 0, moveqn)
+  pasteindex = allNewCases.indexOf(pasteqn)
+  allNewCases.splice(pasteindex + 1, 0, moveqn)
 
   if (/moveCase/.test(moverow.className)) {
-    domoveCase(allOldCases, allNewCases, moverow, thisrow)
+    domoveCase(allOldCases, allNewCases, moverow, pasterow)
   } else if (/copyCase/.test(moverow.className)) {
-    docopyCase(allNewCases, moverow, thisrow)
+    docopyCase(allNewCases, moverow, pasterow)
   }
 
   clearMouseoverTR()
   clearSelection()
 }
 
-function domoveCase(allOldCases, allNewCases, moverow, thisrow)
+function domoveCase(allOldCases, allNewCases, moverow, pasterow)
 {
-  let thisopdate = thisrow.dataset.opdate
+  let pasteopdate = pasterow.dataset.opdate
 
-  moverow.dataset.waitnum = calcWaitnum(thisopdate, thisrow, thisrow.nextElementSibling)
+  moverow.dataset.waitnum = calcWaitnum(pasteopdate, pasterow, pasterow.nextElementSibling)
 
-  sqlmoveCase(allOldCases, allNewCases, moverow, thisrow).then(response => {
+  sqlmoveCase(allOldCases, allNewCases, moverow, pasterow).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
     } else {
@@ -64,13 +62,13 @@ function domoveCase(allOldCases, allNewCases, moverow, thisrow)
 	}).catch(error => alert(error.stack))
 }
 
-function docopyCase(allNewCases, moverow, thisrow)
+function docopyCase(allNewCases, moverow, pasterow)
 {
-  let thisopdate = thisrow.dataset.opdate
+  let pasteopdate = pasterow.dataset.opdate
 
-  moverow.dataset.waitnum = calcWaitnum(thisopdate, thisrow, thisrow.nextElementSibling)
+  moverow.dataset.waitnum = calcWaitnum(pasteopdate, pasterow, pasterow.nextElementSibling)
 
-  sqlcopyCase(allNewCases, moverow, thisrow).then(response => {
+  sqlcopyCase(allNewCases, moverow, pasterow).then(response => {
     typeof response === "object"
     ? updateBOOK(response)
     : Alert ("copyCase", response)

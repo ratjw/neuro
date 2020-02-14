@@ -3,7 +3,7 @@ import { PATIENT, CELLDATASET } from '../control/const.js'
 import { timer, resetTimerCounter } from "./timer.js"
 import { clearEditcell } from "./edit.js"
 import { clearMouseoverTR } from "../util/util.js"
-import { sqlSortable } from "../model/sqlSortable.js"
+import { sqlmoveCase } from "../model/sqlmoveCase.js"
 import { calcWaitnum } from "../util/calcWaitnum.js"
 import { getOpdate } from "../util/date.js"
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
@@ -128,6 +128,7 @@ export function sortable () {
       // not the same as movecase in clickDate because the row was actually moved
       // clonemoveitem in case of if it's the only one row, the date is skipped
       // clonethisdrop in case of it may be removed by (!thisqn) thisdrop.remove()
+      // thisdrop is replaced by moveitem, clonethisdrop is used for sqlSortable
       let clonemoveitem = moveitem.cloneNode(true),
         clonethisdrop = thisdrop.cloneNode(true),
         prevopdate = prevrow && prevrow.dataset.opdate,
@@ -171,7 +172,7 @@ export function sortable () {
 
       if (!thisqn) { thisdrop.remove() }
 
-      sqlSortable(allOldCases, allNewCases, moveitem, clonethisdrop).then(response => {
+      sqlmoveCase(allOldCases, allNewCases, moveitem, clonethisdrop).then(response => {
         if (typeof response === "object") {
           updateBOOK(response)
         } else {
