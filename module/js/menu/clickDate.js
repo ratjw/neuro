@@ -1,4 +1,5 @@
 
+import { PASTETOP, PASTEBOTTOM } from '../control/const.js'
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
 import { clearMouseoverTR, Alert} from "../util/util.js"
 import { clearSelection } from "../control/selectRow.js"
@@ -15,6 +16,7 @@ export function clickDate(moverow, pasterow)
 
     pasteTableID = pasterow.closest('table').id,
     pasteqn = pasterow.dataset.qn,
+    pastepos = pasterow.classList.contains(PASTEBOTTOM) ? 1 : 0,
     allOldCases,
     allNewCases,
     pasteindex
@@ -34,25 +36,28 @@ export function clickDate(moverow, pasterow)
     allOldCases = []
   }
 
-  // insert itself into new sameDateRoom after the clicked row
+  // insert itself into new sameDateRoom before/after the clicked row
   pasteindex = allNewCases.indexOf(pasteqn)
-  allNewCases.splice(pasteindex + 1, 0, moveqn)
+  
+  allNewCases.splice(pasteindex + pastepos, 0, moveqn)
 
   if (/moveCase/.test(moverow.className)) {
-    domoveCase(allOldCases, allNewCases, moverow, pasterow)
+    domoveCase(allOldCases, allNewCases, moverow, pasterow, pastepos)
   } else if (/copyCase/.test(moverow.className)) {
-    docopyCase(allNewCases, moverow, pasterow)
+    docopyCase(allNewCases, moverow, pasterow, pastepos)
   }
 
   clearMouseoverTR()
   clearSelection()
 }
 
-function domoveCase(allOldCases, allNewCases, moverow, pasterow)
+function domoveCase(allOldCases, allNewCases, moverow, pasterow, pastepos)
 {
   let pasteopdate = pasterow.dataset.opdate
 
-  moverow.dataset.waitnum = calcWaitnum(pasteopdate, pasterow, pasterow.nextElementSibling)
+  moverow.dataset.waitnum = pastepos
+                          ? calcWaitnum(pasteopdate, pasterow, pasterow.nextElementSibling)
+                          : calcWaitnum(pasteopdate, pasterow.previousElementSibling, pasterow)
 
   sqlmoveCase(allOldCases, allNewCases, moverow, pasterow).then(response => {
     if (typeof response === "object") {
@@ -63,11 +68,13 @@ function domoveCase(allOldCases, allNewCases, moverow, pasterow)
 	}).catch(error => alert(error.stack))
 }
 
-function docopyCase(allNewCases, moverow, pasterow)
+function docopyCase(allNewCases, moverow, pasterow, pastepos)
 {
   let pasteopdate = pasterow.dataset.opdate
 
-  moverow.dataset.waitnum = calcWaitnum(pasteopdate, pasterow, pasterow.nextElementSibling)
+  moverow.dataset.waitnum = pastepos
+                          ? calcWaitnum(pasteopdate, pasterow, pasterow.nextElementSibling)
+                          : calcWaitnum(pasteopdate, pasterow.previousElementSibling, pasterow)
 
   sqlcopyCase(allNewCases, moverow, pasterow).then(response => {
     typeof response === "object"

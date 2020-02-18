@@ -55,6 +55,12 @@ THAIMONTHFULL = [ "มกราคม", "กุมภาพันธ์", "ม�
                   "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" ],
 LARGESTDATE = "9999-12-31",
 
+SELECTED = "selected",
+MOVECASE = "moveCase",
+COPYCASE = "copyCase",
+PASTETOP = "pasteDateTop",
+PASTEBOTTOM = "pasteDateBottom",
+
 COMPLICATION = {
   admitted: "Readmission",
 //  operated: "Reoperation",

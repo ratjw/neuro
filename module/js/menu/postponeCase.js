@@ -1,4 +1,5 @@
 
+import { SELECTED } from "../control/const.js"
 import { LARGESTDATE } from "../control/const.js"
 import { sqlPostponeCase } from "../model/sqlPostponeCase.js"
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
@@ -11,7 +12,7 @@ import { locateFound } from "../view/scrolltoThisCase.js"
 // but was shown blank date on screen
 export function postponeCase()
 {
-  let row = document.querySelector(".selected"),
+  let row = document.querySelector(`.${SELECTED}`),
     tableID = row.closest('table').id,
     opdate = row.dataset.opdate,
     oproom = row.dataset.oproom,

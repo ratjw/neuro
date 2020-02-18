@@ -344,8 +344,13 @@ tr.copyCase {
 }
 
 /* mark where move/copy case will be pasted */
-tr.pasteDate {
-  border-bottom: dashed 2px green;
+tr.pasteDateTop {
+  border: inset 5px silver;
+  border-top: solid 30px silver;
+}
+tr.pasteDateBottom {
+  border: outset 5px silver;
+  border-bottom: solid 30px silver;
 }
 
 tr.selected {

@@ -1,5 +1,5 @@
 
-import { LARGESTDATE } from "../control/const.js"
+import { LARGESTDATE, MOVECASE, COPYCASE, PASTETOP, PASTEBOTTOM } from "../control/const.js"
 
 // necessary when passing to http, not when export to excel
 export function URIcomponent(content) {
@@ -168,12 +168,13 @@ export function Alert(title, message) {
 export function clearMouseoverTR()
 {
   $("#maintbl tr:has('td'), #queuetbl tr:has('td')")
-    .off("mouseover")
+    .off("mousemove")
     .off("mouseout")
     .off("click")
-  $(".pasteDate").removeClass("pasteDate")
-  $(".moveCase").removeClass("moveCase")
-  $(".copyCase").removeClass("copyCase")
+  $(`.${PASTETOP}`).removeClass(PASTETOP)
+  $(`.${PASTEBOTTOM}`).removeClass(PASTEBOTTOM)
+  $(`.${MOVECASE}`).removeClass(MOVECASE)
+  $(`.${COPYCASE}`).removeClass(COPYCASE)
 }
 
 // The second parameter (, 0) ensure a default value if array.map is empty

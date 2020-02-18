@@ -1,4 +1,5 @@
 
+import { SELECTED, MOVECASE, COPYCASE } from "../control/const.js"
 import { oneRowMenu } from '../control/oneRowMenu.js'
 
 export function selectRow(event, target)
@@ -9,26 +10,21 @@ export function selectRow(event, target)
     $allRows = $("tr")
 
   if (/selected/.test($row.attr('class'))) {
-    $row.removeClass("selected")
-    disableOneRowMenu()
+    clearSelection()
   } else {
-    $rows.removeClass("selected")
-    $row.addClass("selected")
+    $rows.removeClass(SELECTED)
+    $row.addClass(SELECTED)
     oneRowMenu()
   }
 }
 
 export function clearSelection()
 {
-  $('.selected').removeClass('selected');
-  disableOneRowMenu()
-}
-
-function disableOneRowMenu()
-{
   let ids = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", "#delete"]
 
   ids.forEach(function(each) {
     $(each).addClass("disabled")
   })
+
+  $(`.${SELECTED}`).removeClass(SELECTED)
 }

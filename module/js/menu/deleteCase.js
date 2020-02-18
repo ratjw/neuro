@@ -1,4 +1,5 @@
 
+import { SELECTED } from "../control/const.js"
 import { sqlDeleteCase } from "../model/sqlDeleteCase.js"
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
@@ -9,7 +10,7 @@ import { clearSelection } from "../control/selectRow.js"
 // Remove the row if more than one case on that date, or on staff table
 // Just blank the row if there is only one case
 export function deleteCase() {
-  let row = document.querySelector(".selected"),
+  let row = document.querySelector(`.${SELECTED}`),
     tableID = row.closest('table').id,
     qn = row.dataset.qn,
     oproom = row.dataset.oproom,

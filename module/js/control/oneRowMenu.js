@@ -1,12 +1,12 @@
 
-import { LARGESTDATE } from "../control/const.js"
+import { LARGESTDATE, SELECTED } from "../control/const.js"
 
 // disable some menu-items for the one current row
 // Menu for the current row -> addrow, postpone, moveCase, copyCase, tracking, del
 // Menu for all cases -> staffqueue, service, all deleted, search, readme
 export function oneRowMenu()
 {
-  let row = document.querySelector(".selected"),
+  let row = document.querySelector(`.${SELECTED}`),
     prevDate = row.previousElementSibling.dataset.opdate,
     opdate = row.dataset.opdate,
     staffname = row.dataset.staffname,
