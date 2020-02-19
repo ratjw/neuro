@@ -33,10 +33,6 @@ export function oneRowMenu()
     $("#deleteCase").html("<b>Confirm Delete </b><br>" + patient)
   }
   enable(Delete, "#delete")
-
-  enable(true, "#EXCEL")
-
-  enable(true, "#LINE")
 }
 
 function enable(able, id)

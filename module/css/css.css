@@ -345,12 +345,10 @@ tr.copyCase {
 
 /* mark where move/copy case will be pasted */
 tr.pasteDateTop {
-  border: inset 5px silver;
-  border-top: solid 30px silver;
+  box-shadow:inset 0px 20px 5px 0px lightgrey;
 }
 tr.pasteDateBottom {
-  border: outset 5px silver;
-  border-bottom: solid 30px silver;
+  box-shadow:inset 0px -20px 5px 0px lightgrey;
 }
 
 tr.selected {

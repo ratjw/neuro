@@ -38,7 +38,7 @@ function mouseEvent(selected)
   let $allRows = $("#maintbl tr:has('td'), #queuetbl tr:has('td')")
 
   $allRows.mousemove(function() {
-    if (event.clientY - $(this).offset().top < this.offsetHeight/2) {
+    if (event.clientY - this.getBoundingClientRect().top < this.offsetHeight/2) {
       this.classList.remove(PASTEBOTTOM)
       this.classList.add(PASTETOP)
     } else {
