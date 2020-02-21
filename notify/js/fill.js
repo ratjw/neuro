@@ -1,6 +1,6 @@
 
 import { LARGESTDATE } from "./const.js"
-import { ISOdate, nextdates } from "./date.js"
+import { nextdates } from "./date.js"
 import { BOOK } from "./updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData, fillNewrowData } from "./fillNewrowData.js"

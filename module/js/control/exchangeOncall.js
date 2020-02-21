@@ -1,6 +1,4 @@
 
-import { OPDATE } from "../control/const.js"
-import { getOpdate } from "../util/date.js"
 import { reposition, menustyle } from "../util/util.js"
 import { clearEditcell } from "../control/edit.js"
 import { setSTAFF } from "../util/updateBOOK.js"
@@ -16,8 +14,7 @@ export function exchangeOncall(pointing)
     select: ( event, ui ) => {
       let staffname = ui.item.text()
       let id = ui.item.data('id').toString()
-      let opdateth = $pointing.closest('tr').find("td")[OPDATE].innerHTML
-      let opdate = getOpdate(opdateth)
+      let opdate = pointing.closest('tr').dataset.opdate
 
       changeOncall(pointing, opdate, id, staffname)
       $staffConsult.hide()
@@ -53,10 +50,11 @@ async function changeOncall(pointing, opdate, id, staffname)
     pointing.dataset.originConsult = ''
   }
 
-  // Had been exchanged
+  // Had ever been exchanged before
   else if (key) {
     sql += remove + set
     pointing.dataset.exchangeKey = key
+  // Never been exchanged before
   } else {
     sql += set
     pointing.dataset.originConsult = prevStaff

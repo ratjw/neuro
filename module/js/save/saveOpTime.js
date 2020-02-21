@@ -1,6 +1,5 @@
 
 import { sqlSaveOpTime } from "../model/sqlSaveOpTime.js"
-import { getOpdate } from "../util/date.js"
 import { sameDateRoomTableRows } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"

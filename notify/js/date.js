@@ -2,10 +2,10 @@
 import { LARGESTDATE, THAIMONTH } from "./const.js"
 
 const today = new Date()
-export const START = ISOdate(new Date(today.getFullYear(), today.getMonth()-1, 1))
+export const START = obj_2_ISO(new Date(today.getFullYear(), today.getMonth()-1, 1))
 
-// Javascript Date Object to MySQL date (ISOdate 2014-05-11)
-export function ISOdate(date) {
+// Javascript Date Object to MySQL date (obj_2_ISO 2014-05-11)
+export function obj_2_ISO(date) {
   if (!date) { return date }
 
   let mm = date.getMonth() + 1,
@@ -17,8 +17,8 @@ export function ISOdate(date) {
       ].join("-")
 } 
 
-// ISOdate (2014-05-11) to Thai date (11 พค. 2557) 
-export function thDate(opdate) {
+// obj_2_ISO (2014-05-11) to Thai date (11 พค. 2557) 
+export function ISO_2_th(opdate) {
   if (!opdate) { return opdate }
 
   // LARGESTDATE (9999-12-31)
@@ -35,22 +35,40 @@ export function thDate(opdate) {
   ].join(" ")
 }
 
-// Date Object or ISOdate to be added or substracted by days
-// Result in ISOdate (2014-05-11)
+// Thai date (11 พค. 2557) to obj_2_ISO (2014-05-11)
+export function th_2_ISO(opdate) {
+  if (!opdate) { return "" }
+
+  let date = opdate.split(" "),
+    mm = THAIMONTH.indexOf(date[1]) + 1
+
+  if (date.length > 3) { return "" }
+  if (mm === 0) { return "" }
+
+  return [
+    Number(date[2]) - 543,
+    (mm < 10 ? '0' : '') + mm,
+    date[0]
+  ].join("-")
+} 
+
+// Date Object or obj_2_ISO to be added or substracted by days
+// Result in obj_2_ISO (2014-05-11)
 export function nextdates(date, days) {
   if (!date) { return date }
 
   let next = new Date(date);
-    next.setDate(next.getDate() + days);
 
-  return ISOdate(next);
+  next.setDate(next.getDate() + days);
+
+  return obj_2_ISO(next);
 }
 
 // change date in book to show on table taking care of LARGESTDATE
 export function putThdate (date) {
   if (!date) { return date }
 
-  return (String(date) === LARGESTDATE) ? "" : thDate(date)
+  return (String(date) === LARGESTDATE) ? "" : th_2_ISO(date)
 }
 
 export function putNameAge(q)

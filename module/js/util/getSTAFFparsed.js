@@ -57,12 +57,14 @@ export function getOncallExchange()
 
   staffs.forEach(staff => exchange[staff.profile.staffname] = staff.profile.exchange)
 
-  Object.entries(exchange).forEach(([key, val]) => {
-    if (!val || Object.entries(val).length === 0) {
-      delete exchange[key]
+  // remove staff with no exchange
+  Object.entries(exchange).forEach(([staff, exchng]) => {
+    if (!exchng || Object.entries(exchng).length === 0) {
+      delete exchange[staff]
     }
   })
 
+  // remove out-of-date exchange
   Object.entries(exchange).forEach(([key, val]) => {
     Object.entries(val).forEach((k, date) => {
       if (date < START_DATE) {

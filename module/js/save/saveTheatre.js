@@ -1,6 +1,5 @@
 
 import { sqlSaveTheatre } from "../model/sqlSaveTheatre.js"
-import { getOpdate } from "../util/date.js"
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"

@@ -46,21 +46,27 @@ export function fillConsults(tableID = 'maintbl')
 
   allSaturdays.forEach((e, i) => allSaturdays[e] = oncallList[i])
 
+  // fill default staffname
   tableSaturdayRows.forEach(e => {
     dataAttr(e.cells[PATIENT], allSaturdays[e.dataset.opdate])
   })
 
+  // fill exchange staffname
   const exchange = getOncallExchange()
-  Object.entries(exchange).forEach(([staffname, obj]) => {
-    Object.values(obj).forEach(date => {
+  Object.entries(exchange).forEach(([staffname, exchng]) => {
+    Object.entries(exchng).forEach(([key, date]) => {
       tableSaturdayRows.some(row => {
         const rowdate = row.dataset.opdate
         if (rowdate === date) {
           const cell = row.cells[PATIENT]
-          let original = cell.dataset.originConsult
-          if (!original) {  cell.dataset.originConsult = cell.dataset.consult }
-          dataAttr(cell, staffname)
+          if (!cell.dataset.originConsult) {
+            cell.dataset.originConsult = cell.dataset.consult
+          }
+          cell.dataset.consult = staffname
+          cell.dataset.exchangeKey = key
+          return true
         }
+        // beyond exchange date -> break loop
         else if (rowdate > date) {
           return true
         }

@@ -2,7 +2,6 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { calcWaitnum } from "../util/calcWaitnum.js"
-import { getOpdate } from "../util/date.js"
 import { URIcomponent, getTitlename } from "../util/util.js"
 
 export function sqlMoveCaseHN(pointed, waiting, wanting)
