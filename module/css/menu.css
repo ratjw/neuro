@@ -49,16 +49,8 @@
   color: gray;
   text-shadow: 0px 1px 0px #fff;
 }
-#cssmenu > ul li#submenu a,
-#cssmenu > ul li#EXCEL a,
-#cssmenu > ul li#LINE a {
-  width: 30px;
-  height: 20px;
-  text-align: center;
-  padding-top: 7px;
-}
 #cssmenu > ul li#submenu ul li a {
-  width: 150px;
+  width: 125px;
   height: auto;
   text-align: left;
   padding-top: 12px;
