@@ -1,11 +1,15 @@
 
-import {
-  STAFFNAME, RAMAID, ONCALL, START, SKIPBEGIN, SKIPEND
-} from '../setting/settingStaff.js'
 import { postData, MYSQLIPHP } from "../model/fetch.js"
 import { URIcomponent } from "../util/util.js"
 import { checkFieldExist } from "../util/getSTAFFparsed.js"
 import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
+
+const STAFFNAME = 0,
+  RAMAID = 1,
+  ONCALL = 2,
+  START = 3,
+  SKIPBEGIN = 4,
+  SKIPEND = 5
 
 export function sqlDoSaveStaff(row)
 {

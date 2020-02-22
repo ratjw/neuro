@@ -7,12 +7,9 @@ import { getLatestKey, Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
 
-export const STAFFNAME = 0,
-              RAMAID = 1,
-              ONCALL = 2,
-              START = 3,
-              SKIPBEGIN = 4,
-              SKIPEND = 5
+const START = 3,
+      SKIPBEGIN = 4,
+      SKIPEND = 5
 
 export function settingStaff()
 {

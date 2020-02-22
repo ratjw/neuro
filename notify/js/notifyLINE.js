@@ -65,6 +65,6 @@ function selectRows(begindate, enddate)
 
   return [...rows].filter(row => {
     let opdate = row.dataset.opdate
-    return opdate >= begindate && opdate < enddate 
+    return opdate >= begindate && opdate <= enddate 
   })
 }

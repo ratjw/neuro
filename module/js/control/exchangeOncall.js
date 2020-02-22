@@ -33,8 +33,8 @@ async function changeOncall(pointing, opdate, id, staffname)
 
   if (staffname === prevStaff) { return }
 
-  let key = pointing.dataset.exchangeKey
-  let originConsult = pointing.dataset.originConsult
+  let key = pointing.dataset.exkey
+  let exconsult = pointing.dataset.exconsult
   let prevStaffID = getStaffID(prevStaff)
   let now = Date.now()
   let sql = 'sqlReturnStaff='
@@ -44,20 +44,20 @@ async function changeOncall(pointing, opdate, id, staffname)
   let set = `UPDATE staff SET profile=`
     + `JSON_SET(profile,'$.exchange',JSON_OBJECT("${now}","${opdate}")) WHERE id=${id};`
 
-  if (staffname === originConsult) {
+  if (staffname === exconsult) {
     sql += remove
-    pointing.dataset.exchangeKey = ''
-    pointing.dataset.originConsult = ''
+    pointing.dataset.exkey = ''
+    pointing.dataset.exconsult = ''
   }
 
   // Had ever been exchanged before
   else if (key) {
     sql += remove + set
-    pointing.dataset.exchangeKey = key
+    pointing.dataset.exkey = key
   // Never been exchanged before
   } else {
     sql += set
-    pointing.dataset.originConsult = prevStaff
+    pointing.dataset.exconsult = prevStaff
   }
   pointing.dataset.consult = staffname
 
