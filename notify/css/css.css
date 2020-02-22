@@ -116,10 +116,18 @@ td img.imgpale {
 #maintbl td:nth-child(8) { font-size: 12px; }
 #maintbl td:nth-child(11) { font-size: 12px; }
 
+:root {
+  --consultant: ;
+}
+
+td.consult[data-exconsult] { 
+  --consultant: '\Aเดิม ' attr(data-exconsult);
+}
+
 td.consult::after { 
   color: #999999;
-  font-size: 12px;
-  content: 'สัปดาห์ Consult\A'attr(data-consult);
+  font-size: 16px;
+  content: 'สัปดาห์ Consult\A'attr(data-consult)var(--consultant);
   white-space: pre;
 }
 

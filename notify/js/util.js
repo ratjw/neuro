@@ -72,3 +72,15 @@ export function stringChopper(longtext, width)
 
   return result1
 }
+
+export function getLatestKey(obj){
+  if (!obj || !Object.entries(obj).length) { return '' }
+
+  return Math.max(...Object.keys(obj)) || ''
+}
+
+export function getLatestValue(obj){
+  if (!obj || !Object.entries(obj).length) { return '' }
+
+  return obj[Math.max(...Object.keys(obj))] || ''
+}

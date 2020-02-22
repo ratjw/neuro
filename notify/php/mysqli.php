@@ -79,7 +79,7 @@ function returnStaff($mysqli, $sql)
 
 function getStaff($mysqli)
 {
-	$sql = "SELECT * FROM staff ORDER BY number;";
+	$sql = "SELECT * FROM staff;";
 	return multiquery($mysqli, $sql);
 }
 

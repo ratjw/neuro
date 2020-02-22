@@ -1,7 +1,7 @@
 
-import { PATIENT } from "../control/const.js"
-import { obj_2_ISO, nextdates } from "../util/date.js"
-import { getStaffOncall, getLatestStart, getOncallExchange } from "../util/getSTAFFparsed.js"
+import { PATIENT } from "./const.js"
+import { obj_2_ISO, nextdates } from "./date.js"
+import { getStaffOncall, getLatestStart, getOncallExchange } from "./getSTAFFparsed.js"
 
 // The staff who has latest startoncall date, is to start
 export function fillConsults(tableID = 'maintbl')

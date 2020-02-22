@@ -1,12 +1,28 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { fillmain } from "./fill.js"
+import { fillConsults } from "./fillConsults.js"
 import { updateBOOK } from "./updateBOOK.js"
 import { holiday } from './holiday.js'
 import { obj_2_ISO, nextdates } from './date.js'
 import { sendNotifyLINE } from './sendNotifyLINE.js'
 
 export async function notifyLINE()
+{
+  const beginEnd = getBeginEnd(),
+    begindate = beginEnd.begindate,
+    enddate = beginEnd.enddate,
+    message = beginEnd.message
+
+  if (await start(begindate, enddate)) {
+    fillmain(begindate, enddate)
+    fillConsults()
+    selectRows(begindate, enddate).forEach(e => e.classList.add('selected'))
+    sendNotifyLINE(message)
+  }
+}
+
+export function getBeginEnd()
 {
   const today = new Date(),
     day = today.getDay(),
@@ -15,15 +31,12 @@ export async function notifyLINE()
     thisSaturday = getDayInSameWeek(today, 6),
     nextMonday = getDayInNextWeek(today, 1),
     nextSaturday = getDayInNextWeek(today, 6),
-    thisWeek = day < 5,
-    begindate = thisWeek ? tomorrow : nextMonday,
-    enddate = thisWeek ? thisSaturday : nextSaturday,
-    message = thisWeek ? 'สัปดาห์นี้' : 'สัปดาห์หน้า'
-
-  if (await start(begindate, enddate)) {
-    fillmain(begindate, enddate)
-    selectRows(begindate, enddate).forEach(e => e.classList.add('selected'))
-    sendNotifyLINE(message)
+    thisWeek = day < 5
+  
+  return {
+    begindate: thisWeek ? tomorrow : nextMonday,
+    enddate: thisWeek ? thisSaturday : nextSaturday,
+    message: thisWeek ? 'สัปดาห์นี้' : 'สัปดาห์หน้า'
   }
 }
 

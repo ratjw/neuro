@@ -13,6 +13,16 @@ export let BOOK = [],
   HOLIDAY = [],
   TIMESTAMP = ""
 
+export function getBOOK() { return JSON.parse(JSON.stringify(BOOK)) }
+export function getCONSULT() { return JSON.parse(JSON.stringify(CONSULT)) }
+export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
+export function getHOLIDAY() { return JSON.parse(JSON.stringify(HOLIDAY)) }
+export function getTIMESTAMP() { return TIMESTAMP }
+
+export function setSTAFF(staff) { STAFF = staff }
+export function setHOLIDAY(holiday) { HOLIDAY = holiday }
+
+
 let table = document.getElementById('maintbl')
 
 // Save data got from server
