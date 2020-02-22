@@ -10,10 +10,13 @@ import { sendNotifyLINE } from './sendNotifyLINE.js'
 export async function notifyLINE()
 {
   const beginEnd = getBeginEnd(),
+    thisday = beginEnd.thisday,
     begindate = beginEnd.begindate,
     enddate = beginEnd.enddate,
     message = beginEnd.message
 
+  // No notify on Sunday nad Saturday
+  if (!(thisday % 6)) { return }
   if (await start(begindate, enddate)) {
     fillmain(begindate, enddate)
     fillConsults()
@@ -34,6 +37,7 @@ export function getBeginEnd()
     thisWeek = day < 5
   
   return {
+    thisday: day,
     begindate: thisWeek ? tomorrow : nextMonday,
     enddate: thisWeek ? thisSaturday : nextSaturday,
     message: thisWeek ? 'สัปดาห์นี้' : 'สัปดาห์หน้า'
