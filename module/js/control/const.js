@@ -47,7 +47,7 @@ COLUMNDATASET = {
 },
 
 // for CSS display 'สัปดาห์ Consult\A'attr(data-consult) at row.cells[PATIENT]
-CELLDATASET = ["exconsult", "consult", "exkey"],
+CELLDATASET = ["origconsult", "consult", "prevkey"],
 
 NAMEOFDAYTHAI = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์"],
 THAIMONTH = ["มค.", "กพ.", "มีค.", "เมย.", "พค.", "มิย.", "กค.", "สค.", "กย.", "ตค.", "พย.", "ธค."],

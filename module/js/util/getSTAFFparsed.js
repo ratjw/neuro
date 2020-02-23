@@ -47,7 +47,7 @@ export function getStaffID(staffname)
 {
   let staffs = getSTAFFparsed()
 
-  return staffs.filter(staff => (staff.profile.staffname === staffname))[0]
+  return staffs.map(staff => (staff.profile.staffname === staffname) && staff.id)[0]
 }
 
 export function getOncallExchange()

@@ -113,11 +113,11 @@ td img.imgpale {
 #maintbl.showColumn2 td:nth-child(2) { font-size: xx-small; text-align: center; }
 
 :root {
-  --consultant: ;
+  --consultant: "";
 }
 
-td.consult[data-exconsult] { 
-  --consultant: '\Aเดิม ' attr(data-exconsult);
+td.consult[data-origconsult] { 
+  --consultant: '\Aเดิม ' attr(data-origconsult);
 }
 
 td.consult::after { 

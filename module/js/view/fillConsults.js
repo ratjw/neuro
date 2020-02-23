@@ -57,11 +57,11 @@ export function fillConsults(tableID = 'maintbl')
         const rowdate = row.dataset.opdate
         if (rowdate === date) {
           const cell = row.cells[PATIENT]
-          if (!cell.dataset.exconsult) {
-            cell.dataset.exconsult = cell.dataset.consult
+          if (!cell.dataset.origconsult) {
+            cell.dataset.origconsult = cell.dataset.consult
           }
           cell.dataset.consult = staffname
-          cell.dataset.exkey = key
+          cell.dataset.prevkey = key
           return true
         }
         // beyond exchange date -> break loop

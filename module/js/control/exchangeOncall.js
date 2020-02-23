@@ -33,31 +33,32 @@ async function changeOncall(pointing, opdate, id, staffname)
 
   if (staffname === prevStaff) { return }
 
-  let key = pointing.dataset.exkey
-  let exconsult = pointing.dataset.exconsult
+  let prevkey = pointing.dataset.prevkey
+  let origconsult = pointing.dataset.origconsult
   let prevStaffID = getStaffID(prevStaff)
   let now = Date.now()
   let sql = 'sqlReturnStaff='
 
   let remove = `UPDATE staff SET profile=`
-    + `JSON_REMOVE(profile,'$.exchange."${key}"') WHERE id=${prevStaffID};`
+    + `JSON_REMOVE(profile,'$.exchange."${prevkey}"') WHERE id=${prevStaffID};`
   let set = `UPDATE staff SET profile=`
     + `JSON_SET(profile,'$.exchange',JSON_OBJECT("${now}","${opdate}")) WHERE id=${id};`
 
-  if (staffname === exconsult) {
+  if (staffname === origconsult) {
     sql += remove
-    pointing.dataset.exkey = ''
-    pointing.dataset.exconsult = ''
+    pointing.dataset.prevkey = ''
+    pointing.dataset.origconsult = ''
   }
 
   // Had ever been exchanged before
-  else if (key) {
+  else if (prevkey) {
     sql += remove + set
-    pointing.dataset.exkey = key
+    pointing.dataset.prevkey = now
   // Never been exchanged before
   } else {
     sql += set
-    pointing.dataset.exconsult = prevStaff
+    pointing.dataset.prevkey = now
+    pointing.dataset.origconsult = prevStaff
   }
   pointing.dataset.consult = staffname
 
@@ -65,6 +66,6 @@ async function changeOncall(pointing, opdate, id, staffname)
   if (typeof response === "object") {
     setSTAFF(response.STAFF)
   } else {
-    Alert("changeOncall", response)
+    alert("changeOncall", response)
   }
 }
