@@ -12,13 +12,18 @@ export function getSTAFFparsed()
   return staffs
 }
 
-export function checkFieldExist(id, field)
+export function checkFieldExist(id, field, subfield)
 {
   const staffs = getSTAFFparsed()
   const staff = staffs.filter(e => e.id === id)
-  const keys = staff.map(e => Object.keys(e.profile))[0]
+  const existedField = staff.map(e => Object.keys(e.profile))[0]
 
-  return keys.includes(field)
+  if (subfield) {
+    const existedSubField = staff.map(e => Object.keys(e.profile[field]))[0]
+    return existedSubField.includes(subfield)
+  } else {
+    return existedField.includes(field)
+  }
 }
 
 export function getStaffOncall()
@@ -55,6 +60,7 @@ export function getOncallExchange()
   let staffs = getSTAFFparsed()
   let exchange = {}
 
+  // retrieve exchange field in each staff
   staffs.forEach(staff => exchange[staff.profile.staffname] = staff.profile.exchange)
 
   // remove staff with no exchange
@@ -66,53 +72,16 @@ export function getOncallExchange()
 
   // remove out-of-date exchange
   Object.entries(exchange).forEach(([staff, exchng]) => {
-    Object.entries(exchng).forEach(([key, date]) => {
+    Object.entries(exchng).forEach(([date, edit]) => {
       if (date < START_DATE) {
-        delete exchange[staff][key]
+        delete exchange[staff][date]
       }
     })
-  })
-/*
-  // remove same-date exchange with older keys within one staff
-  Object.entries(exchange).forEach(([staff, exchng]) => {
-    const uniqDates = [...new Set(Object.values(exchng))]
-
-Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
-
-    uniqDates.forEach(uniqDate => {
-      let uniqExchng = Object.entries(exchng).filter(([key, eachDate]) => {
-        if (eachDate === uniqDate) {
-          return acc
-        } else {
-          return key
-        }
-      })
-    })
-    Object.entries(exchange).forEach(([staff, exchng]) => {
-      Object.entries(exchng).reduce((acc, [key, date]) => {
-        if (acc > key) {
-          delete exchange[staff][key]
-          return acc
-        } else {
-          delete exchange[staff][acc]
-          return key
-        }
-      }, 0)
-
+    // remove staff with no exchange
+    if (Object.entries(exchng).length === 0) {
+      delete exchange[staff]
+    }
   })
 
-  // remove same-date exchange with older keys all staffs
-  Object.entries(exchange).forEach(([staff, exchng]) => {
-    Object.entries(exchng).reduce((acc, [key, date]) => {
-      if (acc > key) {
-        delete exchange[staff][key]
-        return acc
-      } else {
-        delete exchange[staff][acc]
-        return key
-      }
-    }, 0)
-  })
-*/
   return exchange
 }

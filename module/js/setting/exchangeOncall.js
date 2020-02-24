@@ -48,20 +48,18 @@ async function changeOncall(cell, opdate, id, staffname)
   cell.dataset.consult = staffname
 }
 
-function setDB(opdate, id)
+function setDB(exchngDate, id)
 {
-  const fieldExist = checkFieldExist(id, 'exchange')
+  const exchngExist = checkFieldExist(id, 'exchange')
+  const dateExist = checkFieldExist(id, "exchange", exchngDate)
   const now = Date.now()
+  const sql = `sqlReturnStaff=UPDATE staff SET profile=`
+  const edittime = `JSON_OBJECT("${now}","${USER}")`
+  const where = `WHERE id=${id};`
 
-  return fieldExist
-    ? `sqlReturnStaff=UPDATE staff SET profile=JSON_SET(profile,`
-      + `'$.exchange."${opdate}"',`
-      + `JSON_OBJECT("timestamp","${now}","editor","${USER}")`
-      + `) `
-      + `WHERE id=${id};`
-    : `sqlReturnStaff=UPDATE staff SET profile=JSON_SET(profile,`
-      + `'$.exchange',JSON_OBJECT("${opdate}",`
-      + `JSON_OBJECT("timestamp","${now}","editor","${USER}")`
-      + `)) `
-      + `WHERE id=${id};`
+  return exchngExist
+    ? dateExist
+      ? `${sql}JSON_SET(profile,'$.exchange."${exchngDate}"."${now}"',"${USER}") ${where}`
+      : `${sql}JSON_SET(profile,'$.exchange."${exchngDate}"',${edittime}) ${where}`
+    : `${sql}JSON_SET(profile,'$.exchange',JSON_OBJECT("${exchngDate}",${edittime})) ${where}`
 }
