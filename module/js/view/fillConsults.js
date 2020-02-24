@@ -46,7 +46,11 @@ export function fillConsults(tableID = 'maintbl')
 
   // fill default staffname
   tableSaturdayRows.forEach(e => {
-    dataAttr(e.cells[PATIENT], allSaturdays[e.dataset.opdate])
+    const cell = e.cells[PATIENT],
+      staffname = allSaturdays[e.dataset.opdate]
+
+    cell.dataset.consult = staffname
+    cell.classList.add("consult")
   })
 
   // fill exchange staffname
@@ -60,8 +64,10 @@ export function fillConsults(tableID = 'maintbl')
           if (!cell.dataset.origconsult) {
             cell.dataset.origconsult = cell.dataset.consult
           }
+          else if (cell.dataset.origconsult === staffname) {
+            delete cell.dataset.origconsult
+          }
           cell.dataset.consult = staffname
-          cell.dataset.prevkey = key
           return true
         }
         // beyond exchange date -> break loop
@@ -132,10 +138,4 @@ function getSkipSat(allSaturdays, staff)
   })
 
   return [...new Set(skipSat)]
-}
-
-function dataAttr(pointing, staffname)
-{
-  pointing.dataset.consult = staffname
-  pointing.classList.add("consult")
 }

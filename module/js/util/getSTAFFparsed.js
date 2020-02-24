@@ -65,13 +65,54 @@ export function getOncallExchange()
   })
 
   // remove out-of-date exchange
-  Object.entries(exchange).forEach(([key, val]) => {
-    Object.entries(val).forEach((k, date) => {
+  Object.entries(exchange).forEach(([staff, exchng]) => {
+    Object.entries(exchng).forEach(([key, date]) => {
       if (date < START_DATE) {
-        delete exchange[key][k]
+        delete exchange[staff][key]
       }
     })
   })
+/*
+  // remove same-date exchange with older keys within one staff
+  Object.entries(exchange).forEach(([staff, exchng]) => {
+    const uniqDates = [...new Set(Object.values(exchng))]
 
+Object.keys(obj).reduce((a, b) => obj[a] > obj[b] ? a : b);
+
+    uniqDates.forEach(uniqDate => {
+      let uniqExchng = Object.entries(exchng).filter(([key, eachDate]) => {
+        if (eachDate === uniqDate) {
+          return acc
+        } else {
+          return key
+        }
+      })
+    })
+    Object.entries(exchange).forEach(([staff, exchng]) => {
+      Object.entries(exchng).reduce((acc, [key, date]) => {
+        if (acc > key) {
+          delete exchange[staff][key]
+          return acc
+        } else {
+          delete exchange[staff][acc]
+          return key
+        }
+      }, 0)
+
+  })
+
+  // remove same-date exchange with older keys all staffs
+  Object.entries(exchange).forEach(([staff, exchng]) => {
+    Object.entries(exchng).reduce((acc, [key, date]) => {
+      if (acc > key) {
+        delete exchange[staff][key]
+        return acc
+      } else {
+        delete exchange[staff][acc]
+        return key
+      }
+    }, 0)
+  })
+*/
   return exchange
 }

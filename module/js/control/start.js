@@ -18,7 +18,7 @@ import { sqlGetServiceOneMonth } from "../model/sqlservice.js"
 import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
 import { isMobile } from "../main.js"
-import { exchangeOncall } from "../control/exchangeOncall.js"
+import { exchangeOncall } from "../setting/exchangeOncall.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {

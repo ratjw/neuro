@@ -1,8 +1,7 @@
 
 import { postData, MYSQLIPHP } from "../model/fetch.js"
 import { URIcomponent } from "../util/util.js"
-import { checkFieldExist } from "../util/getSTAFFparsed.js"
-import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
+import { getSTAFFparsed, checkFieldExist } from "../util/getSTAFFparsed.js"
 
 const STAFFNAME = 0,
   RAMAID = 1,
