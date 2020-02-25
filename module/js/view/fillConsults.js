@@ -54,20 +54,14 @@ export function fillConsults(tableID = 'maintbl')
   })
 
   // fill exchange staffname
-  const exchange = getOncallExchange()
+  let exchange = getOncallExchange()
+  exchange = uniqueExchngDates(exchange)
   Object.entries(exchange).forEach(([staffname, exchng]) => {
-    Object.entries(exchng).forEach(([key, date]) => {
+    Object.keys(exchng).forEach(date => {
       tableSaturdayRows.some(row => {
         const rowdate = row.dataset.opdate
         if (rowdate === date) {
-          const cell = row.cells[PATIENT]
-          if (!cell.dataset.origconsult) {
-            cell.dataset.origconsult = cell.dataset.consult
-          }
-          else if (cell.dataset.origconsult === staffname) {
-            delete cell.dataset.origconsult
-          }
-          cell.dataset.consult = staffname
+          fillExchange(row.cells[PATIENT], staffname)
           return true
         }
         // beyond exchange date -> break loop
@@ -77,6 +71,43 @@ export function fillConsults(tableID = 'maintbl')
       })
     })
   })
+}
+/*
+"อ.อัตถพร": {"2020-02-22": {1582636820525: "000000"}}
+
+"อ.เกรียงศักดิ์": {"2020-02-22": {1582635474678: "000000"}}
+*/
+function uniqueExchngDates(exchange)
+{
+  const exchngDates = Object.values(exchange).map(exchng => Object.keys(exchng).toString())
+  const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) != i)
+  const dupDates = [...new Set(findDups)]
+
+  dupDates.forEach(dupDate => {
+    let timestamp = 0
+    let staffItem = {}
+    Object.entries(exchange).forEach(([staff, exchng]) => {
+      Object.entries(exchng).forEach(([date, edit]) => {
+        if (date === dupDate) {
+          let editTime = Object.keys(edit)[0]
+          if (timestamp === 0) {
+            timestamp = editTime
+            staffItem = staff
+            return
+          }
+          if (editTime > timestamp) {
+            timestamp = editTime
+            delete exchange[staffItem][date]
+          } else {
+            delete exchange[staff][date]
+          }
+        }
+      })
+    })
+  })
+
+  return [...exchange].filter(staff => Object.values(staff).filter(exchng => 
+    Object.keys(exchng).length !== 0))
 }
 
 function getAllSaturdays(startFirstSat, tableSaturdates)
@@ -138,4 +169,16 @@ function getSkipSat(allSaturdays, staff)
   })
 
   return [...new Set(skipSat)]
+}
+
+function fillExchange(cell, staffname)
+{
+  if (!cell.dataset.origconsult) {
+    cell.dataset.origconsult = cell.dataset.consult
+  }
+  else if (cell.dataset.origconsult === staffname) {
+    delete cell.dataset.origconsult
+  }
+
+  cell.dataset.consult = staffname
 }

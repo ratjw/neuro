@@ -16,13 +16,14 @@ export function checkFieldExist(id, field, subfield)
 {
   const staffs = getSTAFFparsed()
   const staff = staffs.filter(e => e.id === id)
-  const existedField = staff.map(e => Object.keys(e.profile))[0]
+  const existedKeys = staff.map(e => Object.keys(e.profile))[0]
+  const existedField = existedKeys.includes(field)
 
-  if (subfield) {
-    const existedSubField = staff.map(e => Object.keys(e.profile[field]))[0]
-    return existedSubField.includes(subfield)
+  if (existedField && subfield) {
+    const existedSubKeys = staff.map(e => Object.keys(e.profile[field]))[0]
+    return existedSubKeys.includes(subfield)
   } else {
-    return existedField.includes(field)
+    return existedField
   }
 }
 
@@ -58,30 +59,23 @@ export function getStaffID(staffname)
 export function getOncallExchange()
 {
   let staffs = getSTAFFparsed()
-  let exchange = {}
 
-  // retrieve exchange field in each staff
-  staffs.forEach(staff => exchange[staff.profile.staffname] = staff.profile.exchange)
+  // retrieve exchange field in only staffs with exchange
+  staffs = staffs.filter(staff => staff.profile.exchange)
+  staffs = staffs.map(has => ( {[has.profile.staffname]: has.profile.exchange} ))
 
-  // remove staff with no exchange
-  Object.entries(exchange).forEach(([staff, exchng]) => {
-    if (!exchng || Object.entries(exchng).length === 0) {
-      delete exchange[staff]
-    }
-  })
-
-  // remove out-of-date exchange
-  Object.entries(exchange).forEach(([staff, exchng]) => {
+  Object.entries(staffs).forEach(([staff, exchng]) => {
     Object.entries(exchng).forEach(([date, edit]) => {
+      // remove out-of-date exchange
       if (date < START_DATE) {
-        delete exchange[staff][date]
+        delete staffs[staff][date]
       }
     })
-    // remove staff with no exchange
+    // remove staff with empty exchange
     if (Object.entries(exchng).length === 0) {
-      delete exchange[staff]
+      delete staffs[staff]
     }
   })
 
-  return exchange
+  return staffs
 }
