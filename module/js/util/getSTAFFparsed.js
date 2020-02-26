@@ -1,7 +1,6 @@
 
 import { getSTAFF } from "../util/updateBOOK.js"
 import { getLatestKey, getLatestValue } from "../util/util.js"
-import { START_DATE } from "../util/date.js"
 
 export function getSTAFFparsed()
 {
@@ -62,20 +61,7 @@ export function getOncallExchange()
 
   // retrieve exchange field in only staffs with exchange
   staffs = staffs.filter(staff => staff.profile.exchange)
-  staffs = staffs.map(has => ( {[has.profile.staffname]: has.profile.exchange} ))
 
-  Object.entries(staffs).forEach(([staff, exchng]) => {
-    Object.entries(exchng).forEach(([date, edit]) => {
-      // remove out-of-date exchange
-      if (date < START_DATE) {
-        delete staffs[staff][date]
-      }
-    })
-    // remove staff with empty exchange
-    if (Object.entries(exchng).length === 0) {
-      delete staffs[staff]
-    }
-  })
-
-  return staffs
+          // strip to only staffname and exchange fields
+  return staffs.map(has => ( {[has.profile.staffname]: has.profile.exchange} ))
 }
