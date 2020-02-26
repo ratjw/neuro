@@ -11,6 +11,31 @@ export function getSTAFFparsed()
   return staffs
 }
 
+export function getStaffID(staffname)
+{
+  let staffs = getSTAFFparsed()
+
+  return staffs.map(staff => (staff.profile.staffname === staffname) && staff.id)[0]
+}
+
+export function getStaffOncall()
+{
+  let staffs = getSTAFFparsed()
+
+  return staffs.filter(staff => (staff.profile.oncall > 0))
+}
+
+export function getOncallExchange()
+{
+  let staffs = getSTAFFparsed()
+
+  // retrieve exchange field in only staffs with exchange
+  staffs = staffs.filter(staff => staff.profile.exchange)
+
+          // strip to only staffname and exchange fields
+  return staffs.map(has => ( {[has.profile.staffname]: has.profile.exchange} ))
+}
+
 export function checkFieldExist(id, field, subfield)
 {
   const staffs = getSTAFFparsed()
@@ -21,16 +46,9 @@ export function checkFieldExist(id, field, subfield)
   if (existedField && subfield) {
     const existedSubKeys = staff.map(e => Object.keys(e.profile[field]))[0]
     return existedSubKeys.includes(subfield)
-  } else {
-    return existedField
   }
-}
 
-export function getStaffOncall()
-{
-  let staffs = getSTAFFparsed()
-
-  return staffs.filter(staff => (staff.profile.oncall > 0))
+  return existedField
 }
 
 // find latest entry within each staff (maxKey) and get the date value for startDate
@@ -46,22 +64,4 @@ export function getLatestStart()
   })
 
   return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)
-}
-
-export function getStaffID(staffname)
-{
-  let staffs = getSTAFFparsed()
-
-  return staffs.map(staff => (staff.profile.staffname === staffname) && staff.id)[0]
-}
-
-export function getOncallExchange()
-{
-  let staffs = getSTAFFparsed()
-
-  // retrieve exchange field in only staffs with exchange
-  staffs = staffs.filter(staff => staff.profile.exchange)
-
-          // strip to only staffname and exchange fields
-  return staffs.map(has => ( {[has.profile.staffname]: has.profile.exchange} ))
 }

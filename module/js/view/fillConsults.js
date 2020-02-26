@@ -71,22 +71,6 @@ function getAllSaturdays(startFirstSat, tableSaturdates)
   return satDays
 }
 
-function getOncallList(startStaff, allLen)
-{
-  const staffs = getStaffOncall(),
-    staffnames = staffs.map(e => e.profile.staffname),
-    stafflen = staffnames.length,
-    num = startStaff.profile.oncall - 1,
-    rotated = staffnames.map((e, i) => staffnames[(i + num) % stafflen])
-
-  let list = []
-  while (list.length < allLen) {
-    list = [...list, ...rotated]
-  }
-
-  return list
-}
-
 // get first Saturday from startDate
 function getFirstSat(startStaff)
 {
@@ -116,4 +100,20 @@ function getSkipSat(allSaturdays, staff)
   })
 
   return [...new Set(skipSat)]
+}
+
+function getOncallList(startStaff, allLen)
+{
+  const staffs = getStaffOncall(),
+    staffnames = staffs.map(e => e.profile.staffname),
+    stafflen = staffnames.length,
+    num = startStaff.profile.oncall - 1,
+    rotated = staffnames.map((e, i) => staffnames[(i + num) % stafflen])
+
+  let list = []
+  while (list.length < allLen) {
+    list = [...list, ...rotated]
+  }
+
+  return list
 }

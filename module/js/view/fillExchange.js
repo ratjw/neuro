@@ -2,6 +2,7 @@
 import { PATIENT } from "../control/const.js"
 import { getOncallExchange } from "../util/getSTAFFparsed.js"
 import { START_DATE } from "../util/date.js"
+import { getLatestKey } from "../util/util.js"
 
 export function fillExchange(tableSaturdayRows)
 {
@@ -50,35 +51,35 @@ function uniqueExchngDates(staffs)
 {
   const staffsObj = mutateToObj(staffs)
   const exchngDates = Object.values(staffsObj).map(exchng => Object.keys(exchng).toString())
-  const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) != i)
+  const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) !== i)
   const dupDates = [...new Set(findDups)]
 
   dupDates.forEach(dupDate => {
     let timestamp = 0
-    let staffItem = {}
-    Object.entries(staffsObj).forEach(([staff, exchng]) => {
+    let staffname = ''
+    Object.entries(staffsObj).forEach(([name, exchng]) => {
       Object.entries(exchng).forEach(([date, edit]) => {
         if (date === dupDate) {
-          let editTime = Object.keys(edit)[0]
+          let editTime = getLatestKey(edit)
           if (timestamp === 0) {
             timestamp = editTime
-            staffItem = staff
+            staffname = name
             return
           }
           if (editTime > timestamp) {
             timestamp = editTime
-            delete staffsObj[staffItem][date]
+            delete staffsObj[staffname][date]
           } else {
-            delete staffsObj[staff][date]
+            delete staffsObj[name][date]
           }
         }
       })
     })
   })
 
-  Object.entries(staffsObj).forEach(([staff, exchng]) => {
+  Object.entries(staffsObj).forEach(([name, exchng]) => {
     if (Object.entries(exchng).length === 0) {
-      delete staffsObj[staff]
+      delete staffsObj[name]
     }
   })
 
