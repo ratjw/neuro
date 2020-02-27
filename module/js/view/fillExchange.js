@@ -9,7 +9,7 @@ export function fillExchange(tableSaturdayRows)
   let staffs = getOncallExchange()
 
   staffs = getActiveExchange(staffs)
-  staffs = uniqueExchngDates(staffs)
+  staffs = removeDupExchng(staffs)
   Object.entries(staffs).forEach(([staffname, exchng]) => {
     Object.keys(exchng).forEach(date => {
       tableSaturdayRows.some(row => {
@@ -42,15 +42,12 @@ function getActiveExchange(staffs)
           // remove staffs with empty exchange
   return staffs.filter(staff => Object.entries(Object.values(staff)[0]).length !== 0)
 }
-/*
-"อ.อัตถพร": {"2020-02-22": {1582636820525: "000000"}}
 
-"อ.เกรียงศักดิ์": {"2020-02-22": {1582635474678: "000000"}}
-*/
-function uniqueExchngDates(staffs)
+function removeDupExchng(staffs)
 {
-  const staffsObj = mutateToObj(staffs)
-  const exchngDates = Object.values(staffsObj).map(exchng => Object.keys(exchng).toString())
+  // convert from array of objects to an object of objects
+//  const staffsObj = Object.assign({}, ...staffs)
+  const exchngDates = getEachExchDate(staffs)
   const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) !== i)
   const dupDates = [...new Set(findDups)]
 
@@ -86,12 +83,69 @@ function uniqueExchngDates(staffs)
   return staffsObj
 }
 
-function mutateToObj(staffs)
+function getEachExchDate(staffs)
+{
+  const eachExchDate = []
+
+  staffs.forEach(staff => {
+    Object.entries(staff).forEach(([name, exch]) => {
+      Object.entries(exch).forEach(([date, edit]) => {
+        let subObj = {[name]: {[date]: edit}}
+        eachExchDate.push(subObj)
+      })
+    })
+  })
+
+  return eachExchDate
+}
+
+/*
+function removeDupExchng(staffs)
+{
+  // convert from array of objects to an object of objects
+  const staffsObj = Object.assign({}, ...staffs)
+  const exchngDates = Object.values(staffsObj).map(exchng => Object.keys(exchng).join())
+  const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) !== i)
+  const dupDates = [...new Set(findDups)]
+
+  dupDates.forEach(dupDate => {
+    let timestamp = 0
+    let staffname = ''
+    Object.entries(staffsObj).forEach(([name, exchng]) => {
+      Object.entries(exchng).forEach(([date, edit]) => {
+        if (date === dupDate) {
+          let editTime = getLatestKey(edit)
+          if (timestamp === 0) {
+            timestamp = editTime
+            staffname = name
+            return
+          }
+          if (editTime > timestamp) {
+            timestamp = editTime
+            delete staffsObj[staffname][date]
+          } else {
+            delete staffsObj[name][date]
+          }
+        }
+      })
+    })
+  })
+
+  Object.entries(staffsObj).forEach(([name, exchng]) => {
+    if (Object.entries(exchng).length === 0) {
+      delete staffsObj[name]
+    }
+  })
+
+  return staffsObj
+}
+*/
+function arrayToObj(staffs)
 {
   const staffsObj = {}
 
   staffs.forEach(staff => {
-    staffsObj[Object.keys(staff)[0]] = Object.values(staff)[0]
+    staffsObj.assign(staff)
   })
 
   return staffsObj
@@ -109,63 +163,3 @@ function fillExchngCell(cell, staffname)
 
   cell.dataset.consult = staffname
 }
-/*
-function uniqueExchngDates(exchange)
-{
-  const exchngDates = Object.values(exchange).map(exchng => Object.keys(exchng).toString())
-  const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) != i)
-  const dupDates = [...new Set(findDups)]
-
-  dupDates.forEach(dupDate => {
-    let timestamp = 0
-    let staffItem = {}
-    Object.entries(exchange).forEach(([staff, exchng]) => {
-      Object.entries(exchng).forEach(([date, edit]) => {
-        if (date === dupDate) {
-          let editTime = Object.keys(edit)[0]
-          if (timestamp === 0) {
-            timestamp = editTime
-            staffItem = staff
-            return
-          }
-          if (editTime > timestamp) {
-            timestamp = editTime
-            delete exchange[staffItem][date]
-          } else {
-            delete exchange[staff][date]
-          }
-        }
-      })
-    })
-  })
-
-  return [...exchange].filter(staff => Object.values(staff).filter(exchng => 
-    Object.keys(exchng).length !== 0))
-}
-
-export function getOncallExchange()
-{
-  let staffs = getSTAFFparsed()
-
-  // retrieve exchange field in only staffs with exchange
-  staffs = staffs.filter(staff => staff.profile.exchange)
-  staffs = staffs.map(has => ( {[has.profile.staffname]: has.profile.exchange} ))
-
-  staffs.forEach(staff => {
-    Object.entries(staff).forEach(([name, exchng]) => {
-      Object.entries(exchng).forEach(([date, edit]) => {
-        // remove out-of-date exchange
-        if (date < START_DATE) {
-          delete staffs[staff][date]
-        }
-        // remove staff with empty exchange
-        if (Object.entries(edit).length === 0) {
-          delete staffs[staff]
-        }
-      })
-    })
-  })
-
-  return staffs
-}
-*/
