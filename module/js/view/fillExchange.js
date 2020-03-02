@@ -6,30 +6,16 @@ import { getLatestKey } from "../util/util.js"
 
 export function fillExchange(tableSaturdayRows)
 {
-  let staffs = getOncallExchange()
+  const staffs = getOncallExchange()
+  const staffsOncall = getActiveExchange(staffs)
+  const staffsObj = getUniqExchDates(staffsOncall)
 
-  staffs = getActiveExchange(staffs)
-//  staffs = removeDupExchng(staffs)
-  staffs.forEach(staff => {
-    Object.entries(staff).forEach(([staffname, exchng]) => {
-      Object.entries(exchng).forEach(([date, edit]) => {
-        tableSaturdayRows.some(row => {
-          let rowdate = row.dataset.opdate,
-            edittime = getLatestKey(edit)
-          if (rowdate === date) {
-            fillExchngCell(row.cells[PATIENT], staffname, edittime)
-            return true
-          }
-          // beyond exchange date -> break loop
-          else if (rowdate > date) {
-            return true
-          }
-        })
-      })
+  Object.entries(staffsObj).forEach(([staffname, exchng]) => {
+    Object.keys(exchng).forEach(date => {
+      let rowSat = tableSaturdayRows.find(row => row.dataset.opdate === date)
+      fillExchngCell(rowSat.cells[PATIENT], staffname)
     })
   })
-
-  tableSaturdayRows.forEach(row => delete row.cells[PATIENT].dataset.edittime)
 }
 
 function getActiveExchange(staffs)
@@ -48,13 +34,10 @@ function getActiveExchange(staffs)
   return staffs.filter(staff => Object.entries(Object.values(staff)[0]).length !== 0)
 }
 
-function fillExchngCell(cell, staffname, edittime)
+function fillExchngCell(cell, staffname)
 {
-  let celltime = cell.dataset.edittime ? Number(cell.dataset.edittime) : 0
-
   if (staffname === cell.dataset.consult) { return }
-  if (edittime < celltime) { return }
-  cell.dataset.edittime = edittime
+
   if (!cell.dataset.origconsult) {
     cell.dataset.origconsult = cell.dataset.consult
   }
@@ -63,4 +46,54 @@ function fillExchngCell(cell, staffname, edittime)
   }
 
   cell.dataset.consult = staffname
+}
+
+function removeDupExchng(staffs)
+{
+  const eachExchDates = getUniqueExchDates(staffs)
+
+  return removeDups(eachExchDates)
+}
+
+function getUniqExchDates(staffs)
+{
+  // convert from array of objects to an object of objects
+  const staffsObj = Object.assign({}, ...staffs)
+  const exchngDates = Object.values(staffsObj).map(exchng => Object.keys(exchng)).flat()
+  const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) !== i)
+
+  if (!findDups.length) { return }
+
+  const dupDates = [...new Set(findDups)]
+
+  dupDates.forEach(dupDate => {
+    let timestamp = 0
+    let staffname = ''
+    Object.entries(staffsObj).forEach(([name, exchng]) => {
+      Object.entries(exchng).forEach(([date, edit]) => {
+        if (date === dupDate) {
+          let editTime = getLatestKey(edit)
+          if (timestamp === 0) {
+            timestamp = editTime
+            staffname = name
+            return
+          }
+          if (editTime > timestamp) {
+            timestamp = editTime
+            delete staffsObj[staffname][date]
+          } else {
+            delete staffsObj[name][date]
+          }
+        }
+      })
+    })
+  })
+
+  Object.entries(staffsObj).forEach(([name, exchng]) => {
+    if (Object.entries(exchng).length === 0) {
+      delete staffsObj[name]
+    }
+  })
+
+  return staffsObj
 }
