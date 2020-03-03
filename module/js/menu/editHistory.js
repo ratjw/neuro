@@ -7,9 +7,10 @@ import { viewCaseHistory } from "../view/viewCaseHistory.js"
 export function editHistory()
 {
   let row = document.querySelector(`.${SELECTED}`),
-    hn = row.dataset.hn
+    hn = row.dataset.hn,
+    qn = row.dataset.qn
 
-  sqlCaseHistory(hn).then(response => {
+  sqlCaseHistory(hn, qn).then(response => {
     typeof response === "object"
     ? viewCaseHistory(row, hn, response)
     : Alert("caseHistory", response)

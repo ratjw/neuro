@@ -1,10 +1,11 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 
-export function sqlCaseHistory(hn) {
-  let sql = `sqlReturnData=SELECT * FROM bookhistory 
-              WHERE qn in (SELECT qn FROM book WHERE hn='${hn}') 
-              ORDER BY editdatetime DESC;`
+export function sqlCaseHistory(hn, qn) {
+  const sql = `sqlReturnData=SELECT * FROM bookhistory `
+             +    `WHERE qn `
+             + (hn ? `in (SELECT qn FROM book WHERE hn='${hn}') ` : `=${qn} `)
+             +   `ORDER BY editdatetime DESC;`
 
   return postData(MYSQLIPHP, sql)
 }
