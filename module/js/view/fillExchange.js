@@ -10,6 +10,8 @@ export function fillExchange(tableSaturdayRows)
   const staffsOncall = getActiveExchange(staffs)
   const staffsObj = getUniqExchDates(staffsOncall)
 
+  if (!staffsObj) { return }
+
   Object.entries(staffsObj).forEach(([staffname, exchng]) => {
     Object.keys(exchng).forEach(date => {
       let rowSat = tableSaturdayRows.find(row => row.dataset.opdate === date)
@@ -62,8 +64,21 @@ function getUniqExchDates(staffs)
   const exchngDates = Object.values(staffsObj).map(exchng => Object.keys(exchng)).flat()
   const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) !== i)
 
-  if (!findDups.length) { return }
+  if (findDups.length) {
+    staffsObj = deleteDups(findDups, staffsObj)
+  }
 
+  Object.entries(staffsObj).forEach(([name, exchng]) => {
+    if (Object.entries(exchng).length === 0) {
+      delete staffsObj[name]
+    }
+  })
+
+  return staffsObj
+}
+
+function deleteDups(findDups, staffsObj)
+{
   const dupDates = [...new Set(findDups)]
 
   dupDates.forEach(dupDate => {
@@ -87,12 +102,6 @@ function getUniqExchDates(staffs)
         }
       })
     })
-  })
-
-  Object.entries(staffsObj).forEach(([name, exchng]) => {
-    if (Object.entries(exchng).length === 0) {
-      delete staffsObj[name]
-    }
   })
 
   return staffsObj

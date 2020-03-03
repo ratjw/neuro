@@ -89,9 +89,10 @@ function getSkipSat(allSaturdays, staff)
   let skipSat = []
 
   Object.entries(skip).forEach(([key, val]) => {
-    if (val.end > allSaturdays[0]) {
-      let begin = obj_2_ISO(new Date(val.begin))
-      let end = obj_2_ISO(new Date(val.end))
+    let begin = obj_2_ISO(new Date(val.begin))
+    let end = obj_2_ISO(new Date(val.end))
+
+    if (end > allSaturdays[0]) {
       let allSat = [...allSaturdays]
       let skips = allSat.filter(e => (e >= begin) && (e <= end))
 
