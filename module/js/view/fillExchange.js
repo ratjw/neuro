@@ -60,9 +60,9 @@ function removeDupExchng(staffs)
 function getUniqExchDates(staffs)
 {
   // convert from array of objects to an object of objects
-  const staffsObj = Object.assign({}, ...staffs)
-  const exchngDates = Object.values(staffsObj).map(exchng => Object.keys(exchng)).flat()
-  const findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) !== i)
+  let staffsObj = Object.assign({}, ...staffs)
+  let exchngDates = Object.values(staffsObj).map(exchng => Object.keys(exchng)).flat()
+  let findDups = exchngDates.filter((e, i) => exchngDates.indexOf(e) !== i)
 
   if (findDups.length) {
     staffsObj = deleteDups(findDups, staffsObj)
