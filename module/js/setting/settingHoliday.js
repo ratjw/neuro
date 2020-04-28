@@ -23,9 +23,9 @@ const HOLIDAYENGTHAI = {
   "no": "ไม่หยุด"
 }
 
-export function inputHoliday()
+export function settingHoliday()
 {
-  let  $dialogHoliday = $("#dialogHoliday"),
+  let $dialogHoliday = $("#dialogHoliday"),
     $holidaytbl = $("#holidaytbl"),
     $holidateth = $("#holidateth"),
     $holidayname = $("#holidayname"),
@@ -48,7 +48,7 @@ export function inputHoliday()
       }
     }],
     close: function() {
-      let  $inputRow = $("#holidaytbl tr:has('input')")
+      let $inputRow = $("#holidaytbl tr:has('input')")
 
       if ($inputRow.length) {
         holidayInputBack($inputRow)
@@ -74,9 +74,12 @@ export function inputHoliday()
 
 function fillHoliday($holidaytbl)
 {
+  const thisYear = new Date().getFullYear().toString(),
+    holiday = getHOLIDAY().filter(date => date.holidate > thisYear)
+
   $holidaytbl.find('tr').slice(1).remove()
 
-  $.each( getHOLIDAY(), function(i) {
+  $.each( holiday, function(i) {
     $('#holidaycells tr').clone()
       .appendTo($holidaytbl.find('tbody'))
         .filldataHoliday(this)

@@ -11,7 +11,7 @@ import { editHistory } from "../menu/editHistory.js"
 import { deleteCase } from "../menu/deleteCase.js"
 import { resEPA } from '../setting/resEPA.js'
 import { resResearch } from '../setting/resResearch.js'
-import { inputHoliday, addHoliday } from "../setting/inputHoliday.js"
+import { settingHoliday, addHoliday } from "../setting/settingHoliday.js"
 import { settingResident } from '../setting/settingResident.js'
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
@@ -52,7 +52,7 @@ function setClickSetting()
     "clickresResearch": resResearch,
     "clickSetResident": settingResident,
     "clickSetStaff": settingStaff,
-    "clickSetHoliday": inputHoliday,
+    "clickSetHoliday": settingHoliday,
     "addholiday": addHoliday
   },
   disable = [

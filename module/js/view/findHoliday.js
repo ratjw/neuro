@@ -3,11 +3,14 @@ import { getHOLIDAY } from "../util/updateBOOK.js"
 
 export function findHoliday(date)
 {
+  const picDir = "css/pic/holiday"
+
   // Buddhist holiday and compensation for religious day on weekend
   const holiday = getHOLIDAY()
   const Buddhist = holiday.find(day => day.holidate === date)
+
   if (Buddhist) {
-    return `url('css/pic/holiday/${Buddhist.dayname}.png')`
+    return `url('${picDir}/${Buddhist.dayname}.png')`
   }
 
   let monthdate = date.substring(5),
@@ -15,7 +18,7 @@ export function findHoliday(date)
     Mon = dayofweek === 1,
     Tue = dayofweek === 2,
 
-  // Thai official holiday & Compensation
+  // Thai official holiday & holidaysub (Compensation)
   govHoliday = {
     "12-31": "Yearend",
     "01-01": "Newyear",
@@ -53,7 +56,7 @@ export function findHoliday(date)
   }
 
   if (govHoliday[monthdate]) {
-    return `url('css/pic/holiday/${govHoliday[monthdate]}.png')`
+    return `url('${picDir}/${govHoliday[monthdate]}.png')`
   }
   return ''
 }
