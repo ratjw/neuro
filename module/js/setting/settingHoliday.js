@@ -131,7 +131,7 @@ function delHoliday(that)
       vdate = th_2_ISO(vdateth),
       vname = $cell[1].innerHTML.replace(/<button.*$/, ""),
       rows = getTableRowsByDate('maintbl', vdate),
-      holidayEng = getHolidayEng(vname)
+      holidayEng = getHolidayEng(vname) || vname
 
     sqlDelHoliday(vdate, holidayEng).then(response => {
       if (typeof response === "object") {
