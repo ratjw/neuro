@@ -1,12 +1,15 @@
 
-import { HOLIDAY } from "./updateBOOK.js"
+import { getHOLIDAY } from "./updateBOOK.js"
 
-export function holiday(date)
+// Buddhist holiday and compensation for religious day on weekend
+export function findHoliday(date)
 {
-  // Buddhist holiday and compensation for religious day on weekend
-  let Buddhist = HOLIDAY.find(day => day.holidate === date)
+  const picDir = "css/pic/holiday"
+  const holiday = getHOLIDAY()
+  const Buddhist = holiday.find(day => day.holidate === date)
+
   if (Buddhist) {
-    return `url('css/pic/holiday/${Buddhist.dayname}.png')`
+    return `url('${picDir}/${Buddhist.dayname}.png')`
   }
 
   let monthdate = date.substring(5),
@@ -28,12 +31,18 @@ export function holiday(date)
     "04-15": "Songkran",
     "04-16": (Mon || Tue) && "Songkransub",
     "04-17": (Mon || Tue) && "Songkransub",
+    "05-04": "Coronation",
+    "05-05": Mon && "Coronationsub",
+    "05-06": Mon && "Coronationsub",
+    "06-03": "Queen10",
+    "06-04": (Mon || Tue) && "Queen10sub",
+    "06-05": (Mon || Tue) && "Queen10sub",
     "07-28": "King10",
     "07-29": Mon && "King10sub",
     "07-30": Mon && "King10sub",
-    "08-12": "Queen",
-    "08-13": Mon && "Queensub",
-    "08-14": Mon && "Queensub",
+    "08-12": "Queen9",
+    "08-13": Mon && "Queen9sub",
+    "08-14": Mon && "Queen9sub",
     "10-13": "King09",
     "10-14": Mon && "King09sub",
     "10-15": Mon && "King09sub",
@@ -49,6 +58,7 @@ export function holiday(date)
   }
 
   if (govHoliday[monthdate]) {
-    return `url('css/pic/holiday/${govHoliday[monthdate]}.png')`
+    return `url('${picDir}/${govHoliday[monthdate]}.png')`
   }
+  return ''
 }

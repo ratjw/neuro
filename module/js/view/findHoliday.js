@@ -1,11 +1,10 @@
 
 import { getHOLIDAY } from "../util/updateBOOK.js"
 
+// Buddhist holiday and compensation for religious day on weekend
 export function findHoliday(date)
 {
   const picDir = "css/pic/holiday"
-
-  // Buddhist holiday and compensation for religious day on weekend
   const holiday = getHOLIDAY()
   const Buddhist = holiday.find(day => day.holidate === date)
 
@@ -27,14 +26,14 @@ export function findHoliday(date)
     "04-06": "Chakri",
     "04-07": Mon && "Chakrisub",
     "04-08": Mon && "Chakrisub",
-    "05-04": "Coronation",
-    "05-05": Mon && "Coronationsub",
-    "05-06": Mon && "Coronationsub",
     "04-13": "Songkran",
     "04-14": "Songkran",
     "04-15": "Songkran",
     "04-16": (Mon || Tue) && "Songkransub",
     "04-17": (Mon || Tue) && "Songkransub",
+    "05-04": "Coronation",
+    "05-05": Mon && "Coronationsub",
+    "05-06": Mon && "Coronationsub",
     "06-03": "Queen10",
     "06-04": (Mon || Tue) && "Queen10sub",
     "06-05": (Mon || Tue) && "Queen10sub",

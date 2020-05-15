@@ -3,7 +3,6 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { fillmain } from "./fill.js"
 import { fillConsults } from "./fillConsults.js"
 import { updateBOOK } from "./updateBOOK.js"
-import { holiday } from './holiday.js'
 import { obj_2_ISO, nextdates } from './date.js'
 import { sendNotifyLINE } from './sendNotifyLINE.js'
 

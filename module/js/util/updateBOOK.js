@@ -1,7 +1,7 @@
 
 import { isSplit } from "./util.js"
 import { staffqueue } from "../view/staffqueue.js"
-import { fillmain, refillDatedCases } from "../view/fill.js"
+import { refillDatedCases } from "../view/fill.js"
 import { renewEditcell } from "../control/edit.js"
 
 //--- global variables --------------
@@ -16,6 +16,7 @@ let BOOK = [],
   HOLIDAY = [],
   TIMESTAMP = ""
 
+// clone all the data
 export function getBOOK() { return JSON.parse(JSON.stringify(BOOK)) }
 export function getCONSULT() { return JSON.parse(JSON.stringify(CONSULT)) }
 export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
