@@ -30,7 +30,7 @@ export function findHoliday(date)
     "04-14": "Songkran",
     "04-15": "Songkran",
     "04-16": (Mon || Tue) && "Songkransub",
-    "04-17": Tue && "Songkransub",
+    "04-17": Mon && "Songkransub",
     "05-04": "Coronation",
     "05-05": Mon && "Coronationsub",
     "05-06": Mon && "Coronationsub",
