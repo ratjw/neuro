@@ -112,21 +112,6 @@ td img.imgpale {
 #maintbl.showColumn2 th:nth-child(2) { width: 30px; font-size: xx-small; }
 #maintbl.showColumn2 td:nth-child(2) { font-size: xx-small; text-align: center; }
 
-:root {
-  --consultant: "";
-}
-
-td.consult[data-origconsult] { 
-  --consultant: '\Aเดิม ' attr(data-origconsult);
-}
-
-td.consult::after { 
-  color: #999999;
-  font-size: 12px;
-  content: 'สัปดาห์ Consult\A'attr(data-consult)var(--consultant);
-  white-space: pre;
-}
-
 #queuetbl tr.nodate td:first-child::before {
   font-size: 14px;
   content: attr(data-number);
@@ -289,6 +274,28 @@ td.consult::after {
 #holidayInput,
 td img.hide {
   display: none;
+}
+
+:root {
+  --consultant: "";
+}
+
+td.consult[data-origconsult] { 
+  --consultant: '\Aเดิม ' attr(data-origconsult);
+}
+
+td.consult::after { 
+  color: #999999;
+  font-size: 12px;
+  content: 'สัปดาห์ Consult\A'attr(data-consult)var(--consultant);
+  white-space: pre;
+}
+
+td.holiday::after { 
+  color: #CCCCCC;
+  font-size: 24px;
+  font-weight: bold;
+  content: attr(data-holiday);
 }
 
 #editcell { 

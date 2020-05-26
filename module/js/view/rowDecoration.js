@@ -11,16 +11,14 @@ const NAMEOFDAYFULL = ["Sunday", "Monday", "Tuesday",
 export function rowDecoration(row, date)
 {
   const  cells = row.cells,
-   Dstyle = cells[DIAGNOSIS].style
+   cellDiag = cells[DIAGNOSIS]
 
   row.className = dayName(NAMEOFDAYFULL, date) || "nodate"
   cells[OPDATE].innerHTML = putThdate(date)
 
   if (date < LARGESTDATE) {
-    const oldImg = Dstyle.backgroundImage
-    const newImg = findHoliday(date)
-
-    if (oldImg || newImg) { Dstyle.backgroundImage = newImg }
+    cellDiag.classList.add("holiday")
+    cellDiag.dataset.holiday = findHoliday(date)
   }
 }
 

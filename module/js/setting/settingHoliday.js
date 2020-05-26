@@ -8,20 +8,20 @@ import { findHoliday } from "../view/findHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
 import { Alert } from "../util/util.js"
 
-const HOLIDAYENGTHAI = {
-  "Magha": "วันมาฆบูชา",
-  "Maghasub": "ชดเชยวันมาฆบูชา",
-  "Ploughing": "วันพืชมงคล",
-  "Ploughingsub": "ชดเชยวันพืชมงคล",
-  "Vesak": "วันวิสาขบูชา",
-  "Vesaksub": "ชดเชยวันวิสาขบูชา",
-  "Asalha": "วันอาสาฬหบูชา",
-  "Asalhasub": "ชดเชยวันอาสาฬหบูชา",
-  "Vassa": "วันเข้าพรรษา",
-  "Vassasub": "ชดเชยวันเข้าพรรษา",
-  "special": "วันหยุดพิเศษ",
-  "no": "ไม่หยุด"
-}
+const HOLIDAYTHAI = [
+  "วันมาฆบูชา",
+  "ชดเชยวันมาฆบูชา",
+  "วันพืชมงคล",
+  "ชดเชยวันพืชมงคล",
+  "วันวิสาขบูชา",
+  "ชดเชยวันวิสาขบูชา",
+  "วันอาสาฬหบูชา",
+  "ชดเชยวันอาสาฬหบูชา",
+  "วันเข้าพรรษา",
+  "ชดเชยวันเข้าพรรษา",
+  "วันหยุดพิเศษ",
+  "ไม่หยุด"
+]
 
 export function settingHoliday()
 {
@@ -59,10 +59,8 @@ export function settingHoliday()
   datePicker($holidateth)
   $holidateth.datepicker('option', 'onClose', checkComplete)
 
-  // option holidays Eng: Thai
-  $.each(HOLIDAYENGTHAI, function(key, val) {
-    holidaylist += `<option value="${key}">${val}</option>`
-  })
+  // option holidayThai
+  HOLIDAYTHAI.forEach(holi => holidaylist += `<option value="${holi}">${holi}</option>`)
   $holidayname.html(holidaylist)
   $("#buttonHoliday").hide()
   $holidayname.on('change', checkComplete)
@@ -97,7 +95,7 @@ jQuery.fn.extend({
     let  cells = this[0].cells
 
     cells[0].innerHTML = putThdate(q.holidate)
-    cells[1].innerHTML = HOLIDAYENGTHAI[q.dayname]
+    cells[1].innerHTML = q.dayname
   }
 })
 
@@ -119,34 +117,6 @@ export function addHoliday()
   }
 }
 
-function delHoliday(that)
-{
-  let  $row = $(that).closest("tr")
-
-  if ($row.find("input").length) {
-    holidayInputBack($row)
-  } else {
-    let  $cell = $row.find("td"),
-      vdateth = $cell[0].innerHTML,
-      vdate = th_2_ISO(vdateth),
-      vname = $cell[1].innerHTML.replace(/<button.*$/, ""),
-      rows = getTableRowsByDate('maintbl', vdate),
-      holidayEng = getHolidayEng(vname) || vname
-
-    sqlDelHoliday(vdate, holidayEng).then(response => {
-      if (typeof response === "object") {
-        setHOLIDAY(response)
-        $(rows).each(function() {
-          this.cells[DIAGNOSIS].style.backgroundImage = ""
-        })
-        $row.remove()
-      } else {
-        Alert ("delHoliday", response)
-      }
-    })
-  }
-}
-
 function saveHoliday()
 {
   let  vdateth = document.getElementById("holidateth").value,
@@ -162,17 +132,14 @@ function saveHoliday()
       holidayInputBack($("#holidateth").closest("tr"))
       fillHoliday($("#holidaytbl"))
       $("#buttonHoliday").hide()
-      $(rows).each(function() {
-        this.cells[DIAGNOSIS].style.backgroundImage = findHoliday(vdate)
+      rows.forEach(row => {
+        row.cells[DIAGNOSIS].classList.add("holiday")
+        row.cells[DIAGNOSIS].dataset.holiday = findHoliday(vdate)
       })
     } else {
       Alert ("saveHoliday", response)
     }
   })
-}
-
-function getHolidayEng(vname) {
-  return Object.keys(HOLIDAYENGTHAI).find(key => HOLIDAYENGTHAI[key] === vname)
 }
 
 // Have to move $inputRow back and forth because datepicker is sticked to #holidateth
@@ -181,4 +148,37 @@ function holidayInputBack($inputRow)
   $("#holidateth").val("")
   $("#holidayname").val("")
   $('#holidayInput tbody').append($inputRow)
+}
+
+function delHoliday(that)
+{
+  let  $row = $(that).closest("tr")
+
+  if ($row.find("input").length) {
+    holidayInputBack($row)
+  } else {
+    holidayDelete($row)
+  }
+}
+
+function holidayDelete($row)
+{
+  let $cell = $row.find("td"),
+    vdateth = $cell[0].innerHTML,
+    vdate = th_2_ISO(vdateth),
+    vname = $cell[1].innerHTML,
+    rows = getTableRowsByDate('maintbl', vdate)
+
+  sqlDelHoliday(vdate, vname).then(response => {
+    if (typeof response === "object") {
+      setHOLIDAY(response)
+      $row.remove()
+      rows.forEach(row => {
+        row.cells[DIAGNOSIS].classList.remove("holiday")
+        delete row.cells[DIAGNOSIS].dataset.holiday
+      })
+    } else {
+      Alert ("delHoliday", response)
+    }
+  })
 }
