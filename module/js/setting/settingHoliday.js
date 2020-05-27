@@ -67,8 +67,11 @@ export function settingHoliday()
 
 function fillHoliday($holidaytbl)
 {
-  const thisYear = new Date().getFullYear().toString(),
-    holiday = getHOLIDAY().filter(date => date.holidate > thisYear)
+  const thisyear = new Date().getFullYear().toString(),
+    maxyear = "9999",
+    holiday = getHOLIDAY().filter(day =>
+                (day.holidate > thisyear) && (day.holidate < maxyear)
+              )
 
   $holidaytbl.find('tr').slice(1).remove()
 
