@@ -65,7 +65,7 @@ export function nextdates(date, days) {
 export function putThdate (date) {
   if (!date) { return date }
 
-  return (String(date) === LARGESTDATE) ? "" : th_2_ISO(date)
+  return (String(date) === LARGESTDATE) ? "" : ISO_2_th(date)
 }
 
 export function putNameAge(q)

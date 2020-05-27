@@ -3,7 +3,6 @@ import {
   OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
   DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT, COLUMN
 } from "./const.js"
-import { rowDecoration } from "./rowDecoration.js"
 import { putNameAge } from "./date.js"
 import { viewLab } from "./viewLab.js"
 import { viewEquip } from "./viewEquip.js"

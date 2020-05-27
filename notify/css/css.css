@@ -116,21 +116,6 @@ td img.imgpale {
 #maintbl td:nth-child(8) { font-size: 12px; }
 #maintbl td:nth-child(11) { font-size: 12px; }
 
-:root {
-  --consultant: ;
-}
-
-td.consult[data-origconsult] { 
-  --consultant: '\Aเดิม ' attr(data-origconsult);
-}
-
-td.consult::after { 
-  color: #999999;
-  font-size: 16px;
-  content: 'สัปดาห์ Consult\A'attr(data-consult)var(--consultant);
-  white-space: pre;
-}
-
 #queuewrapper {
   float: right;
 }
@@ -315,6 +300,28 @@ td.consult::after {
 #holidayInput,
 .ui-datepicker-year {
   display: none;
+}
+
+:root {
+  --consultant: ;
+}
+
+td.consult[data-origconsult] { 
+  --consultant: '\Aเดิม ' attr(data-origconsult);
+}
+
+td.consult::after { 
+  color: #999999;
+  font-size: 16px;
+  content: 'สัปดาห์ Consult\A'attr(data-consult)var(--consultant);
+  white-space: pre;
+}
+
+td.holiday::after { 
+  color: #CCCCCC;
+  font-size: 24px;
+  font-weight: bold;
+  content: attr(data-holiday);
 }
 
 #editcell { 

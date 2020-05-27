@@ -6,25 +6,9 @@ import { updateBOOK } from "./updateBOOK.js"
 import { obj_2_ISO, nextdates } from './date.js'
 import { sendNotifyLINE } from './sendNotifyLINE.js'
 
+export let BEGINDATE
+
 export async function notifyLINE()
-{
-  const beginEnd = getBeginEnd(),
-    thisday = beginEnd.thisday,
-    begindate = beginEnd.begindate,
-    enddate = beginEnd.enddate,
-    message = beginEnd.message
-
-  // No notify on Sunday nad Saturday
-  if (!(thisday % 6)) { return }
-  if (await start(begindate, enddate)) {
-    fillmain(begindate, enddate)
-    fillConsults()
-    selectRows(begindate, enddate).forEach(e => e.classList.add('selected'))
-    sendNotifyLINE(message)
-  }
-}
-
-export function getBeginEnd()
 {
   const today = new Date(),
     day = today.getDay(),
@@ -33,13 +17,20 @@ export function getBeginEnd()
     thisSaturday = getDayInSameWeek(today, 6),
     nextMonday = getDayInNextWeek(today, 1),
     nextSaturday = getDayInNextWeek(today, 6),
-    thisWeek = day < 5
-  
-  return {
-    thisday: day,
-    begindate: thisWeek ? tomorrow : nextMonday,
-    enddate: thisWeek ? thisSaturday : nextSaturday,
-    message: thisWeek ? 'สัปดาห์นี้' : 'สัปดาห์หน้า'
+    thisWeek = day < 5,
+    begindate = thisWeek ? tomorrow : nextMonday,
+    enddate = thisWeek ? thisSaturday : nextSaturday,
+    message = thisWeek ? 'สัปดาห์นี้' : 'สัปดาห์หน้า'
+
+  BEGINDATE = begindate
+
+  // No notify on Sunday and Saturday
+  if (!(day % 6)) { return }
+  if (await start(todate, enddate)) {
+    fillmain(todate, enddate)
+    fillConsults()
+    selectRows(begindate, enddate).forEach(e => e.classList.add('selected'))
+    sendNotifyLINE(message)
   }
 }
 

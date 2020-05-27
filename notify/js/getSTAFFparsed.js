@@ -1,7 +1,7 @@
 
 import { getSTAFF } from "./updateBOOK.js"
 import { getLatestKey, getLatestValue } from "./util.js"
-import { getBeginEnd } from "./notifyLINE.js"
+import { BEGINDATE } from "./notifyLINE.js"
 
 export function getSTAFFparsed()
 {
@@ -67,7 +67,7 @@ export function getOncallExchange()
   // remove out-of-date exchange
   Object.entries(exchange).forEach(([key, val]) => {
     Object.entries(val).forEach((k, date) => {
-      if (date < getBeginEnd().begindate) {
+      if (date < BEGINDATE) {
         delete exchange[key][k]
       }
     })
