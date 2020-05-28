@@ -85,7 +85,7 @@ function getOncallNum(cell, field) {
   const oldcontent = cell.dataset.val
   const newcontent = cell.textContent
 
-  return oldcontent === newcontent ? '' : `"$.${field}",${newcontent}`
+  return oldcontent === newcontent ? '' : `"$.${field}",${newcontent || null}`
 }
 
 function getDateContent(id, cell, field)

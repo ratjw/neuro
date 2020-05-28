@@ -63,23 +63,28 @@ jQuery.fn.extend({
 
     row.dataset.id = q.id
 
-;   [ qprofile.staffname,
-      qprofile.ramaid,
-      qprofile.oncall
+    // fill first 3 columns
+;   [ qprofile.staffname || "",
+      qprofile.ramaid || "",
+      qprofile.oncall || ""
     ].forEach((e, i) => {
       if (i < START) {
         showCell(cells[i], e)
       }
     })
 
+    // fill staffname
     const start = getLatestStart()
-    if (qprofile.staffname === start.profile.staffname) {
-      showCell(startCell, start.startDate, start.startKey)
-    } else {
-      showCell(startCell, '')
+    if (start) {
+      if (qprofile.staffname === start.profile.staffname) {
+        showCell(startCell, start.startDate, start.startKey)
+      } else {
+        showCell(startCell, '')
+      }
+      if (qprofile.oncall) { inputDatepicker(startCell) }
     }
-    if (qprofile.oncall) { inputDatepicker(startCell) }
 
+    // fill leave of absence (begin, end)
     const key = getLatestKey(qprofile.skip)
     const endDate = key ? getActiveDate(qprofile.skip[key]["end"]) : ''
     const beginDate = endDate ? qprofile.skip[key]["begin"] : ''
