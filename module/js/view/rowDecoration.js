@@ -17,29 +17,27 @@ export function rowDecoration(row, date)
     dayofweek = (new Date(date)).getDay(),
     Mon = dayofweek === 1,
     Tue = dayofweek === 2,
-    holidayName = findHoliday(date)
+    holidayName = ""
 
   row.className = dayName(NAMEOFDAYFULL, date) || "nodate"
   cells[OPDATE].innerHTML = putThdate(date)
 
   if (date < LARGESTDATE) {
+    holidayName = findHoliday(date)
     if (holidayName) {
-      cellDiag.classList.add("holiday")
-      cellDiag.dataset.holiday = holidayName
+      fillHoliday(cellDiag, holidayName)
     }
     else if (row.rowIndex > 2) {
       if (Mon) {
         holidayName = compensateMon(row)
         if (holidayName) {
-          cellDiag.classList.add("holiday")
-          cellDiag.dataset.holiday = COMPENSATE + holidayName
+          fillHoliday(cellDiag, COMPENSATE + holidayName)
         }
       }
       else if (Tue) {
         holidayName = compensateTue(row)
         if (holidayName) {
-          cellDiag.classList.add("holiday")
-          cellDiag.dataset.holiday = COMPENSATE + holidayName
+          fillHoliday(cellDiag, COMPENSATE + holidayName)
         }
       }
     }
@@ -51,6 +49,12 @@ function dayName(DAYNAME, date)
   return date === LARGESTDATE
           ? ""
           : DAYNAME[(new Date(date)).getDay()]
+}
+
+function fillHoliday(cellDiag, holidayName)
+{
+  cellDiag.classList.add("holiday")
+  cellDiag.dataset.holiday = holidayName
 }
 
 function compensateMon(row)

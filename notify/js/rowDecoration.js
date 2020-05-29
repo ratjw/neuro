@@ -17,12 +17,13 @@ export function rowDecoration(row, date)
     dayofweek = (new Date(date)).getDay(),
     Mon = dayofweek === 1,
     Tue = dayofweek === 2,
-    holidayName = findHoliday(date)
+    holidayName = ""
 
   row.className = dayName(NAMEOFDAYFULL, date) || "nodate"
   cells[OPDATE].innerHTML = putThdate(date)
 
   if (date < LARGESTDATE) {
+    holidayName = findHoliday(date)
     if (holidayName) {
       fillHoliday(cellDiag, holidayName)
     }
