@@ -66,7 +66,7 @@ jQuery.fn.extend({
     // fill first 3 columns
 ;   [ qprofile.staffname || "",
       qprofile.ramaid || "",
-      qprofile.oncall || ""
+      qprofile.oncall
     ].forEach((e, i) => {
       if (i < START) {
         showCell(cells[i], e)
