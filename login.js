@@ -29,15 +29,12 @@ function login()
               : module
                 ? "module"
                 : "es5/es5.html"
-  var secretary = '005497'
   var admin = '000000'
-  var ADMIN = [admin, '001198', secretary]
 					
-  sessionStorage.setItem('admin', ADMIN)
+  sessionStorage.setItem('admin', admin)
 	sessionStorage.setItem('isMobile', isMobile)
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
 	document.getElementById("browser").value = browser
-	document.getElementById("secretary").value = secretary
   if (location.host === "localhost") {
     sessionStorage.setItem('userid', admin)
     document.getElementById("userid").value = admin

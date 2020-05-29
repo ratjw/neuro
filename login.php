@@ -3,7 +3,6 @@
 		$userid = !empty($_POST['userid']) ? $_POST['userid'] : '';
 		$pwd = !empty($_POST['pwd']) ? $_POST['pwd'] : '';
 		$browser = !empty($_POST['browser']) ? $_POST['browser'] : '';
-		$secretary = !empty($_POST['secretary']) ? $_POST['secretary'] : '';
 
 		$browserDoctor = "location:$browser";
 		$browserNurse = "location:nurse/nurse.html";
@@ -30,12 +29,13 @@
 
 			$staff = $resultz === "S";
       $resident = $resultz === "R";
-      $secretary = $userid === $secretary && $resultz === "G";
+      $secretary = $resultz === "G";
+      $nurse = $resultz === "N";
 
       if ($staff || $resident || $secretary) {
 				header($browserDoctor);
 			}
-			else if ($resultz === "N") {
+			else if ($nurse) {
 				header($browserNurse);
 			}
 			// Pass the login but other than S, R, N

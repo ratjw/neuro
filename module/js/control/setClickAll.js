@@ -85,9 +85,9 @@ export function getPermission(submenu, rname)
     barname = RESIDENT.find(e => e.residentname === rname),
     barid = barname && barname.ramaid || '',
     permission = {
-      disable: [...ADMIN, ...staffid],
-      slider: [...ADMIN, ...staffid, ...residentid],
-      resBar: [...ADMIN, ...staffid, barid]
+      disable: [ADMIN, ...staffid],
+      slider: [ADMIN, ...staffid, ...residentid],
+      resBar: [ADMIN, ...staffid, barid]
     }
 
   return permission[submenu].includes(USER)
