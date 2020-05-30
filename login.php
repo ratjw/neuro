@@ -1,5 +1,6 @@
 <?php
 include "connect.php";
+require_once "personnel.php";
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$userid = !empty($_POST['userid']) ? $_POST['userid'] : '';
@@ -14,8 +15,9 @@ include "connect.php";
 		$wsdl="http://appcenter/webservice/patientservice.wsdl";
 		$resultz = "";
 		$error = "";
+    $personnel = preg_match('/^\d{6}$/', $userid);
 
-		if (preg_match('/^\d{6}$/', $userid)) {
+		if ($personnel) {
       $localhost = strpos($thisname, "localhost") !== false;
       $localnet = strpos($thisname, "192.168") !== false;
       $intranet = strpos($thisname, $servername) !== false;
@@ -41,12 +43,6 @@ include "connect.php";
 			else if ($nurse) {
 				header($browserNurse);
 			}
-			// Pass the login but other than S, R, N
-			else if (preg_match('/^\w{1}$/', $resultz)) {
-				$error = "Unauthorized";
-        header("location:index.php?error=$error");
-			}
-			// Fail the login
 			else {
 				$error = "Incorrect password or username";
         header("location:index.php?error=$error");
