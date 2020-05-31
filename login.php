@@ -1,5 +1,4 @@
 <?php
-include "connect.php";
 require_once "personnel.php";
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {

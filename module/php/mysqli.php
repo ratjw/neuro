@@ -79,8 +79,7 @@ function returnResident($mysqli, $sql, $training)
 	if (is_string($return)) {
 		return $return;
 	} else {
-		$data["RESIDENT"] = getResident($mysqli, $training);
-		return json_encode($data);
+		return json_encode(getResident($mysqli, $training));
 	}
 }
 

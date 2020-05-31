@@ -13,7 +13,7 @@ export async function getResident()
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
-    RESIDENT = response.RESIDENT
+    RESIDENT = response
   } else {
     Alert("getResident", response)
   }  
