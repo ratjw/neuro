@@ -51,14 +51,14 @@ function sqlUpdate(id, cell)
 
   if (!jsonremove && !jsonset) { return '' }
   if (jsonremove && !jsonset) {
-    return `sqlReturnStaff=UPDATE staff SET profile=${jsonremove} WHERE id=${id};`
+    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE id=${id};`
   }
   if (!jsonremove && jsonset) {
-    return `sqlReturnStaff=UPDATE staff SET profile=${jsonset} WHERE id=${id};`
+    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonset} WHERE id=${id};`
   }
   if (jsonremove && jsonset) {
-    return`sqlReturnStaff=UPDATE staff SET profile=${jsonremove} WHERE id=${id};`
-                        + `UPDATE staff SET profile=${jsonset} WHERE id=${id};`
+    return`sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE id=${id};`
+                        + `UPDATE personnel SET profile=${jsonset} WHERE id=${id};`
   }
 }
 

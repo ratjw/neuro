@@ -107,7 +107,7 @@ function getResident($mysqli, $training)
 
 function getStaff($mysqli)
 {
-	$sql = "SELECT * FROM staff;";
+	$sql = "SELECT * FROM personnel;";
 	return multiquery($mysqli, $sql);
 }
 
