@@ -31,7 +31,7 @@ function start($mysqli)
 {
 	$data = array();
 	$data = book($mysqli);
-	$data["STAFF"] = getStaff($mysqli);
+	$data["PERSONNEL"] = getPersonnel($mysqli);
 	$data["HOLIDAY"] = getHoliday($mysqli);
 	return json_encode($data);
 }
@@ -90,8 +90,7 @@ function returnStaff($mysqli, $sql)
 	if (is_string($return)) {
 		return $return;
 	} else {
-		$data["STAFF"] = getStaff($mysqli);
-		return json_encode($data);
+		return json_encode(getPersonnel($mysqli));
 	}
 }
 
@@ -105,7 +104,7 @@ function getResident($mysqli, $training)
 	return multiquery($mysqli, $sql);
 }
 
-function getStaff($mysqli)
+function getPersonnel($mysqli)
 {
 	$sql = "SELECT * FROM personnel;";
 	return multiquery($mysqli, $sql);

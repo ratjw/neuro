@@ -1,7 +1,7 @@
 
 import { htmlStafflist } from "../control/html.js"
 import { sqlDoSaveStaff } from "../model/sqlDoStaff.js"
-import { setSTAFF } from "../util/updateBOOK.js"
+import { setPERSONNEL } from "../util/updateBOOK.js"
 import { getSTAFFparsed, getLatestStart } from "../util/getSTAFFparsed.js"
 import { getLatestKey, Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
@@ -155,7 +155,7 @@ async function doSaveStaff(row)
   let response = await sqlDoSaveStaff(row)
 
   if (typeof response === "object") {
-    setSTAFF(response.STAFF)
+    setPERSONNEL(response.STAFF)
     htmlStafflist()
     fillConsults()
   } else {

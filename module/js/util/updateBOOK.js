@@ -7,23 +7,26 @@ import { renewEditcell } from "../control/edit.js"
 //--- global variables --------------
 // BOOK is for main table and individual staff's cases table
 // CONSULT is for Consults table (special table in queuetbl)
-// HOLIDAY is for Buddhist holiday entry of every year
+// PERSONNEL is for staffs, residents, and other paramedics
+// HOLIDAY is for Buddhist holiday entry of every year and govt. holiday
 // TIMESTAMP is the last time access from this client to the server
 
 let BOOK = [],
   CONSULT = [],
-  STAFF = [],
+  PERSONNEL = [],
   HOLIDAY = [],
   TIMESTAMP = ""
 
-// clone all the data
+// return the deep-cloned data, instead of the array's reference
+// not = [...array] which is only one-layer cloning
 export function getBOOK() { return JSON.parse(JSON.stringify(BOOK)) }
 export function getCONSULT() { return JSON.parse(JSON.stringify(CONSULT)) }
-export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
+export function getPERSONNEL() { return JSON.parse(JSON.stringify(PERSONNEL)) }
 export function getHOLIDAY() { return JSON.parse(JSON.stringify(HOLIDAY)) }
 export function getTIMESTAMP() { return TIMESTAMP }
 
-export function setSTAFF(staff) { STAFF = staff }
+// for other modules that get data from server
+export function setPERSONNEL(personnel) { PERSONNEL = personnel }
 export function setHOLIDAY(holiday) { HOLIDAY = holiday }
 
 let table = document.getElementById('maintbl')
@@ -35,7 +38,7 @@ export function updateBOOK(response) {
   if (BOOK.length) { refillDatedCases(table, BOOK, response.BOOK) }
   if (response.BOOK) { BOOK = response.BOOK }
   if (response.CONSULT) { CONSULT = response.CONSULT }
-  if (response.STAFF) { STAFF = response.STAFF }
+  if (response.PERSONNEL) { PERSONNEL = response.PERSONNEL }
   if (response.HOLIDAY) { HOLIDAY = response.HOLIDAY }
   if (response.QTIME) { TIMESTAMP = response.QTIME }
 

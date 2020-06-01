@@ -1,7 +1,7 @@
 
 import { reposition, menustyle } from "../util/util.js"
 import { clearEditcell } from "../control/edit.js"
-import { setSTAFF } from "../util/updateBOOK.js"
+import { setPERSONNEL } from "../util/updateBOOK.js"
 import { getStaffID, checkFieldExist } from "../util/getSTAFFparsed.js"
 import { postData, MYSQLIPHP } from "../model/fetch.js"
 import { USER } from "../main.js"
@@ -34,7 +34,7 @@ async function changeOncall(cell, opdate, id, staffname)
 
   const response = await postData(MYSQLIPHP, setDB(opdate, id))
   if (typeof response === "object") {
-    setSTAFF(response.STAFF)
+    setPERSONNEL(response.STAFF)
   } else {
     alert("changeOncall", response)
   }
