@@ -62,10 +62,8 @@ function success(response) {
 
 // *** to do -> offline browsing by service worker ***
 function failed(response) {
-  let title = "Server Error",
-    error = "<br><br>Response from server has no data"
 
-  Alert(title, error)
+  Alert("Server Error", response)
 }
 
 function contextmenu(event)

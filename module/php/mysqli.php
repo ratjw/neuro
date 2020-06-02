@@ -31,7 +31,7 @@ function start($mysqli)
 {
 	$data = array();
 	$data = book($mysqli);
-	$data["PERSONNEL"] = getPersonnel($mysqli);
+	$data["STAFF"] = getStaff($mysqli);
 	$data["HOLIDAY"] = getHoliday($mysqli);
 	return json_encode($data);
 }
@@ -90,7 +90,7 @@ function returnStaff($mysqli, $sql)
 	if (is_string($return)) {
 		return $return;
 	} else {
-		return json_encode(getPersonnel($mysqli));
+		return json_encode(getStaff($mysqli));
 	}
 }
 
@@ -100,15 +100,19 @@ function getResident($mysqli, $training)
   $month = date("m");
   $endmonth = 4;
   $yearth = ($month > $endmonth) ? ($year + 1) : $year;
-  $sql = "SELECT * FROM resident WHERE $yearth-enrollyear<=$training ORDER BY enrollyear,ramaid;";
+  $sql = "SELECT * FROM personnel
+          WHERE json_extract(profile,'$.position')='resident'
+            AND $yearth-enliststart<=trainingtime
+          ORDER BY enliststart,ramaid;";
 	return multiquery($mysqli, $sql);
 }
 
-function getPersonnel($mysqli)
+function getStaff($mysqli)
 {
-	$sql = "SELECT * FROM personnel;";
+	$sql = "SELECT * FROM personnel where json_extract(profile,'$.position')='staff';";
 	return multiquery($mysqli, $sql);
 }
+
 
 function getHoliday($mysqli)
 {

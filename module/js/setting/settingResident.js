@@ -1,8 +1,9 @@
 
 import {
-  RESIDENT, getResident, saveResident, addResident, updateResident, deleteResident
+  RESIDENT, saveResident, addResident, updateResident, deleteResident
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
+import { getRESIDENTparsed } from "../util/getRESIDENTparsed.js"
 
 export const RAMAID = 0,
   RNAME = 1,
@@ -14,7 +15,7 @@ const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
   IMAGE3 = `<img class="image3" src="css/pic/general/delete.png">`,
   IMAGEALL = `${IMAGE1}${IMAGE2}${IMAGE3}`
 
-export async function settingResident()
+export function settingResident()
 {
   const IMAGES = {
     image1: addResident,
@@ -26,13 +27,12 @@ export async function settingResident()
     $residenttbltbody = $("#residenttbl tbody"),
     $residenttbltr = $("#residenttbl tr"),
     $residentcellstr = $('#residentcells tr'),
-    maxHeight = winHeight(90)
+    maxHeight = winHeight(90),
+    resident = getRESIDENTparsed()
 
   $residenttbltr.slice(1).remove()
 
-  if (!RESIDENT.length) { await getResident() }
-
-  if (!RESIDENT.length) {
+  if (!resident.length) {
     let $clone = $residentcellstr.clone(),
       clone = $clone[0],
       cells = clone.cells,
@@ -43,7 +43,7 @@ export async function settingResident()
       saveResident(clone)
     })
   } else {
-    $.each( RESIDENT, (i, item) => {
+    $.each( resident, (i, item) => {
       $residentcellstr.clone()
         .appendTo($residenttbltbody)
           .filldataResident(i, item)

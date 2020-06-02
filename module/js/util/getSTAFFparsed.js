@@ -1,14 +1,14 @@
 
-import { getPERSONNEL } from "../util/updateBOOK.js"
+import { getSTAFF } from "../util/updateBOOK.js"
 import { getLatestKey, getLatestValue } from "../util/util.js"
 
 export function getSTAFFparsed()
 {
-  const persons = getPERSONNEL()
+  const staffs = getSTAFF()
 
-  persons.forEach(e => e.profile = JSON.parse(e.profile))
+  staffs.forEach(e => e.profile = JSON.parse(e.profile))
 
-  return persons.filter(person => person.profile.position === "staff")
+  return staffs
 }
 
 export function getStaffID(staffname)

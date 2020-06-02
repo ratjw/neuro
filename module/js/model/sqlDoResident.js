@@ -9,7 +9,7 @@ export let RESIDENT = []
 
 export async function getResident()
 {
-  let sql = `sqlReturnResident=&training=${training}`
+  let sql = `sqlReturnResident=`
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -39,7 +39,9 @@ export async function saveResident(row)
   let cell = row.cells
   let ramaid = cell[RAMAID].textContent
   let residentname = cell[RNAME].textContent
-  let enrollyear = cell[ENYEAR].textContent
+  let trainingTime = cell[TRAINTIME].textContent
+  let enlistStart = cell[ENSTART].textContent
+  let enlistEnd = cell[ENEND].textContent
 
   // X axis is double the research time range, because half of it is the white bars
   let fulltrain = xRange / 2
@@ -47,19 +49,25 @@ export async function saveResident(row)
   let research = JSON.stringify({ proposal: month*3,
                    planning: month*12,
                    ethic: month*9,
-                   "data50": month*18,
-                   "data100": month*15,
+                   data: month*33,
                    analysis: month*2,
                    complete: month*1
                  })
 
-  if (!residentname || !enrollyear) {
+  if (!residentname || !enlistStart) {
     Alert("saveResident", "<br>Incomplete Entry")
     return
   }
 
-  let sql = `sqlReturnResident=INSERT INTO resident (ramaid,residentname,enrollyear,research)
-               VALUES('${ramaid}','${residentname}','${enrollyear}','${research}');&training=${training}`
+  let sql = `sqlReturnResident=INSERT INTO resident
+               (ramaid,residentname,trainingTime,enlistStart,enlistEnd,research)
+               VALUES
+               ('${ramaid}',
+               '${residentname}',
+               '${trainingTime}',
+               '${enlistStart}',
+               '${enlistEnd}',
+               '${research}');`
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -75,14 +83,20 @@ export async function updateResident(row)
   let oldramaid = row.dataset.ramaid
   let newramaid = cell[RAMAID].textContent
   let residentname = cell[RNAME].textContent
-  let enrollyear = cell[ENYEAR].textContent
+  let trainingTime = cell[TRAINTIME].textContent
+  let enlistStart = cell[ENSTART].textContent
+  let enlistEnd = cell[ENEND].textContent
 
-  if (!residentname || !enrollyear) { return "<br>Incomplete Entry" }
+  if (!residentname || !enlistStart) { return "<br>Incomplete Entry" }
 
-  if (confirm("ต้องการแก้ไขข้อมูลนี้")) {
+  if (confirm("ต้องการแก้ไขข้อมูลนี้?")) {
     let sql = `sqlReturnResident=UPDATE resident
-               SET ramaid='${newramaid}',residentname='${residentname}',enrollyear='${enrollyear}'
-               WHERE ramaid=${oldramaid};&training=${training}`
+               SET ramaid='${newramaid}',
+                   residentname='${residentname}',
+                   trainingTime='${trainingTime}',
+                   enlistStart='${enlistStart}'
+                   enlistEnd='${enlistEnd}'
+               WHERE ramaid=${oldramaid};`
     let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
@@ -99,9 +113,8 @@ export async function deleteResident(row)
 
   if (!ramaid) { return "<br>No Number" }
 
-  if (confirm("ต้องการลบข้อมูลนี้หรือไม่")) {
-    let sql = `sqlReturnResident=DELETE FROM resident 
-               WHERE ramaid=${ramaid};&training=${training}`
+  if (confirm("ต้องการลบข้อมูลนี้?")) {
+    let sql = `sqlReturnResident=DELETE FROM resident WHERE ramaid=${ramaid};`
     let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
