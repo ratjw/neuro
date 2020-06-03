@@ -21,7 +21,7 @@ require_once "book.php";
 		echo returnData($mysqli, $_POST['sqlReturnData']);
 	}
 	else if (isset($_POST['sqlReturnResident'])) {
-		echo returnResident($mysqli, $_POST['sqlReturnResident'], $_POST['training']);
+		echo returnResident($mysqli, $_POST['sqlReturnResident']);
 	}
 	else if (isset($_POST['sqlReturnStaff'])) {
 		echo returnStaff($mysqli, $_POST['sqlReturnStaff']);
@@ -69,18 +69,18 @@ function returnData($mysqli, $sql)
 	}
 }
 
-function returnResident($mysqli, $sql, $training)
+function returnResident($mysqli, $sql)
 {
 	$data = array();
   $return = array();
   if ($sql) {
     $return = multiquery($mysqli, $sql);
+    if (is_string($return)) {
+      return $return;
+    }
   }
-	if (is_string($return)) {
-		return $return;
-	} else {
-		return json_encode(getResident($mysqli, $training));
-	}
+
+  return json_encode(getResident($mysqli));
 }
 
 function returnStaff($mysqli, $sql)
@@ -94,22 +94,18 @@ function returnStaff($mysqli, $sql)
 	}
 }
 
-function getResident($mysqli, $training)
+function getResident($mysqli)
 {
-	$year = date("Y") + 543;
-  $month = date("m");
-  $endmonth = 4;
-  $yearth = ($month > $endmonth) ? ($year + 1) : $year;
   $sql = "SELECT * FROM personnel
-          WHERE json_extract(profile,'$.position')='resident'
-            AND $yearth-enliststart<=trainingtime
-          ORDER BY enliststart,ramaid;";
+          WHERE JSON_EXTRACT(profile,'$.position')='resident'
+          ORDER BY JSON_EXTRACT(profile,'$.enlistStart'),
+                JSON_EXTRACT(profile,'$.ramaid');";
 	return multiquery($mysqli, $sql);
 }
 
 function getStaff($mysqli)
 {
-	$sql = "SELECT * FROM personnel where json_extract(profile,'$.position')='staff';";
+	$sql = "SELECT * FROM personnel where JSON_EXTRACT(profile,'$.position')='staff';";
 	return multiquery($mysqli, $sql);
 }
 

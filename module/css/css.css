@@ -244,7 +244,8 @@ td img.imgpale {
   width: 20px;
 }
 
-#residenttbl td:nth-child(4) { text-align: center; }
+#residenttbl { text-align: center; }
+#residenttbl td:nth-child(2) { text-align: left; }
 
 #wrapper,
 #queuewrapper,

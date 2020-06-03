@@ -1,11 +1,27 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
-import { RAMAID, RNAME, ENYEAR, ICONS, settingResident } from "../setting/settingResident.js"
-import { xRange, training, RESEARCHBAR } from '../setting/prepareData.js'
+import { settingResident } from "../setting/settingResident.js"
+import { xRange, RESEARCHBAR } from '../setting/prepareData.js'
 import { resResearch } from '../setting/resResearch.js'
 
+export const RAMAID = 0,
+  RNAME = 1,
+  YEARS = 2,
+  START = 3,
+  END = 4,
+  ICONS = 5
+
 export let RESIDENT = []
+
+export function getRESIDENTparsed()
+{
+  const residents = JSON.parse(JSON.stringify(RESIDENT))
+
+  residents.forEach(e => e.profile = JSON.parse(e.profile))
+
+  return residents.map(resident => resident.profile)
+}
 
 export async function getResident()
 {
@@ -17,6 +33,13 @@ export async function getResident()
   } else {
     Alert("getResident", response)
   }  
+}
+
+export function getTrainingTime()
+{
+  const residents = getRESIDENTparsed()
+
+  return residents[0].profile.trainingTime
 }
 
 export function addResident(row)
@@ -39,13 +62,13 @@ export async function saveResident(row)
   let cell = row.cells
   let ramaid = cell[RAMAID].textContent
   let residentname = cell[RNAME].textContent
-  let trainingTime = cell[TRAINTIME].textContent
-  let enlistStart = cell[ENSTART].textContent
-  let enlistEnd = cell[ENEND].textContent
+  let trainingTime = cell[YEARS].textContent
+  let enlistStart = cell[START].textContent
+  let enlistEnd = cell[END].textContent
 
   // X axis is double the research time range, because half of it is the white bars
   let fulltrain = xRange / 2
-  let month = fulltrain / training / 12
+  let month = fulltrain / getTrainingTime() / 12
   let research = JSON.stringify({ proposal: month*3,
                    planning: month*12,
                    ethic: month*9,
@@ -59,15 +82,14 @@ export async function saveResident(row)
     return
   }
 
-  let sql = `sqlReturnResident=INSERT INTO resident
-               (ramaid,residentname,trainingTime,enlistStart,enlistEnd,research)
-               VALUES
-               ('${ramaid}',
-               '${residentname}',
-               '${trainingTime}',
-               '${enlistStart}',
-               '${enlistEnd}',
-               '${research}');`
+  let sql = `sqlReturnResident=INSERT INTO personnel (profile)
+               VALUES (JSON_OBJECT('ramaid','${ramaid}',
+                 'residentname','${residentname}',
+                 'trainingTime','${trainingTime}',
+                 'enlistStart','${enlistStart}',
+                 'enlistEnd','${enlistEnd}',
+                 'research','${research}',
+                 'position','resident'));`
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -83,20 +105,20 @@ export async function updateResident(row)
   let oldramaid = row.dataset.ramaid
   let newramaid = cell[RAMAID].textContent
   let residentname = cell[RNAME].textContent
-  let trainingTime = cell[TRAINTIME].textContent
-  let enlistStart = cell[ENSTART].textContent
-  let enlistEnd = cell[ENEND].textContent
+  let trainingTime = cell[YEARS].textContent
+  let enlistStart = cell[START].textContent
+  let enlistEnd = cell[END].textContent
 
   if (!residentname || !enlistStart) { return "<br>Incomplete Entry" }
 
   if (confirm("ต้องการแก้ไขข้อมูลนี้?")) {
-    let sql = `sqlReturnResident=UPDATE resident
-               SET ramaid='${newramaid}',
-                   residentname='${residentname}',
-                   trainingTime='${trainingTime}',
-                   enlistStart='${enlistStart}'
-                   enlistEnd='${enlistEnd}'
-               WHERE ramaid=${oldramaid};`
+    let sql = `sqlReturnResident=UPDATE personnel
+               SET profile=JSON_SET(profile,'$.ramaid','${newramaid}',
+                   '$.residentname','${residentname}',
+                   '$.trainingTime','${trainingTime}',
+                   '$.enlistStart','${enlistStart}',
+                   '$.enlistEnd','${enlistEnd}')
+               WHERE JSON_EXTRACT(profile,'$.ramaid')='${oldramaid}';`
     let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
@@ -114,7 +136,8 @@ export async function deleteResident(row)
   if (!ramaid) { return "<br>No Number" }
 
   if (confirm("ต้องการลบข้อมูลนี้?")) {
-    let sql = `sqlReturnResident=DELETE FROM resident WHERE ramaid=${ramaid};`
+    let sql = `sqlReturnResident=DELETE FROM personnel
+                WHERE JSON_EXTRACT(profile,'$.ramaid')=${ramaid};`
     let response = await postData(MYSQLIPHP, sql)
     if (typeof response === "object") {
       showResident(response)
@@ -132,7 +155,8 @@ function showResident(response)
 
 export async function updateResearch(barChart, ridx, _ranges)
 {
-  const ramaid = RESIDENT[ridx].ramaid,
+  const residents = getRESIDENTparsed(),
+    ramaid = residents[ridx].ramaid,
     progress = RESEARCHBAR.map(e => e.progress).filter(e => e),
     slidertbl = document.getElementById('slidertbl'),
     columns = [...slidertbl.querySelectorAll('td')],
@@ -141,9 +165,9 @@ export async function updateResearch(barChart, ridx, _ranges)
 
     progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
     
-  const sql = `sqlReturnResident=UPDATE resident
+  const sql = `sqlReturnResident=UPDATE personnel
              SET research='${JSON.stringify(json)}'
-             WHERE ramaid=${ramaid};&training=${training}`
+             WHERE JSON_EXTRACT(profile,'$.ramaid')=${ramaid};`
 
   let response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -157,9 +181,10 @@ export async function updateResearch(barChart, ridx, _ranges)
 
 function updateBar(barChart, ridx)
 {
-  let fulltrain = xRange / 2,
+  const residents = getRESIDENTparsed(),
+    fulltrain = xRange / 2,
     bardataset = barChart.data.datasets,
-    research = JSON.parse(RESIDENT[ridx].research),
+    research = residents[ridx].research,
     resbar = RESEARCHBAR.map(e => e.progress)
 
   bardataset.forEach((e, i) => {

@@ -9,7 +9,6 @@ import { moveCase } from "../menu/moveCopyCase.js"
 import { copyCase } from "../menu/moveCopyCase.js"
 import { editHistory } from "../menu/editHistory.js"
 import { deleteCase } from "../menu/deleteCase.js"
-import { resEPA } from '../setting/resEPA.js'
 import { resResearch } from '../setting/resResearch.js'
 import { settingHoliday, addHoliday } from "../setting/settingHoliday.js"
 import { settingResident } from '../setting/settingResident.js'
