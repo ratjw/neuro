@@ -37,11 +37,11 @@ export function settingStaff()
 
   actionIcons.innerHTML = actionTemplate.innerHTML
 
+  $dialogStaff.dialog({ modal: true })
   $dialogStaff.dialog({ height: 'auto' })
   $dialogStaff.dialog({
     title: "Neurosurgery Staff",
     closeOnEscape: true,
-    modal: true,
     show: 200,
     hide: 200,
     width: "auto",

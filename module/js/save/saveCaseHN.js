@@ -50,10 +50,10 @@ let  wanting = {...waiting},
       ? 800
       : width
 
+  $dialogMoveCaseHN.dialog({ modal: true })
   $dialogMoveCaseHN.dialog({
     title: "เคสซ้ำ",
     closeOnEscape: true,
-    modal: true,
     autoResize: true,
     show: 200,
     hide: 200,

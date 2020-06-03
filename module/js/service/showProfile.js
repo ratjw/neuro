@@ -54,11 +54,11 @@ export function showProfile(pointing)
 
   showTreatment()
 
+  _$dialogProfile.dialog({ modal: true })
   _$dialogProfile.dialog({ height: 'auto' })
   _$dialogProfile.dialog({
     title: `${hn} ${patient}`,
     closeOnEscape: true,
-    modal: true,
     width: 'auto',
     height: (_$dialogProfile.height() > _maxHeight) ? _maxHeight : 'auto',
     buttons: [

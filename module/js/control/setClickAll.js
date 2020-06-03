@@ -16,7 +16,7 @@ import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
 import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
-import { RESIDENT } from "../model/sqlDoResident.js"
+import { getRESIDENT } from "../model/sqlDoResident.js"
 
 export function setClickAll()
 {
@@ -77,11 +77,12 @@ function setClickService()
   service.onmouseout = hidemonthpicker
 }
 
-export function getPermission(submenu, rname)
+export async function getPermission(submenu, rname)
 {
   const staffid = getSTAFFparsed().map(e => e.profile.ramaid),
-    residentid = RESIDENT.map(e => e.ramaid),
-    barname = RESIDENT.find(e => e.residentname === rname),
+    residents = await getRESIDENT(),
+    residentid = residents.map(e => e.ramaid),
+    barname = residents.find(e => e.residentname === rname),
     barid = barname && barname.ramaid || '',
     permission = {
       disable: [ADMIN, ...staffid],

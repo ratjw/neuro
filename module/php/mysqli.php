@@ -98,8 +98,7 @@ function getResident($mysqli)
 {
   $sql = "SELECT * FROM personnel
           WHERE JSON_EXTRACT(profile,'$.position')='resident'
-          ORDER BY JSON_EXTRACT(profile,'$.enlistStart'),
-                JSON_EXTRACT(profile,'$.ramaid');";
+          ORDER BY JSON_EXTRACT(profile,'$.ramaid');";
 	return multiquery($mysqli, $sql);
 }
 

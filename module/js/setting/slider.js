@@ -1,8 +1,9 @@
 
 import { obj_2_ISO, ISO_2_th } from "../util/date.js"
 import { winWidth } from "../util/util.js"
-import { RESEARCHBAR, xRange } from '../setting/prepareData.js'
-import { RESIDENT, updateResearch } from "../model/sqlDoResident.js"
+import { xRange } from '../setting/resResearch.js'
+import { RESEARCHBAR } from '../setting/prepareData.js'
+import { YEARS, getRESIDENT, updateResearch } from "../model/sqlDoResident.js"
 import { getPermission } from '../control/setClickAll.js'
 import { USER } from "../main.js"
 
@@ -31,16 +32,16 @@ export function slider(evt, barChart, yearRange)
   const timemap = getTimemap(cdatasets, ridx),
     beginSlider = getBeginSlider(yearRange, timemap),
     beginslider = new Date(beginSlider),
-    endslider = new Date(beginslider.getFullYear() + 5, 4, 31)
+    endslider = new Date(beginslider.getFullYear() + YEARS, 4, 31)
 
   begindate.innerHTML = ISO_2_th(obj_2_ISO(beginslider))
   enddate.innerHTML = ISO_2_th(obj_2_ISO(endslider))
   enddate.style.right = '10px'
 
+  $dialogSlider.dialog({ modal: true })
   $dialogSlider.dialog({
   title: rname,
     closeOnEscape: true,
-    modal: true,
     show: 200,
     hide: 200,
     width: winWidth(100),
@@ -96,7 +97,7 @@ function getBeginSlider(yearRange, timemap)
 
 function getResText(ridx)
 {
-  const research = RESIDENT.map(e => JSON.parse(e.research)),
+  const research = getRESIDENT().map(e => JSON.parse(e.research)),
     resbar = RESEARCHBAR.map(e => e.progress).filter(e => e)
 
   return resbar.map(e => research[ridx][e][1])

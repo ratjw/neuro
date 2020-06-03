@@ -1,8 +1,11 @@
 
 import { winHeight, winWidth } from "../util/util.js"
-import { xRange, prepareDatasets } from '../setting/prepareData.js'
+import { prepareDatasets } from '../setting/prepareData.js'
 import { slider } from '../setting/slider.js'
 import { getPermission } from '../control/setClickAll.js'
+
+// xRange (xAxis length) is the span of 10 years
+export const xRange = 200
 
 export async function resResearch()
 {
@@ -53,10 +56,10 @@ export async function resResearch()
     }
   })
 
+  $dialogResResearch.dialog({ modal: true })
   $dialogResResearch.dialog({
     title: "Resident Research",
     closeOnEscape: true,
-    modal: true,
     show: 200,
     hide: 200,
     width: winWidth(100),
@@ -124,17 +127,20 @@ function barCaption(e)
         base = bar._model.base + padding,
         x = bar._model.x,
         y = bar._model.y,
-        width = x - base - padding,
-        context = calcMulti(caption, width)
+        width = x - base - padding
 
-      if (context.length === 1) {
-        context.forEach(tex => ctx.fillText(tex, base, y))
-      }
-      else if (context.length === 2) {
-        context.forEach((tex, x) => ctx.fillText(tex, base, y + (x*charH - charH/2)))
-      }
-      else if (context.length === 3) {
-        context.forEach((tex, x) => ctx.fillText(tex, base, y + (x-1)*charH))
+      if (caption) {
+        let context = calcMulti(caption, width)
+
+        if (context.length === 1) {
+          context.forEach(tex => ctx.fillText(tex, base, y))
+        }
+        else if (context.length === 2) {
+          context.forEach((tex, x) => ctx.fillText(tex, base, y + (x*charH - charH/2)))
+        }
+        else if (context.length === 3) {
+          context.forEach((tex, x) => ctx.fillText(tex, base, y + (x-1)*charH))
+        }
       }
     })
   })

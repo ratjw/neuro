@@ -62,11 +62,11 @@ function showPatientNames(response, pointed, patientname)
     $dialogPatient.dialog('close')
   })
 
+  $dialogPatient.dialog({ modal: true })
   $dialogPatient.dialog({ height: 'auto' })
   $dialogPatient.dialog({
     title: patientname,
     closeOnEscape: true,
-    modal: true,
     show: 200,
     hide: 200,
     width: 'auto',

@@ -1,9 +1,8 @@
 
 import {
-  ICONS, getResident, saveResident, addResident, updateResident, deleteResident
+  ICONS, YEARS, getRESIDENT, fillResidentTbl, addResident, updateResident, deleteResident
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
-import { getRESIDENTparsed } from "../model/sqlDoResident.js"
 
 const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
   IMAGE2 = `<img class="image2" src="css/pic/general/update.png">`,
@@ -26,38 +25,26 @@ export async function settingResident()
 
   $residenttbltr.slice(1).remove()
 
-  let residents = getRESIDENTparsed()
-  if (!residents.length) {
-    await getResident()
-    residents = getRESIDENTparsed()
-  }
+  let residents = await getRESIDENT()
 
   if (!residents.length) {
-    let $clone = $residentcellstr.clone(),
-      clone = $clone[0],
-      cells = clone.cells,
-      $icon = $clone.find("td").eq(ICONS)
-    $clone.appendTo($residenttbltbody)
-;   ["", "", "", "", "", "Save"].forEach((e, i) => { clone.cells[i].innerHTML = e })
-    $icon.one("click", function() {
-      saveResident(clone)
-    })
+    fillResidentTbl()
   } else {
-    $.each( residents, (i, item) => {
+    $.each( residents, function() {
       $residentcellstr.clone()
         .appendTo($residenttbltbody)
-          .filldataResident(i, item)
+          .filldataResident(this)
     })
     $("#dialogResident").off("click", "img").on("click", "img", function() {
       IMAGES[this.className].call(this, this.closest("tr"))
     })
   }
 
+  $dialogResident.dialog({ modal: true })
   $dialogResident.dialog({ height: 'auto' })
   $dialogResident.dialog({
     title: "Neurosurgery Resident",
     closeOnEscape: true,
-    modal: true,
     show: 200,
     hide: 200,
     width: "auto",
@@ -75,7 +62,7 @@ export async function settingResident()
 }
 
 jQuery.fn.extend({
-  filldataResident : function (i, q) {
+  filldataResident : function (q) {
 
     let row = this[0]
     let cells = row.cells
@@ -83,7 +70,6 @@ jQuery.fn.extend({
     row.dataset.ramaid = q.ramaid
 ;   [ q.ramaid,
       q.residentname,
-      q.trainingTime,
       q.enlistStart,
       q.enlistEnd,
       IMAGEALL

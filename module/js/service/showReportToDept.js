@@ -32,10 +32,10 @@ export function showReportToDept(title)
 {
   let sumColumn = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+  $("#dialogReview").dialog({ modal: true })
   $("#dialogReview").dialog({
     title: title,
     closeOnEscape: true,
-    modal: true,
     width: 700,
     height: winHeight(95),
     buttons: [{

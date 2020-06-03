@@ -2,17 +2,60 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
-import { xRange, RESEARCHBAR } from '../setting/prepareData.js'
-import { resResearch } from '../setting/resResearch.js'
-
-export const RAMAID = 0,
-  RNAME = 1,
-  YEARS = 2,
-  START = 3,
-  END = 4,
-  ICONS = 5
+import { RESEARCHBAR } from '../setting/prepareData.js'
+import { xRange } from '../setting/resResearch.js'
 
 export let RESIDENT = []
+
+// Neurosurgery residency training is 5 years
+export const YEARS = 5,
+  RAMAID = 0,
+  RNAME = 1,
+  START = 2,
+  END = 3,
+  ICONS = 4,
+
+  ENLISTSTART = "1 Jun",
+  ENLISTEND = "31 May"
+
+export function fillResidentTbl()
+{
+  let denttbody = document.querySelector("#residenttbl tbody"),
+    residentcells = document.querySelector("#residentcells tr"),
+    clone = residentcells.cloneNode(true),
+    cells = clone.cells,
+    icon = cells[ICONS],
+    prefillData = ["", "", getEnlistStart(), getEnlistEnd(), "Save"]
+
+  denttbody.appendChild(clone)
+  prefillData.forEach((e, i) => { cells[i].innerHTML = e })
+  icon.onclick = function() { saveResident(clone) }
+}
+
+function getEnlistStart()
+{
+  let year = new Date().getFullYear()
+
+  return `${ENLISTSTART} ${year}`
+}
+
+function getEnlistEnd()
+{
+  let year = new Date().getFullYear()
+
+  return `${ENLISTEND} ${year+YEARS}`
+}
+
+export async function getRESIDENT()
+{
+  let residents = getRESIDENTparsed()
+  if (!residents.length) {
+    await getResident()
+    residents = getRESIDENTparsed()
+  }
+
+  return residents
+}
 
 export function getRESIDENTparsed()
 {
@@ -35,13 +78,6 @@ export async function getResident()
   }  
 }
 
-export function getTrainingTime()
-{
-  const residents = getRESIDENTparsed()
-
-  return residents[0].profile.trainingTime
-}
-
 export function addResident(row)
 {
   let residenttr = document.querySelector("#residentcells tr")
@@ -49,6 +85,8 @@ export function addResident(row)
   let ramaid = clone.cells[RAMAID]
   let icon = clone.cells[ICONS]
 
+  clone.cells[START].innerHTML = getEnlistStart()
+  clone.cells[END].innerHTML = getEnlistEnd()
   icon.innerHTML = "Save"
   row.after(clone)
   icon.addEventListener("click", function() {
@@ -62,13 +100,12 @@ export async function saveResident(row)
   let cell = row.cells
   let ramaid = cell[RAMAID].textContent
   let residentname = cell[RNAME].textContent
-  let trainingTime = cell[YEARS].textContent
   let enlistStart = cell[START].textContent
   let enlistEnd = cell[END].textContent
 
   // X axis is double the research time range, because half of it is the white bars
   let fulltrain = xRange / 2
-  let month = fulltrain / getTrainingTime() / 12
+  let month = fulltrain / YEARS / 12
   let research = JSON.stringify({ proposal: month*3,
                    planning: month*12,
                    ethic: month*9,
@@ -85,7 +122,7 @@ export async function saveResident(row)
   let sql = `sqlReturnResident=INSERT INTO personnel (profile)
                VALUES (JSON_OBJECT('ramaid','${ramaid}',
                  'residentname','${residentname}',
-                 'trainingTime','${trainingTime}',
+                 'trainingTime','${YEARS}',
                  'enlistStart','${enlistStart}',
                  'enlistEnd','${enlistEnd}',
                  'research','${research}',
@@ -105,7 +142,6 @@ export async function updateResident(row)
   let oldramaid = row.dataset.ramaid
   let newramaid = cell[RAMAID].textContent
   let residentname = cell[RNAME].textContent
-  let trainingTime = cell[YEARS].textContent
   let enlistStart = cell[START].textContent
   let enlistEnd = cell[END].textContent
 
@@ -115,7 +151,7 @@ export async function updateResident(row)
     let sql = `sqlReturnResident=UPDATE personnel
                SET profile=JSON_SET(profile,'$.ramaid','${newramaid}',
                    '$.residentname','${residentname}',
-                   '$.trainingTime','${trainingTime}',
+                   '$.trainingTime','${YEARS}',
                    '$.enlistStart','${enlistStart}',
                    '$.enlistEnd','${enlistEnd}')
                WHERE JSON_EXTRACT(profile,'$.ramaid')='${oldramaid}';`

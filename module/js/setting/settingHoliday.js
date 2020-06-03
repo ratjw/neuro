@@ -27,10 +27,10 @@ export function settingHoliday()
     holidaylist = '<option style="display:none"></option>'
 
   fillHoliday($holidaytbl)
+  $dialogHoliday.dialog({ modal: true })
   $dialogHoliday.dialog({
     title: "Holiday",
     closeOnEscape: true,
-    modal: true,
     show: 200,
     hide: 200,
     width: 350,
