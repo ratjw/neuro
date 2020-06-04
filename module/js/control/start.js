@@ -19,6 +19,7 @@ import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
 import { isMobile } from "../main.js"
 import { exchangeOncall } from "../setting/exchangeOncall.js"
+import { calResidentLevel } from "../setting/calResidentLevel.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
@@ -57,12 +58,12 @@ function success(response) {
   setClickAll()
   overrideJqueryUI()
   resetTimer()
+  calResidentLevel()
 //  serverSentEvent()
 }
 
 // *** to do -> offline browsing by service worker ***
 function failed(response) {
-
   Alert("Server Error", response)
 }
 

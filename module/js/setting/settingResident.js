@@ -1,10 +1,13 @@
 
 import {
-  ICONS, YEARS, getRESIDENT, fillResidentTbl, addResident, updateResident, deleteResident, calResidentLevel
+ ICONS, YEARS, getRESIDENT, saveResident, updateResident, deleteResident
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
-const IMAGE1 = `<img class="image1" src="css/pic/general/update.png">`,
+const ENLISTSTART = "4 Jun",
+      ENLISTEND = "31 May",
+
+  IMAGE1 = `<img class="image1" src="css/pic/general/update.png">`,
   IMAGE2 = `<img class="image2" src="css/pic/general/delete.png">`
 
 export async function settingResident()
@@ -19,9 +22,7 @@ export async function settingResident()
 
   let residents = await getRESIDENT()
 
-  if (!residents.length) {
-    fillResidentTbl()
-  } else {
+  if (residents.length) {
     $.each( residents, function() {
       $residentcellstr.clone()
         .appendTo($residenttbltbody)
@@ -34,6 +35,8 @@ export async function settingResident()
       deleteResident(this.closest("tr"))
     })
   }
+
+  addResident()
 
   $dialogResident.dialog({ modal: true })
   $dialogResident.dialog({ height: 'auto' })
@@ -49,11 +52,46 @@ export async function settingResident()
     let keycode = event.which || window.Event.keyCode
     if (keycode === 13) {
       let save = [...document.querySelectorAll("#residenttbl tr")].find(e => 
-        e.cells[5].innerHTML === "Save"
+        e.cells[5].innerHTML === `<img src="css/pic/general/save.png">`
       )
       if (save) { saveResident(save) }
     }
   })
+}
+
+function addResident()
+{
+  let denttbody = document.querySelector("#residenttbl tbody"),
+    residentcells = document.querySelector("#residentcells tr"),
+    clone = residentcells.cloneNode(true),
+    cells = clone.cells,
+    icon = cells[ICONS],
+    prefillData = [
+      "",
+      "",
+      getEnlistStart(),
+      2,
+      getEnlistEnd(),
+      `<img src="css/pic/general/save.png">`
+    ]
+
+  denttbody.appendChild(clone)
+  prefillData.forEach((e, i) => { cells[i].innerHTML = e })
+  icon.onclick = function() { saveResident(clone) }
+}
+
+export function getEnlistStart()
+{
+  let year = new Date().getFullYear()
+
+  return `${ENLISTSTART} ${year}`
+}
+
+function getEnlistEnd()
+{
+  let year = new Date().getFullYear()
+
+  return `${ENLISTEND} ${year+YEARS}`
 }
 
 jQuery.fn.extend({
@@ -66,7 +104,7 @@ jQuery.fn.extend({
 ;   [ q.ramaid,
       q.residentname,
       q.enlistStart,
-      calResidentLevel(q.enlistStart, q.startLevel),
+      q.yearLevel,
       q.enlistEnd,
       IMAGE1 + IMAGE2
     ].forEach((e, i) => { cells[i].innerHTML = e })

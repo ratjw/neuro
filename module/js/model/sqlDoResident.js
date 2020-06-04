@@ -13,65 +13,20 @@ export const YEARS = 5,
   RNAME = 1,
   START = 2,
   END = 3,
-  ICONS = 4,
-
-  ENLISTSTART = "1 Jun",
-  STARTLEVEL = "1",
-  ENLISTEND = "31 May"
-
-export function fillResidentTbl()
-{
-  let denttbody = document.querySelector("#residenttbl tbody"),
-    residentcells = document.querySelector("#residentcells tr"),
-    clone = residentcells.cloneNode(true),
-    cells = clone.cells,
-    icon = cells[ICONS],
-    prefillData = [
-      "",
-      "",
-      getEnlistStart(),
-      STARTLEVEL,
-      getEnlistEnd(),
-      "Save"
-    ]
-
-  denttbody.appendChild(clone)
-  prefillData.forEach((e, i) => { cells[i].innerHTML = e })
-  icon.onclick = function() { saveResident(clone) }
-}
-
-function getEnlistStart()
-{
-  let year = new Date().getFullYear()
-
-  return `${ENLISTSTART} ${year}`
-}
-
-function getEnlistEnd()
-{
-  let year = new Date().getFullYear()
-
-  return `${ENLISTEND} ${year+YEARS}`
-}
-
-export function calResidentLevel(startDate, beginLevel)
-{
-  const today = new Date(),
-    start = new Date(startDate),
-}
+  ICONS = 4
 
 export async function getRESIDENT()
 {
   let residents = getRESIDENTparsed()
   if (!residents.length) {
-    await getResident()
+    await sqlResident()
     residents = getRESIDENTparsed()
   }
 
   return residents
 }
 
-export function getRESIDENTparsed()
+function getRESIDENTparsed()
 {
   const residents = JSON.parse(JSON.stringify(RESIDENT))
 
@@ -80,7 +35,7 @@ export function getRESIDENTparsed()
   return residents.map(resident => resident.profile)
 }
 
-export async function getResident()
+async function sqlResident()
 {
   let sql = `sqlReturnResident=`
 
@@ -88,25 +43,8 @@ export async function getResident()
   if (typeof response === "object") {
     RESIDENT = response
   } else {
-    Alert("getResident", response)
+    Alert("sqlResident", response)
   }  
-}
-
-export function addResident(row)
-{
-  let residenttr = document.querySelector("#residentcells tr")
-  let clone = residenttr.cloneNode(true)
-  let ramaid = clone.cells[RAMAID]
-  let icon = clone.cells[ICONS]
-
-  clone.cells[START].innerHTML = getEnlistStart()
-  clone.cells[END].innerHTML = getEnlistEnd()
-  icon.innerHTML = "Save"
-  row.after(clone)
-  icon.addEventListener("click", function() {
-    saveResident(clone)
-  })
-  ramaid.focus()
 }
 
 export async function saveResident(row)
@@ -128,7 +66,7 @@ export async function saveResident(row)
                    complete: month*1
                  })
 
-  if (!residentname || !enlistStart) {
+  if (!residentname) {
     Alert("saveResident", "<br>Incomplete Entry")
     return
   }
@@ -175,6 +113,22 @@ export async function updateResident(row)
     } else {
       response && Alert("updateResident", response)
     }
+  }
+}
+
+export async function updateResidentLevel(residents)
+{
+  let sql = "sqlReturnResident="
+  residents.forEach(dent => {
+    sql += `UPDATE personnel SET profile=JSON_SET(profile,'$.yearLevel',${dent.yearLevel})
+       WHERE JSON_EXTRACT(profile,'$.ramaid')='${dent.ramaid}';`
+  })
+
+  let response = await postData(MYSQLIPHP, sql)
+  if (typeof response === "object") {
+    showResident(response)
+  } else {
+    response && Alert("updateResidentLevel", response)
   }
 }
 
@@ -225,7 +179,7 @@ export async function updateResearch(barChart, ridx, _ranges)
     updateBar(barChart, ridx)
     $("#slidertbl").colResizable({ disable: true })
   } else {
-    Alert("getResident", response)
+    Alert("updateResearch", response)
   }  
 }
 
