@@ -1,9 +1,8 @@
 
-import { getEnlistStart } from "../setting/settingResident.js"
-import { getRESIDENT, updateResidentLevel } from "../model/sqlDoResident.js"
+import { MAXYEAR, getRESIDENT, updateResidentLevel } from "../model/sqlDoResident.js"
 import { obj_2_ISO } from "../util/date.js"
 
-const MAXYEAR = 5
+const ENLISTSTART = "1 Jun"
 
 export async function calResidentLevel()
 {
@@ -11,10 +10,12 @@ export async function calResidentLevel()
 
   if (!residents.length) { return }
 
-  const today = obj_2_ISO(new Date()),
-    start = obj_2_ISO(new Date(getEnlistStart()))
+  const today = new Date(),
+    fullYear = today.getFullYear(),
+    todate = obj_2_ISO(new Date()),
+    start = obj_2_ISO(new Date(`${ENLISTSTART} ${fullYear}`))
 
-  if (today >= start) {
+  if (todate >= start) {
     if (firstAccess(residents)) { calYears(residents) }
   }
 }
@@ -29,19 +30,19 @@ function firstAccess(residents)
     year5 = present.filter(dent => dent.yearLevel === 5)
 
   if (year1.length) {
-    if (!updated(year1[1])) { calYears(residents); return }
+    if (!updated(year1[0])) { calYears(residents); return }
   }
   if (year2.length) {
-    if (!updated(year2[1])) { calYears(residents); return }
+    if (!updated(year2[0])) { calYears(residents); return }
   }
   if (year3.length) {
-    if (!updated(year3[1])) { calYears(residents); return }
+    if (!updated(year3[0])) { calYears(residents); return }
   }
   if (year4.length) {
-    if (!updated(year4[1])) { calYears(residents); return }
+    if (!updated(year4[0])) { calYears(residents); return }
   }
   if (year5.length) {
-    if (!updated(year5[1])) { calYears(residents); return }
+    if (!updated(year5[0])) { calYears(residents); return }
   }
 }
 
@@ -52,10 +53,10 @@ function updated(resident)
 
 function correctLevel(resident)
 {
-  const startYear = (new Date(resident.enlistStart)).getFullYear(),
-    thisYear = (new Date()).getFullYear()
-
-  return thisYear - startYear + 1
+  return new Date().getFullYear()
+          - resident.enlistStart
+          + resident.startLevel
+          + (resident.addLevel || 0)
 }
 
 function calYears(residents)

@@ -4,11 +4,10 @@ import {
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
-const ENLISTSTART = "4 Jun",
-      ENLISTEND = "31 May",
+const ENTRYLEVEL = 2,
 
-  IMAGE1 = `<img class="image1" src="css/pic/general/update.png">`,
-  IMAGE2 = `<img class="image2" src="css/pic/general/delete.png">`
+  IMAGE1 = `<img class="updateResident" src="css/pic/general/update.png">`,
+  IMAGE2 = `<img class="deleteResident" src="css/pic/general/delete.png">`
 
 export async function settingResident()
 {
@@ -28,10 +27,12 @@ export async function settingResident()
         .appendTo($residenttbltbody)
           .filldataResident(this)
     })
-    $("#dialogResident").off("click", ".image1").on("click", ".image1", function() {
+    $("#dialogResident").off("click", ".updateResident")
+      .on("click", ".updateResident", function() {
       updateResident(this.closest("tr"))
     })
-    $("#dialogResident").off("click", ".image2").on("click", ".image2", function() {
+    $("#dialogResident").off("click", ".deleteResident")
+      .on("click", ".deleteResident", function() {
       deleteResident(this.closest("tr"))
     })
   }
@@ -69,29 +70,13 @@ function addResident()
     prefillData = [
       "",
       "",
-      getEnlistStart(),
-      2,
-      getEnlistEnd(),
+      ENTRYLEVEL,
       `<img src="css/pic/general/save.png">`
     ]
 
   denttbody.appendChild(clone)
   prefillData.forEach((e, i) => { cells[i].innerHTML = e })
   icon.onclick = function() { saveResident(clone) }
-}
-
-export function getEnlistStart()
-{
-  let year = new Date().getFullYear()
-
-  return `${ENLISTSTART} ${year}`
-}
-
-function getEnlistEnd()
-{
-  let year = new Date().getFullYear()
-
-  return `${ENLISTEND} ${year+YEARS}`
 }
 
 jQuery.fn.extend({
@@ -101,11 +86,11 @@ jQuery.fn.extend({
     let cells = row.cells
 
     row.dataset.ramaid = q.ramaid
+    row.dataset.yearLevel = q.yearLevel
+    row.dataset.addLevel = q.addLevel
 ;   [ q.ramaid,
       q.residentname,
-      q.enlistStart,
       q.yearLevel,
-      q.enlistEnd,
       IMAGE1 + IMAGE2
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
