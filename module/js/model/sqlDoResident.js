@@ -16,6 +16,7 @@ export const YEARS = 5,
   ICONS = 4,
 
   ENLISTSTART = "1 Jun",
+  STARTLEVEL = "1",
   ENLISTEND = "31 May"
 
 export function fillResidentTbl()
@@ -25,7 +26,14 @@ export function fillResidentTbl()
     clone = residentcells.cloneNode(true),
     cells = clone.cells,
     icon = cells[ICONS],
-    prefillData = ["", "", getEnlistStart(), getEnlistEnd(), "Save"]
+    prefillData = [
+      "",
+      "",
+      getEnlistStart(),
+      STARTLEVEL,
+      getEnlistEnd(),
+      "Save"
+    ]
 
   denttbody.appendChild(clone)
   prefillData.forEach((e, i) => { cells[i].innerHTML = e })
@@ -44,6 +52,12 @@ function getEnlistEnd()
   let year = new Date().getFullYear()
 
   return `${ENLISTEND} ${year+YEARS}`
+}
+
+export function calResidentLevel(startDate, beginLevel)
+{
+  const today = new Date(),
+    start = new Date(startDate),
 }
 
 export async function getRESIDENT()

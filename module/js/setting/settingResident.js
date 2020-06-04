@@ -1,22 +1,14 @@
 
 import {
-  ICONS, YEARS, getRESIDENT, fillResidentTbl, addResident, updateResident, deleteResident
+  ICONS, YEARS, getRESIDENT, fillResidentTbl, addResident, updateResident, deleteResident, calResidentLevel
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
-const IMAGE1 = `<img class="image1" src="css/pic/general/add.png">`,
-  IMAGE2 = `<img class="image2" src="css/pic/general/update.png">`,
-  IMAGE3 = `<img class="image3" src="css/pic/general/delete.png">`,
-  IMAGEALL = `${IMAGE1}${IMAGE2}${IMAGE3}`
+const IMAGE1 = `<img class="image1" src="css/pic/general/update.png">`,
+  IMAGE2 = `<img class="image2" src="css/pic/general/delete.png">`
 
 export async function settingResident()
 {
-  const IMAGES = {
-    image1: addResident,
-    image2: updateResident,
-    image3: deleteResident
-  }
-
   const $dialogResident = $("#dialogResident"),
     $residenttbltbody = $("#residenttbl tbody"),
     $residenttbltr = $("#residenttbl tr"),
@@ -35,8 +27,11 @@ export async function settingResident()
         .appendTo($residenttbltbody)
           .filldataResident(this)
     })
-    $("#dialogResident").off("click", "img").on("click", "img", function() {
-      IMAGES[this.className].call(this, this.closest("tr"))
+    $("#dialogResident").off("click", ".image1").on("click", ".image1", function() {
+      updateResident(this.closest("tr"))
+    })
+    $("#dialogResident").off("click", ".image2").on("click", ".image2", function() {
+      deleteResident(this.closest("tr"))
     })
   }
 
@@ -71,8 +66,9 @@ jQuery.fn.extend({
 ;   [ q.ramaid,
       q.residentname,
       q.enlistStart,
+      calResidentLevel(q.enlistStart, q.startLevel),
       q.enlistEnd,
-      IMAGEALL
+      IMAGE1 + IMAGE2
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
