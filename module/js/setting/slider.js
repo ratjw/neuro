@@ -3,7 +3,7 @@ import { obj_2_ISO, ISO_2_th } from "../util/date.js"
 import { winWidth } from "../util/util.js"
 import { xRange } from '../setting/resResearch.js'
 import { RESEARCHBAR } from '../setting/prepareData.js'
-import { YEARS, getRESIDENT, updateResearch } from "../model/sqlDoResident.js"
+import { MAXYEAR, getRESIDENT, updateResearch } from "../model/sqlDoResident.js"
 import { getPermission } from '../control/setClickAll.js'
 import { USER } from "../main.js"
 
@@ -32,7 +32,7 @@ export function slider(evt, barChart, yearRange)
   const timemap = getTimemap(cdatasets, ridx),
     beginSlider = getBeginSlider(yearRange, timemap),
     beginslider = new Date(beginSlider),
-    endslider = new Date(beginslider.getFullYear() + YEARS, 4, 31)
+    endslider = new Date(beginslider.getFullYear() + MAXYEAR, 4, 31)
 
   begindate.innerHTML = ISO_2_th(obj_2_ISO(beginslider))
   enddate.innerHTML = ISO_2_th(obj_2_ISO(endslider))

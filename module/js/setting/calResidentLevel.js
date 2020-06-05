@@ -51,11 +51,11 @@ function updated(resident)
   return correctLevel(resident) === resident.yearLevel ? true : false
 }
 
-function correctLevel(resident)
+export function correctLevel(resident)
 {
   return new Date().getFullYear()
-          - resident.enlistStart
-          + resident.startLevel
+          - resident.entryDate
+          + resident.entryLevel
           + (resident.addLevel || 0)
 }
 

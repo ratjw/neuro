@@ -11,7 +11,7 @@ let RESIDENT = []
 export const MAXYEAR = 5,
   RAMAID = 0,
   RNAME = 1,
-  YEARS = 2,
+  LEVEL = 2,
   ICONS = 3
 
 export async function getRESIDENT()
@@ -44,8 +44,8 @@ export async function saveResident(row)
   const cell = row.cells,
     ramaid = cell[RAMAID].textContent,
     residentname = cell[RNAME].textContent,
-    yearLevel = cell[YEARS].textContent,
-    thisYear = new Date().getFullYear(),
+    level = cell[LEVEL].textContent,
+    thisDate = $.datepicker.formatDate('d M yy', new Date()),
 
   // X axis is double the research time range, because half of it is the white bars
     fulltrain = xRange / 2,
@@ -63,14 +63,11 @@ export async function saveResident(row)
     return
   }
 
-  // yearLevel is to be changed every yearLevel
-  // startLevel is fixed, for calculation of correctLevel()
   const sql = `sqlReturnResident=INSERT INTO personnel (profile)
                VALUES (JSON_OBJECT('ramaid','${ramaid}',
                  'residentname','${residentname}',
-                 'yearLevel','${yearLevel}',
-                 'enlistStart','${thisYear}',
-                 'startLevel','${yearLevel}',
+                 'entryDate','${thisDate}',
+                 'entryLevel','${level}',
                  'research','${research}',
                  'position','resident'));`
 
@@ -89,16 +86,14 @@ export async function updateResident(row)
     newramaid = cell[RAMAID].textContent,
     residentname = cell[RNAME].textContent,
 
-    rowYearLevel = row.dataset.yearLevel,
-    oldYearLevel = rowYearLevel === "null" ? null : rowYearLevel,
-    newYearLevel = Number(cell[YEARS].textContent) || null,
-    diffLevel = newYearLevel - oldYearLevel,
+    oldLevel = row.dataset.level,
+    newLevel = cell[LEVEL].textContent,
+    diffLevel = +newLevel - oldLevel,
 
-    rowAddLevel = row.dataset.addLevel,
-    oldAddLevel = rowAddLevel === "undefined" ? 0 : rowAddLevel,
-    addLevel = oldYearLevel === newYearLevel ? null : oldAddLevel + diffLevel,
+    oldAddLevel = row.dataset.addLevel,
+    addLevel = +oldAddLevel + diffLevel,
 
-    level = addLevel === null ? "" : `,'$.yearLevel',${newYearLevel},'$.addLevel',${addLevel}`
+    level = diffLevel ? `,'$.addLevel',${addLevel}` : ""
 
   if (!residentname) { return "<br>Incomplete Entry" }
 
@@ -122,7 +117,7 @@ export async function updateResidentLevel(residents)
   let sql = "sqlReturnResident="
 
   residents.forEach(dent => {
-    sql += `UPDATE personnel SET profile=JSON_SET(profile,'$.yearLevel',${dent.yearLevel})
+    sql += `UPDATE personnel SET profile=JSON_SET(profile,'$.level',${dent.level})
        WHERE JSON_EXTRACT(profile,'$.ramaid')='${dent.ramaid}';`
   })
 

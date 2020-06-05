@@ -1,6 +1,6 @@
 
 import { xRange } from "../setting/resResearch.js"
-import { YEARS, getRESIDENT } from "../model/sqlDoResident.js"
+import { MAXYEAR, getRESIDENT } from "../model/sqlDoResident.js"
 
 export const RESEARCHBAR = [
   {label: "", progress: "", color: "#FFFFFF"},
@@ -37,7 +37,7 @@ function prepareData(residents)
 function calcDatasets(residents)
 {
   // X axis is double the research time range, because half of it is the white bars
-  let year = xRange / 2 / YEARS,
+  let year = xRange / 2 / MAXYEAR,
     trainingTime = residents.map(e => Number(e.trainingTime)),
     research = residents.map(e => JSON.parse(e.research))
 
@@ -72,8 +72,8 @@ function calcYearOne()
 function calcBeginEdu(year)
 {
   const beginEdu = new Date(year, eduMonth, eduDate),
-    beginX = new Date(eduYear - YEARS, 0, 1),
-    endX = new Date(eduYear + YEARS, 0, 0),
+    beginX = new Date(eduYear - MAXYEAR, 0, 1),
+    endX = new Date(eduYear + MAXYEAR, 0, 0),
     timelag = (beginEdu - beginX) / (endX - beginX)
 
   return timelag * xRange
@@ -89,15 +89,15 @@ function prepareYears()
 
 function prepareRange()
 {
-  return [...Array(YEARS*2)].map((e,i) => eduYear + 543 - YEARS + i)
+  return [...Array(MAXYEAR*2)].map((e,i) => eduYear + 543 - MAXYEAR + i)
 }
 
 function prepareToday()
 {
   const today = new Date(),
     thisY = eduYear,
-    firstDate = new Date(`${thisY - YEARS}`),
-    lastDate = new Date(`${thisY + YEARS}`),
+    firstDate = new Date(`${thisY - MAXYEAR}`),
+    lastDate = new Date(`${thisY + MAXYEAR}`),
     interval = lastDate - firstDate
 
   return (today - firstDate) / interval * xRange

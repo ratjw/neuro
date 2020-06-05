@@ -1,10 +1,11 @@
 
 import {
- ICONS, YEARS, getRESIDENT, saveResident, updateResident, deleteResident
+ ICONS, getRESIDENT, saveResident, updateResident, deleteResident
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
 const ENTRYLEVEL = 2,
+  CHANGELEVEL = "1 Jun",
 
   IMAGE1 = `<img class="updateResident" src="css/pic/general/update.png">`,
   IMAGE2 = `<img class="deleteResident" src="css/pic/general/delete.png">`
@@ -53,7 +54,7 @@ export async function settingResident()
     let keycode = event.which || window.Event.keyCode
     if (keycode === 13) {
       let save = [...document.querySelectorAll("#residenttbl tr")].find(e => 
-        e.cells[5].innerHTML === `<img src="css/pic/general/save.png">`
+        e.cells[ICONS].innerHTML === `<img src="css/pic/general/save.png">`
       )
       if (save) { saveResident(save) }
     }
@@ -84,14 +85,35 @@ jQuery.fn.extend({
 
     let row = this[0]
     let cells = row.cells
+    let level = calcLevel(q)
 
     row.dataset.ramaid = q.ramaid
-    row.dataset.yearLevel = q.yearLevel
-    row.dataset.addLevel = q.addLevel
+    row.dataset.addLevel = q.addLevel || ""
+    row.dataset.level = level
 ;   [ q.ramaid,
       q.residentname,
-      q.yearLevel,
+      level,
       IMAGE1 + IMAGE2
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
+
+function calcLevel(resident)
+{
+  const today = new Date(),
+    change = changeLevel(today)
+
+  return thisYear
+          + change
+          - resident.entryDate
+          + resident.entryLevel
+          + (resident.addLevel || 0)
+}
+
+export function changeLevel(today)
+{
+  const thisYear = today.getFullYear(),
+    changeDate = new Date(`${CHANGELEVEL} ${thisYear}`)
+
+  return today < changeDate ? -1 : 0
+}
