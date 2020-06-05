@@ -100,20 +100,18 @@ jQuery.fn.extend({
 
 function calcLevel(resident)
 {
-  const today = new Date(),
-    change = changeLevel(today)
+  const todate = new Date().setHours(0,0,0,0),
+    thisYear = new Date().getFullYear(),
+    entryYear = new Date(resident.entryDate).getFullYear(),
+    entryDate = Date.parse(resident.entryDate),
+    entryLimit = Date.parse(new Date(`${CHANGELEVEL} ${entryYear}`)),
+    thisLimit = Date.parse(new Date(`${CHANGELEVEL} ${thisYear}`)),
+    level = thisYear
+            - entryYear
+            + resident.entryLevel
+            + (todate < thisLimit ? -1 : 0)
+            + (entryDate < entryLimit ? 1 : 0)
+            + (resident.addLevel || 0)
 
-  return thisYear
-          + change
-          - resident.entryDate
-          + resident.entryLevel
-          + (resident.addLevel || 0)
-}
-
-export function changeLevel(today)
-{
-  const thisYear = today.getFullYear(),
-    changeDate = new Date(`${CHANGELEVEL} ${thisYear}`)
-
-  return today < changeDate ? -1 : 0
+  return level <= 5 ? level : ""
 }

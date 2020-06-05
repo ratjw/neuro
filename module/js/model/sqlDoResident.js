@@ -39,6 +39,9 @@ async function sqlResident()
   }  
 }
 
+// xRange (X axis) is double the research time range (fulltrain),
+// because half of it is the white bars
+// fulltrain is MAXYEAR in graphic range
 export async function saveResident(row)
 {
   const cell = row.cells,
@@ -47,7 +50,6 @@ export async function saveResident(row)
     level = cell[LEVEL].textContent,
     thisDate = $.datepicker.formatDate('d M yy', new Date()),
 
-  // X axis is double the research time range, because half of it is the white bars
     fulltrain = xRange / 2,
     month = fulltrain / MAXYEAR / 12,
     research = JSON.stringify({ proposal: month*3,
@@ -79,6 +81,9 @@ export async function saveResident(row)
   }
 }
 
+// entryDate = the date of key-in resident setting
+// entryLevel = resident year level at key-in
+// addLevel = user-key-in change of year level
 export async function updateResident(row)
 {
   const cell = row.cells,
@@ -109,23 +114,6 @@ export async function updateResident(row)
     showResident(response)
   } else {
     response && Alert("updateResident", response)
-  }
-}
-
-export async function updateResidentLevel(residents)
-{
-  let sql = "sqlReturnResident="
-
-  residents.forEach(dent => {
-    sql += `UPDATE personnel SET profile=JSON_SET(profile,'$.level',${dent.level})
-       WHERE JSON_EXTRACT(profile,'$.ramaid')='${dent.ramaid}';`
-  })
-
-  const response = await postData(MYSQLIPHP, sql)
-  if (typeof response === "object") {
-    RESIDENT = response
-  } else {
-    response && Alert("updateResidentLevel", response)
   }
 }
 

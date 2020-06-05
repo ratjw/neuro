@@ -34,19 +34,19 @@ function prepareData(residents)
   }
 }
 
+// X axis is double the research time range, because half of it is the white bars
 function calcDatasets(residents)
 {
-  // X axis is double the research time range, because half of it is the white bars
   let year = xRange / 2 / MAXYEAR,
-    trainingTime = residents.map(e => Number(e.trainingTime)),
+    whiteBar = residents.map(e => new Date(e.entryDate).getFullYear()),
     research = residents.map(e => JSON.parse(e.research))
 
   return RESEARCHBAR.map((r, i) => {
     if (i === 0) {
       return {
         label: r.label,
-        backgroundColor: trainingTime.map(e => r.color),
-        data: trainingTime.map(e => calcBeginEdu(e - 543)),
+        backgroundColor: whiteBar.map(e => r.color),
+        data: whiteBar.map(e => calcBeginEdu(e)),
         caption: research.map(e => '')
       }
     } else {
