@@ -16,9 +16,9 @@ const eduMonth = 5
 const eduDate = 1
 const eduYear = calcYearOne()
 
-export async function prepareDatasets()
+export function prepareDatasets()
 {
-  const residents = await getRESIDENT()
+  const residents = getRESIDENT()
 
   return {
     data: prepareData(residents),

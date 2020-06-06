@@ -14,17 +14,11 @@ export const MAXYEAR = 5,
   LEVEL = 2,
   ICONS = 3
 
-export async function getRESIDENT()
+export async function startRESIDENT()
 {
-  if (!RESIDENT.length) {
-    await sqlResident()
-  }
+  await sqlResident()
 
-  const residents = JSON.parse(JSON.stringify(RESIDENT))
-
-  residents.forEach(e => e.profile = JSON.parse(e.profile))
-
-  return residents.map(resident => resident.profile)
+  return getRESIDENT()
 }
 
 async function sqlResident()
@@ -37,6 +31,15 @@ async function sqlResident()
   } else {
     Alert("sqlResident", response)
   }  
+}
+
+export function getRESIDENT()
+{
+  const residents = JSON.parse(JSON.stringify(RESIDENT))
+
+  residents.forEach(e => e.profile = JSON.parse(e.profile))
+
+  return residents.map(resident => resident.profile)
 }
 
 // xRange (X axis) is double the research time range (fulltrain),
@@ -144,7 +147,7 @@ function showResident(response)
 
 export async function updateResearch(barChart, ridx, _ranges)
 {
-  const residents = await getRESIDENT(),
+  const residents = getRESIDENT(),
     ramaid = residents[ridx].ramaid,
     progress = RESEARCHBAR.map(e => e.progress).filter(e => e),
     slidertbl = document.getElementById('slidertbl'),
@@ -168,9 +171,9 @@ export async function updateResearch(barChart, ridx, _ranges)
   }  
 }
 
-async function updateBar(barChart, ridx)
+function updateBar(barChart, ridx)
 {
-  const residents = await getRESIDENT(),
+  const residents = getRESIDENT(),
     fulltrain = xRange / 2,
     bardataset = barChart.data.datasets,
     research = residents[ridx].research,

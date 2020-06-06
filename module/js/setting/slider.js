@@ -95,9 +95,9 @@ function getBeginSlider(yearRange, timemap)
   return addMillisec(beginx, sliderbegin)
 }
 
-async function getResText(ridx)
+function getResText(ridx)
 {
-  const residents = await getRESIDENT(),
+  const residents = getRESIDENT(),
     research = residents.map(e => JSON.parse(e.research)),
     resbar = RESEARCHBAR.map(e => e.progress).filter(e => e)
 
@@ -141,13 +141,13 @@ function getSlidertotal(yearRange, timemap)
   return sliderend - sliderbegin
 }
 
-async function prepareColumns(cdatasets, ridx)
+function prepareColumns(cdatasets, ridx)
 {
   let slidertbl = document.getElementById('slidertbl'),
     columns = [...slidertbl.querySelectorAll('td')],
     tblwidth = slidertbl.offsetWidth,
 
-    resText = await getResText(ridx),
+    resText = getResText(ridx),
     colors = cdatasets.map(e => e.backgroundColor[0]).filter(e => e !== '#FFFFFF'),
 
     timemap = getTimemap(cdatasets, ridx),

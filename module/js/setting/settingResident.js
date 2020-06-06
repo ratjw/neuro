@@ -10,7 +10,7 @@ const ENTRYLEVEL = 2,
   IMAGE1 = `<img class="updateResident" src="css/pic/general/update.png">`,
   IMAGE2 = `<img class="deleteResident" src="css/pic/general/delete.png">`
 
-export async function settingResident()
+export function settingResident()
 {
   const $dialogResident = $("#dialogResident"),
     $residenttbltbody = $("#residenttbl tbody"),
@@ -20,7 +20,7 @@ export async function settingResident()
 
   $residenttbltr.slice(1).remove()
 
-  let residents = await getRESIDENT()
+  let residents = getRESIDENT()
 
   if (residents.length) {
     $.each( residents, function() {
