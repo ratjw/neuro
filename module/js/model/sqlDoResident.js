@@ -158,7 +158,7 @@ export async function updateResearch(barChart, ridx, _ranges)
     progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
     
   const sql = `sqlReturnResident=UPDATE personnel
-             SET research='${JSON.stringify(json)}'
+             SET profile=JSON_SET(profile,"$.research",'${JSON.stringify(json)}')
              WHERE JSON_EXTRACT(profile,'$.ramaid')=${ramaid};`
 
   const response = await postData(MYSQLIPHP, sql)
