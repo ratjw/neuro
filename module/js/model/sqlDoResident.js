@@ -47,8 +47,8 @@ export async function saveResident(row)
   const cell = row.cells,
     ramaid = cell[RAMAID].textContent,
     residentname = cell[RNAME].textContent,
-    level = cell[LEVEL].textContent,
-    thisDate = $.datepicker.formatDate('d M yy', new Date()),
+    entryLevel = cell[LEVEL].textContent,
+    entryDate = Date.now(),
 
     fulltrain = xRange / 2,
     month = fulltrain / MAXYEAR / 12,
@@ -68,8 +68,8 @@ export async function saveResident(row)
   const sql = `sqlReturnResident=INSERT INTO personnel (profile)
                VALUES (JSON_OBJECT('ramaid','${ramaid}',
                  'residentname','${residentname}',
-                 'entryDate','${thisDate}',
-                 'entryLevel','${level}',
+                 'entryDate','${entryDate}',
+                 'entryLevel','${entryLevel}',
                  'research','${research}',
                  'position','resident'));`
 
@@ -144,7 +144,7 @@ function showResident(response)
 
 export async function updateResearch(barChart, ridx, _ranges)
 {
-  const residents = getRESIDENT(),
+  const residents = await getRESIDENT(),
     ramaid = residents[ridx].ramaid,
     progress = RESEARCHBAR.map(e => e.progress).filter(e => e),
     slidertbl = document.getElementById('slidertbl'),
@@ -168,9 +168,9 @@ export async function updateResearch(barChart, ridx, _ranges)
   }  
 }
 
-function updateBar(barChart, ridx)
+async function updateBar(barChart, ridx)
 {
-  const residents = getRESIDENT(),
+  const residents = await getRESIDENT(),
     fulltrain = xRange / 2,
     bardataset = barChart.data.datasets,
     research = residents[ridx].research,

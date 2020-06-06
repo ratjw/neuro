@@ -38,7 +38,7 @@ function prepareData(residents)
 function calcDatasets(residents)
 {
   let year = xRange / 2 / MAXYEAR,
-    whiteBar = residents.map(e => new Date(e.entryDate).getFullYear()),
+    whiteBar = residents.map(e => new Date(e.entryDate).getFullYear() - e.entryLevel + 1),
     research = residents.map(e => JSON.parse(e.research))
 
   return RESEARCHBAR.map((r, i) => {
@@ -53,8 +53,8 @@ function calcDatasets(residents)
       return {
         label: r.label,
         backgroundColor: research.map(e => r.color),
-        data: research.map(e => e[r.progress] && e[r.progress][0]),
-        caption: research.map(e => e[r.progress] && e[r.progress][1])
+        data: research.map(e => Array.isArray(e[r.progress]) ? e[r.progress][0] : e[r.progress]),
+        caption: research.map(e => Array.isArray(e[r.progress]) ? e[r.progress][1] : e[r.progress])
       }
     }
   })

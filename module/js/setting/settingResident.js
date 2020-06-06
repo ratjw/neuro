@@ -92,7 +92,7 @@ jQuery.fn.extend({
     row.dataset.level = level
 ;   [ q.ramaid,
       q.residentname,
-      level,
+      (level <= 5 ? level : ""),
       IMAGE1 + IMAGE2
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
@@ -100,18 +100,17 @@ jQuery.fn.extend({
 
 function calcLevel(resident)
 {
-  const todate = new Date().setHours(0,0,0,0),
+  const todate = Date.now(),
     thisYear = new Date().getFullYear(),
     entryYear = new Date(resident.entryDate).getFullYear(),
     entryDate = Date.parse(resident.entryDate),
     entryLimit = Date.parse(new Date(`${CHANGELEVEL} ${entryYear}`)),
-    thisLimit = Date.parse(new Date(`${CHANGELEVEL} ${thisYear}`)),
-    level = thisYear
-            - entryYear
-            + resident.entryLevel
-            + (todate < thisLimit ? -1 : 0)
-            + (entryDate < entryLimit ? 1 : 0)
-            + (resident.addLevel || 0)
+    thisLimit = Date.parse(new Date(`${CHANGELEVEL} ${thisYear}`))
 
-  return level <= 5 ? level : ""
+  return thisYear
+          - entryYear
+          + resident.entryLevel
+          + (todate < thisLimit ? -1 : 0)
+          + (entryDate < entryLimit ? 1 : 0)
+          + (resident.addLevel || 0)
 }
