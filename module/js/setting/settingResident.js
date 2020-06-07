@@ -1,7 +1,7 @@
 
-import { eduMonth, eduDate, eduYear } from "../setting/constResident.js"
+import { ICONS, eduMonth, eduDate, eduYear } from "../setting/constResident.js"
 import {
- ICONS, getRESIDENT, saveResident, updateResident, deleteResident
+  getRESIDENT, newResident, updateResident, deleteResident
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
@@ -37,7 +37,7 @@ export function settingResident()
     })
   }
 
-  addResident()
+  moreResident()
 
   $dialogResident.dialog({ modal: true })
   $dialogResident.dialog({ height: 'auto' })
@@ -52,15 +52,18 @@ export function settingResident()
   .off('keydown').on('keydown', event => {
     let keycode = event.which || window.Event.keyCode
     if (keycode === 13) {
-      let save = [...document.querySelectorAll("#residenttbl tr")].find(e => 
-        e.cells[ICONS].innerHTML === `<img src="css/pic/general/save.png">`
-      )
-      if (save) { saveResident(save) }
+      event.preventDefault()
+      let selObj = window.getSelection(),
+        row = selObj.focusNode.parentNode.closest('tr'),
+        save = row.cells[ICONS].innerHTML.includes('<img src="css/pic/general/save.png">')
+
+      if (save) { newResident(row) }
+      else updateResident(row)
     }
   })
 }
 
-function addResident()
+function moreResident()
 {
   let denttbody = document.querySelector("#residenttbl tbody"),
     residentcells = document.querySelector("#residentcells tr"),
@@ -76,7 +79,7 @@ function addResident()
 
   denttbody.appendChild(clone)
   prefillData.forEach((e, i) => { cells[i].innerHTML = e })
-  icon.onclick = function() { saveResident(clone) }
+  icon.onclick = function() { newResident(clone) }
 }
 
 jQuery.fn.extend({
@@ -84,10 +87,10 @@ jQuery.fn.extend({
 
     let row = this[0]
     let cells = row.cells
-    let level = eduYear - entryYear + (q.addLevel || 0)
+    let level = eduYear - q.yearOne + 1 - (q.addLevel || 0)
 
     row.dataset.ramaid = q.ramaid
-    row.dataset.addLevel = q.addLevel || ""
+    row.dataset.addLevel = q.addLevel || 0
     row.dataset.level = level
 ;   [ q.ramaid,
       q.residentname,

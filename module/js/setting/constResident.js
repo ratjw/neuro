@@ -1,20 +1,22 @@
 
-export const RESIDENT = [],
-
 // Neurosurgery residency training is 5 years
+export const MAXYEAR = 5,
+
 // xRange (xAxis length) is the span of 10 years
 xRange = 200,
-MAXYEAR = 5,
+
+// Education year at this moment now (changes at 1 June of the year)
 eduDate = 1,
 eduMonth = 5,
-eduYear = calcYearOne(),
-eduYear = calcYearOne(),
+eduYear = calcEduYear(),
 
+// columns in residentTbl
 RAMAID = 0,
 RNAME = 1,
 LEVEL = 2,
 ICONS = 3,
 
+// columns in horizontal bar chart
 RESEARCHBAR = [
   {label: "", progress: "", color: "#FFFFFF"},
   {label: "Proposal", progress: "proposal", color: "#DAA520"},
@@ -25,11 +27,11 @@ RESEARCHBAR = [
   {label: "Complete", progress: "complete", color: "red"}
 ]
 
-function calcYearOne()
+function calcEduYear()
 {
   const today = new Date(),
-    beginEdu = new Date(today.getFullYear(), eduMonth, eduDate),
-    thisyear = today.getFullYear()
+    thisyear = today.getFullYear(),
+    changeEdu = new Date(today.getFullYear(), eduMonth, eduDate)
 
-  return ((today - beginEdu) > 0) ? thisyear + 1 : thisyear
+  return today < changeEdu ? thisyear - 1 : thisyear
 }

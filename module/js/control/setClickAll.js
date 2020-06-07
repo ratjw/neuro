@@ -9,7 +9,7 @@ import { moveCase } from "../menu/moveCopyCase.js"
 import { copyCase } from "../menu/moveCopyCase.js"
 import { editHistory } from "../menu/editHistory.js"
 import { deleteCase } from "../menu/deleteCase.js"
-import { resResearch } from '../setting/resResearch.js'
+import { researchResident } from '../setting/researchResident.js'
 import { settingHoliday, addHoliday } from "../setting/settingHoliday.js"
 import { settingResident } from '../setting/settingResident.js'
 import { settingStaff } from '../setting/settingStaff.js'
@@ -48,7 +48,7 @@ function setClickMenu()
 function setClickSetting()
 {
   const clickSetting = {
-    "clickresResearch": resResearch,
+    "clickresResearch": researchResident,
     "clickSetResident": settingResident,
     "clickSetStaff": settingStaff,
     "clickSetHoliday": settingHoliday,

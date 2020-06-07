@@ -1,6 +1,5 @@
 
-import { MAXYEAR, eduMonth, eduDate, eduYear, RESEARCHBAR } from "../setting/constResident.js"
-import { xRange } from "../setting/resResearch.js"
+import { MAXYEAR, xRange, eduMonth, eduDate, eduYear, RESEARCHBAR } from "../setting/constResident.js"
 import { getRESIDENT } from "../model/sqlDoResident.js"
 
 export function prepareDatasets()
@@ -25,8 +24,8 @@ function prepareData(residents)
 function calcDatasets(residents)
 {
   let year = xRange / 2 / MAXYEAR,
-    whiteBar = residents.map(e => new Date(e.entryDate).getFullYear() - e.entryLevel + 1),
-    research = residents.map(e => JSON.parse(e.research))
+    whiteBar = residents.map(e => +e.yearOne + (e.addLevel || 0)),
+    research = residents.map(e => e.research)
 
   return RESEARCHBAR.map((r, i) => {
     if (i === 0) {

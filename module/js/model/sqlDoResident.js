@@ -2,11 +2,11 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
-import { RESEARCHBAR } from '../setting/prepareData.js'
 import {
-  RESIDENT, xRange, MAXYEAR, RAMAID, RNAME, LEVEL, ICONS
-  eduDate, eduMonth, eduYear, RESEARCHBAR
+  xRange, MAXYEAR, RAMAID, RNAME, LEVEL, ICONS, eduDate, eduMonth, eduYear, RESEARCHBAR
 } from '../setting/constResident.js'
+
+let RESIDENT = []
 
 export async function startRESIDENT()
 {
@@ -32,54 +32,54 @@ export function getRESIDENT()
   const residents = JSON.parse(JSON.stringify(RESIDENT))
 
   residents.forEach(e => e.profile = JSON.parse(e.profile))
+  residents.forEach(e => e.profile.research = JSON.parse(e.profile.research))
 
   return residents.map(resident => resident.profile)
 }
 
 // xRange (X axis) is double the research time range (fulltrain),
 // because half of it is the white bars
-// fulltrain is MAXYEAR in graphic range
-export async function saveResident(row)
+// fulltrain is MAXYEAR in graphic x-range
+// eduYear = education year on the day of key-in resident setting
+// level = resident year level at key-in
+export async function newResident(row)
 {
   const cell = row.cells,
     ramaid = cell[RAMAID].textContent,
     residentname = cell[RNAME].textContent,
-    entryLevel = cell[LEVEL].textContent,
-    entryDate = Date.now(),
+    level = cell[LEVEL].textContent,
+    yearOne = eduYear - level + 1,
 
     fulltrain = xRange / 2,
     month = fulltrain / MAXYEAR / 12,
-    research = JSON.stringify({ proposal: month*3,
-                   planning: month*12,
-                   ethic: month*9,
-                   data: month*33,
-                   analysis: month*2,
-                   complete: month*1
+    research = JSON.stringify({ proposal: [month*3],
+                   planning: [month*12],
+                   ethic: [month*9],
+                   data: [month*33],
+                   analysis: [month*2],
+                   complete: [month*1]
                  })
 
   if (!residentname) {
-    Alert("saveResident", "<br>Incomplete Entry")
+    Alert("newResident", "<br>Incomplete Entry")
     return
   }
 
   const sql = `sqlReturnResident=INSERT INTO personnel (profile)
-               VALUES (JSON_OBJECT('ramaid','${ramaid}',
-                 'residentname','${residentname}',
-                 'entryDate','${entryDate}',
-                 'entryLevel','${entryLevel}',
-                 'research','${research}',
-                 'position','resident'));`
+                VALUES (JSON_OBJECT('ramaid','${ramaid}',
+                  'residentname','${residentname}',
+                  'yearOne','${yearOne}',
+                  'research','${research}',
+                  'position','resident'));`
 
   const response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
     showResident(response)
   } else {
-    response && Alert("saveResident", response)
+    response && Alert("newResident", response)
   }
 }
 
-// entryDate = the date of key-in resident setting
-// entryLevel = resident year level at key-in
 // addLevel = user-key-in change of year level
 export async function updateResident(row)
 {
@@ -90,7 +90,7 @@ export async function updateResident(row)
 
     oldLevel = row.dataset.level,
     newLevel = cell[LEVEL].textContent,
-    diffLevel = +newLevel - oldLevel,
+    diffLevel = oldLevel - newLevel,
 
     oldAddLevel = row.dataset.addLevel,
     addLevel = +oldAddLevel + diffLevel,
@@ -152,7 +152,7 @@ export async function updateResearch(barChart, ridx, _ranges)
     progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
     
   const sql = `sqlReturnResident=UPDATE personnel
-             SET profile=JSON_SET(profile,"$.research",'${JSON.stringify(json)}')
+             SET profile=JSON_SET(profile,"$.research","${JSON.stringify(json)}")
              WHERE JSON_EXTRACT(profile,'$.ramaid')=${ramaid};`
 
   const response = await postData(MYSQLIPHP, sql)

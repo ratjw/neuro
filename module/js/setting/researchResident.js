@@ -5,7 +5,7 @@ import { slider } from '../setting/slider.js'
 import { getPermission } from '../control/setClickAll.js'
 import { winHeight, winWidth } from "../util/util.js"
 
-export async function resResearch()
+export async function researchResident()
 {
   const chartjs = document.getElementById("chartjs"),
     $dialogResResearch = $("#dialogResResearch"),
