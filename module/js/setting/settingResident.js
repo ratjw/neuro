@@ -1,12 +1,11 @@
 
+import { eduMonth, eduDate, eduYear } from "../setting/constResident.js"
 import {
  ICONS, getRESIDENT, saveResident, updateResident, deleteResident
 } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
 const ENTRYLEVEL = 2,
-  CHANGELEVEL = "1 Jun",
-
   IMAGE1 = `<img class="updateResident" src="css/pic/general/update.png">`,
   IMAGE2 = `<img class="deleteResident" src="css/pic/general/delete.png">`
 
@@ -85,32 +84,15 @@ jQuery.fn.extend({
 
     let row = this[0]
     let cells = row.cells
-    let level = calcLevel(q)
+    let level = eduYear - entryYear + (q.addLevel || 0)
 
     row.dataset.ramaid = q.ramaid
     row.dataset.addLevel = q.addLevel || ""
     row.dataset.level = level
 ;   [ q.ramaid,
       q.residentname,
-      (level <= 5 ? level : ""),
+      level < 6 ? level : "",
       IMAGE1 + IMAGE2
     ].forEach((e, i) => { cells[i].innerHTML = e })
   }
 })
-
-function calcLevel(resident)
-{
-  const todate = Date.now(),
-    thisYear = new Date().getFullYear(),
-    entryYear = new Date(resident.entryDate).getFullYear(),
-    entryDate = Date.parse(resident.entryDate),
-    entryLimit = Date.parse(new Date(`${CHANGELEVEL} ${entryYear}`)),
-    thisLimit = Date.parse(new Date(`${CHANGELEVEL} ${thisYear}`))
-
-  return thisYear
-          - entryYear
-          + resident.entryLevel
-          + (todate < thisLimit ? -1 : 0)
-          + (entryDate < entryLimit ? 1 : 0)
-          + (resident.addLevel || 0)
-}

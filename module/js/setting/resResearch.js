@@ -1,11 +1,9 @@
 
-import { winHeight, winWidth } from "../util/util.js"
+import { xRange } from '../setting/constResident.js'
 import { prepareDatasets } from '../setting/prepareData.js'
 import { slider } from '../setting/slider.js'
 import { getPermission } from '../control/setClickAll.js'
-
-// xRange (xAxis length) is the span of 10 years
-export const xRange = 200
+import { winHeight, winWidth } from "../util/util.js"
 
 export async function resResearch()
 {

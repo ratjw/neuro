@@ -1,20 +1,7 @@
 
+import { MAXYEAR, eduMonth, eduDate, eduYear, RESEARCHBAR } from "../setting/constResident.js"
 import { xRange } from "../setting/resResearch.js"
-import { MAXYEAR, getRESIDENT } from "../model/sqlDoResident.js"
-
-export const RESEARCHBAR = [
-  {label: "", progress: "", color: "#FFFFFF"},
-  {label: "Proposal", progress: "proposal", color: "#DAA520"},
-  {label: "Planning", progress: "planning", color: "gold"},
-  {label: "Ethic", progress: "ethic", color: "#70EE70"},
-  {label: "Data", progress: "data", color: "#ADD8E6"},
-  {label: "Analysis", progress: "analysis", color: "violet"},
-  {label: "Complete", progress: "complete", color: "red"}
-]
-
-const eduMonth = 5
-const eduDate = 1
-const eduYear = calcYearOne()
+import { getRESIDENT } from "../model/sqlDoResident.js"
 
 export function prepareDatasets()
 {
@@ -58,15 +45,6 @@ function calcDatasets(residents)
       }
     }
   })
-}
-
-function calcYearOne()
-{
-  const today = new Date(),
-    beginEdu = new Date(today.getFullYear(), eduMonth, eduDate),
-    thisyear = today.getFullYear()
-
-  return ((today - beginEdu) > 0) ? thisyear + 1 : thisyear
 }
 
 function calcBeginEdu(year)

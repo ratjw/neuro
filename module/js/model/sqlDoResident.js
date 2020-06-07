@@ -3,16 +3,10 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
 import { RESEARCHBAR } from '../setting/prepareData.js'
-import { xRange } from '../setting/resResearch.js'
-
-let RESIDENT = []
-
-// Neurosurgery residency training is 5 years
-export const MAXYEAR = 5,
-  RAMAID = 0,
-  RNAME = 1,
-  LEVEL = 2,
-  ICONS = 3
+import {
+  RESIDENT, xRange, MAXYEAR, RAMAID, RNAME, LEVEL, ICONS
+  eduDate, eduMonth, eduYear, RESEARCHBAR
+} from '../setting/constResident.js'
 
 export async function startRESIDENT()
 {
