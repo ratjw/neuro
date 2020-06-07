@@ -1,10 +1,10 @@
 
 import { MAXYEAR, xRange, eduMonth, eduDate, eduYear, RESEARCHBAR } from "../setting/constResident.js"
-import { getRESIDENT } from "../model/sqlDoResident.js"
+import { presentRESIDENT } from "../model/sqlDoResident.js"
 
 export function prepareDatasets()
 {
-  const residents = getRESIDENT()
+  const residents = presentRESIDENT()
 
   return {
     data: prepareData(residents),
@@ -24,7 +24,7 @@ function prepareData(residents)
 function calcDatasets(residents)
 {
   let year = xRange / 2 / MAXYEAR,
-    whiteBar = residents.map(e => +e.yearOne + (e.addLevel || 0)),
+    whiteBar = residents.map(e => e.yearOne),
     research = residents.map(e => e.research)
 
   return RESEARCHBAR.map((r, i) => {
@@ -39,8 +39,8 @@ function calcDatasets(residents)
       return {
         label: r.label,
         backgroundColor: research.map(e => r.color),
-        data: research.map(e => Array.isArray(e[r.progress]) ? e[r.progress][0] : e[r.progress]),
-        caption: research.map(e => Array.isArray(e[r.progress]) ? e[r.progress][1] : "")
+        data: research.map(e => e[r.progress] && e[r.progress][0]),
+        caption: research.map(e => e[r.progress] && e[r.progress][1])
       }
     }
   })

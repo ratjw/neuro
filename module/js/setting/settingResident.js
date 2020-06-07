@@ -87,10 +87,10 @@ jQuery.fn.extend({
 
     let row = this[0]
     let cells = row.cells
-    let level = eduYear - q.yearOne + 1 - (q.addLevel || 0)
+    let level = eduYear - q.yearOne + 1 - q.addLevel
 
     row.dataset.ramaid = q.ramaid
-    row.dataset.addLevel = q.addLevel || 0
+    row.dataset.addLevel = q.addLevel
     row.dataset.level = level
 ;   [ q.ramaid,
       q.residentname,

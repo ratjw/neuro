@@ -2,7 +2,7 @@
 import { obj_2_ISO, ISO_2_th } from "../util/date.js"
 import { winWidth } from "../util/util.js"
 import { MAXYEAR, xRange, RESEARCHBAR } from '../setting/constResident.js'
-import { getRESIDENT, updateResearch } from "../model/sqlDoResident.js"
+import { presentRESIDENT, updateResearch } from "../model/sqlDoResident.js"
 import { getPermission } from '../control/setClickAll.js'
 import { USER } from "../main.js"
 
@@ -96,7 +96,7 @@ function getBeginSlider(yearRange, timemap)
 
 function getResText(ridx)
 {
-  const residents = getRESIDENT(),
+  const residents = presentRESIDENT(),
     research = residents.map(e => e.research),
     resbar = RESEARCHBAR.map(e => e.progress).filter(e => e)
 

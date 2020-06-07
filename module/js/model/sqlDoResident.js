@@ -1,6 +1,6 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
-import { Alert } from "../util/util.js"
+import { Alert, URIcomponent } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
 import {
   xRange, MAXYEAR, RAMAID, RNAME, LEVEL, ICONS, eduDate, eduMonth, eduYear, RESEARCHBAR
@@ -37,6 +37,11 @@ export function getRESIDENT()
   return residents.map(resident => resident.profile)
 }
 
+export function presentRESIDENT()
+{
+  return getRESIDENT().filter(e => eduYear - e.yearOne + 1 - e.addLevel <= MAXYEAR)
+}
+
 // xRange (X axis) is double the research time range (fulltrain),
 // because half of it is the white bars
 // fulltrain is MAXYEAR in graphic x-range
@@ -52,12 +57,12 @@ export async function newResident(row)
 
     fulltrain = xRange / 2,
     month = fulltrain / MAXYEAR / 12,
-    research = JSON.stringify({ proposal: [month*3],
-                   planning: [month*12],
-                   ethic: [month*9],
-                   data: [month*33],
-                   analysis: [month*2],
-                   complete: [month*1]
+    research = JSON.stringify({ proposal: [month*3,""],
+                   planning: [month*12,""],
+                   ethic: [month*9,""],
+                   data: [month*33,""],
+                   analysis: [month*2,""],
+                   complete: [month*1,""]
                  })
 
   if (!residentname) {
@@ -69,6 +74,7 @@ export async function newResident(row)
                 VALUES (JSON_OBJECT('ramaid','${ramaid}',
                   'residentname','${residentname}',
                   'yearOne','${yearOne}',
+                  'addLevel',0,
                   'research','${research}',
                   'position','resident'));`
 
@@ -93,17 +99,15 @@ export async function updateResident(row)
     diffLevel = oldLevel - newLevel,
 
     oldAddLevel = row.dataset.addLevel,
-    addLevel = +oldAddLevel + diffLevel,
-
-    level = diffLevel ? `,'$.addLevel',${addLevel}` : ""
+    addLevel = +oldAddLevel + diffLevel
 
   if (!residentname) { return "<br>Incomplete Entry" }
 
   const sql = `sqlReturnResident=UPDATE personnel
              SET profile=JSON_SET(profile,
                         '$.ramaid','${newramaid}',
-                        '$.residentname','${residentname}'
-                        ${level}
+                        '$.residentname','${residentname}',
+                        '$.addLevel',${addLevel}
                         )
              WHERE JSON_EXTRACT(profile,'$.ramaid')='${oldramaid}';`
   const response = await postData(MYSQLIPHP, sql)
@@ -141,7 +145,7 @@ function showResident(response)
 
 export async function updateResearch(barChart, ridx, _ranges)
 {
-  const residents = getRESIDENT(),
+  const residents = presentRESIDENT(),
     ramaid = residents[ridx].ramaid,
     progress = RESEARCHBAR.map(e => e.progress).filter(e => e),
     slidertbl = document.getElementById('slidertbl'),
@@ -152,8 +156,8 @@ export async function updateResearch(barChart, ridx, _ranges)
     progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
     
   const sql = `sqlReturnResident=UPDATE personnel
-             SET profile=JSON_SET(profile,"$.research","${JSON.stringify(json)}")
-             WHERE JSON_EXTRACT(profile,'$.ramaid')=${ramaid};`
+             SET profile=JSON_SET(profile,"$.research",'${JSON.stringify(json)}')
+             WHERE JSON_EXTRACT(profile,'$.ramaid')='${ramaid}';`
 
   const response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -167,7 +171,7 @@ export async function updateResearch(barChart, ridx, _ranges)
 
 function updateBar(barChart, ridx)
 {
-  const residents = getRESIDENT(),
+  const residents = presentRESIDENT(),
     fulltrain = xRange / 2,
     bardataset = barChart.data.datasets,
     research = residents[ridx].research,
