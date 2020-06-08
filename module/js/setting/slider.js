@@ -1,7 +1,7 @@
 
-import { obj_2_ISO, ISO_2_th } from "../util/date.js"
+import { obj_2_ISO, ISO_2_th, obj_2_th } from "../util/date.js"
 import { winWidth } from "../util/util.js"
-import { MAXYEAR, xRange, RESEARCHBAR } from '../setting/constResident.js'
+import { MAXYEAR, xRange, eduDate, eduMonth, RESEARCHBAR } from '../setting/constResident.js'
 import { presentRESIDENT, updateResearch } from "../model/sqlDoResident.js"
 import { getPermission } from '../control/setClickAll.js'
 import { USER } from "../main.js"
@@ -17,6 +17,7 @@ export function slider(evt, barChart, yearRange)
     slidertemplate = document.querySelector('#slidertemplate'),
     begindate = document.getElementById('begindate'),
     enddate = document.getElementById('enddate'),
+    cidxlen = RESEARCHBAR.length,
 
     active = activePoint[0],
     cdata = active['_chart'].config.data,
@@ -25,16 +26,16 @@ export function slider(evt, barChart, yearRange)
     rname = cdata.labels[ridx],
     cdatasets = cdata.datasets
 
-  if ((cidx === 0) || (cidx > 7)) { return }
+  if ((cidx === 0) || (cidx > cidxlen)) { return }
   if (!getPermission('resBar', rname)) { return }
 
   const timemap = getTimemap(cdatasets, ridx),
     beginSlider = getBeginSlider(yearRange, timemap),
     beginslider = new Date(beginSlider),
-    endslider = new Date(beginslider.getFullYear() + MAXYEAR, 4, 31)
+    endslider = new Date(beginslider.getFullYear() + MAXYEAR, eduMonth, eduDate - 1)
 
-  begindate.innerHTML = ISO_2_th(obj_2_ISO(beginslider))
-  enddate.innerHTML = ISO_2_th(obj_2_ISO(endslider))
+  begindate.innerHTML = obj_2_th(beginslider)
+  enddate.innerHTML = obj_2_th(endslider)
   enddate.style.right = '10px'
 
   $dialogSlider.dialog({ modal: true })
@@ -47,7 +48,7 @@ export function slider(evt, barChart, yearRange)
     height: 'auto',
     buttons: [{
       text: "Save",
-      click: function() {
+      click: () => {
         const newTimeRanges = getNewTimeRanges(timemap)
         updateResearch(barChart, ridx, newTimeRanges)
         $dialogSlider.dialog("close")
@@ -62,7 +63,7 @@ export function slider(evt, barChart, yearRange)
     liveDrag: true, 
     draggingClass: "rangeDrag", 
     gripInnerHtml: "<div class='rangeGrip'></div>", 
-    onDrag: function () { onDragGrip(yearRange, timemap) },
+    onDrag: () => onDragGrip(yearRange, timemap),
     minWidth: 8
   });	
 

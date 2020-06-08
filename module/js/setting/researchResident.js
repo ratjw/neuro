@@ -1,6 +1,6 @@
 
 import { xRange } from '../setting/constResident.js'
-import { prepareDatasets } from '../setting/prepareData.js'
+import { prepareDatasets } from '../setting/prepareDatasets.js'
 import { slider } from '../setting/slider.js'
 import { getPermission } from '../control/setClickAll.js'
 import { winHeight, winWidth } from "../util/util.js"

@@ -18,6 +18,15 @@ export function obj_2_ISO(date) {
       ].join("-")
 } 
 
+// Javascript Date Object to MySQL date (ISOdate 2014-05-11)
+export function obj_2_th(date) {
+  if (!date) { return date }
+
+  let ISO = obj_2_ISO(date)
+
+  return ISO_2_th(ISO)
+} 
+
 // ISOdate (2014-05-11) to Thai date (11 พค. 2557) 
 export function ISO_2_th(opdate) {
   if (!opdate) { return opdate }
