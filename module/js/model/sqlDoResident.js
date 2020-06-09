@@ -1,6 +1,6 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
-import { Alert, URIcomponent } from "../util/util.js"
+import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
 import {
   xRange, MAXYEAR, RAMAID, RNAME, LEVEL, ICONS, eduDate, eduMonth, eduYear, RESEARCHBAR
@@ -32,7 +32,7 @@ export function getRESIDENT()
   const residents = JSON.parse(JSON.stringify(RESIDENT))
 
   residents.forEach(e => e.profile = JSON.parse(e.profile))
-  residents.forEach(e => e.profile.research = JSON.parse(e.profile.research))
+  residents.forEach(e => e.profile.research = e.profile.research)
 
   return residents.map(resident => resident.profile)
 }
@@ -57,13 +57,13 @@ export async function newResident(row)
 
     fulltrain = xRange / 2,
     month = fulltrain / MAXYEAR / 12,
-    research = `{ "proposal": [${month*3},""],\
-                  "planning": [${month*12},""],\
-                  "ethic": [${month*9},""],\
-                  "data": [${month*33},""],\
-                  "analysis": [${month*2},""],\
-                  "complete": [${month*1},""]\
-                }`.replace("/ /g","")
+    research = { proposal: [month*3,""],
+                  planning: [month*12,""],
+                  ethic: [month*9,""],
+                  data: [month*33,""],
+                  analysis: [month*2,""],
+                  complete: [month*1,""]
+                }
 
   if (!residentname) {
     Alert("newResident", "<br>Incomplete Entry")
@@ -75,7 +75,7 @@ export async function newResident(row)
                   'residentname','${residentname}',
                   'yearOne','${yearOne}',
                   'addLevel',0,
-                  'research',json_pretty(${research}),
+                  'research',CAST('${JSON.stringify(research)}' AS JSON),
                   'position','resident'));`
 
   const response = await postData(MYSQLIPHP, sql)
@@ -156,7 +156,7 @@ export async function updateResearch(barChart, ridx, _ranges)
     progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
     
   const sql = `sqlReturnResident=UPDATE personnel
-             SET profile=JSON_SET(profile,"$.research",'${JSON.stringify(json)}')
+             SET profile=JSON_SET(profile,"$.research",CAST('${json}' AS JSON)}')
              WHERE JSON_EXTRACT(profile,'$.ramaid')='${ramaid}';`
 
   const response = await postData(MYSQLIPHP, sql)
