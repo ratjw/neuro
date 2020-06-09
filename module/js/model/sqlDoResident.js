@@ -57,13 +57,13 @@ export async function newResident(row)
 
     fulltrain = xRange / 2,
     month = fulltrain / MAXYEAR / 12,
-    research = JSON.stringify({ proposal: [month*3,""],
-                   planning: [month*12,""],
-                   ethic: [month*9,""],
-                   data: [month*33,""],
-                   analysis: [month*2,""],
-                   complete: [month*1,""]
-                 })
+    research = `{ "proposal": [${month*3},""],\
+                  "planning": [${month*12},""],\
+                  "ethic": [${month*9},""],\
+                  "data": [${month*33},""],\
+                  "analysis": [${month*2},""],\
+                  "complete": [${month*1},""]\
+                }`.replace("/ /g","")
 
   if (!residentname) {
     Alert("newResident", "<br>Incomplete Entry")
@@ -75,7 +75,7 @@ export async function newResident(row)
                   'residentname','${residentname}',
                   'yearOne','${yearOne}',
                   'addLevel',0,
-                  'research','${research}',
+                  'research',json_pretty(${research}),
                   'position','resident'));`
 
   const response = await postData(MYSQLIPHP, sql)
