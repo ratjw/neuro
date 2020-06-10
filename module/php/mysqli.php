@@ -97,14 +97,14 @@ function returnStaff($mysqli, $sql)
 function getResident($mysqli)
 {
   $sql = "SELECT * FROM personnel
-          WHERE JSON_EXTRACT(profile,'$.position')='resident'
+          WHERE profile->'$.role'='resident'
           ORDER BY profile->'$.yearOne'+profile->'$.addLevel',profile->'$.ramaid';";
 	return multiquery($mysqli, $sql);
 }
 
 function getStaff($mysqli)
 {
-	$sql = "SELECT * FROM personnel where JSON_EXTRACT(profile,'$.position')='staff';";
+	$sql = "SELECT * FROM personnel where profile->'$.role'='staff';";
 	return multiquery($mysqli, $sql);
 }
 

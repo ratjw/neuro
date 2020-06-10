@@ -28,14 +28,14 @@ export function fillConsults(tableID = 'maintbl')
     staffsOncall = getStaffOncall()
 
   staffsOncall.forEach(staff => {
-    if (staff.profile.skip) {
+    if (staff.skip) {
       staff["skipSat"] = getSkipSat(allSaturdays, staff)
     }
   })
 
   allSaturdays.forEach((sat, i) => {
     staffsOncall.forEach(staff => {
-      const matchname = staff.profile.staffname === oncallList[i]
+      const matchname = staff.staffname === oncallList[i]
       const matchskip = staff.skipSat && staff.skipSat.includes(sat)
       if (matchname && matchskip) {
         oncallList.splice(i, 1)
@@ -85,7 +85,7 @@ function getFirstSat(startStaff)
 
 function getSkipSat(allSaturdays, staff)
 {
-  let skip = staff.profile.skip
+  let skip = staff.skip
   let skipSat = []
 
   Object.entries(skip).forEach(([key, val]) => {
@@ -106,9 +106,9 @@ function getSkipSat(allSaturdays, staff)
 function getOncallList(startStaff, allLen)
 {
   const staffs = getStaffOncall(),
-    staffnames = staffs.map(e => e.profile.staffname),
+    staffnames = staffs.map(e => e.staffname),
     stafflen = staffnames.length,
-    num = startStaff.profile.oncall - 1,
+    num = startStaff.oncall - 1,
     rotated = staffnames.map((e, i) => staffnames[(i + num) % stafflen])
 
   let list = []

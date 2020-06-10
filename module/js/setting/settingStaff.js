@@ -56,7 +56,6 @@ jQuery.fn.extend({
 
     const row = this[0]
     const cells = row.cells
-    const qprofile = q.profile
     const startCell = cells[START]
     const beginCell = cells[SKIPBEGIN]
     const endCell = cells[SKIPEND]
@@ -64,30 +63,30 @@ jQuery.fn.extend({
     row.dataset.id = q.id
 
     // fill first 3 columns
-;   [ qprofile.staffname || "",
-      qprofile.ramaid || "",
-      qprofile.oncall
+;   [ q.name || "",
+      q.ramaid || "",
+      q.oncall
     ].forEach((e, i) => {
       if (i < START) {
         showCell(cells[i], e)
       }
     })
 
-    // fill staffname
+    // fill name
     const start = getLatestStart()
     if (start) {
-      if (qprofile.staffname === start.profile.staffname) {
+      if (q.name === start.name) {
         showCell(startCell, start.startDate, start.startKey)
       } else {
         showCell(startCell, '')
       }
-      if (qprofile.oncall) { inputDatepicker(startCell) }
+      if (q.oncall) { inputDatepicker(startCell) }
     }
 
     // fill leave of absence (begin, end)
-    const key = getLatestKey(qprofile.skip)
-    const endDate = key ? getActiveDate(qprofile.skip[key]["end"]) : ''
-    const beginDate = endDate ? qprofile.skip[key]["begin"] : ''
+    const key = getLatestKey(q.skip)
+    const endDate = key ? getActiveDate(q.skip[key]["end"]) : ''
+    const beginDate = endDate ? q.skip[key]["begin"] : ''
 
     showCell(beginCell, beginDate, key)
     inputDatepicker(beginCell)

@@ -2,7 +2,8 @@
 import { obj_2_ISO, ISO_2_th, obj_2_th } from "../util/date.js"
 import { winWidth } from "../util/util.js"
 import { MAXYEAR, xRange, eduDate, eduMonth, RESEARCHBAR } from '../setting/constResident.js'
-import { presentRESIDENT, updateResearch } from "../model/sqlDoResident.js"
+import { presentRESIDENT } from "../setting/getRESIDENT.js"
+import { updateResearch } from "../model/sqlDoResident.js"
 import { getPermission } from '../control/setClickAll.js'
 import { USER } from "../main.js"
 

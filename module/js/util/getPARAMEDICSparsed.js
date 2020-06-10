@@ -6,7 +6,7 @@ export function getPARAMEDICSparsed()
 {
   const persons = getPERSONNEL()
 
-  persons.forEach(e => e.profile = JSON.parse(e.profile))
+  persons.forEach(e => JSON.parse(e))
 
-  return persons.filter(person => person.profile.position === "paramedics")
+  return persons.filter(person => person.role === "paramedics")
 }

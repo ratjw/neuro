@@ -2,20 +2,12 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
-import {
-  xRange, MAXYEAR, RAMAID, RNAME, LEVEL, ICONS, eduDate, eduMonth, eduYear, RESEARCHBAR
-} from '../setting/constResident.js'
+import { xRange, MAXYEAR, RAMAID, RNAME, LEVEL, eduYear, RESEARCHBAR } from '../setting/constResident.js'
+import { presentRESIDENT } from "../setting/getRESIDENT.js"
 
-let RESIDENT = []
+export let RESIDENT = []
 
-export async function startRESIDENT()
-{
-  await sqlResident()
-
-  return getRESIDENT()
-}
-
-async function sqlResident()
+export async function sqlResident()
 {
   const sql = `sqlReturnResident=`
 
@@ -27,21 +19,6 @@ async function sqlResident()
   }  
 }
 
-export function getRESIDENT()
-{
-  const residents = JSON.parse(JSON.stringify(RESIDENT))
-
-  residents.forEach(e => e.profile = JSON.parse(e.profile))
-  residents.forEach(e => e.profile.research = e.profile.research)
-
-  return residents.map(resident => resident.profile)
-}
-
-export function presentRESIDENT()
-{
-  return getRESIDENT().filter(e => eduYear - e.yearOne + 1 - e.addLevel <= MAXYEAR)
-}
-
 // xRange (X axis) is double the research time range (fulltrain),
 // because half of it is the white bars
 // fulltrain is MAXYEAR in graphic x-range
@@ -51,7 +28,7 @@ export async function newResident(row)
 {
   const cell = row.cells,
     ramaid = cell[RAMAID].textContent,
-    residentname = cell[RNAME].textContent,
+    name = cell[RNAME].textContent,
     level = cell[LEVEL].textContent,
     yearOne = eduYear - level + 1,
 
@@ -65,18 +42,18 @@ export async function newResident(row)
                   complete: [month*1,""]
                 }
 
-  if (!residentname) {
+  if (!name) {
     Alert("newResident", "<br>Incomplete Entry")
     return
   }
 
   const sql = `sqlReturnResident=INSERT INTO personnel (profile)
                 VALUES (JSON_OBJECT('ramaid','${ramaid}',
-                  'residentname','${residentname}',
+                  'name','${name}',
                   'yearOne','${yearOne}',
                   'addLevel',0,
                   'research',CAST('${JSON.stringify(research)}' AS JSON),
-                  'position','resident'));`
+                  'role','resident'));`
 
   const response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
@@ -92,7 +69,7 @@ export async function updateResident(row)
   const cell = row.cells,
     oldramaid = row.dataset.ramaid,
     newramaid = cell[RAMAID].textContent,
-    residentname = cell[RNAME].textContent,
+    name = cell[RNAME].textContent,
 
     oldLevel = row.dataset.level,
     newLevel = cell[LEVEL].textContent,
@@ -101,12 +78,12 @@ export async function updateResident(row)
     oldAddLevel = row.dataset.addLevel,
     addLevel = +oldAddLevel + diffLevel
 
-  if (!residentname) { return "<br>Incomplete Entry" }
+  if (!name) { return "<br>Incomplete Entry" }
 
   const sql = `sqlReturnResident=UPDATE personnel
              SET profile=JSON_SET(profile,
                         '$.ramaid','${newramaid}',
-                        '$.residentname','${residentname}',
+                        '$.name','${name}',
                         '$.addLevel',${addLevel}
                         )
              WHERE JSON_EXTRACT(profile,'$.ramaid')='${oldramaid}';`

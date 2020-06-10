@@ -1,8 +1,7 @@
 
 import { ICONS, eduMonth, eduDate, eduYear } from "../setting/constResident.js"
-import {
-  getRESIDENT, newResident, updateResident, deleteResident
-} from "../model/sqlDoResident.js"
+import { getRESIDENT } from "../setting/getRESIDENT.js"
+import { newResident, updateResident, deleteResident } from "../model/sqlDoResident.js"
 import { winHeight } from "../util/util.js"
 
 const ENTRYLEVEL = 2,
@@ -93,7 +92,7 @@ jQuery.fn.extend({
     row.dataset.addLevel = q.addLevel
     row.dataset.level = level
 ;   [ q.ramaid,
-      q.residentname,
+      q.name,
       level < 6 ? level : "",
       IMAGE1 + IMAGE2
     ].forEach((e, i) => { cells[i].innerHTML = e })

@@ -1,6 +1,6 @@
 
 import { MAXYEAR, xRange, eduMonth, eduDate, eduYear, RESEARCHBAR } from "../setting/constResident.js"
-import { presentRESIDENT } from "../model/sqlDoResident.js"
+import { presentRESIDENT } from "../setting/getRESIDENT.js"
 
 export function prepareDatasets()
 {
@@ -15,7 +15,7 @@ export function prepareDatasets()
 function prepareData(residents)
 {
   return {
-    labels: residents.map(e => e.residentname),
+    labels: residents.map(e => e.name),
     datasets: calcDatasets(residents)
   }
 }

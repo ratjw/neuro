@@ -12,14 +12,14 @@ export function htmlStafflist() {
     staffConsult = ''
 
   staffs.forEach(each => {
-    let name = each.profile.staffname
+    let name = each.name
     stafflist += `<li><div>${name}</div></li>`
     staffmenu += `<li class="w100">`
                +  `<a class="clickStaff ${name}">`
                +    ` <span>${name}</span>`
                +  `</a>`
                + `</li>`
-    if (each.profile.oncall) {
+    if (each.oncall) {
       staffConsult += `<li data-id="${each.id}"><div>${name}</div></li>`
     }
   })
@@ -34,8 +34,8 @@ export function htmlStafflist() {
 
   document.querySelectorAll(".clickStaff").forEach(item => {
     item.onclick = () => {
-      let staffname = item.className.split(" ")[1]
-      staffqueue(staffname)
+      let name = item.className.split(" ")[1]
+      staffqueue(name)
     }
   })
 }
