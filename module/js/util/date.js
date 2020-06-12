@@ -72,6 +72,20 @@ export function th_2_ISO(opdate) {
   ].join("-")
 } 
 
+// Thai date Mon (11 พค.) to ISOdate (9999-05-11)
+export function ddThaiM_2_ISO(opdate) {
+  if (!opdate) { return "" }
+
+  let date = opdate.split(" "),
+    mm = THAIMONTH.indexOf(date[1]) + 1
+
+  return [
+    9999,
+    (mm < 10 ? '0' : '') + mm,
+    date[0]
+  ].join("-")
+} 
+
 // Date Object or ISOdate to be added or substracted by days
 // Result in ISOdate (2014-05-11)
 export function nextdates(date, days) {

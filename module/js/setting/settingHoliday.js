@@ -1,5 +1,5 @@
 
-import { ISO_2_th } from "../util/date.js"
+import { ISO_2_th, th_2_ISO } from "../util/date.js"
 import { getHOLIDAY } from "../util/updateBOOK.js"
 import { datePicker } from "../util/datePicker.js"
 import { dialogHoliday, saveHoliday, onclickDelete } from "../setting/dialogHoliday.js"
@@ -54,7 +54,7 @@ function moreHoliday()
     cells = clone.cells,
     holidaylist = LIST,
     checkComplete = () => {
-      if (holidate.value && holidayname.value) {
+      if (holidate.value && holiname.value) {
         cells[ACTION].innerHTML = SAVE
       }
     }
@@ -75,7 +75,7 @@ function moreHoliday()
   holiname.onchange = checkComplete
 
   cells[ACTION].onclick = async () => {
-    await saveHoliday(clone)
+    await saveHoliday(th_2_ISO(holidate.value), holiname.value)
     fillHoliday()
   }
 }

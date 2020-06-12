@@ -1,6 +1,6 @@
 
 import { DIAGNOSIS, THAIMONTH } from "../control/const.js"
-import { th_2_ISO, ISO_2_th, ISO_2_ddThaiM } from "../util/date.js"
+import { th_2_ISO } from "../util/date.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { getHOLIDAY, setHOLIDAY } from "../util/updateBOOK.js"
 import { findHoliday } from "../setting/findHoliday.js"
@@ -23,19 +23,14 @@ export function dialogHoliday(title)
   })
 }
 
-export async function saveHoliday()
+export async function saveHoliday(holidate, holiname)
 {
-  const input = document.querySelector("#holidate"),
-    selec = document.querySelector("#holidayname"),
-    holidate = th_2_ISO(input.value),
-    holiname = selec && selec.value || selec.textContent,
-    rows = getTableRowsByDate('maintbl', holidate)
-
   if (!holidate || !holiname) { return }
 
   let response = await sqlSaveHoliday(holidate, holiname)
     if (typeof response === "object") {
       setHOLIDAY(response)
+      const rows = getTableRowsByDate('maintbl', holidate)
       rows.forEach(row => {
         row.cells[DIAGNOSIS].classList.add("holiday")
         row.cells[DIAGNOSIS].dataset.holiday = findHoliday(holidate)
@@ -56,12 +51,11 @@ export function onclickDelete()
 
 function delHoliday(row)
 {
-  const cells = row.querySelectorAll("td"),
-    holidate = th_2_ISO(cells[HOLIDATE].textContent),
-    holiname = cells[HOLINAME].textContent,
+  const holidate = row.dataset.holidate,
+    dayname = row.dataset.dayname,
     maintblrows = getTableRowsByDate('maintbl', holidate)
 
-  sqlDelHoliday(holidate, holiname).then(response => {
+  sqlDelHoliday(holidate, dayname).then(response => {
     if (typeof response === "object") {
       setHOLIDAY(response)
       row.remove()

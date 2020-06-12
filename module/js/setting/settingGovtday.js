@@ -1,5 +1,5 @@
 
-import { ISO_2_ddThaiM } from "../util/date.js"
+import { ISO_2_ddThaiM, ddThaiM_2_ISO } from "../util/date.js"
 import { getHOLIDAY } from "../util/updateBOOK.js"
 import { dateMonthPicker } from "../util/datePicker.js"
 import { dialogHoliday, saveHoliday, onclickDelete } from "../setting/dialogHoliday.js"
@@ -70,7 +70,7 @@ function moreHoliday()
   holidayname.contentEditable = true
   holidayname.oninput = checkComplete
   cells[ACTION].onclick = async () => {
-    await saveHoliday(clone)
+    await saveHoliday(ddThaiM_2_ISO(holidate.value), holidayname.textContent)
     fillGovtday()
   }
 }
