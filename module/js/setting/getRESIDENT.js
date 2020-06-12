@@ -1,6 +1,6 @@
 
 import { MAXYEAR, eduYear } from '../setting/constResident.js'
-import { RESIDENT, sqlResident } from "../model/sqlDoResident.js"
+import { RESIDENT, sqlResident } from "../model/sqlResident.js"
 
 export async function startRESIDENT()
 {

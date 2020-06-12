@@ -1,15 +1,14 @@
 
-import { OPDATE, DIAGNOSIS, LARGESTDATE } from "../control/const.js"
-import { putThdate } from "../util/date.js"
-import { findHoliday } from "../view/findHoliday.js"
+import { OPDATE, DIAGNOSIS, NAMEOFDAYFULL, LARGESTDATE } from "../control/const.js"
+import { ISO_2_th } from "../util/date.js"
+import { findHoliday } from "../setting/findHoliday.js"
 
-// for row, and 1st column colors
-const NAMEOFDAYFULL = ["Sunday", "Monday", "Tuesday",
-  "Wednesday", "Thursday", "Friday", "Saturday"
-]
 const COMPENSATE = "ชดเชย"
 const NEWYEAR = "วันขึ้นปีใหม่"
 
+// show holiday to that date row at DIAGNOSIS column
+// every Mon, Tue: check back on Sat and Sun
+// if found holiday, show COMPENSATE
 export function rowDecoration(row, date)
 {
   let cells = row.cells,
@@ -20,7 +19,7 @@ export function rowDecoration(row, date)
     holidayName = ""
 
   row.className = dayName(NAMEOFDAYFULL, date) || "nodate"
-  cells[OPDATE].innerHTML = putThdate(date)
+  cells[OPDATE].innerHTML = ISO_2_th(date)
 
   if (date < LARGESTDATE) {
     holidayName = findHoliday(date)

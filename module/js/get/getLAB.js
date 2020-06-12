@@ -3,7 +3,7 @@ import { LAB, NAMEOFDAYTHAI } from "../control/const.js"
 import { clearEditcell } from "../control/edit.js"
 import { USER } from "../main.js"
 import { sqlGetLab, sqlSaveLab, sqlCancelAllLab } from "../model/sqlGetLab.js"
-import { putAgeOpdate, putThdate } from "../util/date.js"
+import { putAgeOpdate, ISO_2_th } from "../util/date.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winHeight, string25_1, deepEqual } from "../util/util.js"
 
@@ -20,7 +20,7 @@ export function getLAB(pointing)
     rowLab = row.dataset.lab,
     thisLab = {
       opdaylab: NAMEOFDAYTHAI[(new Date(row.dataset.opdate)).getDay()],
-      opdatethlab: putThdate(row.dataset.opdate),
+      opdatethlab: ISO_2_th(row.dataset.opdate),
       staffnamelab: row.dataset.staffname,
       hnlab: row.dataset.hn,
       patientnamelab: row.dataset.patient,

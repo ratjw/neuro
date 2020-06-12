@@ -35,13 +35,23 @@ export function ISO_2_th(opdate) {
   if (String(opdate) > "9999") { return "" }
 
   let date = opdate.split("-"),
-    yyyy = Number(date[0]) + 543,
-    mm = THAIMONTH[Number(date[1]) - 1]
+    mm = THAIMONTH[date[1] - 1]
 
   return [
     date[2],
-    THAIMONTH[Number(date[1]) - 1],
-    Number(date[0]) + 543
+    THAIMONTH[date[1] - 1],
+    +date[0] + 543
+  ].join(" ")
+}
+
+// MAXYEAR ISOdate (9999-05-11) to Thai date month (11 พค. ) 
+export function ISO_2_ddThaiM(opdate) {
+  let date = opdate.split("-"),
+    mm = THAIMONTH[date[1] - 1]
+
+  return [
+    date[2],
+    THAIMONTH[date[1] - 1]
   ].join(" ")
 }
 
@@ -56,7 +66,7 @@ export function th_2_ISO(opdate) {
   if (mm === 0) { return "" }
 
   return [
-    Number(date[2]) - 543,
+    date[2] - 543,
     (mm < 10 ? '0' : '') + mm,
     date[0]
   ].join("-")
@@ -78,13 +88,6 @@ export function nextdates(date, days) {
 export function getOpdate (date) {
   // Undefined date will be taken care by th_2_ISO
   return (String(date) === "") ? LARGESTDATE : th_2_ISO(date)
-}
-
-// change date in book to show on table taking care of LARGESTDATE
-export function putThdate (date) {
-  if (!date) { return date }
-
-  return (String(date) === LARGESTDATE) ? "" : ISO_2_th(date)
 }
 
 export function putNameAge(q)

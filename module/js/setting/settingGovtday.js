@@ -1,31 +1,29 @@
 
-import { ISO_2_th } from "../util/date.js"
+import { ISO_2_ddThaiM } from "../util/date.js"
 import { getHOLIDAY } from "../util/updateBOOK.js"
-import { datePicker } from "../util/datePicker.js"
+import { dateMonthPicker } from "../util/datePicker.js"
 import { dialogHoliday, saveHoliday, onclickDelete } from "../setting/dialogHoliday.js"
 import {
- THISYEAR, MAXYEAR, HOLIDAYTHAI, HOLIDATE, HOLINAME, INPUT, SELECT, ACTION, SAVE, LIST, DELETE
+ MAXYEAR, HOLIDATE, HOLINAME, INPUT, ACTION, SAVE, DELETE
 } from "../setting/constHoliday.js"
 
-export function settingHoliday()
+export function settingGovtday()
 {
-  fillHoliday()
-  dialogHoliday("Religious Holiday")
+  fillGovtday()
+  dialogHoliday("Government Holiday")
 }
 
-export function fillHoliday()
+export function fillGovtday()
 {
   const $holidaytbl = $("#holidaytbl"),
-    holiday = getHOLIDAY().filter(day =>
-                (day.holidate > THISYEAR) && (day.holidate < MAXYEAR)
-              )
+    holiday = getHOLIDAY().filter(day => day.holidate > MAXYEAR)
 
   $holidaytbl.find('tr').slice(1).remove()
 
   $.each( holiday, function(i) {
     $('#holidaycells tr').clone()
       .appendTo($holidaytbl.find('tbody'))
-        .filldataHoliday(this)
+        .filldataGovtday(this)
   });
 
   moreHoliday()
@@ -33,13 +31,13 @@ export function fillHoliday()
 }
 
 jQuery.fn.extend({
-  filldataHoliday : function(q) {
+  filldataGovtday : function(q) {
     let row = this[0]
     let cells = row.cells
 
     row.dataset.holidate = q.holidate
     row.dataset.dayname = q.dayname
-;   [ ISO_2_th(q.holidate),
+;   [ ISO_2_ddThaiM(q.holidate),
       q.dayname,
       DELETE
     ].forEach((e, i) => cells[i].innerHTML = e)
@@ -52,9 +50,9 @@ function moreHoliday()
     holidaycells = document.querySelector("#holidaycells tr"),
     clone = holidaycells.cloneNode(true),
     cells = clone.cells,
-    holidaylist = LIST,
+    holidayname = cells[HOLINAME],
     checkComplete = () => {
-      if (holidate.value && holidayname.value) {
+      if (holidate.value && holidayname.textContent) {
         cells[ACTION].innerHTML = SAVE
       }
     }
@@ -65,17 +63,14 @@ function moreHoliday()
   const holidate = document.querySelector("#holidate"),
     $holidate = $(holidate)
   holidate.tabIndex = "-1"
-  datePicker($holidate)
+  dateMonthPicker($holidate)
+  $holidate.focus(() => $(".ui-datepicker-year").hide())
   $holidate.datepicker('option', 'onClose', checkComplete)
 
-  cells[HOLINAME].innerHTML = SELECT
-  const holiname = document.querySelector("#holidayname")
-  HOLIDAYTHAI.forEach(holi => holidaylist += `<option value="${holi}">${holi}</option>`)
-  holiname.innerHTML = holidaylist
-  holiname.onchange = checkComplete
-
+  holidayname.contentEditable = true
+  holidayname.oninput = checkComplete
   cells[ACTION].onclick = async () => {
     await saveHoliday(clone)
-    fillHoliday()
+    fillGovtday()
   }
 }

@@ -10,7 +10,8 @@ import { copyCase } from "../menu/moveCopyCase.js"
 import { editHistory } from "../menu/editHistory.js"
 import { deleteCase } from "../menu/deleteCase.js"
 import { researchResident } from '../setting/researchResident.js'
-import { settingHoliday, addHoliday } from "../setting/settingHoliday.js"
+import { settingHoliday } from "../setting/settingHoliday.js"
+import { settingGovtday } from "../setting/settingGovtday.js"
 import { settingResident } from '../setting/settingResident.js'
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
@@ -52,7 +53,7 @@ function setClickSetting()
     "clickSetResident": settingResident,
     "clickSetStaff": settingStaff,
     "clickSetHoliday": settingHoliday,
-    "addholiday": addHoliday
+    "clickSetGovtday": settingGovtday
   },
   disable = [
     "#clickSetResident",

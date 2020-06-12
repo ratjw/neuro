@@ -2,7 +2,7 @@
 import { rowDecoration } from "./rowDecoration.js"
 import { LARGESTDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
-import { obj_2_ISO, ISO_2_th, nextdates, putThdate } from "../util/date.js"
+import { obj_2_ISO, ISO_2_th, nextdates } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 
 export function pagination($dialog, $maintbl, book, search)
@@ -195,7 +195,7 @@ jQuery.fn.extend({
       cells = row.cells,
       date = q.opdate
 
-;  [  putThdate(date),
+; [ ISO_2_th(date),
     q.staffname,
     q.hn,
     q.patient,

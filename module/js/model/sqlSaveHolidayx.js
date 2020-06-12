@@ -1,19 +1,19 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 
-export function sqlSaveHoliday(holidate, holiname)
+export function sqlSaveHoliday(vdate, vname)
 {
   let sql=`sqlReturnData=INSERT INTO holiday (holidate,dayname)
-              VALUES('${holidate}','${holiname}');
+              VALUES('${vdate}','${vname}');
             SELECT * FROM holiday ORDER BY holidate;`
 
   return postData(MYSQLIPHP, sql)
 }
 
-export function sqlDelHoliday(holidate, holiname)
+export function sqlDelHoliday(vdate, holidayEng)
 {
   let sql=`sqlReturnData=DELETE FROM holiday
-              WHERE holidate='${holidate}' AND dayname='${holiname}';
+              WHERE holidate='${vdate}' AND dayname='${holidayEng}';
             SELECT * FROM holiday ORDER BY holidate;`
 
   return postData(MYSQLIPHP, sql)

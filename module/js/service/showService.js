@@ -7,7 +7,7 @@ import { coloring } from "./coloring.js"
 import { getAdmitDischargeDate } from "./getAdmitDischargeDate.js"
 import { SERVICE, seteditableSV, serviceFromDate } from "./setSERVICE.js"
 import { viewProfile } from "./viewProfile.js"
-import { START_DATE, ISO_2_th, putThdate, putNameAge } from "../util/date.js"
+import { START_DATE, ISO_2_th, putNameAge } from "../util/date.js"
 
 export function showService() {
   let $servicetbl = $("#servicetbl"),
@@ -103,8 +103,8 @@ jQuery.fn.extend({
     cells[TREATMENTSV].innerHTML = viewProfile(q.profile, opdateth, q.treatment)
     cells[ADMISSIONSV].innerHTML = q.admission
     cells[FINALSV].innerHTML = q.final
-    cells[ADMITSV].innerHTML = putThdate(q.admit)
-    cells[DISCHARGESV].innerHTML = putThdate(q.discharge)
+    cells[ADMITSV].innerHTML = ISO_2_th(q.admit)
+    cells[DISCHARGESV].innerHTML = ISO_2_th(q.discharge)
 
     row.dataset.opdate = q.opdate
     row.dataset.hn = q.hn

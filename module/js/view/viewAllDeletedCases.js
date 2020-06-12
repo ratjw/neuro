@@ -1,6 +1,6 @@
 
 import { rowDecoration } from "./rowDecoration.js"
-import { putThdate } from "../util/date.js"
+import { ISO_2_th } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 import { toUndelete } from "../menu/allDeletedCases.js"
 import { setRowData } from "../view/fillNewrowData.js"
@@ -76,7 +76,7 @@ jQuery.fn.extend({
     rowDecoration(row, q.opdate)
     row.cells[0].classList.add("toUndelete")
 
-;    [  putThdate(q.opdate),
+;   [ ISO_2_th(q.opdate),
       q.staffname,
       q.hn,
       q.patient,

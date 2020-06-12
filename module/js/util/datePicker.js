@@ -30,3 +30,33 @@ export function datePicker($datepicker)
     }
   })
 }
+
+// not display year
+export function dateMonthPicker($datepicker)
+{
+  $datepicker.datepicker({
+    autoSize: true,
+    dateFormat: "dd M",
+    // display full names on calendar title
+    monthNames: THAIMONTHFULL,
+    // Input/Output short names
+    // to be consistent with the month converted by th_2_ISO()
+    monthNamesShort: THAIMONTH,
+    beforeShow: function (input, inst) {
+      // prevent using Buddhist year from <input>
+      if (inst.selectedYear) {
+        $(this).datepicker("setDate", new Date(inst.currentYear, inst.currentMonth, inst.currentDay))
+      }
+      // show Buddhist year when click on <input>
+      // use .one("click") not to affect on setDate
+      $datepicker.one("click", function() {
+        if (input.value) {
+          $datepicker.val(input.value)
+        }
+      })
+    },
+    onSelect: function (input, inst) {
+      $datepicker.val(input)
+    }
+  })
+}

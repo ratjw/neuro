@@ -3,7 +3,7 @@ import { EQUIPMENT, NAMEOFDAYTHAI } from "../control/const.js"
 import { clearEditcell } from "../control/edit.js"
 import { USER } from "../main.js"
 import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEquip.js"
-import { putAgeOpdate, putThdate } from "../util/date.js"
+import { putAgeOpdate, ISO_2_th } from "../util/date.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winWidth, winHeight, radioHack, deepEqual, string50 } from "../util/util.js"
 
@@ -39,7 +39,7 @@ export function getEQUIP(pointing)
       casenumequip: row.dataset.casenum || "",
       optimeequip: row.dataset.optime,
       opdayequip: NAMEOFDAYTHAI[(new Date(row.dataset.opdate)).getDay()],
-      opdatethequip: putThdate(row.dataset.opdate),
+      opdatethequip: ISO_2_th(row.dataset.opdate),
       staffnameequip: row.dataset.staffname,
       hnequip: row.dataset.hn,
       patientnameequip: row.dataset.patient,

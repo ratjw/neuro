@@ -1,7 +1,7 @@
 
 import { ICONS, eduMonth, eduDate, eduYear } from "../setting/constResident.js"
 import { getRESIDENT } from "../setting/getRESIDENT.js"
-import { newResident, updateResident, deleteResident } from "../model/sqlDoResident.js"
+import { newResident, updateResident, deleteResident } from "../model/sqlResident.js"
 import { winHeight } from "../util/util.js"
 
 const ENTRYLEVEL = 2,
@@ -54,10 +54,11 @@ export function settingResident()
       event.preventDefault()
       let selObj = window.getSelection(),
         row = selObj.focusNode.parentNode.closest('tr'),
-        save = row.cells[ICONS].innerHTML.includes('<img src="css/pic/general/save.png">')
+        update = row.cells[ICONS].innerHTML.includes(IMAGE1),
+        save = row.cells[ICONS].innerHTML.includes(IMAGE2)
 
-      if (save) { newResident(row) }
-      else updateResident(row)
+      if (update) { updateResident(row) }
+      else if (save) { newResident(row) }
     }
   })
 }

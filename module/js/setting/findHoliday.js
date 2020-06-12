@@ -1,7 +1,6 @@
 
 import { getHOLIDAY } from "../util/updateBOOK.js"
 
-// Buddhist holiday and compensation for religious day on weekend
 export function findHoliday(date)
 {
   const maxyear = "9999",
@@ -12,6 +11,9 @@ export function findHoliday(date)
   return yesHoliday ? yesHoliday.dayname :  ''
 }
 
+// newHoliday = Buddhist holiday for 3 calendar-years (maintable is 2 years ahead)
+// fixHoliday = Thai govt. holiday for  3 calendar-years
+// all plus compensation for religious day on weekend
 function fixHolidayX3()
 {
   const maxyear = "9999",

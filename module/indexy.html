@@ -551,8 +551,7 @@
  </table>
  <br>
  <hr>
- <div id="actionIcons">
- </div>
+ <div id="actionIcons"></div>
 </div>
 
 <table id="staffcells">
@@ -632,7 +631,7 @@
    <tr>
     <th>Date</th>
     <th>Holiday Name</th>
-    <th></th>
+    <th>Upd Del</th>
    </tr>
   </thead>
   <tbody>
@@ -643,9 +642,19 @@
 <table id="holidaycells">
   <tbody>
   <tr>
+     <td><input type="text" id="holidateth" class="w80" readonly></td>
+     <td><select id="holidayname" class="w150"></select></td>
     <td></td>
-    <td></td>
-    <td></td>
+  </tr>
+  </tbody>
+</table>
+
+<table id="holigovtInput">
+  <tbody>
+  <tr>
+     <td><input type="text" id="holidategovt" class="w80" readonly></td>
+     <td><input id="holigovtname" class="w150"></input></td>
+     <td><button class="delholiday">-</button></td>
   </tr>
   </tbody>
 </table>

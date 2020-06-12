@@ -2,7 +2,7 @@
 import { rowDecoration } from "./rowDecoration.js"
 import { OPDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
-import { obj_2_ISO, th_2_ISO, putThdate } from "../util/date.js"
+import { obj_2_ISO, th_2_ISO, ISO_2_th } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 import { exportFindToExcel } from "../util/excel.js"
 
@@ -85,7 +85,7 @@ jQuery.fn.extend({
       rowDecoration(this[0], q.opdate)
     }
 
-;   [ putThdate(q.opdate),
+;   [ ISO_2_th(q.opdate),
       q.staffname,
       q.hn,
       q.patient,

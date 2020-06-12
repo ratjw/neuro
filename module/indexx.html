@@ -632,7 +632,7 @@
    <tr>
     <th>Date</th>
     <th>Holiday Name</th>
-    <th></th>
+    <th><button id="addholiday">+</button></th>
    </tr>
   </thead>
   <tbody>
@@ -645,7 +645,20 @@
   <tr>
     <td></td>
     <td></td>
-    <td></td>
+    <td><button class="delholiday">-</button></td>
+  </tr>
+  </tbody>
+</table>
+
+<table id="holidayInput">
+  <tbody>
+  <tr>
+     <td>
+      <input type="text" id="holidateth" class="w80" readonly>
+      <input type="text" id="holidatemonth" class="w80" readonly>
+     </td>
+     <td><select id="holidayname" class="w150"></select></td>
+     <td><button class="delholiday">-</button></td>
   </tr>
   </tbody>
 </table>

@@ -273,7 +273,6 @@ td img.imgpale {
 #scbb option:first-of-type,
 #dialogPatient, #patientcells,
 #dialogHoliday, #holidaycells,
-#holidayInput,
 td img.hide {
   display: none;
 }

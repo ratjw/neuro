@@ -1,7 +1,7 @@
 
 import { PATIENT } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
-import { putThdate } from "../util/date.js"
+import { ISO_2_th } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 
 // Make box dialog dialogHistory containing historytbl
@@ -56,7 +56,7 @@ jQuery.fn.extend({
     if (q.action === 'delete') { this.addClass("deletedcase") }
     if (q.action === 'undelete') { this.addClass("undelete") }
 
-;    [  putThdate(q.opdate) || "",
+;   [ ISO_2_th(q.opdate) || "",
       q.oproom || "",
       q.casenum || "",
       q.staffname,
