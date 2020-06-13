@@ -3,11 +3,9 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
 import {
-  setRESIDENT, xRange, MAXYEAR, RAMAID, RNAME, LEVEL, eduYear, RESEARCHBAR
+  setRESIDENT, presentRESIDENT, xRange, MAXYEAR, RAMAID, RNAME,
+  LEVEL, eduYear, RESEARCHBAR
 } from '../setting/constResident.js'
-import { presentRESIDENT } from "../setting/getRESIDENT.js"
-
-export let  = []
 
 export async function sqlResident()
 {

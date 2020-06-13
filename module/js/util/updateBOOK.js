@@ -3,6 +3,7 @@ import { isSplit } from "./util.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { refillDatedCases } from "../view/fill.js"
 import { renewEditcell } from "../control/edit.js"
+import { setHOLIDAY } from "../setting/constHoliday.js"
 
 //--- global variables --------------
 // BOOK is for main table and individual staff's cases table
@@ -14,7 +15,6 @@ import { renewEditcell } from "../control/edit.js"
 let BOOK = [],
   CONSULT = [],
   STAFF = [],
-  HOLIDAY = [],
   TIMESTAMP = ""
 
 // return the deep-cloned data, instead of the array's reference
@@ -22,12 +22,10 @@ let BOOK = [],
 export function getBOOK() { return JSON.parse(JSON.stringify(BOOK)) }
 export function getCONSULT() { return JSON.parse(JSON.stringify(CONSULT)) }
 export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
-export function getHOLIDAY() { return JSON.parse(JSON.stringify(HOLIDAY)) }
 export function getTIMESTAMP() { return TIMESTAMP }
 
 // for other modules that set data from server
 export function setSTAFF(staff) { STAFF = staff }
-export function setHOLIDAY(holiday) { HOLIDAY = holiday }
 
 let table = document.getElementById('maintbl')
 
@@ -39,7 +37,7 @@ export function updateBOOK(response) {
   if (response.BOOK) { BOOK = response.BOOK }
   if (response.CONSULT) { CONSULT = response.CONSULT }
   if (response.STAFF) { STAFF = response.STAFF }
-  if (response.HOLIDAY) { HOLIDAY = response.HOLIDAY }
+  if (response.HOLIDAY) { setHOLIDAY(response.HOLIDAY) }
   if (response.QTIME) { TIMESTAMP = response.QTIME }
 
   if (isSplit()) { staffqueue(titlename.innerHTML) }

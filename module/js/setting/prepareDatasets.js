@@ -1,6 +1,7 @@
 
-import { MAXYEAR, xRange, eduMonth, eduDate, eduYear, RESEARCHBAR } from "../setting/constResident.js"
-import { presentRESIDENT } from "../setting/getRESIDENT.js"
+import {
+  presentRESIDENT, MAXYEAR, xRange, eduMonth, eduDate, eduYear, RESEARCHBAR
+} from "../setting/constResident.js"
 
 export function prepareDatasets()
 {

@@ -6,6 +6,7 @@ import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData } from "../view/fillNewrowData.js"
 import { viewOneDay } from "./viewOneDay.js"
 import { fillNewrowData } from "./fillNewrowData.js"
+import { fillExtHoliday } from "../view/fillExtHoliday.js"
 
 // Render Main table
 // Consults and dialogAll tables use this too
@@ -22,6 +23,7 @@ export function fillmain()
 
   // fill blank rows to two years from now
   fillBlankDates(table, lastcase, until)
+  fillExtHoliday(table)
 }
 
 // truncate the cases without opdate

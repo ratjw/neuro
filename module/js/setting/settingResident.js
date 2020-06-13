@@ -1,6 +1,5 @@
 
-import { ICONS, eduMonth, eduDate, eduYear } from "../setting/constResident.js"
-import { getRESIDENT } from "../setting/getRESIDENT.js"
+import { getRESIDENT, ICONS, eduMonth, eduDate, eduYear } from "../setting/constResident.js"
 import { newResident, updateResident, deleteResident } from "../model/sqlResident.js"
 import { winHeight } from "../util/util.js"
 

@@ -7,6 +7,7 @@ import { splitPane } from "./splitPane.js"
 import { fillDatedCases, fillBlankDates } from "./fill.js"
 import { fillConsults } from "./fillConsults.js"
 import { scrolltoToday } from "./scrolltoThisCase.js"
+import { fillExtHoliday } from "../view/fillExtHoliday.js"
 
 export function staffqueue(staffname) {
   let mtable = document.getElementById("maintbl"),
@@ -30,6 +31,7 @@ export function staffqueue(staffname) {
     reNumberNodateRows()
   }
 
+  fillExtHoliday(qtable)
   fillConsults('queuetbl')
   if (!qtable.closest('div').scrollTop && !refill) { scrolltoToday('queuetbl') }
 }

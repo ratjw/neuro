@@ -1,10 +1,7 @@
 
-import { DIAGNOSIS, THAIMONTH } from "../control/const.js"
-import { th_2_ISO } from "../util/date.js"
+import { DIAGNOSIS } from "../control/const.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
-import { getHOLIDAY, setHOLIDAY } from "../util/updateBOOK.js"
-import { findHoliday } from "../setting/findHoliday.js"
-import { HOLIDATE, HOLINAME, ACTION } from "../setting/constHoliday.js"
+import { setHOLIDAY } from "../setting/constHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
 import { Alert } from "../util/util.js"
 import { fillHoliday } from "../view/rowDecoration.js"
@@ -33,7 +30,7 @@ export async function saveHoliday(holidate, holiname)
       setHOLIDAY(response)
       const rows = getTableRowsByDate('maintbl', holidate)
       rows.forEach(row => {
-        fillHoliday(row.cells[DIAGNOSIS], holidate)
+        fillHoliday(row.cells[DIAGNOSIS], holiname)
       })
     } else {
       Alert ("saveHoliday", response)

@@ -112,7 +112,7 @@ function getStaff($mysqli)
 function getHoliday($mysqli)
 {
 	$sql = "SELECT * FROM holiday
-            WHERE holidate >= CURDATE() - INTERVAL 1 YEAR
+            WHERE holidate >= MAKEDATE(year(now()),1)- interval 1 month
             ORDER BY holidate;";
 	return multiquery($mysqli, $sql);
 }

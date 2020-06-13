@@ -1,10 +1,10 @@
 
 import { ISO_2_th, th_2_ISO } from "../util/date.js"
-import { getHOLIDAY } from "../util/updateBOOK.js"
 import { datePicker } from "../util/datePicker.js"
 import { dialogHoliday, saveHoliday, onclickDelete } from "../setting/dialogHoliday.js"
 import {
-  THISYEAR, MAXYEAR, HOLIDAYTHAI, HOLIDATE, HOLINAME, INPUT, SELECT, ACTION, SAVE, LIST, DELETE
+  THISYEAR, MAXYEAR, HOLIDAYTHAI, HOLIDATE, HOLINAME, INPUT, SELECT,
+  ACTION, SAVE, LIST, DELETE, getHOLIDAY
 } from "../setting/constHoliday.js"
 
 export function settingHoliday()

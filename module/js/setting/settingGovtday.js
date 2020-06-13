@@ -1,10 +1,9 @@
 
 import { ISO_2_ddThaiM, ddThaiM_2_ISO } from "../util/date.js"
-import { getHOLIDAY } from "../util/updateBOOK.js"
 import { dateMonthPicker } from "../util/datePicker.js"
 import { dialogHoliday, saveHoliday, onclickDelete } from "../setting/dialogHoliday.js"
 import {
-  MAXYEAR, HOLIDATE, HOLINAME, INPUT, ACTION, SAVE, DELETE
+  MAXYEAR, HOLIDATE, HOLINAME, INPUT, ACTION, SAVE, DELETE, getHOLIDAY
 } from "../setting/constHoliday.js"
 
 export function settingGovtday()

@@ -1,15 +1,6 @@
 
 let RESIDENT = []
 
-export function setRESIDENT(residents) { RESIDENT = residents }
-
-export function getRESIDENT()
-{
-  const residents = JSON.parse(JSON.stringify(RESIDENT))
-
-  return residents.map(resident => JSON.parse(resident.profile))
-}
-
 // Neurosurgery residency training is 5 years
 export const MAXYEAR = 5,
 
@@ -45,4 +36,18 @@ function calcEduYear()
     changeEdu = new Date(today.getFullYear(), eduMonth, eduDate)
 
   return today < changeEdu ? thisyear - 1 : thisyear
+}
+
+export function setRESIDENT(residents) { RESIDENT = residents }
+
+export function getRESIDENT()
+{
+  const residents = JSON.parse(JSON.stringify(RESIDENT))
+
+  return residents.map(resident => JSON.parse(resident.profile))
+}
+
+export function presentRESIDENT()
+{
+  return getRESIDENT().filter(e => eduYear - e.yearOne + 1 - e.addLevel <= MAXYEAR)
 }
