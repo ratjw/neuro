@@ -7,6 +7,7 @@ import { fillHoliday } from "../view/rowDecoration.js"
 import { nextdates } from "../util/date.js"
 
 const COMPENSATE = "ชดเชย"
+const NOHOLIDAY = "ไม่หยุด"
 
 export function fillExtHoliday(table)
 {
@@ -40,10 +41,12 @@ function compensateSun(onSunday, tblid)
 {
   onSunday.forEach(d => d.holidate = nextdates(d.holidate, 1))
   onSunday.forEach(d => {
-    let rows = getTableRowsByDate(tblid, d.holidate)
+    let rows = getTableRowsByDate(tblid, d.holidate),
+      row0 = rows[0]
 
     if (!rows.length) { return }
-    if (classHoliday(rows[0])) {
+    if (classHoliday(row0)) {
+      if (row0.cells[DIAGNOSIS].dataset.holiday === NOHOLIDAY) { return }
       d.holidate = nextdates(d.holidate, 1)
       rows = getTableRowsByDate(tblid, d.holidate)
       if (rows.length) { prefillHoliRows(rows, d.dayname) }

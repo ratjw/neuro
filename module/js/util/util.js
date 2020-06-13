@@ -1,7 +1,7 @@
 
 import { MAXDATE, MOVECASE, COPYCASE, PASTETOP, PASTEBOTTOM } from "../control/const.js"
 
-// necessary when passing to http, not when export to excel
+// necessary when passing to http without JSON.stringify
 export function URIcomponent(content) {
   if (/\W/.test(content)) {
     content = content.trim()

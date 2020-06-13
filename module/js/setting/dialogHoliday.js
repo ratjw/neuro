@@ -3,21 +3,23 @@ import { DIAGNOSIS } from "../control/const.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { setHOLIDAY } from "../setting/constHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
-import { Alert } from "../util/util.js"
+import { Alert, winHeight } from "../util/util.js"
 import { fillHoliday } from "../view/rowDecoration.js"
 
 export function dialogHoliday(title)
 {
-  const  $dialogHoliday = $("#dialogHoliday")
+  const  $dialogHoliday = $("#dialogHoliday"),
+    maxHeight = winHeight(98)
 
   $dialogHoliday.dialog({ modal: true })
+  $dialogHoliday.dialog({ height: 'auto' })
   $dialogHoliday.dialog({
     title: title,
     closeOnEscape: true,
     show: 200,
     hide: 200,
-    width: 370,
-    height: 620
+    width: 'auto',
+    height: ($dialogHoliday.height() > maxHeight) ? maxHeight : 'auto'
   })
 }
 
