@@ -1,5 +1,5 @@
 
-import { LARGESTDATE, MOVECASE, COPYCASE, PASTETOP, PASTEBOTTOM } from "../control/const.js"
+import { MAXDATE, MOVECASE, COPYCASE, PASTETOP, PASTEBOTTOM } from "../control/const.js"
 
 // necessary when passing to http, not when export to excel
 export function URIcomponent(content) {
@@ -180,7 +180,7 @@ export function clearMouseoverTR()
 // The second parameter (, 0) ensure a default value if array.map is empty
 export function getLargestWaitnum(book, staffname)
 {
-  let dateStaff = book.filter(q => (q.staffname === staffname) && (q.opdate === LARGESTDATE))
+  let dateStaff = book.filter(q => (q.staffname === staffname) && (q.opdate === MAXDATE))
 
   return Math.max(...dateStaff.map(q => q.waitnum), 0)
 }

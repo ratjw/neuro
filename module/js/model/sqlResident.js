@@ -2,10 +2,12 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
-import { xRange, MAXYEAR, RAMAID, RNAME, LEVEL, eduYear, RESEARCHBAR } from '../setting/constResident.js'
+import {
+  setRESIDENT, xRange, MAXYEAR, RAMAID, RNAME, LEVEL, eduYear, RESEARCHBAR
+} from '../setting/constResident.js'
 import { presentRESIDENT } from "../setting/getRESIDENT.js"
 
-export let RESIDENT = []
+export let  = []
 
 export async function sqlResident()
 {
@@ -13,7 +15,7 @@ export async function sqlResident()
 
   const response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
-    RESIDENT = response
+    setRESIDENT(response)
   } else {
     Alert("sqlResident", response)
   }  
@@ -116,7 +118,7 @@ export async function deleteResident(row)
 
 function showResident(response)
 {
-  RESIDENT = response
+  setRESIDENT(response)
   settingResident()
 }
 
@@ -138,7 +140,7 @@ export async function updateResearch(barChart, ridx, _ranges)
 
   const response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
-    RESIDENT = response
+    setRESIDENT(response)
     updateBar(barChart, ridx)
     $("#slidertbl").colResizable({ disable: true })
   } else {

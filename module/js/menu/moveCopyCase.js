@@ -1,6 +1,6 @@
 
 import {
-  SELECTED, LARGESTDATE, MOVECASE, COPYCASE, PASTETOP, PASTEBOTTOM
+  SELECTED, MAXDATE, MOVECASE, COPYCASE, PASTETOP, PASTEBOTTOM
 } from "../control/const.js"
 import { clickDate } from "./clickDate.js"
 

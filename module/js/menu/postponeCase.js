@@ -1,6 +1,6 @@
 
 import { SELECTED } from "../control/const.js"
-import { LARGESTDATE } from "../control/const.js"
+import { MAXDATE } from "../control/const.js"
 import { sqlPostponeCase } from "../model/sqlPostponeCase.js"
 import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
 import { getBOOK, updateBOOK } from "../util/updateBOOK.js"
@@ -8,7 +8,7 @@ import { Alert, getLargestWaitnum, isSplit } from "../util/util.js"
 import { clearSelection } from "../control/selectRow.js"
 import { locateFound } from "../view/scrolltoThisCase.js"
 
-// Undefined date booking has opdate set to LARGESTDATE
+// Undefined date booking has opdate set to MAXDATE
 // but was shown blank date on screen
 export function postponeCase()
 {
@@ -26,7 +26,7 @@ export function postponeCase()
   }
 
   row.dataset.waitnum = getLargestWaitnum(getBOOK(), staffname) + 1
-  doPostponeCase(LARGESTDATE)
+  doPostponeCase(MAXDATE)
   clearSelection()
 
   function doPostponeCase(thisdate) {

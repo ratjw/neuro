@@ -1,6 +1,6 @@
 
 import { rowDecoration } from "./rowDecoration.js"
-import { LARGESTDATE } from "../control/const.js"
+import { MAXDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { obj_2_ISO, ISO_2_th, nextdates } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
@@ -127,7 +127,7 @@ export function pagination($dialog, $maintbl, book, search)
   function getBookNoDate(book)
   {
     return $.grep(book, function(q) {
-      return q.opdate === LARGESTDATE
+      return q.opdate === MAXDATE
     })
   }
 
@@ -213,7 +213,7 @@ jQuery.fn.extend({
 
 function findLastDateInBOOK(book)
 {
-  let q = book.find(e => e.opdate === LARGESTDATE)
+  let q = book.find(e => e.opdate === MAXDATE)
 
   return book[book.indexOf(q) - 1].opdate
 }

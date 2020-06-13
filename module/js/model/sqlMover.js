@@ -1,11 +1,11 @@
 
 import { USER } from "../main.js"
-import { LARGESTDATE } from "../control/const.js"
+import { MAXDATE } from "../control/const.js"
 
 // if no oproom, will have no casenum too
 export function sqlMover(waitnum, opdate, theatre, oproom, casenum, qn)
 {
-  if (opdate === LARGESTDATE) {
+  if (opdate === MAXDATE) {
     return `UPDATE book SET
         waitnum=${waitnum},
         opdate='${opdate}',

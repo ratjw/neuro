@@ -1,5 +1,5 @@
 
-import { LARGESTDATE, THAIMONTH } from "../control/const.js"
+import { MAXDATE, THAIMONTH } from "../control/const.js"
 
 // start at 1st date of last month
 const today = new Date()
@@ -31,7 +31,7 @@ export function obj_2_th(date) {
 export function ISO_2_th(opdate) {
   if (!opdate) { return opdate }
 
-  // LARGESTDATE (9999-12-31)
+  // MAXDATE (9999-12-31)
   if (String(opdate) > "9999") { return "" }
 
   let date = opdate.split("-"),
@@ -101,7 +101,7 @@ export function nextdates(date, days) {
 // change Thai date from table to ISO date
 export function getOpdate (date) {
   // Undefined date will be taken care by th_2_ISO
-  return (String(date) === "") ? LARGESTDATE : th_2_ISO(date)
+  return (String(date) === "") ? MAXDATE : th_2_ISO(date)
 }
 
 export function putNameAge(q)
@@ -116,11 +116,11 @@ export function putAgeOpdate(dob, date)
 
 // Calculate age at (toDate) (iso format) from birth date
 function getAge (birth, toDate) {
-  // with LARGESTDATE as today
+  // with MAXDATE as today
   if (!birth) { return "" }
 
   birth = new Date(birth);
-  let today = (toDate === LARGESTDATE) ? new Date() : new Date(toDate),
+  let today = (toDate === MAXDATE) ? new Date() : new Date(toDate),
 
     ayear = today.getFullYear(),
     amonth = today.getMonth(),

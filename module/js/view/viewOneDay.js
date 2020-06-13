@@ -2,10 +2,10 @@
 import { fillOldrowData, unfillOldrowData } from "./fillNewrowData.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
-import { LARGESTDATE } from "../control/const.js"
+import { MAXDATE } from "../control/const.js"
 
 export function viewOneDay(table, opdate, opdateBOOKrows) {
-  if ((table.id === 'maintbl') && (opdate === LARGESTDATE)) { return }
+  if ((table.id === 'maintbl') && (opdate === MAXDATE)) { return }
 
   let opdateTblRows = getTableRowsByDate(table.id, opdate),
     bookRows = opdateBOOKrows.length,

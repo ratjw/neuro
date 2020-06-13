@@ -25,7 +25,7 @@ export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
 export function getHOLIDAY() { return JSON.parse(JSON.stringify(HOLIDAY)) }
 export function getTIMESTAMP() { return TIMESTAMP }
 
-// for other modules that get data from server
+// for other modules that set data from server
 export function setSTAFF(staff) { STAFF = staff }
 export function setHOLIDAY(holiday) { HOLIDAY = holiday }
 

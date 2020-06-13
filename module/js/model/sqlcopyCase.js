@@ -3,7 +3,7 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
-import { LARGESTDATE } from "../control/const.js"
+import { MAXDATE } from "../control/const.js"
 import { getLargestWaitnum, URIcomponent } from "../util/util.js"
 import { getBOOK } from "../util/updateBOOK.js"
 
@@ -17,9 +17,9 @@ export function sqlcopyCase(allNewCases, moverow, thisrow) {
     qn = row.dataset.qn,
     index = allNewCases.indexOf(qn)
 
-  if (thisdate === LARGESTDATE) {
+  if (thisdate === MAXDATE) {
     row.dataset.waitnum = getLargestWaitnum(getBOOK(), staffname) + 1
-    row.dataset.opdate = LARGESTDATE
+    row.dataset.opdate = MAXDATE
     row.dataset.theatre = ''
     row.dataset.oproom = null
     row.dataset.casenum = null

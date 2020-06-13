@@ -4,7 +4,7 @@ import { getHOLIDAY } from "../util/updateBOOK.js"
 import { datePicker } from "../util/datePicker.js"
 import { dialogHoliday, saveHoliday, onclickDelete } from "../setting/dialogHoliday.js"
 import {
- THISYEAR, MAXYEAR, HOLIDAYTHAI, HOLIDATE, HOLINAME, INPUT, SELECT, ACTION, SAVE, LIST, DELETE
+  THISYEAR, MAXYEAR, HOLIDAYTHAI, HOLIDATE, HOLINAME, INPUT, SELECT, ACTION, SAVE, LIST, DELETE
 } from "../setting/constHoliday.js"
 
 export function settingHoliday()

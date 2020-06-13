@@ -1,5 +1,5 @@
 
-import { LARGESTDATE, SELECTED } from "../control/const.js"
+import { MAXDATE, SELECTED } from "../control/const.js"
 
 // disable some menu-items for the one current row
 // Menu for the current row -> addrow, postpone, moveCase, copyCase, tracking, del
@@ -12,7 +12,7 @@ export function oneRowMenu()
     staffname = row.dataset.staffname,
     patient = row.dataset.patient,
     qn = row.dataset.qn,
-    notLARGE = (opdate !== LARGESTDATE)
+    notLARGE = (opdate !== MAXDATE)
 
   enable(qn, "#addrow")
 

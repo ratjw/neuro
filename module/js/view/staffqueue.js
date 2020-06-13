@@ -4,30 +4,28 @@ import { obj_2_ISO } from "../util/date.js"
 import { getBOOK, getCONSULT } from "../util/updateBOOK.js"
 import { isSplit } from "../util/util.js"
 import { splitPane } from "./splitPane.js"
-import { fillDatedCases, fillBlankDates, makenextrow } from "./fill.js"
+import { fillDatedCases, fillBlankDates } from "./fill.js"
 import { fillConsults } from "./fillConsults.js"
 import { scrolltoToday } from "./scrolltoThisCase.js"
 
 export function staffqueue(staffname) {
   let mtable = document.getElementById("maintbl"),
     qtable = document.getElementById("queuetbl"),
-    refill = (document.getElementById('titlename').innerHTML === staffname),
-    book,
-    date,
-    until
+    refill = (document.getElementById('titlename').innerHTML === staffname)
 
   document.getElementById('titlename').innerHTML = staffname
   if (!isSplit()) { splitPane(mtable, qtable) }
 
   if (staffname === "Consults") {
-    book = getCONSULT()
-    until = obj_2_ISO(new Date())
+    const consult = getCONSULT(),
+      until = obj_2_ISO(new Date()),
 
-    date = fillDatedCases(qtable, book)
+    date = fillDatedCases(qtable, consult)
 
     fillBlankDates(qtable, date, until)
   } else {
-    book = getBOOK().filter(e => e.staffname === staffname)
+    const book = getBOOK().filter(e => e.staffname === staffname)
+
     fillDatedCases(qtable, book)
     reNumberNodateRows()
   }

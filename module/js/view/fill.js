@@ -1,5 +1,5 @@
 
-import { LARGESTDATE } from "../control/const.js"
+import { MAXDATE } from "../control/const.js"
 import { START_DATE, obj_2_ISO, nextdates } from "../util/date.js"
 import { getBOOK } from "../util/updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
@@ -28,7 +28,7 @@ export function fillmain()
 function getBookWithOpdate()
 {
   const book = getBOOK()
-  const i = book.findIndex(e => e.opdate >= LARGESTDATE)
+  const i = book.findIndex(e => e.opdate >= MAXDATE)
 
   return i < 0 ? book : book.slice(0, i)
 }    
@@ -67,7 +67,7 @@ export function fillDatedCases(table, book)
   // from START_DATE to end of waiting list with opdate
   for (q; q < blen; q++) {
     qdate = book[q].opdate
-    if (qdate < LARGESTDATE) {
+    if (qdate < MAXDATE) {
 
       // step over each day that is not in QBOOK
       while (date < qdate) {
@@ -144,7 +144,7 @@ export function fillBlankDates(table, date, until)
 }
 
 // create and decorate new row
-export function makenextrow(table, date) {
+function makenextrow(table, date) {
   let tbody = table.querySelector("tbody"),
     tblcells = document.getElementById("tblcells"),
     row = tblcells.rows[0].cloneNode(true)

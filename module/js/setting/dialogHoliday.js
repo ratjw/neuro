@@ -7,6 +7,7 @@ import { findHoliday } from "../setting/findHoliday.js"
 import { HOLIDATE, HOLINAME, ACTION } from "../setting/constHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
 import { Alert } from "../util/util.js"
+import { fillHoliday } from "../view/rowDecoration.js"
 
 export function dialogHoliday(title)
 {
@@ -32,8 +33,7 @@ export async function saveHoliday(holidate, holiname)
       setHOLIDAY(response)
       const rows = getTableRowsByDate('maintbl', holidate)
       rows.forEach(row => {
-        row.cells[DIAGNOSIS].classList.add("holiday")
-        row.cells[DIAGNOSIS].dataset.holiday = findHoliday(holidate)
+        fillHoliday(row.cells[DIAGNOSIS], holidate)
       })
     } else {
       Alert ("saveHoliday", response)
