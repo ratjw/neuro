@@ -4,6 +4,7 @@ import { getBOOK, getCONSULT, updateBOOK } from "../util/updateBOOK.js"
 import { Alert, reposition } from "../util/util.js"
 import { viewAllDeletedCases } from "../view/viewAllDeletedCases.js"
 import { scrolltoThisCase } from "../view/scrolltoThisCase.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 export function allDeletedCases()
 {
@@ -38,6 +39,7 @@ export function toUndelete(thisdate)
     sqlUndelete(allCases, oproom, qn, 0).then(response => {
       if (typeof response === "object") {
         updateBOOK(response)
+        refillHoliday()
         scrolltoThisCase(qn)
       } else {
         Alert("toUndelete", response)

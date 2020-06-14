@@ -33,6 +33,7 @@ export function postponeCase()
     sqlPostponeCase(allCases, row, thisdate).then(response => {
       let hasData = function () {
         updateBOOK(response)
+        refillHoliday()
         if (isSplit()) {
           locateFound('queuetblContainer', 'queuetbl', qn)
         }

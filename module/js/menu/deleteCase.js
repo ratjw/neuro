@@ -5,6 +5,7 @@ import { sameDateRoomTableQNs } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { clearSelection } from "../control/selectRow.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 // not actually delete the case but set deleted = 1
 // Remove the row if more than one case on that date, or on staff table
@@ -29,8 +30,11 @@ export function deleteCase() {
   clearSelection()
 
   sqlDeleteCase(allCases, oproom, qn).then(response => {
-    typeof response === "object"
-    ? updateBOOK(response)
-    : Alert ("deleteCase", response)
+    if (typeof response === "object") {
+      updateBOOK(response)
+      refillHoliday()
+    } else {
+      Alert ("deleteCase", response)
+    }
   }).catch(error => alert(error.stack))
 }

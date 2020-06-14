@@ -11,6 +11,7 @@ import { sqlSaveOnChange } from "../model/sqlupdate.js"
 import { sqlSaveOnChangeService } from "../model/sqlservice.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 // timer is just an id number of setTimeout, not the clock object
 // idleCounter is number of cycles of idle setTimeout
@@ -49,7 +50,7 @@ let onChange = function () {
   if (!POINTER) { return false }
 
   let content = getNewcontent(),
-      whereisEditcell = editcellLocation()
+    whereisEditcell = editcellLocation()
 
   if (OLDCONTENT === content) {
     return false
@@ -93,6 +94,7 @@ function saveOnChange(content)
   sqlSaveOnChange(column, content, qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
+      refillHoliday()
     } else {
       Alert ("saveOnChange", response)
     }

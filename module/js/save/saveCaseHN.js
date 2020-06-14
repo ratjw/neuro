@@ -8,6 +8,7 @@ import { putNameAge } from "../util/date.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winWidth } from "../util/util.js"
 import { rowDecoration } from "../view/rowDecoration.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 export function saveCaseHN(pointed, waiting)
 {
@@ -91,6 +92,7 @@ let  wanting = {...waiting},
     sqlMoveCaseHN(pointed, waiting, wanting).then(response => {
       let hasData = function () {
         updateBOOK(response)
+        refillHoliday()
       }
       let noData = function () {
         Alert("saveCaseHN", response)

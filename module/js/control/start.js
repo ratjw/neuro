@@ -19,6 +19,7 @@ import { setSERVICE } from "../service/setSERVICE.js"
 import { reViewService } from "../service/showService.js"
 import { isMobile } from "../main.js"
 import { exchangeOncall } from "../setting/exchangeOncall.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
@@ -217,12 +218,14 @@ function serverSentEvent()
             reViewService()
             renewEditcell()
             updateBOOK(data)
+            refillHoliday()
           } else {
             Alert ("getUpdateService", response)
           }
         })
       } else {
         updateBOOK(data)
+        refillHoliday()
         renewEditcell()
       }
     }

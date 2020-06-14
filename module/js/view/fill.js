@@ -6,7 +6,7 @@ import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData } from "../view/fillNewrowData.js"
 import { viewOneDay } from "./viewOneDay.js"
 import { fillNewrowData } from "./fillNewrowData.js"
-import { fillExtHoliday } from "../view/fillExtHoliday.js"
+import { fillHoliday, refillHoliday } from "../view/fillHoliday.js"
 
 // Render Main table
 // Consults and dialogAll tables use this too
@@ -23,7 +23,7 @@ export function fillmain()
 
   // fill blank rows to two years from now
   fillBlankDates(table, lastcase, until)
-  fillExtHoliday(table)
+  fillHoliday(table)
 }
 
 // truncate the cases without opdate
@@ -109,6 +109,8 @@ export function refillDatedCases(table, oldbook, newbook)
   Object.entries(allDiff).forEach(([opdate, rows]) => {
     viewOneDay(table, opdate, rows)
   })
+
+  refillHoliday()
 }
 
 let groupBy = function(items, key) {

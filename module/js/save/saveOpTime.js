@@ -4,6 +4,7 @@ import { sameDateRoomTableRows } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { OLDCONTENT } from "../control/edit.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 export function saveOpTime(pointed, newcontent)
 {
@@ -34,6 +35,7 @@ export function saveOpTime(pointed, newcontent)
   sqlSaveOpTime(allQNs, oproom, newcontent, qn).then(response => {
     let hasData = function () {
       updateBOOK(response)
+      refillHoliday()
     }
 
     typeof response === "object"

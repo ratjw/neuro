@@ -4,7 +4,7 @@ import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { setHOLIDAY } from "../setting/constHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
 import { Alert, winHeight } from "../util/util.js"
-import { fillHoliday } from "../view/rowDecoration.js"
+import { fillHoliRows } from "../view/fillHoliday.js"
 
 export function dialogHoliday(title)
 {
@@ -31,9 +31,7 @@ export async function saveHoliday(holidate, holiname)
     if (typeof response === "object") {
       setHOLIDAY(response)
       const rows = getTableRowsByDate('maintbl', holidate)
-      rows.forEach(row => {
-        fillHoliday(row.cells[DIAGNOSIS], holiname)
-      })
+      fillHoliRows(rows, holiname)
     } else {
       Alert ("saveHoliday", response)
     }

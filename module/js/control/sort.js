@@ -11,6 +11,7 @@ import { Alert, isConsults, isStaffname } from "../util/util.js"
 import { rowDecoration } from "../view/rowDecoration.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 import { blankRowData, unfillOldrowData } from "../view/fillNewrowData.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 // Sortable 2 windows connected with each other
 // Trace placeholder to determine moving up or down
@@ -174,6 +175,7 @@ export function sortable () {
       sqlmoveCase(allOldCases, allNewCases, moveitem, clonethisdrop).then(response => {
         if (typeof response === "object") {
           updateBOOK(response)
+          refillHoliday()
         } else {
           Alert("Sortable", response)
         }

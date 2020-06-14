@@ -1,5 +1,5 @@
  
-import { OPDATE } from "../control/const.js"
+import { OPDATE, NODATE } from "../control/const.js"
 import { obj_2_ISO } from "../util/date.js"
 import { getBOOK, getCONSULT } from "../util/updateBOOK.js"
 import { isSplit } from "../util/util.js"
@@ -7,7 +7,7 @@ import { splitPane } from "./splitPane.js"
 import { fillDatedCases, fillBlankDates } from "./fill.js"
 import { fillConsults } from "./fillConsults.js"
 import { scrolltoToday } from "./scrolltoThisCase.js"
-import { fillExtHoliday } from "../view/fillExtHoliday.js"
+import { fillHoliday } from "../view/fillHoliday.js"
 
 export function staffqueue(staffname) {
   let mtable = document.getElementById("maintbl"),
@@ -31,7 +31,7 @@ export function staffqueue(staffname) {
     reNumberNodateRows()
   }
 
-  fillExtHoliday(qtable)
+  fillHoliday(qtable)
   fillConsults('queuetbl')
   if (!qtable.closest('div').scrollTop && !refill) { scrolltoToday('queuetbl') }
 }
@@ -39,7 +39,7 @@ export function staffqueue(staffname) {
 function reNumberNodateRows()
 {
   let queuetbl = document.getElementById('queuetbl'),
-    nodates = Array.from(queuetbl.querySelectorAll('tr')).filter(e => e.className === 'nodate')
+    nodates = Array.from(queuetbl.querySelectorAll('tr')).filter(e => e.className === NODATE)
 
   nodates.forEach((row, i) => {
     row.cells[OPDATE].dataset.number = i + 1

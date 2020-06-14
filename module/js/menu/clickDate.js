@@ -7,6 +7,7 @@ import { sqlmoveCase } from "../model/sqlmoveCase.js"
 import { sqlcopyCase } from "../model/sqlcopyCase.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { calcWaitnum } from "../util/calcWaitnum.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 // not the same as sort because the row was not actually moved
 export function clickDate(moverow, pasterow)
@@ -62,6 +63,7 @@ function domoveCase(allOldCases, allNewCases, moverow, pasterow, pastepos)
   sqlmoveCase(allOldCases, allNewCases, moverow, pasterow).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
+      refillHoliday()
     } else {
       Alert ("moveCase", response)
     }
@@ -77,8 +79,11 @@ function docopyCase(allNewCases, moverow, pasterow, pastepos)
                           : calcWaitnum(pasteopdate, pasterow.previousElementSibling, pasterow)
 
   sqlcopyCase(allNewCases, moverow, pasterow).then(response => {
-    typeof response === "object"
-    ? updateBOOK(response)
-    : Alert ("copyCase", response)
+    if (typeof response === "object") {
+      updateBOOK(response)
+      refillHoliday()
+    } else {
+      Alert ("copyCase", response)
+    }
 	}).catch(error => alert(error.stack))
 }

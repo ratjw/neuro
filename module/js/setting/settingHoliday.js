@@ -9,11 +9,11 @@ import {
 
 export function settingHoliday()
 {
-  fillHoliday()
+  fillHolyDay()
   dialogHoliday("Religious Holiday")
 }
 
-export function fillHoliday()
+function fillHolyDay()
 {
   const $holidaytbl = $("#holidaytbl"),
     holiday = getHOLIDAY().filter(day =>
@@ -76,6 +76,6 @@ function moreHoliday()
 
   cells[ACTION].onclick = async () => {
     await saveHoliday(th_2_ISO(holidate.value), holiname.value)
-    fillHoliday()
+    fillHolyDay()
   }
 }

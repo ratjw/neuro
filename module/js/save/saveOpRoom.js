@@ -4,6 +4,7 @@ import { sameDateRoomTableQNs, sameDateRoomTableRows } from "../util/rowsgetting
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { OLDCONTENT } from "../control/edit.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 export function saveOpRoom(pointed, newcontent) {
   let row = pointed.closest('tr'),
@@ -34,6 +35,7 @@ export function saveOpRoom(pointed, newcontent) {
   sqlSaveOpRoom(allOldCases, allNewCases, oproom, newcontent, qn).then(response => {
     let hasData = function () {
       updateBOOK(response)
+      refillHoliday()
     };
 
     typeof response === "object"
