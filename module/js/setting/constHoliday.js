@@ -26,7 +26,7 @@ LIST = `<option style="display:none"></option>`,
 SAVE = `<img src="css/pic/general/save.png">`,
 DELETE = `<img class="delholiday" src="css/pic/general/delete.png">`
 
-// JSON.parse/JSON.stringify to deep clone. [...] is not deep in Firefox
+// JSON.parse/JSON.stringify to deep clone. The [...] is one level clone
 export function getHOLIDAY() { return JSON.parse(JSON.stringify(HOLIDAY)) }
 export function getHOLIDAY3Y() { return JSON.parse(JSON.stringify(HOLIDAY3Y)) }
 

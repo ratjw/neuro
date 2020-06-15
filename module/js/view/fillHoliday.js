@@ -12,13 +12,11 @@ export function fillHoliday(table)
   const tblid = table.id,
     allHolidays = getHOLIDAY3Y(),
     onSunday = allHolidays.filter(d => (new Date(d.holidate)).getDay() === 0),
-    onSaturday = allHolidays.filter(d => (new Date(d.holidate)).getDay() === 6),
-    onNotHoliday = allHolidays.filter(d => d.dayname === NOTHOLIDAY)
+    onSaturday = allHolidays.filter(d => (new Date(d.holidate)).getDay() === 6)
 
   if (allHolidays.length) { fillAllHolidays(allHolidays, tblid) }
   if (onSaturday.length) { compensateSat(onSaturday, tblid) }
   if (onSunday.length) { compensateSun(onSunday, tblid) }
-  if (onNotHoliday.length) { notHoliday(onNotHoliday, tblid) }
 }
 
 function fillAllHolidays(allHolidays, tblid)
@@ -54,14 +52,6 @@ function compensateSun(onSunday, tblid)
     } else {
       fillHoliRows(rows, COMPENSATE + d.dayname)
     }
-  })
-}
-
-function notHoliday(onNotHoliday, tblid)
-{
-  onNotHoliday.forEach(d => {
-    const rows = getTableRowsByDate(tblid, d.holidate)
-    if (rows.length) { fillHoliRows(rows, d.dayname) }
   })
 }
 
