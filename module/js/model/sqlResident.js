@@ -133,7 +133,7 @@ export async function updateResearch(barChart, ridx, _ranges)
     json = {}
 
     progress.forEach((e, i) => json[e] = [_ranges[i] / addRatio, columnsText[i]])
-    
+
   const sql = `sqlReturnResident=UPDATE personnel
              SET profile=JSON_SET(profile,"$.research",CAST('${JSON.stringify(json)}' AS JSON))
              WHERE JSON_EXTRACT(profile,'$.ramaid')='${ramaid}';`
@@ -141,24 +141,7 @@ export async function updateResearch(barChart, ridx, _ranges)
   const response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
     setRESIDENT(response)
-    updateBar(barChart, ridx, _ranges)
-    $("#slidertbl").colResizable({ disable: true })
   } else {
     Alert("updateResearch", response)
   }  
-}
-
-function updateBar(barChart, ridx, _ranges)
-{
-  const fulltrain = XRANGE / 2,
-    bardataset = barChart.data.datasets
-
-  bardataset.forEach((e, i) => {
-    if (i) {
-      e.data[ridx] = _ranges[i]//[0]
-//      e.caption[ridx] = _ranges[i][1]
-    }
-  })
-
-  barChart.update()
 }

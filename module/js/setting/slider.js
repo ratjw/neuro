@@ -15,6 +15,7 @@ export function slider(evt, barChart)
   if (!activePoint.length) { return }
 
   const $dialogSlider = $('#dialogSlider'),
+    $slidertbl = $('#slidertbl'),
     slider = document.querySelector('#slidertbl'),
     slidertemplate = document.querySelector('#slidertemplate'),
     begindate = document.getElementById('begindate'),
@@ -49,8 +50,10 @@ export function slider(evt, barChart)
     buttons: [{
       text: "Save",
       click: () => {
-        const newTimeRanges = getNewTimeRanges(timemap)
-        updateResearch(barChart, ridx, newTimeRanges)
+        const newRange = getNewTimeRanges(timemap)
+        updateResearch(barChart, ridx, newRange)
+        updateBar(barChart, ridx, newRange)
+        $slidertbl.colResizable({ disable: true })
         $dialogSlider.dialog("close")
       }
     }]
@@ -59,7 +62,7 @@ export function slider(evt, barChart)
   slider.innerHTML = slidertemplate.innerHTML
   prepareColumns(cdatasets, ridx)
 
-  $("#slidertbl").colResizable({
+  $slidertbl.colResizable({
     liveDrag: true, 
     draggingClass: "rangeDrag", 
     gripInnerHtml: "<div class='rangeGrip'></div>", 
@@ -69,6 +72,17 @@ export function slider(evt, barChart)
 
   gripsDate(timemap)
   verticalLine(timemap)
+}
+
+function updateBar(barChart, ridx, newRange)
+{
+  const bardataset = barChart.data.datasets
+
+  bardataset.forEach((e, i) => {
+    if (i) { e.data[ridx] = newRange[i-1] }
+  })
+
+  barChart.update()
 }
 
 function getTimemap(cdatasets, ridx)

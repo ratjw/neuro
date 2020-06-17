@@ -77,6 +77,7 @@ function classHoliday(row)
   return classList.length && classList.contains("holiday")
 }
 
+// offsetWidth indicates element visibility
 export function refillHoliday()
 {
   const mainTable = document.querySelector("#maintbl"),
