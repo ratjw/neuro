@@ -5,10 +5,10 @@ import { winWidth } from "../util/util.js"
 import { updateResearch } from "../model/sqlResident.js"
 import { getPermission } from '../control/setClickAll.js'
 import {
-  presentRESIDENT, MAXYEAR, xRange, eduDate, eduMonth, RESEARCHBAR
+  presentRESIDENT, MAXYEAR, XRANGE, DATEBEGINX, DATEENDX, RESEARCHBAR
 } from '../setting/constResident.js'
 
-export function slider(evt, barChart, yearRange)
+export function slider(evt, barChart)
 {
   const activePoint = barChart.getElementAtEvent(evt)
 
@@ -32,12 +32,10 @@ export function slider(evt, barChart, yearRange)
   if (!getPermission('resBar', rname)) { return }
 
   const timemap = getTimemap(cdatasets, ridx),
-    beginSlider = getBeginSlider(yearRange, timemap),
-    beginslider = new Date(beginSlider),
-    endslider = new Date(beginslider.getFullYear() + MAXYEAR, eduMonth, eduDate - 1)
+    dateSlider = getDateSlider(timemap)
 
-  begindate.innerHTML = obj_2_th(beginslider)
-  enddate.innerHTML = obj_2_th(endslider)
+  begindate.innerHTML = obj_2_th(dateSlider.begin)
+  enddate.innerHTML = obj_2_th(dateSlider.end)
   enddate.style.right = '10px'
 
   $dialogSlider.dialog({ modal: true })
@@ -65,12 +63,12 @@ export function slider(evt, barChart, yearRange)
     liveDrag: true, 
     draggingClass: "rangeDrag", 
     gripInnerHtml: "<div class='rangeGrip'></div>", 
-    onDrag: () => onDragGrip(yearRange, timemap),
+    onDrag: () => onDragGrip(timemap),
     minWidth: 8
   });	
 
-  gripsDate(yearRange, timemap)
-  verticalLine(yearRange, timemap)
+  gripsDate(timemap)
+  verticalLine(timemap)
 }
 
 function getTimemap(cdatasets, ridx)
@@ -83,18 +81,17 @@ function getTimeRanges(timemap)
   return timemap.filter((e, i) => i && e)
 }
 
-function getBeginSlider(yearRange, timemap)
+function getDateSlider(timemap)
 {
-  const yearmap = yearRange.map(e => e - 543),
-    beginx = new Date(yearmap[0], 0, 1),
-    endx = new Date(yearmap[yearmap.length-1], 11, 31),
-    xAxis = endx - beginx,
-    xScale = xAxis / xRange,
-
+  const xScale = getXScale(),
     begintime = timemap[0],
-    sliderbegin = begintime * xScale
+    endtime = begintime + getTotalrange(timemap),
+    sliderbegin = begintime * xScale,
+    sliderend = endtime * xScale
 
-  return addMillisec(beginx, sliderbegin)
+  return { begin: addMillisec(DATEBEGINX, sliderbegin),
+            end: addMillisec(DATEBEGINX, sliderend)
+          }
 }
 
 function getResText(ridx)
@@ -120,19 +117,14 @@ function getTotalrange(timemap)
   return timeRanges.reduce((a, e) => a + e)
 }
 
-function getXScale(yearRange)
+function getXScale()
 {
-  const yearmap = yearRange.map(e => e - 543),
-    beginx = new Date(yearmap[0], 0, 1),
-    endx = new Date(yearmap[yearmap.length-1], 11, 31),
-    xAxis = endx - beginx
-
-  return xAxis / xRange
+  return (DATEENDX - DATEBEGINX) / XRANGE
 }
 
-function getSlidertotal(yearRange, timemap)
+function getSlidertotal(timemap)
 {
-  const xScale = getXScale(yearRange),
+  const xScale = getXScale(),
     sumtime = timemap.map((e => i => e += i)(0)),
     begintime = sumtime[0],
     endtime = sumtime[sumtime.length-1],
@@ -164,20 +156,20 @@ function prepareColumns(cdatasets, ridx)
   })
 }
 
-function gripsDate(yearRange, timemap)
+function gripsDate(timemap)
 {
   let rangeGrip = [...document.querySelectorAll('.rangeGrip')],
     sumranges = getSumranges(timemap),
-    gripthDate = getGripthDate(yearRange, timemap, sumranges)
+    gripthDate = getGripthDate(timemap, sumranges)
 
   rangeGrip.forEach((e, i) => e.innerHTML = gripthDate[i])
 }
 
-function onDragGrip(yearRange, timemap)
+function onDragGrip(timemap)
 {
   let newRanges = getNewTimeRanges(timemap),
     sumNewRanges = newRanges.map((e => i => e += i)(0)),
-    gripthDate = getGripthDate(yearRange, timemap, sumNewRanges),
+    gripthDate = getGripthDate(timemap, sumNewRanges),
     rangeGrip = [...document.querySelectorAll('.rangeGrip')]
 
   rangeGrip.forEach((e, i) => e.innerHTML = gripthDate[i])
@@ -195,11 +187,11 @@ function getNewTimeRanges(timemap)
   return colswidth.map(e => e * totalrange / totalwidth)
 }
 
-function getGripthDate(yearRange, timemap, sumranges)
+function getGripthDate(timemap, sumranges)
 {
-  let xScale = getXScale(yearRange),
+  let xScale = getXScale(),
     gripmsec = sumranges.map(e => e * xScale),
-    beginSlider = getBeginSlider(yearRange, timemap),
+    beginSlider = getDateSlider(timemap).begin,
     gripDate = gripmsec.map(e => addMillisec(beginSlider, e)),
     gripISOdate = gripDate.map(e => obj_2_ISO(e))
 
@@ -213,14 +205,14 @@ function addMillisec(beginx, millisec)
   return new Date(begin.setTime(begin.getTime() + millisec))
 }
 
-function verticalLine(yearRange, timemap)
+function verticalLine(timemap)
 {
   const slidertbl = document.getElementById('slidertbl'),
     vline = document.querySelector('.vline'),
     tblwidth = slidertbl.offsetWidth,
-    beginSlider = getBeginSlider(yearRange, timemap),
+    beginSlider = getDateSlider(timemap).begin,
     todaymsec = new Date() - beginSlider,
-    slidertotal = getSlidertotal(yearRange, timemap),
+    slidertotal = getSlidertotal(timemap),
     todayLine = todaymsec * tblwidth / slidertotal,
     tblheight = slidertbl.offsetHeight,
     paddingtop = parseInt($('#dialogSlider').css('padding-top'))

@@ -1,6 +1,4 @@
 <?php
-require_once "personnel.php";
-
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$userid = !empty($_POST['userid']) ? $_POST['userid'] : '';
 		$pwd = !empty($_POST['pwd']) ? $_POST['pwd'] : '';

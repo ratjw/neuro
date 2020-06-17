@@ -4,13 +4,18 @@ let RESIDENT = []
 // Neurosurgery residency training is 5 years
 export const MAXYEAR = 5,
 
-// xRange (xAxis length) is the span of 10 years
-xRange = 200,
+// XRANGE (xAxis length) is the span of 10 years
+// because half of it is the white bars
+XRANGE = 200,
 
 // Education year at this moment now (changes at 1 June of the year)
-eduDate = 1,
-eduMonth = 5,
-eduYear = calcEduYear(),
+EDUDATE = 1,
+EDUMONTH = 5,
+EDUYEAR = calcEduYear(),
+
+// X-axis of research bar chart
+DATEBEGINX = new Date(EDUYEAR - MAXYEAR, 0, 1),
+DATEENDX = new Date(EDUYEAR + MAXYEAR, 0, 0),
 
 // columns in residentTbl
 RAMAID = 0,
@@ -33,7 +38,7 @@ function calcEduYear()
 {
   const today = new Date(),
     thisyear = today.getFullYear(),
-    changeEdu = new Date(today.getFullYear(), eduMonth, eduDate)
+    changeEdu = new Date(today.getFullYear(), EDUMONTH, EDUDATE)
 
   return today < changeEdu ? thisyear - 1 : thisyear
 }
@@ -49,5 +54,5 @@ export function getRESIDENT()
 
 export function presentRESIDENT()
 {
-  return getRESIDENT().filter(e => eduYear - e.yearOne + 1 - e.addLevel <= MAXYEAR)
+  return getRESIDENT().filter(e => EDUYEAR - e.yearOne + 1 - e.addLevel <= MAXYEAR)
 }

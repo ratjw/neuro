@@ -3,8 +3,8 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
 import {
-  setRESIDENT, presentRESIDENT, xRange, MAXYEAR, RAMAID, RNAME,
-  LEVEL, eduYear, RESEARCHBAR
+  setRESIDENT, presentRESIDENT, XRANGE, MAXYEAR, RAMAID, RNAME,
+  LEVEL, EDUYEAR, RESEARCHBAR
 } from '../setting/constResident.js'
 
 export async function sqlResident()
@@ -19,10 +19,10 @@ export async function sqlResident()
   }  
 }
 
-// xRange (X axis) is double the research time range (fulltrain),
+// XRANGE (X axis) is double the research time range (fulltrain),
 // because half of it is the white bars
 // fulltrain is MAXYEAR in graphic x-range
-// eduYear = education year on the day of key-in resident setting
+// EDUYEAR = education year on the day of key-in resident setting
 // level = resident year level at key-in
 export async function newResident(row)
 {
@@ -30,9 +30,9 @@ export async function newResident(row)
     ramaid = cell[RAMAID].textContent,
     name = cell[RNAME].textContent,
     level = cell[LEVEL].textContent,
-    yearOne = eduYear - level + 1,
+    yearOne = EDUYEAR - level + 1,
 
-    fulltrain = xRange / 2,
+    fulltrain = XRANGE / 2,
     month = fulltrain / MAXYEAR / 12,
     research = { proposal: [month*3,""],
                   planning: [month*12,""],
@@ -124,13 +124,15 @@ export async function updateResearch(barChart, ridx, _ranges)
 {
   const residents = presentRESIDENT(),
     ramaid = residents[ridx].ramaid,
+    addLevel = residents[ridx].addLevel,
+    addRatio = 1 + (addLevel / MAXYEAR),
     progress = RESEARCHBAR.map(e => e.progress).filter(e => e),
     slidertbl = document.getElementById('slidertbl'),
     columns = [...slidertbl.querySelectorAll('td')],
     columnsText = columns.map(e => e.textContent),
     json = {}
 
-    progress.forEach((e, i) => json[e] = [_ranges[i], columnsText[i]])
+    progress.forEach((e, i) => json[e] = [_ranges[i] / addRatio, columnsText[i]])
     
   const sql = `sqlReturnResident=UPDATE personnel
              SET profile=JSON_SET(profile,"$.research",CAST('${JSON.stringify(json)}' AS JSON))
@@ -139,25 +141,22 @@ export async function updateResearch(barChart, ridx, _ranges)
   const response = await postData(MYSQLIPHP, sql)
   if (typeof response === "object") {
     setRESIDENT(response)
-    updateBar(barChart, ridx)
+    updateBar(barChart, ridx, _ranges)
     $("#slidertbl").colResizable({ disable: true })
   } else {
     Alert("updateResearch", response)
   }  
 }
 
-function updateBar(barChart, ridx)
+function updateBar(barChart, ridx, _ranges)
 {
-  const residents = presentRESIDENT(),
-    fulltrain = xRange / 2,
-    bardataset = barChart.data.datasets,
-    research = residents[ridx].research,
-    resbar = RESEARCHBAR.map(e => e.progress)
+  const fulltrain = XRANGE / 2,
+    bardataset = barChart.data.datasets
 
   bardataset.forEach((e, i) => {
     if (i) {
-      e.data[ridx] = research[resbar[i]][0]
-      e.caption[ridx] = research[resbar[i]][1]
+      e.data[ridx] = _ranges[i]//[0]
+//      e.caption[ridx] = _ranges[i][1]
     }
   })
 

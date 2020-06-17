@@ -1,5 +1,5 @@
 
-import { getRESIDENT, ICONS, eduMonth, eduDate, eduYear } from "../setting/constResident.js"
+import { getRESIDENT, ICONS, EDUYEAR } from "../setting/constResident.js"
 import { newResident, updateResident, deleteResident } from "../model/sqlResident.js"
 import { winHeight } from "../util/util.js"
 
@@ -86,7 +86,7 @@ jQuery.fn.extend({
 
     let row = this[0]
     let cells = row.cells
-    let level = eduYear - q.yearOne + 1 - q.addLevel
+    let level = EDUYEAR - q.yearOne + 1 - q.addLevel
 
     row.dataset.ramaid = q.ramaid
     row.dataset.addLevel = q.addLevel

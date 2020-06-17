@@ -1,5 +1,5 @@
 
-import { xRange } from '../setting/constResident.js'
+import { XRANGE } from '../setting/constResident.js'
 import { prepareDatasets } from '../setting/prepareDatasets.js'
 import { slider } from '../setting/slider.js'
 import { getPermission } from '../control/setClickAll.js'
@@ -33,7 +33,7 @@ export async function researchResident()
               return yearRange[index]
             },
             min: 0,
-            max: xRange
+            max: XRANGE
           },
           gridLines: { color: "gray" }
         }],
@@ -70,7 +70,7 @@ export async function researchResident()
 
   if (getPermission('slider')) {
     chartjs.onclick = function (event) {
-      slider(event, barChart, yearRange)
+      slider(event, barChart)
     }
   }
 }
