@@ -41,12 +41,13 @@ export function sqlGetUpdateService()
 
 function sqlOneMonth()
 {
-  return `SELECT * FROM book
+  return `SELECT * FROM book b left join personnel p
+            ON b.staffname=JSON_EXTRACT(p.profile,"$.name")
           WHERE opdate BETWEEN '${serviceFromDate}' AND '${serviceToDate}'
             AND deleted=0
             AND waitnum<>0
             AND hn
-          ORDER BY staffname, opdate,oproom,casenum,waitnum;`
+          ORDER BY JSON_EXTRACT(p.profile,"$.oncall"),opdate,oproom,casenum,waitnum;`
 }
 
 function sqlColumn(column, content, qn)
