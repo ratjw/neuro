@@ -41,12 +41,12 @@ export function sqlGetUpdateService()
 
 function sqlOneMonth()
 {
-  return `SELECT b.* FROM book b left join staff s on b.staffname=s.staffname
+  return `SELECT * FROM book
           WHERE opdate BETWEEN '${serviceFromDate}' AND '${serviceToDate}'
             AND deleted=0
             AND waitnum<>0
             AND hn
-          ORDER BY s.number,opdate,oproom,casenum,waitnum;`
+          ORDER BY staffname, opdate,oproom,casenum,waitnum;`
 }
 
 function sqlColumn(column, content, qn)

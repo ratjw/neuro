@@ -31,16 +31,34 @@ export function serviceReview(begin) {
     titledate = inputval.slice(0, -4) + (Number(inputval.slice(-4)) + 543),
     title = "Service Neurosurgery เดือน " + titledate
 
-  let resizeDialogSV = () => {
-    $dialogService.dialog({
-      width: winWidth(100),
-      height: winHeight(100)
-    })
-    winResizeFix($servicetbl, $dialogService)
-  }
+  showDialogService($dialogService, title)
+  clearTimeout(timer)
 
-  // ".ui-dialog:visible": it is necessary NOT to close the non-visible jQuery dialogs,
-  // because these may not have yet been initialized (which results in an error)
+  // for resizing dialogs in landscape / portrait view
+  $(window).on("resize", resizeDialogSV)
+  // for fixing of service table header while scrolling
+  $servicetbl.fixMe($dialogService)
+  $dialogService.on("click", clickCellSV)
+
+  setfromDate(begin)
+  settoDate($.datepicker.formatDate("yy-mm-dd", end))
+  getServiceOneMonth()
+
+  $exportService.on("click", event => {
+    event.preventDefault()
+    exportServiceToExcel()
+  })
+
+  $reportService.on("click", event => {
+    event.preventDefault()
+    showReportToDept(title)
+  })
+}
+
+// ".ui-dialog:visible": it is necessary NOT to close the non-visible jQuery dialogs,
+// because these may not have yet been initialized (which results in an error)
+function showDialogService($dialogService, title)
+{
   $dialogService.dialog({
     title: title,
     closeOnEscape: true,
@@ -65,17 +83,10 @@ export function serviceReview(begin) {
       resetTimerCounter()
     }
   })
-  clearTimeout(timer)
+}
 
-  // for resizing dialogs in landscape / portrait view
-  $(window).on("resize", resizeDialogSV)
-  // for fixing of service table header while scrolling
-  $servicetbl.fixMe($dialogService)
-  $dialogService.on("click", clickCellSV)
-
-  setfromDate(begin)
-  settoDate($.datepicker.formatDate("yy-mm-dd", end))
-
+function getServiceOneMonth()
+{
   sqlGetServiceOneMonth().then(response => {
     if (typeof response === "object") {
       setSERVICE(response)
@@ -84,14 +95,16 @@ export function serviceReview(begin) {
       Alert("getServiceOneMonth", response)
     }
   }).catch(error => alert(error.stack))
+}
 
-  $exportService.on("click", event => {
-    event.preventDefault()
-    exportServiceToExcel()
-  })
+function resizeDialogSV()
+{
+  let $dialogService = $("#dialogService"),
+    $servicetbl = $("#servicetbl")
 
-  $reportService.on("click", event => {
-    event.preventDefault()
-    showReportToDept(title)
+  $dialogService.dialog({
+    width: winWidth(100),
+    height: winHeight(100)
   })
+  winResizeFix($servicetbl, $dialogService)
 }
