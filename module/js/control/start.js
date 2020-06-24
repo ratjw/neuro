@@ -85,6 +85,7 @@ function dialogServiceEvent()
 	document.getElementById("dialogService").addEventListener("mousemove", resetTimerCounter)
 }
 
+// target.closest("td") = click on <div> inside <td>
 function wrapperEvent()
 {
   document.getElementById("wrapper").addEventListener("wheel", () => {
@@ -95,13 +96,14 @@ function wrapperEvent()
   document.getElementById("wrapper").addEventListener("mousemove", resetTimerCounter)
 
   document.getElementById("wrapper").addEventListener("click", event => {
-    const target = event.target
+    let target = event.target
 
     resetTimerCounter()
     removeMarker()
     showColumn2(target)
 
     if (target.closest('#cssmenu')) { return }
+    if (target.closest("td")) { target = target.closest("td") }
 
     clicktable(event, target)
 

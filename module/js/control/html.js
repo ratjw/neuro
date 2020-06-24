@@ -1,7 +1,7 @@
 
 import { LABSHEET, EQUIPSHEET} from "../control/const.js"
 import { staffqueue } from "../view/staffqueue.js"
-import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
+import { getSTAFFparsed } from "../setting/getSTAFFparsed.js"
 
 // stafflist for enter name in Staff column
 // staffmenu for dropdown sub-menu

@@ -30,16 +30,13 @@ import { getEQUIP } from "../get/getEQUIP.js"
 // Click on main or staff table
 // POINTER is the previous editing cell
 export function clicktable(evt, target) {
-  if (POINTER) {
-    savePreviousCell()
-  }
-
   const onCell = (target.nodeName === "TD")
   const textOnly = (!POINTER || POINTER.cellIndex > PATIENT)
 
+  if (POINTER) { savePreviousCell() }
+
   if (onCell && textOnly) {
     editPresentCell(evt, target)
-    document.getElementById('staffConsult').style.display = 'none'
   } else {
     clearAllEditing()
   }

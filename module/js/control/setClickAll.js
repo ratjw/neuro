@@ -16,7 +16,7 @@ import { settingResident } from '../setting/settingResident.js'
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
-import { getSTAFFparsed } from "../util/getSTAFFparsed.js"
+import { getSTAFFparsed } from "../setting/getSTAFFparsed.js"
 import { sqlResident } from "../model/sqlResident.js"
 import { getRESIDENT } from "../setting/constResident.js"
 

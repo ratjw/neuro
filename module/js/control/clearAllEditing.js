@@ -6,9 +6,9 @@ import { clearSelection } from "../control/selectRow.js"
 // use jQuery.marker because if the element doesn't exist, no error occurs
 export function clearAllEditing()
 {
+  clearEditcell()
   $('#stafflist').hide();
   $('#staffConsult').hide();
-  clearEditcell()
   clearMouseoverTR()
   clearSelection()
   if ($("#dialogNotify").hasClass('ui-dialog-content')) {

@@ -21,11 +21,13 @@ export let POINTER = null
 export let OLDCONTENT = ""
 
 // get current content in the editing cell
-// Don't know why there are 2 spin???
+// newcontent is the content currently in editcell
+// and must be fetched from editcell itself every time when wanted
 export function getNewcontent() {
   let editcell = document.getElementById("editcell")
   let spin = document.querySelectorAll("#spin")
 
+  // Don't know why there are 2 spins???
   if (spin.length === 1) {
     return spin[0].value
   } else if (spin.length > 1) {
@@ -34,9 +36,6 @@ export function getNewcontent() {
 
   return getHtmlText(editcell.innerHTML)
 }
-
-// newcontent is the content currently in editcell
-// and must be fetched from editcell itself every time when wanted
 
 // Initialize $editcell
 // Attach events to editcell all the time
@@ -65,17 +64,10 @@ export function editcellEvent()
     // not resize after non-char was pressed
     if (keycode === 27)  { clearAllEditing() }
     if (keycode < 32)  { return }
-
-    POINTER.innerHTML = $editcell.html()
-    $editcell.height($(POINTER).height())
-    reposition($editcell, "center", "center", POINTER)
   })
 }
 
-// function declaration (definition ) : public
-// function expression (literal) : local
-
-// Key on main or staff table
+// Key on main or service table
 let keyin = function (evt, keycode) {
   let tableID = $(POINTER).closest('table').attr('id'),
     servicetbl = tableID === "servicetbl",
@@ -104,11 +96,6 @@ let keyin = function (evt, keycode) {
       evt.preventDefault()
       return
   }
-
-//  if ($("#stafflist, #staffConsult").is(":visible")) {
-//    evt.preventDefault()
-//    return
-//  }
 }
 
 let mainTable9 = function (evt, editable, Shift) {
@@ -240,7 +227,7 @@ let showEditcell = function (pointing, height, width) {
     leftEdit,
     rightEdit
 
-  editcell.style.height = height + "px"
+  editcell.style.minHeight = height + "px"
   editcell.style.width = width + "px"
   editcell.style.fontSize = css.fontSize
   pointing.closest('div').appendChild(editcell)
@@ -295,12 +282,14 @@ export function clearEditcell() {
   spinner && spinner.remove()
 }
 
-// TRIM excess spaces at begin, mid, end
+// TRIM spaces at begin, end
 // remove html tags except <br> <div> </div>
+// TRIM non-blank spaces at begin, end
 export function getHtmlText(innerhtml)
 {
   let HTMLTRIM = /^(\s*<[^>]*>)*\s*|\s*(<[^>]*>\s*)*$/g,
-	  HTMLNOTBRDIV = /(<(?!br|div|\/div).*?>)/gi
+	  HTMLBRDIV = /(<(?!br|div|\/div).*?>)/gi,
+    HTMLNBSP = /(?:^(?:&nbsp;)+)|(?:(?:&nbsp;)+$)/g
 
-  return innerhtml.replace(HTMLTRIM, '').replace(HTMLNOTBRDIV, '')
+  return innerhtml.replace(HTMLTRIM, '').replace(HTMLBRDIV, '').replace(HTMLNBSP, '')
 }
