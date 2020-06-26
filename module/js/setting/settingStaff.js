@@ -1,6 +1,6 @@
 
 import { htmlStafflist } from "../control/html.js"
-import { sqlDoSaveStaff } from "../model/sqlDoStaff.js"
+import { sqlSaveStaff } from "../model/sqlStaff.js"
 import { setSTAFF } from "../util/updateBOOK.js"
 import { getSTAFFparsed, getLatestStart } from "../setting/getSTAFFparsed.js"
 import { getLatestKey, Alert, winHeight } from "../util/util.js"
@@ -140,23 +140,23 @@ function getEditingStaff($tbody)
       let input = this.querySelector('input')
       let val = input ? input.value : this.textContent
       if (val !== this.dataset.val) {
-          doSaveStaff(row)
+          saveStaff(row)
           return false
         }
     })
   })
 }
 
-async function doSaveStaff(row)
+async function saveStaff(row)
 {
-  let response = await sqlDoSaveStaff(row)
+  let response = await sqlSaveStaff(row)
 
   if (typeof response === "object") {
     setSTAFF(response.STAFF)
     htmlStafflist()
     fillConsults()
   } else {
-    alert("doSaveStaff\n\n" + response)
+    alert("saveStaff\n\n" + response)
   }
   settingStaff()
 }

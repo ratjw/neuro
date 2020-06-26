@@ -16,23 +16,21 @@ export function getStaffOncall()
   return staffs.filter(staff => (staff.oncall > 0))
 }
 
+// filter only staffs with exchange and strip to only staffname and exchange fields
 export function getOncallExchange()
 {
-  const staffs = getSTAFFparsed()
+  const staffs = getSTAFFparsed(),
+    staffex = staffs.filter(staff => staff.exchange)
 
-  // retrieve exchange field in only staffs with exchange
-  staffs = staffs.filter(staff => staff.exchange)
-
-          // strip to only staffname and exchange fields
-  return staffs.map(has => ( {[has.name]: has.exchange} ))
+  return staffex.map(has => ( {[has.name]: has.exchange} ))
 }
 
 export function checkFieldExist(ramaid, field, subfield)
 {
-  const staffs = getSTAFFparsed()
-  const staff = staffs.filter(e => e.ramaid === ramaid)
-  const existedKeys = staff.map(e => Object.keys(e))[0]
-  const existedField = existedKeys.includes(field)
+  const staffs = getSTAFFparsed(),
+    staff = staffs.filter(e => e.ramaid === ramaid),
+    existedKeys = staff.map(e => Object.keys(e))[0],
+    existedField = existedKeys.includes(field)
 
   if (existedField && subfield) {
     const existedSubKeys = staff.map(e => Object.keys(e[field]))[0]
