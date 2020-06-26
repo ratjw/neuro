@@ -97,7 +97,7 @@ jQuery.fn.extend({
 function showCell(cell, val, key)
 {
   cell.innerHTML = val
-  cell.dataset.val = val
+  cell.dataset.val = val || ""
   if (key) { cell.dataset.key = key }
 }
 
@@ -152,7 +152,7 @@ async function saveStaff(row)
   let response = await sqlSaveStaff(row)
 
   if (typeof response === "object") {
-    setSTAFF(response.STAFF)
+    setSTAFF(response)
     htmlStafflist()
     fillConsults()
   } else {

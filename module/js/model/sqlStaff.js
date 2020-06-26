@@ -48,18 +48,19 @@ function sqlUpdate(cells, ramaid)
                 return result
               }, "")
   const jsonset = set ? `JSON_SET(profile, ${set})` : ''
+  const rama_id = `profile->"$.ramaid"`
 
 
   if (!jsonremove && !jsonset) { return '' }
   if (jsonremove && !jsonset) {
-    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE ramaid=${ramaid};`
+    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE ${rama_id}="${ramaid}";`
   }
   if (!jsonremove && jsonset) {
-    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonset} WHERE ramaid=${ramaid};`
+    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonset} WHERE ${rama_id}="${ramaid}";`
   }
   if (jsonremove && jsonset) {
-    return`sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE ramaid=${ramaid};`
-                        + `UPDATE personnel SET profile=${jsonset} WHERE ramaid=${ramaid};`
+    return`sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE ${rama_id}="${ramaid}";`
+                        + `UPDATE personnel SET profile=${jsonset} WHERE ${rama_id}="${ramaid}";`
   }
 }
 
@@ -68,8 +69,8 @@ function sqlInsert(cells)
   const name = `"name","${cells[NAME].textContent}"`
   const role = `"role","staff"`
   const ramaid = `"ramaid","${cells[RAMAID].textContent}"`
-  const oncall = `"oncall",${cells[oncall].textContent}`
-  const values = `JSON_OBJECT(${name},${role},${ramaid},${oncall}`
+  const oncall = `"oncall",${cells[ONCALL].textContent}`
+  const values = `JSON_OBJECT(${name},${role},${ramaid},${oncall})`
 
   if (!name || !ramaid || !oncall) { return "" }
 
@@ -119,47 +120,40 @@ function getDateContent(ramaid, cell, field)
 
 function getSkipContent(ramaid, cells, field)
 {
-  const begin = cells[SKIPBEGIN]
-  const end = cells[SKIPEND]
-  const begininput = begin.querySelector('input')
-  const endinput = end.querySelector('input')
+  const begincell = cells[SKIPBEGIN]
+  const endcell = cells[SKIPEND]
+  const begininput = begincell.querySelector('input')
+  const endinput = endcell.querySelector('input')
   const beginNewContent = begininput ? begininput.value : ''
   const endNewContent = endinput ? endinput.value : ''
-  const beginOldContent = begin.dataset.val
-  const endOldContent = end.dataset.val
+  const beginOldContent = begincell.dataset.val
+  const endOldContent = endcell.dataset.val
 
   const deleteBegin = !beginNewContent && beginOldContent
   const deleteEnd = !endNewContent && endOldContent
-
-  const newBegin = beginOldContent !== beginNewContent
-  const newEnd = endOldContent !== endNewContent
-  const notnew = !newBegin && !newEnd
-  const noBegin = (deleteBegin && endNewContent)
-  const noEnd = (deleteEnd && beginNewContent)
-
-  if (notnew || noBegin || noEnd) {
-    return ''
-  }
-
-  const fieldExist = checkFieldExist(ramaid, field)
-  const now = Date.now()
-  const beginend = `"begin","${beginNewContent}", "end","${endNewContent}"`
-
-  if (!fieldExist) {
-    return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
-  }
-
-  const key = cells[SKIPEND].dataset.key
 
   if (deleteBegin && deleteEnd) {
     return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
   }
 
-  const existedBeginEnd = beginOldContent && endOldContent
-  const updateBegin = newBegin && existedBeginEnd
-  const updateEnd = newEnd && existedBeginEnd
+  const newBegin = beginOldContent !== beginNewContent
+  const newEnd = endOldContent !== endNewContent
+  const notnew = !newBegin && !newEnd
 
-  return updateBegin || updateEnd
-          ? `'$.${field}."${key}"',JSON_OBJECT(${beginend})`
-          : `'$.${field}."${now}"',JSON_OBJECT(${beginend})`
+  if (!beginNewContent || !endNewContent || notnew) { return '' }
+
+  const fieldExist = checkFieldExist(ramaid, field)
+  const now = Date.now()
+  const beginend = `"begin","${beginNewContent}", "end","${endNewContent}"`
+  const key = cells[SKIPEND].dataset.key
+
+  if (!fieldExist) {
+    return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
+  }
+
+  if (key) {
+    return `'$.${field}."${key}"',JSON_OBJECT(${beginend})`
+  }
+
+  return `'$.${field}."${now}"',JSON_OBJECT(${beginend})`
 }
