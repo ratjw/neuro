@@ -12,23 +12,24 @@ const STAFFNAME = 0,
 
 export function sqlDoSaveStaff(row)
 {
-  const id = row.dataset.id
-  const cell = row.cells
-  const sql = id ? sqlUpdate(id, cell) : sqlInsert(cell)
+  const sql = row.cells[RAMAID].dataset.ramaid
+              ? sqlUpdate(cells)
+              : sqlInsert(cells)
 
   if (!sql) { return "Incomplete Entry" }
 
   return postData(MYSQLIPHP, sql)
 }
 
-function sqlUpdate(id, cell)
+function sqlUpdate(cells)
 {
+  const ramaid = cells[RAMAID].dataset.val
   let data = [
-    getTextContent(cell[STAFFNAME], 'staffname'),
-    getTextContent(cell[RAMAID], 'ramaid'),
-    getOncallNum(cell[ONCALL], 'oncall'),
-    getDateContent(id, cell[START], 'start'),
-    getSkipContent(id, cell, 'skip'),
+    getTextContent(cells[STAFFNAME], 'staffname'),
+    getTextContent(cells[RAMAID], 'ramaid'),
+    getOncallNum(cells[ONCALL], 'oncall'),
+    getDateContent(ramaid, cells[START], 'start'),
+    getSkipContent(ramaid, cells, 'skip'),
   ]
   let remove = data.filter(e => e.includes('JSON_REMOVE'))
   let jsonremove = ''
@@ -51,22 +52,22 @@ function sqlUpdate(id, cell)
 
   if (!jsonremove && !jsonset) { return '' }
   if (jsonremove && !jsonset) {
-    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE id=${id};`
+    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE ramaid=${ramaid};`
   }
   if (!jsonremove && jsonset) {
-    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonset} WHERE id=${id};`
+    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonset} WHERE ramaid=${ramaid};`
   }
   if (jsonremove && jsonset) {
-    return`sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE id=${id};`
-                        + `UPDATE personnel SET profile=${jsonset} WHERE id=${id};`
+    return`sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE ramaid=${ramaid};`
+                        + `UPDATE personnel SET profile=${jsonset} WHERE ramaid=${ramaid};`
   }
 }
 
-function sqlInsert(cell)
+function sqlInsert(cells)
 {
-  const staffname = cell[STAFFNAME].textContent
-  const ramaid = cell[RAMAID].textContent
-  const oncall = cell[ONCALL].textContent
+  const staffname = cells[STAFFNAME].textContent
+  const ramaid = cells[RAMAID].textContent
+  const oncall = cells[ONCALL].textContent
   const values = `JSON_OBJECT("staffname","${staffname}","ramaid","${ramaid}","oncall",${oncall})`
 
   if (!staffname || !ramaid || !oncall) { return "" }
@@ -88,7 +89,7 @@ function getOncallNum(cell, field) {
   return oldcontent === newcontent ? '' : `"$.${field}",${newcontent || null}`
 }
 
-function getDateContent(id, cell, field)
+function getDateContent(ramaid, cell, field)
 {
   const newinput = cell.querySelector('input')
   const newcontent = newinput ? newinput.value : ''
@@ -99,7 +100,7 @@ function getDateContent(id, cell, field)
     return ''
   }
 
-  const fieldExist = checkFieldExist(id, field)
+  const fieldExist = checkFieldExist(ramaid, field)
   const now = Date.now()
 
   if (!fieldExist) {
@@ -115,10 +116,10 @@ function getDateContent(id, cell, field)
   return `'$.${field}."${now}"',"${newcontent}"`
 }
 
-function getSkipContent(id, cell, field)
+function getSkipContent(ramaid, cells, field)
 {
-  const begin = cell[SKIPBEGIN]
-  const end = cell[SKIPEND]
+  const begin = cells[SKIPBEGIN]
+  const end = cells[SKIPEND]
   const begininput = begin.querySelector('input')
   const endinput = end.querySelector('input')
   const beginNewContent = begininput ? begininput.value : ''
@@ -139,7 +140,7 @@ function getSkipContent(id, cell, field)
     return ''
   }
 
-  const fieldExist = checkFieldExist(id, field)
+  const fieldExist = checkFieldExist(ramaid, field)
   const now = Date.now()
   const beginend = `"begin","${beginNewContent}", "end","${endNewContent}"`
 
@@ -147,7 +148,7 @@ function getSkipContent(id, cell, field)
     return `"$.${field}",JSON_OBJECT("${now}",JSON_OBJECT(${beginend}))`
   }
 
-  const key = cell[SKIPEND].dataset.key
+  const key = cells[SKIPEND].dataset.key
 
   if (deleteBegin && deleteEnd) {
     return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''

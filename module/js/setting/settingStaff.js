@@ -60,8 +60,6 @@ jQuery.fn.extend({
     const beginCell = cells[SKIPBEGIN]
     const endCell = cells[SKIPEND]
 
-    row.dataset.id = q.id
-
     // fill first 3 columns
 ;   [ q.name || "",
       q.ramaid || "",
