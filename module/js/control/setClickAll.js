@@ -16,7 +16,7 @@ import { settingResident } from '../setting/settingResident.js'
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
-import { getSTAFFparsed } from "../setting/getSTAFFparsed.js"
+import { getSTAFF } from "../setting/getSTAFF.js"
 import { sqlResident } from "../model/sqlResident.js"
 import { getRESIDENT } from "../setting/constResident.js"
 
@@ -81,7 +81,7 @@ function setClickService()
 
 export async function getPermission(submenu, rname)
 {
-  const staffid = getSTAFFparsed().map(e => e.ramaid),
+  const staffid = getSTAFF().map(e => e.ramaid),
     residents = await startRESIDENT(),
     residentid = residents.map(e => e.ramaid),
     barname = residents.find(e => e.name === rname),

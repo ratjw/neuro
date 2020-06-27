@@ -1,6 +1,6 @@
 
 import { PATIENT } from "../control/const.js"
-import { getOncallExchange } from "../setting/getSTAFFparsed.js"
+import { getOncallExchange } from "../setting/getSTAFF.js"
 import { START_DATE } from "../util/date.js"
 import { getLatestKey } from "../util/util.js"
 

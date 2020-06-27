@@ -1,8 +1,8 @@
 
 import { reposition, menustyle } from "../util/util.js"
 import { clearEditcell } from "../control/edit.js"
-import { setSTAFF } from "../util/updateBOOK.js"
-import { checkFieldExist } from "../setting/getSTAFFparsed.js"
+import { setSTAFF } from "../setting/constSTAFF.js"
+import { checkFieldExist } from "../setting/getSTAFF.js"
 import { postData, MYSQLIPHP } from "../model/fetch.js"
 import { USER } from "../main.js"
 

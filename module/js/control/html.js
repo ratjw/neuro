@@ -1,12 +1,12 @@
 
 import { LABSHEET, EQUIPSHEET} from "../control/const.js"
 import { staffqueue } from "../view/staffqueue.js"
-import { getSTAFFparsed } from "../setting/getSTAFFparsed.js"
+import { getSTAFF } from "../setting/getSTAFF.js"
 
 // stafflist for enter name in Staff column
 // staffmenu for dropdown sub-menu
 export function htmlStafflist() {
-  let staffs = getSTAFFparsed(),
+  let staffs = getSTAFF(),
     stafflist = '',
     staffmenu = '',
     staffConsult = ''

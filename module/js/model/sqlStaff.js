@@ -1,14 +1,8 @@
 
 import { postData, MYSQLIPHP } from "../model/fetch.js"
 import { URIcomponent } from "../util/util.js"
-import { checkFieldExist } from "../setting/getSTAFFparsed.js"
-
-const NAME = 0,
-  RAMAID = 1,
-  ONCALL = 2,
-  START = 3,
-  SKIPBEGIN = 4,
-  SKIPEND = 5
+import { checkFieldExist } from "../setting/getSTAFF.js"
+import { NAME, RAMAID, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
 
 // cell.dataset was set from filldataStaff() in settingStaff.js
 export function sqlSaveStaff(row)
@@ -136,11 +130,11 @@ function getSkipContent(ramaid, cells, field)
     return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
   }
 
-  const newBegin = beginOldContent !== beginNewContent
-  const newEnd = endOldContent !== endNewContent
-  const notnew = !newBegin && !newEnd
+  const sameBegin = beginOldContent === beginNewContent
+  const sameEnd = endOldContent === endNewContent
+  const noChange = sameBegin && sameEnd
 
-  if (!beginNewContent || !endNewContent || notnew) { return '' }
+  if (!beginNewContent || !endNewContent || noChange) { return '' }
 
   const fieldExist = checkFieldExist(ramaid, field)
   const now = Date.now()

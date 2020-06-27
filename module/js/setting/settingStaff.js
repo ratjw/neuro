@@ -1,15 +1,11 @@
 
 import { htmlStafflist } from "../control/html.js"
 import { sqlSaveStaff } from "../model/sqlStaff.js"
-import { setSTAFF } from "../util/updateBOOK.js"
-import { getSTAFFparsed, getLatestStart } from "../setting/getSTAFFparsed.js"
+import { START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
+import { getSTAFF, getLatestStart } from "../setting/getSTAFF.js"
 import { getLatestKey, Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
-
-const START = 3,
-      SKIPBEGIN = 4,
-      SKIPEND = 5
 
 export function settingStaff()
 {
@@ -20,7 +16,7 @@ export function settingStaff()
     $stafftbltr = $("#stafftbl tr"),
     $staffcellstr = $('#staffcells tr'),
     maxHeight = winHeight(90),
-    staffs = getSTAFFparsed()
+    staffs = getSTAFF()
 
   $stafftbltr.slice(2).remove()
 
@@ -64,13 +60,13 @@ jQuery.fn.extend({
 ;   [ q.name || "",
       q.ramaid || "",
       q.oncall
-    ].forEach((e, i) => {
-      if (i < START) {
-        showCell(cells[i], e)
+    ].forEach((e, j) => {
+      if (j < START) {
+        showCell(cells[j], e)
       }
     })
 
-    // fill name
+    // fill the latest startDate to that name and blank others
     const start = getLatestStart()
     if (start) {
       if (q.name === start.name) {
@@ -83,8 +79,12 @@ jQuery.fn.extend({
 
     // fill leave of absence (begin, end)
     const key = getLatestKey(q.skip)
+    const beginDate = key ? getActiveDate(q.skip[key]["begin"]) : ''
     const endDate = key ? getActiveDate(q.skip[key]["end"]) : ''
-    const beginDate = endDate ? q.skip[key]["begin"] : ''
+
+    // if one of them is after today, show both
+    if (beginDate) { endDate = q.skip[key]["end"] }
+    if (endDate) { beginDate = q.skip[key]["begin"] }
 
     showCell(beginCell, beginDate, key)
     inputDatepicker(beginCell)
@@ -108,7 +108,7 @@ function getActiveDate(e)
   const today = obj_2_ISO(new Date())
   const date = obj_2_ISO(new Date(e))
 
-  return date > today ? e : ""
+  return date >= today ? e : ""
 }
 
 // tabIndex = "-1" prevent input focus

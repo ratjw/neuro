@@ -3,6 +3,7 @@ import { isSplit } from "./util.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { refillDatedCases } from "../view/fill.js"
 import { renewEditcell } from "../control/edit.js"
+import { setSTAFF } from "../setting/constSTAFF.js"
 import { setHOLIDAY } from "../setting/constHoliday.js"
 
 //--- global variables --------------
@@ -14,32 +15,28 @@ import { setHOLIDAY } from "../setting/constHoliday.js"
 
 let BOOK = [],
   CONSULT = [],
-  STAFF = [],
   TIMESTAMP = ""
 
 // return the deep-cloned data, instead of the array's reference
 // not = [...array] which is only one-layer cloning
 export function getBOOK() { return JSON.parse(JSON.stringify(BOOK)) }
 export function getCONSULT() { return JSON.parse(JSON.stringify(CONSULT)) }
-export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
 export function getTIMESTAMP() { return TIMESTAMP }
-
-// for other modules that set data from server
-export function setSTAFF(staff) { STAFF = staff }
-
-let table = document.getElementById('maintbl')
 
 // Save data got from server
 // Two main data for tables (BOOK, CONSULT) and a TIMESTAMP
 // QTIME = datetime of last fetching : $mysqli->query("SELECT now();")
 export function updateBOOK(response) {
-  if (BOOK.length) { refillDatedCases(table, BOOK, response.BOOK) }
   if (response.BOOK) { BOOK = response.BOOK }
   if (response.CONSULT) { CONSULT = response.CONSULT }
-  if (response.STAFF) { STAFF = response.STAFF }
-  if (response.HOLIDAY) { setHOLIDAY(response.HOLIDAY) }
   if (response.QTIME) { TIMESTAMP = response.QTIME }
 
+  if (response.STAFF) { setSTAFF(response.STAFF) }
+  if (response.HOLIDAY) { setHOLIDAY(response.HOLIDAY) }
+
+  if (BOOK.length) {
+    refillDatedCases(document.getElementById('maintbl'), BOOK, response.BOOK)
+  }
   if (isSplit()) { staffqueue(titlename.innerHTML) }
   renewEditcell()
 }
