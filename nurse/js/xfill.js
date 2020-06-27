@@ -7,7 +7,7 @@ function fillupstart()
 		today = new Date(),
 		start = new Date(today.setDate(today.getDate() - 77)).ISOdate(),
 		today = new Date(),
-		until = new Date(today.setDate(today.getDate() + 10)).ISOdate(),
+		until = new Date(today.setDate(today.getDate() + 100)).ISOdate(),
 		today = new Date(),
 		todate = today.ISOdate(),
 		todateth = todate.thDate(),
@@ -100,7 +100,7 @@ function makenextrow(table, date)
 
 	rowi.cells[OPDATE].innerHTML = date.thDate()
 	rowi.cells[OPDATE].className = dayName(NAMEOFDAYABBR, date)
-	rowi.cells[DIAGNOSIS].style.backgroundImage = holiday(date)
+//	rowi.cells[DIAGNOSIS].style.backgroundImage = holiday(date)
 	rowi.className = dayName(NAMEOFDAYFULL, date)
 }
 

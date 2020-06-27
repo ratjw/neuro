@@ -48,9 +48,9 @@ function start($mysqli)
 {
 	$data = array();
 	$data = book($mysqli);
-	$data["STAFF"] = getStaff($mysqli);
-	$data["ONCALL"] = getOncall($mysqli);
-	$data["HOLIDAY"] = getHoliday($mysqli);
+//	$data["STAFF"] = getStaff($mysqli);
+//	$data["ONCALL"] = getOncall($mysqli);
+//	$data["HOLIDAY"] = getHoliday($mysqli);
 	return json_encode($data);
 }
 

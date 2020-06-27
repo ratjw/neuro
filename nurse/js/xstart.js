@@ -34,7 +34,7 @@ function Start()
 		if (typeof response === "object") {
 			updateBOOK(response)
 			fillupstart();
-			fillConsults()
+//			fillConsults()
 		}
 	}
 }
@@ -125,9 +125,9 @@ function updateBOOK(result)
 {
 	if (result.BOOK) { gv.BOOK = result.BOOK }
 	if (result.CONSULT) { gv.CONSULT = result.CONSULT }
-	if (result.STAFF) { gv.STAFF = result.STAFF }
-	if (result.ONCALL) { gv.ONCALL = result.ONCALL }
-	if (result.HOLIDAY) { gv.HOLIDAY = result.HOLIDAY }
+//	if (result.STAFF) { gv.STAFF = result.STAFF }
+//	if (result.ONCALL) { gv.ONCALL = result.ONCALL }
+//	if (result.HOLIDAY) { gv.HOLIDAY = result.HOLIDAY }
 	if (result.QTIME) { gv.timestamp = result.QTIME }
 }
 
