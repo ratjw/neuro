@@ -259,7 +259,8 @@ export function renewEditcell()
      ? "servicetbl"
      : ""
   let qn = POINTER.closest("tr").dataset.qn
-  let row = id && qn && getTableRowByQN(id, qn)
+  if (!id || !qn) { return }
+  let row = getTableRowByQN(id, qn)
   let cindex = POINTER.cellIndex
   let pointing = row.cells[cindex]
 
