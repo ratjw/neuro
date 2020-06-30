@@ -272,8 +272,8 @@ td img.imgpale {
 #dialogStaff, #staffcells,
 #scbb option:first-of-type,
 #dialogPatient, #patientcells,
-#dialogHoliday, #holidaycells,
-td img.hide {
+#dialogHoliday, #holidaycells
+{
   display: none;
 }
 

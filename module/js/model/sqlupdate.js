@@ -24,7 +24,9 @@ export function sqlGetUpdate()
 
 export function sqlSaveOnChange(column, content, qn)
 {
-  let sql = `sqlReturnbook=UPDATE book SET ${column}='${URIcomponent(content)}',editor='${USER}' WHERE qn=${qn};`
+  let sql = `sqlReturnbook=UPDATE book
+							SET ${column}='${URIcomponent(content)}',editor='${USER}'
+							WHERE qn=${qn||null};`
 
   return postData(MYSQLIPHP, sql)
 }
