@@ -1,5 +1,5 @@
 
-import { EQUIPMENT, NAMEOFDAYTHAI } from "../control/const.js"
+import { EQUIPMENT, NAMEOFDAYTHAI, EQUIPITEMS } from "../control/const.js"
 import { clearEditcell } from "../control/edit.js"
 import { USER } from "../main.js"
 import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEquip.js"
@@ -7,23 +7,6 @@ import { putAgeOpdate, ISO_2_th } from "../util/date.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, winWidth, winHeight, radioHack, deepEqual, string50 } from "../util/util.js"
 
-const EQUIPITEMS = [
-  "copay",
-  "Position",
-  "Imaging",
-  "อุปกรณ์ยึดผู้ป่วย",
-  "เครื่องตัดกระดูก",
-  "กล้อง",
-  "Retractor",
-  "CUSA",
-  "U/S",
-  "Shunt",
-  "เครื่องมือบริษัท",
-  "อุปกรณ์อื่นๆ",
-  "Monitor",
-  "Notice"
-]
-//
 let _JsonEquip,
   _qn,
   _$dialogEquip = $('#dialogEquip')
