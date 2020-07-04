@@ -1,4 +1,6 @@
 
+import { THEATRE } from "../../control/const.js"
+import { clicktable } from "../../control/clicktable.js"
 import { resetTimerCounter } from "../../control/timer.js"
 
 // target.closest("td") = click on <div> inside <td>

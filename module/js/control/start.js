@@ -1,6 +1,4 @@
 
-import { THEATRE } from "../control/const.js"
-import { clicktable } from "../control/clicktable.js"
 import { clearAllEditing } from "../control/clearAllEditing.js"
 import { editcellEvent, clearEditcell, renewEditcell } from "../control/edit.js"
 import { resetTimer, resetTimerCounter } from "../control/timer.js"
