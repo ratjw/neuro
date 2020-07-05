@@ -1,4 +1,5 @@
 
+import { register } from "../register.js"
 import { editcellEvent } from "../control/edit.js"
 import { resetTimer } from "../control/timer.js"
 import { setClickAll } from "../control/setClickAll.js"
@@ -20,7 +21,8 @@ import { contextmenu } from "./startsub/contextmenu.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
-	sqlStart().then(response => {
+	register()
+  sqlStart().then(response => {
 		typeof response === "object"
 		? success(response)
 		: failed(response)
