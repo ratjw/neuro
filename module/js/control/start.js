@@ -1,5 +1,5 @@
 
-import { register } from "../register.js"
+import { register } from "../../register.js"
 import { editcellEvent } from "../control/edit.js"
 import { resetTimer } from "../control/timer.js"
 import { setClickAll } from "../control/setClickAll.js"
