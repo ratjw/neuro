@@ -21,7 +21,7 @@ import { contextmenu } from "./startsub/contextmenu.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
-	register()
+//	register()
   sqlStart().then(response => {
 		typeof response === "object"
 		? success(response)
