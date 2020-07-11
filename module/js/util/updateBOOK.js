@@ -26,7 +26,11 @@ export function getTIMESTAMP() { return TIMESTAMP }
 // Save data got from server
 // Two main data for tables (BOOK, CONSULT) and a TIMESTAMP
 // QTIME = datetime of last fetching : $mysqli->query("SELECT now();")
+// refillDatedCases first to see the difference
 export function updateBOOK(response) {
+  if (BOOK.length) {
+    refillDatedCases(document.getElementById('maintbl'), BOOK, response.BOOK)
+  }
   if (response.BOOK) { BOOK = response.BOOK }
   if (response.CONSULT) { CONSULT = response.CONSULT }
   if (response.QTIME) { TIMESTAMP = response.QTIME }
@@ -34,9 +38,6 @@ export function updateBOOK(response) {
   if (response.STAFF) { setSTAFF(response.STAFF) }
   if (response.HOLIDAY) { setHOLIDAY(response.HOLIDAY) }
 
-  if (BOOK.length) {
-    refillDatedCases(document.getElementById('maintbl'), BOOK, response.BOOK)
-  }
   if (isSplit()) { staffqueue(titlename.innerHTML) }
   renewEditcell()
 }

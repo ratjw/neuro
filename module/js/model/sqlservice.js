@@ -1,61 +1,50 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
-import { URIcomponent } from "../util/util.js"
+import { apostrophe } from "../util/util.js"
 import { serviceFromDate, serviceToDate } from "../service/setSERVICE.js"
 
 const GETIPD = "php/getipd.php"
 
-export function sqlSaveOnChangeService(column, content, qn)
-{
-  let sql = sqlColumn(column, URIcomponent(content), qn)
-      + sqlOneMonth()
-
-  return postData(MYSQLIPHP, sql)
-}
-
 export function sqlGetServiceOneMonth() {
-  let sql = "sqlReturnData=" + sqlOneMonth()
+  let serviceDate = {
+    from:serviceFromDate,
+    to:serviceToDate
+  }
 
-  return postData(MYSQLIPHP, sql)
+  return postData(MYSQLIPHP, { sqlReturnService: serviceDate })
 }
 
 export function sqlGetIPD() {
-  let sql = `from=${serviceFromDate}&to=${serviceToDate}&sql=${sqlOneMonth()}`
+  let serviceDate = {
+    from:serviceFromDate,
+    to:serviceToDate
+  }
 
-  return postData(GETIPD, sql)
+  return postData(GETIPD, { serviceDate: serviceDate })
 }
 
 export function sqlSaveService(column, content, qn) {
-  let sql = `sqlReturnService=${sqlItem(column, content, qn)}${sqlOneMonth()}`
+  let sql = sqlItem(column, content, qn)
 
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, { sqlReturnService: sql })
 }
 
-function sqlOneMonth()
+export function sqlSaveOnChangeService(column, content, qn)
 {
-  return `SELECT * FROM book b left join personnel p
-            ON b.staffname=p.profile->"$.name"
-          WHERE opdate BETWEEN '${serviceFromDate}' AND '${serviceToDate}'
-            AND deleted=0
-            AND waitnum<>0
-            AND hn
-          ORDER BY p.id,opdate,oproom,casenum,waitnum;`
-}
+  let sql = sqlItem(column, apostrophe(content), qn)
 
-function sqlColumn(column, content, qn)
-{
-  return "sqlReturnService=" + sqlItem(column, content, qn)
+  return postData(MYSQLIPHP, { sqlReturnService: sql })
 }
 
 function sqlDefaults(qn)
 {
   return `UPDATE book
-          SET doneby='',scale='',manner='',editor='${USER}'
-          WHERE qn=${qn};`
+          SET doneby='',scale='',manner='',editor='USER}'
+          WHERE qn=qn};`
 }
 
 function sqlItem(column, content, qn)
 {
-  return `UPDATE book SET ${column}='${content}',editor='${USER}' WHERE qn=${qn};`
+  return `UPDATE book SET column}='content}',editor='USER}' WHERE qn=qn};`
 }

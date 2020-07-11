@@ -1,8 +1,9 @@
 <?php
 include "connect.php";
 require_once "book.php";
+require_once "getSql.php";
 
-  $input = json_decode(file_get_contents('php://input'));//echo ($input);exit;
+  $input = json_decode(file_get_contents('php://input'));
 	if (isset($input->start)) {
 		if (session_id() == "") { session_start(); }
 		$_SESSION['START_DATE'] = $input->start;
@@ -43,17 +44,19 @@ function returnbook($mysqli, $sql)
 	}
 }
 
-function returnService($mysqli, $sql)
+function returnService($mysqli, $service)
 {
+  $from = isset($service->from) ? $service->from : "";
+  $to = isset($service->to) ? $service->to : "";
+  $sql = isset($service->sql) ? $service->sql : "";
 	$data = array();
-	$return = multiquery($mysqli, $sql);
-	if (is_string($return)) {
-		return $return;
-	} else {
-		$data = book($mysqli);
-		$data["SERVICE"] = $return;
-		return json_encode($data);
-	}
+	if ($sql) {
+    $return = multiquery($mysqli, $sql);
+  }
+  $data = book($mysqli);
+	$data["SERVICE"] = getService($mysqli, $from, $to);
+
+  return json_encode($data);
 }
 
 function returnData($mysqli, $sql)
@@ -89,29 +92,6 @@ function returnStaff($mysqli, $sql)
 	} else {
 		return json_encode(getStaff($mysqli));
 	}
-}
-
-function getResident($mysqli)
-{
-  $sql = "SELECT * FROM personnel
-          WHERE profile->'$.role'='resident'
-          ORDER BY profile->'$.yearOne'+profile->'$.addLevel',profile->'$.ramaid';";
-	return multiquery($mysqli, $sql);
-}
-
-function getStaff($mysqli)
-{
-	$sql = "SELECT * FROM personnel where profile->'$.role'='staff';";
-	return multiquery($mysqli, $sql);
-}
-
-
-function getHoliday($mysqli)
-{
-	$sql = "SELECT * FROM holiday
-            WHERE holidate >= MAKEDATE(year(now()),1)- interval 1 month
-            ORDER BY holidate;";
-	return multiquery($mysqli, $sql);
 }
 
 function multiquery($mysqli, $sql)

@@ -4,7 +4,7 @@ import { USER } from "../main.js"
 import { sqlCaseNum } from "./sqlSaveCaseNum.js"
 import { sqlMover } from "./sqlMover.js"
 import { MAXDATE } from "../control/const.js"
-import { getLargestWaitnum, URIcomponent } from "../util/util.js"
+import { getLargestWaitnum, apostrophe } from "../util/util.js"
 import { getBOOK } from "../util/updateBOOK.js"
 
 export function sqlcopyCase(allNewCases, moverow, thisrow) {
@@ -49,16 +49,16 @@ function sqlInsert(row)
   return `INSERT INTO book SET
     waitnum=${r.waitnum},
     opdate='${r.opdate}',
-    theatre='${URIcomponent(r.theatre)}',
+    theatre='${apostrophe(r.theatre)}',
     oproom=${r.oproom},
     optime='${r.optime}',
     casenum=${r.casenum},
     staffname='${r.staffname}',
     hn='${r.hn}',
-    patient='${URIcomponent(r.patient)}',
+    patient='${apostrophe(r.patient)}',
     dob=${sql1},
-    diagnosis='${URIcomponent(r.diagnosis)}',
-    treatment='${URIcomponent(r.treatment)}',
-    contact='${URIcomponent(r.contact)}',
+    diagnosis='${apostrophe(r.diagnosis)}',
+    treatment='${apostrophe(r.treatment)}',
+    contact='${apostrophe(r.contact)}',
     editor='${USER}';`
 }

@@ -1,5 +1,5 @@
 
-import { URIcomponent, winHeight, deepEqual } from "../util/util.js"
+import { apostrophe, winHeight, deepEqual } from "../util/util.js"
 import { saveContentService, saveService } from './savePreviousCellService.js'
 import { getHtmlText } from '../control/edit.js'
 
@@ -39,7 +39,7 @@ export function saveProfile(pointing, profileJSON)
   if (deepEqual(recordJSON, profileJSON)) { return }
 
   let content = JSON.stringify(recordJSON)
-//    content = URIcomponent(content)
+    content = apostrophe(content)
 
   saveService(pointing, "profile", content)
 }

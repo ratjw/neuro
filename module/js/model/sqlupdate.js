@@ -1,7 +1,7 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { START_DATE } from "../util/date.js"
-import { URIcomponent } from "../util/util.js"
+import { apostrophe } from "../util/util.js"
 import { USER } from "../main.js"
 
 export function sqlStart() {
@@ -19,7 +19,7 @@ export function sqlSaveOnChange(column, content, qn)
 {
   let sql = {
     sqlReturnbook:`UPDATE book
-                    SET ${column}='${URIcomponent(content)}',editor='${USER}'
+                    SET ${column}='${apostrophe(content)}',editor='${USER}'
                     WHERE qn=${qn||null};`
   }
 

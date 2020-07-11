@@ -5,7 +5,7 @@ import { USER } from "../main.js"
 import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEquip.js"
 import { putAgeOpdate, ISO_2_th } from "../util/date.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winWidth, winHeight, radioHack, deepEqual, string50 } from "../util/util.js"
+import { apostrophe, Alert, winWidth, winHeight, radioHack, deepEqual, string50 } from "../util/util.js"
 
 let _JsonEquip,
   _qn,
@@ -243,8 +243,7 @@ function saveEquip()
 
   equipment = JSON.stringify(equipJSON)
 
-  // escape the \ (escape) and ' (single quote) for sql string, not for JSON
-  equipment = equipment.replace(/\\/g,"\\\\").replace(/'/g,"\\'")
+  equipment = apostrophe(equipment)
   sqlSaveEquip(equipment, _qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)

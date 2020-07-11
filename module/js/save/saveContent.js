@@ -1,5 +1,5 @@
 
-import { URIcomponent, Alert } from "../util/util.js"
+import { apostrophe, Alert } from "../util/util.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { OLDCONTENT, reCreateEditcell } from "../control/edit.js"
 import { sqlSaveContentQN, sqlSaveContentNoQN } from "../model/sqlSaveContent.js"
@@ -12,7 +12,7 @@ export function saveContent(pointed, column, newcontent) {
   pointed.innerHTML = newcontent
 
   // take care of white space, double qoute, single qoute, and back slash
-//  newcontent = URIcomponent(newcontent)
+  newcontent = apostrophe(newcontent)
 
   qn
   ? saveContentQN(pointed, column, newcontent)

@@ -2,7 +2,7 @@
 import { PROFILESHEET, OPERATION, RADIOSURG, ENDOVASC, THAIMONTH } from "../control/const.js"
 import { editableSV } from "./setSERVICE.js"
 import { htmlProfile } from '../control/html.js'
-import { URIcomponent, winHeight, radioHack, deepEqual } from "../util/util.js"
+import { winHeight, radioHack, deepEqual } from "../util/util.js"
 import { th_2_ISO, ISO_2_th } from '../util/date.js'
 import { datePicker } from '../util/datePicker.js'
 import { saveService } from './savePreviousCellService.js'

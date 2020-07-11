@@ -1,11 +1,11 @@
 <?php
-function merge($record, $result)
+function merge($input, $result)
 {
-  foreach ($record as $key => $val) {
+  foreach ($input as $key) {
     if (array_key_exists($key, $result)) {
-      $record[$key] = $result[$key];
+      $input->$key = $result[$key];
     }
   }
 
-  return $record;
+  return $input;
 }

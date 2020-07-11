@@ -1,6 +1,5 @@
 
 import { postData, MYSQLIPHP } from "../model/fetch.js"
-import { URIcomponent } from "../util/util.js"
 import { checkFieldExist } from "../setting/getSTAFF.js"
 import { NAME, RAMAID, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
 

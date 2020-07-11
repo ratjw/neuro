@@ -6,7 +6,7 @@ import { POINTER, OLDCONTENT, getNewcontent } from "../control/edit.js"
 import { sqlSaveService } from "../model/sqlservice.js"
 import { getBOOKrowByQN } from "../util/rowsgetting.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { URIcomponent, Alert } from "../util/util.js"
+import { apostrophe, Alert } from "../util/util.js"
 import { ISO_2_th } from "../util/date.js"
 import { reViewService } from "./showService.js"
 import { coloring } from "./coloring.js"
@@ -42,7 +42,7 @@ export function saveContentService(pointed, column, content)
   pointed.innerHTML = content || ''
 
   // take care of white space, double qoute, single qoute, and back slash
-  content = URIcomponent(content)
+  content = apostrophe(content)
 
   saveService(pointed, column, content)
 }
