@@ -44,21 +44,6 @@ function returnbook($mysqli, $sql)
 	}
 }
 
-function returnService($mysqli, $service)
-{
-  $from = isset($service->from) ? $service->from : "";
-  $to = isset($service->to) ? $service->to : "";
-  $sql = isset($service->sql) ? $service->sql : "";
-	$data = array();
-	if ($sql) {
-    $return = multiquery($mysqli, $sql);
-  }
-  $data = book($mysqli);
-	$data["SERVICE"] = getService($mysqli, $from, $to);
-
-  return json_encode($data);
-}
-
 function returnData($mysqli, $sql)
 {
 	$return = multiquery($mysqli, $sql);
@@ -92,6 +77,27 @@ function returnStaff($mysqli, $sql)
 	} else {
 		return json_encode(getStaff($mysqli));
 	}
+}
+
+function returnService($mysqli, $service)
+{
+  $from = isset($service->serviceFromDate) ? $service->serviceFromDate : "";
+  $to = isset($service->serviceToDate) ? $service->serviceToDate : "";
+  $sql = isset($service->sql) ? $service->sql : "";
+	$data = array();
+
+	if (!$sql) {
+    return json_encode(getService($mysqli, $from, $to));
+  }
+
+  $return = multiquery($mysqli, $sql);
+  if (is_string($return)) {
+    return $return;
+	} else {
+    $data = book($mysqli);
+    $data["SERVICE"] = getService($mysqli, $from, $to);
+    return json_encode($data);
+  }
 }
 
 function multiquery($mysqli, $sql)

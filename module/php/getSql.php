@@ -2,7 +2,7 @@
 function getService($mysqli, $from, $to)
 {
   $sql = "SELECT * FROM book b left join personnel p
-            ON b.staffname=p.profile->'$.name'
+            ON JSON_CONTAINS(p.profile,JSON_QUOTE(b.staffname),'$.name')
           WHERE opdate BETWEEN '$from' AND '$to'
             AND deleted=0
             AND waitnum<>0
@@ -28,7 +28,7 @@ function getStaff($mysqli)
 function getHoliday($mysqli)
 {
 	$sql = "SELECT * FROM holiday
-            WHERE holidate >= MAKEDATE(year(now()),1)- interval 1 month
-            ORDER BY holidate;";
+          WHERE holidate >= MAKEDATE(year(now()),1)- interval 1 month
+          ORDER BY holidate;";
 	return multiquery($mysqli, $sql);
 }
