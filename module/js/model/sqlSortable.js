@@ -5,7 +5,7 @@ import { sqlMover } from "./sqlMover.js"
 
 export function sqlSortable(allOldCases, allNewCases, moverow, pasterow)
 {
-  let sql = "sqlReturnbook=",
+  let sql = "",
     newWaitnum = moverow.dataset.waitnum,
     moveroom = moverow.dataset.oproom,
     moveqn = moverow.dataset.qn,
@@ -25,5 +25,5 @@ export function sqlSortable(allOldCases, allNewCases, moverow, pasterow)
         : sqlCaseNum(null, e)
   })
 
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {sqlReturnbook:sql});
 }

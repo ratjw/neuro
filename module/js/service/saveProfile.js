@@ -39,7 +39,7 @@ export function saveProfile(pointing, profileJSON)
   if (deepEqual(recordJSON, profileJSON)) { return }
 
   let content = JSON.stringify(recordJSON)
-    content = URIcomponent(content)
+//    content = URIcomponent(content)
 
   saveService(pointing, "profile", content)
 }

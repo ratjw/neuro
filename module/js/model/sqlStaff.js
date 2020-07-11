@@ -43,18 +43,18 @@ function sqlUpdate(cells, ramaid)
               }, "")
   const jsonset = set ? `JSON_SET(profile, ${set})` : ''
   const rama_id = `profile->"$.ramaid"`
-
+  const updateRemove = `UPDATE personnel SET profile=${jsonremove} WHERE ${rama_id}="${ramaid}";`
+  const updateSet = `UPDATE personnel SET profile=${jsonset} WHERE ${rama_id}="${ramaid}";`
 
   if (!jsonremove && !jsonset) { return '' }
   if (jsonremove && !jsonset) {
-    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE ${rama_id}="${ramaid}";`
+    return { sqlReturnStaff: updateRemove }
   }
   if (!jsonremove && jsonset) {
-    return `sqlReturnStaff=UPDATE personnel SET profile=${jsonset} WHERE ${rama_id}="${ramaid}";`
+    return { sqlReturnStaff: updateSet }
   }
   if (jsonremove && jsonset) {
-    return`sqlReturnStaff=UPDATE personnel SET profile=${jsonremove} WHERE ${rama_id}="${ramaid}";`
-                        + `UPDATE personnel SET profile=${jsonset} WHERE ${rama_id}="${ramaid}";`
+    return { sqlReturnStaff: updateRemove + updateSet }
   }
 }
 
@@ -68,7 +68,9 @@ function sqlInsert(cells)
 
   if (!name || !ramaid || !oncall) { return "" }
 
-  return `sqlReturnStaff=INSERT INTO personnel (profile) VALUES (${values});`
+  return {
+    sqlReturnStaff:`INSERT INTO personnel (profile) VALUES (${values});`
+  }
 }
 
 function getTextContent(cell, field) {

@@ -12,7 +12,7 @@ export function saveContent(pointed, column, newcontent) {
   pointed.innerHTML = newcontent
 
   // take care of white space, double qoute, single qoute, and back slash
-  newcontent = URIcomponent(newcontent)
+//  newcontent = URIcomponent(newcontent)
 
   qn
   ? saveContentQN(pointed, column, newcontent)

@@ -32,13 +32,6 @@ export function sqlSaveService(column, content, qn) {
   return postData(MYSQLIPHP, sql);
 }
 
-export function sqlGetUpdateService()
-{
-  let sql = "sqlReturnService=" + sqlOneMonth()
-
-  return postData(MYSQLIPHP, sql);
-}
-
 function sqlOneMonth()
 {
   return `SELECT * FROM book b left join personnel p

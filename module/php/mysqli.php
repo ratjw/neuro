@@ -2,29 +2,26 @@
 include "connect.php";
 require_once "book.php";
 
-	if (isset($_POST['start'])) {
-    if (session_id() == "") session_start();
-    $_SESSION['START_DATE'] = $_POST['start'];
+  $input = json_decode(file_get_contents('php://input'));//echo ($input);exit;
+	if (isset($input->start)) {
+		if (session_id() == "") { session_start(); }
+		$_SESSION['START_DATE'] = $input->start;
 		echo start($mysqli);
 	}
-	else if (isset($_POST['nosqlReturnbook']))
-	{
-		echo json_encode(book($mysqli));
+	else if (isset($input->sqlReturnbook)) {
+		echo returnbook($mysqli, $input->sqlReturnbook);
 	}
-	else if (isset($_POST['sqlReturnbook'])) {
-		echo returnbook($mysqli, $_POST['sqlReturnbook']);
+	else if (isset($input->sqlReturnService)) {
+		echo returnService($mysqli, $input->sqlReturnService);
 	}
-	else if (isset($_POST['sqlReturnService'])) {
-		echo returnService($mysqli, $_POST['sqlReturnService']);
+	else if (isset($input->sqlReturnData)) {
+		echo returnData($mysqli, $input->sqlReturnData);
 	}
-	else if (isset($_POST['sqlReturnData'])) {
-		echo returnData($mysqli, $_POST['sqlReturnData']);
+	else if (isset($input->sqlReturnResident)) {
+		echo returnResident($mysqli, $input->sqlReturnResident);
 	}
-	else if (isset($_POST['sqlReturnResident'])) {
-		echo returnResident($mysqli, $_POST['sqlReturnResident']);
-	}
-	else if (isset($_POST['sqlReturnStaff'])) {
-		echo returnStaff($mysqli, $_POST['sqlReturnStaff']);
+	else if (isset($input->sqlReturnStaff)) {
+		echo returnStaff($mysqli, $input->sqlReturnStaff);
 	}
 
 function start($mysqli)

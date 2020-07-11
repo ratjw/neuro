@@ -9,9 +9,7 @@ import {
 
 export async function sqlResident()
 {
-  const sql = `sqlReturnResident=`
-
-  const response = await postData(MYSQLIPHP, sql)
+  const response = await postData(MYSQLIPHP, {sqlReturnResident:""})
   if (typeof response === "object") {
     setRESIDENT(response)
   } else {
@@ -47,7 +45,7 @@ export async function newResident(row)
     return
   }
 
-  const sql = `sqlReturnResident=INSERT INTO personnel (profile)
+  const sql = `INSERT INTO personnel (profile)
                 VALUES (JSON_OBJECT('ramaid','${ramaid}',
                   'name','${name}',
                   'yearOne','${yearOne}',
@@ -55,7 +53,7 @@ export async function newResident(row)
                   'research',CAST('${JSON.stringify(research)}' AS JSON),
                   'role','resident'));`
 
-  const response = await postData(MYSQLIPHP, sql)
+  const response = await postData(MYSQLIPHP, {sqlReturnResident:sql})
   if (typeof response === "object") {
     showResident(response)
   } else {
@@ -80,14 +78,14 @@ export async function updateResident(row)
 
   if (!name) { return "<br>Incomplete Entry" }
 
-  const sql = `sqlReturnResident=UPDATE personnel
+  const sql = `UPDATE personnel
              SET profile=JSON_SET(profile,
                         '$.ramaid','${newramaid}',
                         '$.name','${name}',
                         '$.addLevel',${addLevel}
                         )
              WHERE JSON_EXTRACT(profile,'$.ramaid')='${oldramaid}';`
-  const response = await postData(MYSQLIPHP, sql)
+  const response = await postData(MYSQLIPHP, {sqlReturnResident:sql})
   if (typeof response === "object") {
     showResident(response)
   } else {
@@ -103,9 +101,9 @@ export async function deleteResident(row)
   if (!ramaid) { return "<br>No Number" }
 
   if (confirm("ต้องการลบข้อมูลนี้?")) {
-    const sql = `sqlReturnResident=DELETE FROM personnel
+    const sql = `DELETE FROM personnel
                 WHERE JSON_EXTRACT(profile,'$.ramaid')=${ramaid};`
-    const response = await postData(MYSQLIPHP, sql)
+    const response = await postData(MYSQLIPHP, {sqlReturnResident:sql})
     if (typeof response === "object") {
       showResident(response)
     } else {
@@ -134,11 +132,11 @@ export async function updateResearch(barChart, ridx, _ranges)
 
     progress.forEach((e, i) => json[e] = [_ranges[i] / addRatio, columnsText[i]])
 
-  const sql = `sqlReturnResident=UPDATE personnel
+  const sql = `UPDATE personnel
              SET profile=JSON_SET(profile,"$.research",CAST('${JSON.stringify(json)}' AS JSON))
              WHERE JSON_EXTRACT(profile,'$.ramaid')='${ramaid}';`
 
-  const response = await postData(MYSQLIPHP, sql)
+  const response = await postData(MYSQLIPHP, {sqlReturnResident:sql})
   if (typeof response === "object") {
     setRESIDENT(response)
   } else {
