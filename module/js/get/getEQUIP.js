@@ -242,8 +242,8 @@ function saveEquip()
   if (deepEqual(equipJSON, _JsonEquip)) { return }
 
   equipment = JSON.stringify(equipJSON)
-
   equipment = apostrophe(equipment)
+
   sqlSaveEquip(equipment, _qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
