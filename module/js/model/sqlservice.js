@@ -42,7 +42,7 @@ export function sqlGetUpdateService()
 function sqlOneMonth()
 {
   return `SELECT * FROM book b left join personnel p
-            ON b.staffname=p.profile->"$.name"
+            ON JSON_CONTAINS(p.profile,JSON_QUOTE(b.staffname),"$.name")
           WHERE opdate BETWEEN '${serviceFromDate}' AND '${serviceToDate}'
             AND deleted=0
             AND waitnum<>0
