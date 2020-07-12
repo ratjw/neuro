@@ -4,10 +4,6 @@ require_once "book.php";
 require_once "mysqli.php";
 require_once "getSql.php";
 
-//$neuroStaff = [
-//  "004415", "003391", "007841", "008146", "004606", "006599", "006805"
-//];
-
   $input = json_decode(file_get_contents('php://input'));
 	$from = $input->from;
 	$to = $input->to;
@@ -17,14 +13,10 @@ require_once "getSql.php";
 	if (!$personnel) { return; }
 
 	while ($rowi = $personnel->fetch_assoc()) {
-		$staffs[] = $rowi;
+		$staffs[] = json_decode($rowi["profile"]);
 	}
 
 	foreach ($staffs as $staff) {
-    $neuroStaffx[] = json_decode($staff["profile"]);
-  }
-
-	foreach ($neuroStaffx as $staff) {
     $neuroStaffs[] = $staff->ramaid;
   }
 

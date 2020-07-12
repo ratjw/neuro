@@ -7,6 +7,7 @@ import { getBOOK, updateBOOK } from "../util/updateBOOK.js"
 import { Alert, getLargestWaitnum, isSplit } from "../util/util.js"
 import { clearSelection } from "../control/selectRow.js"
 import { locateFound } from "../view/scrolltoThisCase.js"
+import { refillHoliday } from "../view/fillHoliday.js"
 
 // Undefined date booking has opdate set to MAXDATE
 // but was shown blank date on screen
@@ -31,17 +32,15 @@ export function postponeCase()
 
   function doPostponeCase(thisdate) {
     sqlPostponeCase(allCases, row, thisdate).then(response => {
-      let hasData = function () {
+      if (typeof response === "object") {
         updateBOOK(response)
         refillHoliday()
         if (isSplit()) {
           locateFound('queuetblContainer', 'queuetbl', qn)
         }
+      } else {
+        Alert ("postponeCase", response)
       }
-
-      typeof response === "object"
-      ? hasData()
-      : Alert ("postponeCase", response)
-    }).catch(error => alert(error.stack))
+    }).catch(error => alert(error.message + "\n" + error.stack))
   }
 }

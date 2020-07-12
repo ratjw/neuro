@@ -28,7 +28,7 @@ export function sqlcopyCase(allNewCases, moverow, thisrow) {
     row.dataset.theatre = thistheatre
     if (thisroom) {
       row.dataset.oproom = thisroom
-      row.dataset.casenum = i + 1
+      row.dataset.casenum = +row.dataset.casenum + 1
     } else {
       row.dataset.oproom = null
       row.dataset.casenum = null
