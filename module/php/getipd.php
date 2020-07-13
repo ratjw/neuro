@@ -13,14 +13,10 @@ require_once "getSql.php";
 	if (!$personnel) { return; }
 
 	while ($rowi = $personnel->fetch_assoc()) {
-		$staffs[] = $rowi;
+		$staffs[] = json_decode($rowi["profile"]);
 	}
 
 	foreach ($staffs as $staff) {
-    $neuroStaffx[] = json_decode($staff["profile"]);
-  }
-
-	foreach ($neuroStaffx as $staff) {
     $neuroStaffs[] = $staff->ramaid;
   }
 

@@ -40,9 +40,9 @@ export function showService() {
         .filldataService(this, scase)
   })
 
-//  if (/surgery\.rama/.test(location.hostname)) {
+  if (/surgery\.rama/.test(location.hostname)) {
     getAdmitDischargeDate()
-  //}
+  }
 }
 
 // Use existing DOM table to refresh when editing
