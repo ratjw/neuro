@@ -11,7 +11,6 @@ function login()
 	// Browsers that support module: Chrome/61, Firefox/60, Safari 10.1
 	// (.*)$ is the second argument
 	var ua = navigator.userAgent
-	var isMobile = /Android|webOS|iPhone|iPad|BlackBerry|IEMobile/i.test(ua)
 	var Chrome = ua.match(/Chrome\/(.*)$/)
 	var Firefox = ua.match(/Firefox\/(.*)$/)
 	var Safari = ua.match(/Safari\/(.*)$/)
@@ -22,17 +21,10 @@ function login()
                   : (Safari && Safari.length > 1)
                     ? Safari[1] >= "10.1"
                     : false
-	var browser = /rvpn/.test(window.origin)
-              ? isMobile
-                ? "mobilevpn/mobilevpn.html"
-                : "es5/es5.html"
-              : module
-                ? "module"
-                : "es5/es5.html"
+	var browser = /rvpn/.test(window.origin) ? "es5/es5.html" : "module"
   var admin = '000000'
 					
   sessionStorage.setItem('admin', admin)
-	sessionStorage.setItem('isMobile', isMobile)
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
 	document.getElementById("browser").value = browser
   if (location.host === "localhost") {

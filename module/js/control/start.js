@@ -12,7 +12,6 @@ import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { htmlStafflist, htmlLab, htmlEquipment } from "../control/html.js"
 import { scrolltoToday } from "../view/scrolltoThisCase.js"
-import { isMobile } from "../main.js"
 import { dialogServiceEvent } from "./startsub/dialogServiceEvent.js"
 import { wrapperEvent } from "./startsub/wrapperEvent.js"
 import { documentEvent } from "./startsub/documentEvent.js"
@@ -36,7 +35,6 @@ export function start() {
 function success(response) {
 
   // call sortable before render, otherwise it renders very slowly
-//  isMobile ? scaleViewport() : 
   sortable()
   updateBOOK(response)
   fillmain()
