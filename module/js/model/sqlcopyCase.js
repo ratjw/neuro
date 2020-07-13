@@ -28,6 +28,7 @@ export function sqlcopyCase(allNewCases, moverow, pasterow) {
 function sqlCopyPaster(moverow, pasterow)
 {
   let origin = moverow.dataset,
+    dob = origin.dob ? `'${origin.dob}'` : null,
     pastedate = pasterow.dataset.opdate,
     pastetheatre = pasterow.dataset.theatre,
     pasteroom = pasterow.dataset.oproom,
@@ -66,6 +67,7 @@ function sqlCopyPaster(moverow, pasterow)
     staffname='${origin.staffname}',
     hn='${origin.hn}',
     patient='${apostrophe(origin.patient)}',
+    dob=${dob},
     diagnosis='${apostrophe(origin.diagnosis)}',
     treatment='${apostrophe(origin.treatment)}',
     contact='${apostrophe(origin.contact)}',
