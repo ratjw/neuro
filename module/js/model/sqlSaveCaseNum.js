@@ -31,8 +31,10 @@ export function sqlCaseNum(casenum, qn)
 export function updateCasenum(allCases)
 {
   let sql = ""
+
   allCases.forEach((item, i) => {
     sql += sqlCaseNum(i + 1, item)
   })
+
   return sql
 }

@@ -6,38 +6,54 @@ import { sqlMover } from "./sqlMover.js"
 import { MAXDATE } from "../control/const.js"
 import { getLargestWaitnum, apostrophe } from "../util/util.js"
 import { getBOOK } from "../util/updateBOOK.js"
+import { PASTETOP, PASTEBOTTOM } from '../control/const.js'
 
-export function sqlcopyCase(allNewCases, moverow, thisrow) {
+export function sqlcopyCase(allNewCases, moverow, pasterow) {
   let sql = "",
-    thisdate = thisrow.dataset.opdate,
-    thistheatre = thisrow.dataset.theatre,
-    thisroom = thisrow.dataset.oproom,
+    pastedate = pasterow.dataset.opdate,
+    pastetheatre = pasterow.dataset.theatre,
+    pasteroom = pasterow.dataset.oproom,
+    pastecasenum = pasterow.dataset.casenum,
+    pastepos = pasterow.classList.contains(PASTEBOTTOM) ? 1 : 0,
     row = moverow.cloneNode(true),
-    staffname = row.dataset.staffname,
-    qn = row.dataset.qn,
-    index = allNewCases.indexOf(qn)
+    staffname = row.dataset.staffname
 
-  if (thisdate === MAXDATE) {
+  allNewCases.forEach((e, i) => {
+    if (e === moveqn) {
+      pasteroom
+      ? sql += sqlCopier(newWaitnum, pastedate, pastetheatre, pasteroom, i + 1, moveqn)
+      : sql += sqlCopier(newWaitnum, pastedate, pastetheatre, null, null, moveqn)
+    } else {
+      pasteroom
+      ? sql += sqlCaseNum(i + 1, e)
+      : sql += sqlCaseNum(null, e)
+    }
+  })
+
+  return postData(MYSQLIPHP, {sqlReturnbook:sql})
+}
+
+function sqlCopier(waitnum, opdate, theatre, oproom, casenum)
+{
+  if (pastedate === MAXDATE) {
     row.dataset.waitnum = getLargestWaitnum(getBOOK(), staffname) + 1
     row.dataset.opdate = MAXDATE
     row.dataset.theatre = ''
     row.dataset.oproom = null
     row.dataset.casenum = null
   } else {
-    row.dataset.opdate = thisdate
-    row.dataset.theatre = thistheatre
-    if (thisroom) {
-      row.dataset.oproom = thisroom
-      row.dataset.casenum = +row.dataset.casenum + 1
+    row.dataset.opdate = pastedate
+    row.dataset.theatre = pastetheatre
+    if (pasteroom) {
+      row.dataset.oproom = pasteroom
+      row.dataset.casenum = +pastecasenum + pastepos
     } else {
       row.dataset.oproom = null
       row.dataset.casenum = null
     }
   }
 
-  sql += sqlInsert(row)
-
-  return postData(MYSQLIPHP, {sqlReturnbook:sql})
+  return sql += sqlInsert(row)
 }
 
 function sqlInsert(row)
