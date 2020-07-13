@@ -7,23 +7,15 @@ import { MAXDATE } from "../control/const.js"
 import { getLargestWaitnum, apostrophe } from "../util/util.js"
 import { getBOOK } from "../util/updateBOOK.js"
 import { PASTETOP, PASTEBOTTOM } from '../control/const.js'
+import { calcWaitnum } from "../util/calcWaitnum.js"
 
 export function sqlcopyCase(allNewCases, moverow, pasterow) {
-  let sql = "",
-    pastedate = pasterow.dataset.opdate,
-    pastetheatre = pasterow.dataset.theatre,
+  let moveqn = moverow.dataset.qn,
     pasteroom = pasterow.dataset.oproom,
-    pastecasenum = pasterow.dataset.casenum,
-    pastepos = pasterow.classList.contains(PASTEBOTTOM) ? 1 : 0,
-    row = moverow.cloneNode(true),
-    staffname = row.dataset.staffname
+    sql = sqlCopyPaster(moverow, pasterow)
 
   allNewCases.forEach((e, i) => {
-    if (e === moveqn) {
-      pasteroom
-      ? sql += sqlCopier(newWaitnum, pastedate, pastetheatre, pasteroom, i + 1, moveqn)
-      : sql += sqlCopier(newWaitnum, pastedate, pastetheatre, null, null, moveqn)
-    } else {
+    if (e !== moveqn) {
       pasteroom
       ? sql += sqlCaseNum(i + 1, e)
       : sql += sqlCaseNum(null, e)
@@ -33,48 +25,49 @@ export function sqlcopyCase(allNewCases, moverow, pasterow) {
   return postData(MYSQLIPHP, {sqlReturnbook:sql})
 }
 
-function sqlCopier(waitnum, opdate, theatre, oproom, casenum)
+function sqlCopyPaster(moverow, pasterow)
 {
+  let origin = moverow.dataset,
+    pastedate = pasterow.dataset.opdate,
+    pastetheatre = pasterow.dataset.theatre,
+    pasteroom = pasterow.dataset.oproom,
+    pastecasenum = pasterow.dataset.casenum,
+    pastepos = pasterow.classList.contains(PASTEBOTTOM) ? 1 : 0,
+    paster = {}
+
   if (pastedate === MAXDATE) {
-    row.dataset.waitnum = getLargestWaitnum(getBOOK(), staffname) + 1
-    row.dataset.opdate = MAXDATE
-    row.dataset.theatre = ''
-    row.dataset.oproom = null
-    row.dataset.casenum = null
+    paster.waitnum = getLargestWaitnum(getBOOK(), origin.staffname) + 1
+    paster.opdate = MAXDATE
+    paster.theatre = ''
+    paster.oproom = null
+    paster.casenum = null
   } else {
-    row.dataset.opdate = pastedate
-    row.dataset.theatre = pastetheatre
+    paster.waitnum = pastepos
+      ? calcWaitnum(pastedate, pasterow, pasterow.nextElementSibling)
+      : calcWaitnum(pastedate, pasterow.previousElementSibling, pasterow)
+    paster.opdate = pastedate
+    paster.theatre = pastetheatre
     if (pasteroom) {
-      row.dataset.oproom = pasteroom
-      row.dataset.casenum = +pastecasenum + pastepos
+      paster.oproom = pasteroom
+      paster.casenum = +pastecasenum + pastepos
     } else {
-      row.dataset.oproom = null
-      row.dataset.casenum = null
+      paster.oproom = null
+      paster.casenum = null
     }
   }
 
-  return sql += sqlInsert(row)
-}
-
-function sqlInsert(row)
-{
-  let r = row.dataset,
-    dob = r.dob,
-    sql1 = dob ? `'${dob}'` : null
-
   return `INSERT INTO book SET
-    waitnum=${r.waitnum},
-    opdate='${r.opdate}',
-    theatre='${apostrophe(r.theatre)}',
-    oproom=${r.oproom},
-    optime='${r.optime}',
-    casenum=${r.casenum},
-    staffname='${r.staffname}',
-    hn='${r.hn}',
-    patient='${apostrophe(r.patient)}',
-    dob=${sql1},
-    diagnosis='${apostrophe(r.diagnosis)}',
-    treatment='${apostrophe(r.treatment)}',
-    contact='${apostrophe(r.contact)}',
+    waitnum=${paster.waitnum},
+    opdate='${paster.opdate}',
+    theatre='${apostrophe(paster.theatre)}',
+    oproom=${paster.oproom},
+    optime='${origin.optime}',
+    casenum=${paster.casenum},
+    staffname='${origin.staffname}',
+    hn='${origin.hn}',
+    patient='${apostrophe(origin.patient)}',
+    diagnosis='${apostrophe(origin.diagnosis)}',
+    treatment='${apostrophe(origin.treatment)}',
+    contact='${apostrophe(origin.contact)}',
     editor='${USER}';`
 }

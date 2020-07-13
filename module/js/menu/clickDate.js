@@ -54,11 +54,11 @@ export function clickDate(moverow, pasterow)
 
 function domoveCase(allOldCases, allNewCases, moverow, pasterow, pastepos)
 {
-  let pasteopdate = pasterow.dataset.opdate
+  let pastedate = pasterow.dataset.opdate
 
   moverow.dataset.waitnum = pastepos
-                          ? calcWaitnum(pasteopdate, pasterow, pasterow.nextElementSibling)
-                          : calcWaitnum(pasteopdate, pasterow.previousElementSibling, pasterow)
+                          ? calcWaitnum(pastedate, pasterow, pasterow.nextElementSibling)
+                          : calcWaitnum(pastedate, pasterow.previousElementSibling, pasterow)
 
   sqlmoveCase(allOldCases, allNewCases, moverow, pasterow).then(response => {
     if (typeof response === "object") {
@@ -72,12 +72,6 @@ function domoveCase(allOldCases, allNewCases, moverow, pasterow, pastepos)
 
 function docopyCase(allNewCases, moverow, pasterow, pastepos)
 {
-  let pasteopdate = pasterow.dataset.opdate
-
-  moverow.dataset.waitnum = pastepos
-                          ? calcWaitnum(pasteopdate, pasterow, pasterow.nextElementSibling)
-                          : calcWaitnum(pasteopdate, pasterow.previousElementSibling, pasterow)
-
   sqlcopyCase(allNewCases, moverow, pasterow).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
