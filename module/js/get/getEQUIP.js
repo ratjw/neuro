@@ -85,21 +85,22 @@ function fillEquip()
 
 function fillMatchValue(_JsonEquip)
 {
-  Object.entries(_JsonEquip).forEach(([key, v]) => {
-    let title = document.querySelector(`#dialogEquip div[title='${key}']`)
+  Object.entries(_JsonEquip).forEach(([key, val]) => {
+    let title = document.querySelector(`#dialogEquip div[title='${key}']`),
+      textareas = title.querySelectorAll('textarea')
 
     if (!title) { return }
 
     // convert string to array
-    if (typeof v === 'string') { v = v.split() }
-    if (!Array.isArray(v)) { return }
+    if (typeof val === 'string') { val = val.split() }
+    if (!Array.isArray(val)) { return }
 
-    let remain = fillRadioCheckbox(title, v)
+    let remain = fillRadioCheckbox(title, val)
     if (remain.length) {
       remain = fillText(title, remain)
     }
     if (remain.length) {
-      fillTextarea(title, remain)
+      textareas.forEach((e, i) => e.value = val[i] || '' )
     }
   })
 }
@@ -134,11 +135,6 @@ function fillText(title, val)
   })
 
   return copyval
-}
-
-function fillTextarea(title, val)
-{
-  title.querySelectorAll('textarea').forEach((e, i) => e.value = val[i] || '' )
 }
 
 function showNonEditableEquip()
@@ -229,8 +225,9 @@ function saveEquip()
   EQUIPITEMS.forEach(e => {
     let title = document.querySelector(`#dialogEquip div[title='${e}']`)
     title.querySelectorAll(`input, textarea`).forEach(i => {
-      if (i.checked || ((i.type === 'text') && i.value)
-        || ((i.type === 'textarea') && i.value)) {
+      let itext = (i.type === 'text') && i.value
+      let iarea = (i.type === 'textarea') && i.value
+      if (i.checked || itext || iarea) {
           if (!equipJSON[e]) {
             equipJSON[e] = ((e === "เครื่องมือบริษัท") && (i.placeholder)) ? [''] : []
           }
