@@ -1,6 +1,8 @@
 
 import { notifyLINE } from './notifyLINE.js'
 
+  notifyLINE()
+/*
 // msec in a day
 const OneDay = 24 * 60 * 60 * 1000
 
@@ -23,3 +25,4 @@ setTimeout(function() {
   notifyLINE()
   console.log(`setInterval ${new Date()} + ${msecRemain} msec`)
 }, msecRemain)
+*/

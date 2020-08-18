@@ -79,7 +79,7 @@ function returnStaff($mysqli, $sql)
 
 function getStaff($mysqli)
 {
-	$sql = "SELECT * FROM staff;";
+	$sql = "SELECT * FROM personnel where profile->'$.role'='อาจารย์แพทย์เต็มเวลา';";
 	return multiquery($mysqli, $sql);
 }
 

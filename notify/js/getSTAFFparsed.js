@@ -43,11 +43,11 @@ export function getLatestStart()
   return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)
 }
 
-export function getStaffID(staffname)
+export function getStaffID(name)
 {
   let staffs = getSTAFFparsed()
 
-  return staffs.map(staff => (staff.profile.staffname === staffname) && staff.id)[0]
+  return staffs.map(staff => (staff.profile.name === name) && staff.id)[0]
 }
 
 export function getOncallExchange()
@@ -55,7 +55,7 @@ export function getOncallExchange()
   let staffs = getSTAFFparsed()
   let exchange = {}
 
-  staffs.forEach(staff => exchange[staff.profile.staffname] = staff.profile.exchange)
+  staffs.forEach(staff => exchange[staff.profile.name] = staff.profile.exchange)
 
   // remove staff with no exchange
   Object.entries(exchange).forEach(([staff, exchng]) => {

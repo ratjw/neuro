@@ -14,14 +14,14 @@ function getService($mysqli, $from, $to)
 function getResident($mysqli)
 {
   $sql = "SELECT * FROM personnel
-          WHERE profile->'$.role'='resident'
+          WHERE profile->'$.role'='แพทย์ประจำบ้าน'
           ORDER BY profile->'$.yearOne'+profile->'$.addLevel',profile->'$.ramaid';";
 	return multiquery($mysqli, $sql);
 }
 
 function getStaff($mysqli)
 {
-	$sql = "SELECT * FROM personnel where profile->'$.role'='staff';";
+	$sql = "SELECT * FROM personnel where profile->'$.role'='อาจารย์แพทย์เต็มเวลา';";
 	return multiquery($mysqli, $sql);
 }
 
