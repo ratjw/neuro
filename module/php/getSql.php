@@ -7,7 +7,7 @@ function getService($mysqli, $from, $to)
             AND deleted=0
             AND waitnum<>0
             AND hn
-          ORDER BY p.id,opdate,oproom,casenum,waitnum;";
+          ORDER BY p.profile->'$.order',opdate,oproom,casenum,waitnum;";
 	return multiquery($mysqli, $sql);
 }
 
