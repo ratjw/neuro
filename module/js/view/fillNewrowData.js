@@ -8,6 +8,7 @@ import { putNameAge } from "../util/date.js"
 import { viewLab } from "./viewLab.js"
 import { viewEquip } from "./viewEquip.js"
 
+// make null to "", if not, the dataset will change it to "null"
 export function fillNewrowData(row, bookq)
 {
   setRowData(row, bookq)

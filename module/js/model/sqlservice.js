@@ -1,29 +1,16 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
-import { URIcomponent } from "../util/util.js"
 import { serviceFromDate, serviceToDate } from "../service/setSERVICE.js"
 
 const GETIPD = "php/getipd.php"
 
-export function sqlSaveOnChangeService(column, content, qn)
-{
-  let sql = sqlColumn(column, URIcomponent(content), qn)
-      + sqlOneMonth()
-
-  return postData(MYSQLIPHP, sql)
-}
-
 export function sqlGetServiceOneMonth() {
-  let sql = "sqlReturnData=" + sqlOneMonth()
-
-  return postData(MYSQLIPHP, sql)
+  return postData(MYSQLIPHP, { sqlReturnService: {serviceFromDate, serviceToDate} })
 }
 
 export function sqlGetIPD() {
-  let sql = `from=${serviceFromDate}&to=${serviceToDate}&sql=${sqlOneMonth()}`
-
-  return postData(GETIPD, sql)
+  return postData(GETIPD, { serviceDate: {serviceFromDate, serviceToDate} })
 }
 
 export function sqlSaveService(column, content, qn) {

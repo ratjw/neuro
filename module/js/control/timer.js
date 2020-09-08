@@ -8,9 +8,9 @@ import {
 } from "./edit.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 import { sqlSaveOnChange } from "../model/sqlupdate.js"
-import { sqlSaveOnChangeService } from "../model/sqlservice.js"
+import { sqlSaveService } from "../model/sqlservice.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert } from "../util/util.js"
+import { Alert, apostrophe } from "../util/util.js"
 import { refillHoliday } from "../view/fillHoliday.js"
 
 // timer is just an id number of setTimeout, not the clock object
@@ -120,7 +120,7 @@ function saveOnChangeService(content)
 
   if (!column) { return false }
 
-  sqlSaveOnChangeService(column, content, qn).then(response => {
+  sqlSaveService(column, apostrophe(content), qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)
     } else {

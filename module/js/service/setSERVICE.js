@@ -46,6 +46,7 @@ function calcSERVE(service)
       if (!Object.keys(profile).length) { profile = null }
 
       this.profile = JSON.stringify(profile)
+      // set back to string because row.dataset takes only string
     }
   })
 

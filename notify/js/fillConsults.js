@@ -34,7 +34,7 @@ export function fillConsults(tableID = 'maintbl')
 
   allSaturdays.forEach((sat, i) => {
     staffsOncall.forEach(staff => {
-      const matchname = staff.profile.staffname === oncallList[i]
+      const matchname = staff.profile.name === oncallList[i]
       const matchskip = staff.skipSat && staff.skipSat.includes(sat)
       if (matchname && matchskip) {
         oncallList.splice(i, 1)
@@ -44,14 +44,14 @@ export function fillConsults(tableID = 'maintbl')
 
   allSaturdays.forEach((e, i) => allSaturdays[e] = oncallList[i])
 
-  // fill default staffname
+  // fill default name
   tableSaturdayRows.forEach(e => {
     dataAttr(e.cells[PATIENT], allSaturdays[e.dataset.opdate])
   })
 
-  // fill exchange staffname
+  // fill exchange name
   const exchange = getOncallExchange()
-  Object.entries(exchange).forEach(([staffname, exchng]) => {
+  Object.entries(exchange).forEach(([name, exchng]) => {
     Object.entries(exchng).forEach(([key, date]) => {
       tableSaturdayRows.some(row => {
         const rowdate = row.dataset.opdate
@@ -60,7 +60,7 @@ export function fillConsults(tableID = 'maintbl')
           if (!cell.dataset.origconsult) {
             cell.dataset.origconsult = cell.dataset.consult
           }
-          cell.dataset.consult = staffname
+          cell.dataset.consult = name
           cell.dataset.prevkey = key
           return true
         }
@@ -90,7 +90,7 @@ function getAllSaturdays(startFirstSat, tableSaturdates)
 function getOncallList(startStaff, allLen)
 {
   const staffs = getStaffOncall(),
-    staffnames = staffs.map(e => e.profile.staffname),
+    staffnames = staffs.map(e => e.profile.name),
     stafflen = staffnames.length,
     num = startStaff.profile.oncall - 1,
     rotated = staffnames.map((e, i) => staffnames[(i + num) % stafflen])
@@ -134,8 +134,8 @@ function getSkipSat(allSaturdays, staff)
   return [...new Set(skipSat)]
 }
 
-function dataAttr(pointing, staffname)
+function dataAttr(pointing, name)
 {
-  pointing.dataset.consult = staffname
+  pointing.dataset.consult = name
   pointing.classList.add("consult")
 }

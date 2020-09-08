@@ -288,9 +288,8 @@ export function clearEditcell() {
 // TRIM non-blank spaces at begin, end
 export function getHtmlText(innerhtml)
 {
-  let HTMLTRIM = /^(\s*<[^>]*>)*\s*|\s*(<[^>]*>\s*)*$/g,
-	  HTMLBRDIV = /(<(?!br|div|\/div).*?>)/gi,
+  let HTMLBRDIV = /(<(?!br|div|\/div).*?>)/gi,
     HTMLNBSP = /(?:^(?:&nbsp;)+)|(?:(?:&nbsp;)+$)/g
 
-  return innerhtml.replace(HTMLTRIM, '').replace(HTMLBRDIV, '').replace(HTMLNBSP, '')
+  return innerhtml.trim().replace(HTMLBRDIV, '').replace(HTMLNBSP, '')
 }

@@ -1,4 +1,5 @@
 
+import { register } from "../../register.js"
 import { editcellEvent } from "../control/edit.js"
 import { resetTimer } from "../control/timer.js"
 import { setClickAll } from "../control/setClickAll.js"
@@ -11,7 +12,6 @@ import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
 import { htmlStafflist, htmlLab, htmlEquipment } from "../control/html.js"
 import { scrolltoToday } from "../view/scrolltoThisCase.js"
-import { isMobile } from "../main.js"
 import { dialogServiceEvent } from "./startsub/dialogServiceEvent.js"
 import { wrapperEvent } from "./startsub/wrapperEvent.js"
 import { documentEvent } from "./startsub/documentEvent.js"
@@ -20,7 +20,8 @@ import { contextmenu } from "./startsub/contextmenu.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
-	sqlStart().then(response => {
+//	register()
+  sqlStart().then(response => {
 		typeof response === "object"
 		? success(response)
 		: failed(response)
@@ -34,7 +35,6 @@ export function start() {
 function success(response) {
 
   // call sortable before render, otherwise it renders very slowly
-//  isMobile ? scaleViewport() : 
   sortable()
   updateBOOK(response)
   fillmain()

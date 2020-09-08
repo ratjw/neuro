@@ -2,28 +2,42 @@
 include "connect.php";
 require_once "book.php";
 require_once "mysqli.php";
+require_once "getSql.php";
 
-$neuroStaffs = [
-  "004415", "003391", "007841", "008146", "004606", "006599", "006805"
-];
+  $input = json_decode(file_get_contents('php://input'));
+	$from = $input->from;
+	$to = $input->to;
 
-	$from = $_POST["from"];
-	$to = $_POST["to"];
-	$sql = $_POST["sql"];
+	$personnel = $mysqli->query ("SELECT * FROM personnel WHERE profile->'$.role'='staff';");
 
-	$result = $mysqli->query ("SELECT hn, admit, discharge, qn
+	if (!$personnel) { return; }
+
+	while ($rowi = $personnel->fetch_assoc()) {
+		$staffs[] = json_decode($rowi["profile"]);
+	}
+
+	foreach ($staffs as $staff) {
+    $neuroStaffs[] = $staff->ramaid;
+  }
+
+	$allcases = $mysqli->query ("SELECT hn, admit, discharge, qn
 		FROM book
 		WHERE opdate BETWEEN '$from' AND '$to';");
 
-	if (!$result) { return; }
+	if (!$allcases) { return; }
 
-	while ($rowi = $result->fetch_assoc()) {
-		$case[] = $rowi;
+	$allcases = $mysqli->query ("SELECT hn, admit, discharge, qn
+		FROM book
+		WHERE opdate BETWEEN '$from' AND '$to';");
+
+	if (!$allcases) { return; }
+
+	while ($rowi = $allcases->fetch_assoc()) {
+		$cases[] = $rowi;
 	}
 
 	$update = false;
-	foreach ($case as $eachcase)
-	{
+	foreach ($cases as $eachcase)	{
 		$hn = $eachcase["hn"];
 		$qn = $eachcase["qn"];
 
@@ -53,7 +67,7 @@ $neuroStaffs = [
 	}
 
  	if ($update) {
-		echo returnService($mysqli, $sql);
+		echo getService($mysqli, $from, $to);
 	}
 
 //use json encode-decode to convert XML to assoc array

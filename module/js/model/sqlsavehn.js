@@ -2,21 +2,21 @@
 import { postData, MYSQLIPHP } from "./fetch.js"
 import { USER } from "../main.js"
 import { calcWaitnum } from "../util/calcWaitnum.js"
-import { URIcomponent, getTitlename } from "../util/util.js"
+import { apostrophe, getTitlename } from "../util/util.js"
 
 export function sqlMoveCaseHN(pointed, waiting, wanting)
 {
-  let  sql = `sqlReturnbook=UPDATE book SET deleted=1,editor='${USER}' WHERE qn=${waiting.qn};`
-           + sqlCaseHN(pointed, waiting, wanting)
+  let  sql = `UPDATE book SET deleted=1,editor='${USER}' WHERE qn=${waiting.qn};`
+            + sqlCaseHN(pointed, waiting, wanting)
 
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {sqlReturnbook:sql})
 }
 
 export function sqlCopyCaseHN(pointed, waiting, wanting)
 {
-  let  sql = "sqlReturnbook=" + sqlCaseHN(pointed, waiting, wanting)
+  let  sql = sqlCaseHN(pointed, waiting, wanting)
 
-  return postData(MYSQLIPHP, sql);
+  return postData(MYSQLIPHP, {sqlReturnbook:sql})
 }
 
 function sqlCaseHN(pointed, waiting, wanting)
@@ -43,9 +43,9 @@ function sqlUpdateHN(tableID, qn, waiting, wanting)
       patient='${patient}',
       dob='${dob}',
       staffname='${wanting.staffname || staffname}',
-      diagnosis='${URIcomponent(wanting.diagnosis)}',
-      treatment='${URIcomponent(wanting.treatment)}',
-      contact='${URIcomponent(wanting.contact)}',
+      diagnosis='${apostrophe(wanting.diagnosis)}',
+      treatment='${apostrophe(wanting.treatment)}',
+      contact='${apostrophe(wanting.contact)}',
       editor='${USER}'
     WHERE qn=${qn};`
 }
@@ -68,13 +68,13 @@ function sqlInsertHN(tableID, pointed, waiting, wanting)
   ? `INSERT INTO book
     (waitnum,opdate,hn,patient,dob,staffname,diagnosis,treatment,contact,editor)
     VALUES (${waitnum},'${opdate}','${hn}','${patient}','${dob}',
-    '${wanting.staffname || staffname}','${URIcomponent(wanting.diagnosis)}',
-    '${URIcomponent(wanting.treatment)}','${URIcomponent(wanting.contact)}',
+    '${wanting.staffname || staffname}','${apostrophe(wanting.diagnosis)}',
+    '${apostrophe(wanting.treatment)}','${apostrophe(wanting.contact)}',
     '${USER}');`
   : `INSERT INTO book
     (waitnum,opdate,hn,patient,dob,staffname,diagnosis,treatment,contact,editor)
     VALUES (${waitnum},'${opdate}','${hn}','${patient}',null,
-    '${wanting.staffname || staffname}','${URIcomponent(wanting.diagnosis)}',
-    '${URIcomponent(wanting.treatment)}','${URIcomponent(wanting.contact)}',
+    '${wanting.staffname || staffname}','${apostrophe(wanting.diagnosis)}',
+    '${apostrophe(wanting.treatment)}','${apostrophe(wanting.contact)}',
     '${USER}');`
 }

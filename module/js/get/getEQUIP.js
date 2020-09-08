@@ -5,7 +5,7 @@ import { USER } from "../main.js"
 import { sqlGetEditedBy, sqlSaveEquip, sqlCancelAllEquip } from "../model/sqlEquip.js"
 import { putAgeOpdate, ISO_2_th } from "../util/date.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { Alert, winWidth, winHeight, radioHack, deepEqual, string50 } from "../util/util.js"
+import { apostrophe, Alert, winWidth, winHeight, radioHack, deepEqual, string50 } from "../util/util.js"
 
 let _JsonEquip,
   _qn,
@@ -85,21 +85,22 @@ function fillEquip()
 
 function fillMatchValue(_JsonEquip)
 {
-  Object.entries(_JsonEquip).forEach(([key, v]) => {
-    let title = document.querySelector(`#dialogEquip div[title='${key}']`)
+  Object.entries(_JsonEquip).forEach(([key, val]) => {
+    let title = document.querySelector(`#dialogEquip div[title='${key}']`),
+      textareas = title.querySelectorAll('textarea')
 
     if (!title) { return }
 
     // convert string to array
-    if (typeof v === 'string') { v = v.split() }
-    if (!Array.isArray(v)) { return }
+    if (typeof val === 'string') { val = val.split() }
+    if (!Array.isArray(val)) { return }
 
-    let remain = fillRadioCheckbox(title, v)
+    let remain = fillRadioCheckbox(title, val)
     if (remain.length) {
       remain = fillText(title, remain)
     }
     if (remain.length) {
-      fillTextarea(title, remain)
+      textareas.forEach((e, i) => e.value = val[i] || '' )
     }
   })
 }
@@ -134,11 +135,6 @@ function fillText(title, val)
   })
 
   return copyval
-}
-
-function fillTextarea(title, val)
-{
-  title.querySelectorAll('textarea').forEach((e, i) => e.value = val[i] || '' )
 }
 
 function showNonEditableEquip()
@@ -229,8 +225,9 @@ function saveEquip()
   EQUIPITEMS.forEach(e => {
     let title = document.querySelector(`#dialogEquip div[title='${e}']`)
     title.querySelectorAll(`input, textarea`).forEach(i => {
-      if (i.checked || ((i.type === 'text') && i.value)
-        || ((i.type === 'textarea') && i.value)) {
+      let itext = (i.type === 'text') && i.value
+      let iarea = (i.type === 'textarea') && i.value
+      if (i.checked || itext || iarea) {
           if (!equipJSON[e]) {
             equipJSON[e] = ((e === "เครื่องมือบริษัท") && (i.placeholder)) ? [''] : []
           }
@@ -242,9 +239,8 @@ function saveEquip()
   if (deepEqual(equipJSON, _JsonEquip)) { return }
 
   equipment = JSON.stringify(equipJSON)
+  equipment = apostrophe(equipment)
 
-  // escape the \ (escape) and ' (single quote) for sql string, not for JSON
-  equipment = equipment.replace(/\\/g,"\\\\").replace(/'/g,"\\'")
   sqlSaveEquip(equipment, _qn).then(response => {
     if (typeof response === "object") {
       updateBOOK(response)

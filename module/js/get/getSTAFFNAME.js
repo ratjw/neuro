@@ -13,7 +13,7 @@ export function getSTAFFNAME(pointing)
 
   $stafflist.menu({
     select: function( event, ui ) {
-      saveContent(pointing, "staffname", ui.item.text())
+      saveContent(pointing, "staffname", ui.item.text() || pointing.innerHTML)
       clearEditcell()
       $stafflist.hide()
       event.stopPropagation()

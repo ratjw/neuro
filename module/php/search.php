@@ -2,11 +2,8 @@
 include "connect.php";
 require_once "mysqli.php";
 
-//$hn = "";
-//$staffname = "";
-//$others = "menigioma crani inoi";
-
-	extract($_POST);
+  $input = json_decode(file_get_contents('php://input'), true);
+	extract($input);
 
 	$sql = "";
 

@@ -1,17 +1,9 @@
 
 import { MAXDATE, MOVECASE, COPYCASE, PASTETOP, PASTEBOTTOM } from "../control/const.js"
 
-// necessary when passing to http without JSON.stringify
-export function URIcomponent(content) {
-  if (/\W/.test(content)) {
-    content = content.trim()
-    content = content.replace(/"/g, '\"')  // double quotes
-    content = content.replace(/'/g, "&#39;")  // single quotes
-    content = content.replace(/%/g, "\%")   // per cent, mysql: like "%...%"
-    content = content.replace(/\\/g, "\\\\")
-    content = encodeURIComponent(content)
-  }
-  return content
+// Why ?????????????
+export function apostrophe(content) {
+  return content.replace(/\\/g, "\\\\").replace(/'/g, "\\'")
 }
 
 export function isSplit()
