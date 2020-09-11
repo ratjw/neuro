@@ -1,12 +1,14 @@
 <?php
 include "connect.php";
+include "record.php";
 require_once "getPatientByHN.php";
 require_once "merge.php";
 require_once "lastEntryHN.php";
 require_once "saveRecord.php";
 
-  $input = json_decode(file_get_contents('php://input'));
-  $result = getPatientByHN($input->hn);
+  $input = json_decode(file_get_contents('php://input'), true);
+  $record = record($input);
+  $result = getPatientByHN($input[hn]);
 
   // HN not found
   if (empty($result["initial_name"])) {
