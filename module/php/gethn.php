@@ -11,7 +11,7 @@ require_once "saveRecord.php";
   $result = getPatientByHN($input[hn]);
 
   // HN not found
-  if (empty($result["initial_name"])) {
+  if (empty($result[initial_name])) {
     exit("ไม่มีผู้ป่วย HN นี้");
   }
 

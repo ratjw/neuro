@@ -29,8 +29,8 @@ function start($mysqli)
 {
 	$data = array();
 	$data = book($mysqli);
-	$data["STAFF"] = getStaff($mysqli);
-	$data["HOLIDAY"] = getHoliday($mysqli);
+	$data[STAFF] = getStaff($mysqli);
+	$data[HOLIDAY] = getHoliday($mysqli);
 	return json_encode($data);
 }
 
@@ -95,7 +95,7 @@ function returnService($mysqli, $service)
     return $return;
 	} else {
     $data = book($mysqli);
-    $data["SERVICE"] = getService($mysqli, $from, $to);
+    $data[SERVICE] = getService($mysqli, $from, $to);
     return json_encode($data);
   }
 }

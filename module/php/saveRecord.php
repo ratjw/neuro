@@ -3,7 +3,7 @@ require_once "book.php";
 
 function saveRecord($mysqli, $record)
 {
-  if ($record["qn"]) {
+  if ($record[qn]) {
     $sql = sqlUpdate($record);
 	} else {
     $sql = sqlInsert($record);

@@ -16,7 +16,7 @@ require_once "saveRecord.php";
   }
 
   // Name not found
-  if (empty($result["initial_name"])) {
+  if (empty($result[initial_name])) {
     exit("ไม่มีผู้ป่วยชื่อนี้");
   }
 

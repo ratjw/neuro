@@ -13,16 +13,16 @@ function getPatientByHN($hn)
   $resultj = json_encode($resulty);
   $resultz = json_decode($resultj,true);
 
-  if (empty($resultz["initial_name"]))
-    $resultz["initial_name"] = "";
-  if (empty($resultz["first_name"]))
-    $resultz["first_name"] = "";
-  if (empty($resultz["last_name"]))
-    $resultz["last_name"] = "";
-  if (empty($resultz["dob"]))
-    $resultz["dob"] = null;
-  if (empty($resultz["gender"]))
-    $resultz["gender"] = "";
+  if (empty($resultz[initial_name]))
+    $resultz[initial_name] = "";
+  if (empty($resultz[first_name]))
+    $resultz[first_name] = "";
+  if (empty($resultz[last_name]))
+    $resultz[last_name] = "";
+  if (empty($resultz[dob]))
+    $resultz[dob] = null;
+  if (empty($resultz[gender]))
+    $resultz[gender] = "";
 
   return $resultz;
 }

@@ -54,9 +54,9 @@ function book($mysqli)
     $time = current($result->fetch_row());
   }
 
-  $allarray["BOOK"] = $book;
-  $allarray["CONSULT"] = $consult;
-  $allarray["QTIME"] = $time;
+  $allarray[BOOK] = $book;
+  $allarray[CONSULT] = $consult;
+  $allarray[QTIME] = $time;
 
   return $allarray;
 }
