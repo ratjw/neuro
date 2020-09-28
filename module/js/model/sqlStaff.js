@@ -1,7 +1,7 @@
 
 import { postData, MYSQLIPHP } from "../model/fetch.js"
 import { checkFieldExist } from "../setting/getSTAFF.js"
-import { NAME, RAMAID, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
+import { NAME, RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
 
 // cell.dataset was set from filldataStaff() in settingStaff.js
 export function sqlSaveStaff(row)
@@ -20,6 +20,7 @@ function sqlUpdate(cells, ramaid)
   let data = [
     getTextContent(cells[NAME], 'name'),
     getTextContent(cells[RAMAID], 'ramaid'),
+    getTextContent(cells[ROLE], 'role'),
     getOncallNum(cells[ONCALL], 'oncall'),
     getDateContent(ramaid, cells[START], 'start'),
     getSkipContent(ramaid, cells, 'skip'),
@@ -59,16 +60,24 @@ function sqlUpdate(cells, ramaid)
 
 function sqlInsert(cells)
 {
-  const name = `"name","${cells[NAME].textContent}"`
-  const role = `"role","staff"`
-  const ramaid = `"ramaid","${cells[RAMAID].textContent}"`
-  const oncall = `"oncall",${cells[ONCALL].textContent}`
-  const values = `JSON_OBJECT(${name},${role},${ramaid},${oncall})`
+  const cname = cells[NAME].textContent
+  const cramaid = cells[RAMAID].textContent
+  const crole = cells[ROLE].textContent
+  const concall = cells[ONCALL].textContent
 
-  if (!name || !ramaid || !oncall) { return "" }
+  const name = cname ? `"name","${cname}"` : ""
+  const ramaid = cramaid ? `"ramaid","${cramaid}"` : ""
+  const role = crole ? `"role","${crole}"` : ""
+  const oncall = concall ? `"oncall",${concall}` : ""
+
+  const values = `${name},${role},${ramaid},${oncall}`.replace(/,$/, "")
+  const json = `JSON_OBJECT(${values})`
+
+  if (!ramaid) { return "" }
 
   return {
-    sqlReturnStaff:`INSERT INTO personnel (profile) VALUES (${values});`
+    sqlReturnStaff:`INSERT INTO personnel (division,profile)`
+                    + `VALUES ("ประสาทศัลยศาสตร์",${json});`
   }
 }
 
