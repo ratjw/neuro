@@ -97,7 +97,7 @@ jQuery.fn.extend({
 function showCell(cell, val, key)
 {
   cell.innerHTML = val
-  cell.dataset.val = val || ""
+  cell.dataset.val = val === 0 ?  val : (val || "")
   if (key) { cell.dataset.key = key }
 }
 
