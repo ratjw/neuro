@@ -32,7 +32,9 @@ async function changeOncall(cell, opdate, ramaid, staffname)
 {
   if (staffname === cell.dataset.consult) { return }
 
-  const response = await postData(MYSQLIPHP, sqlDB(opdate, ramaid))
+  const sql = sqlDB(opdate, ramaid),
+    response = await postData(MYSQLIPHP, { sqlReturnStaff: sql })
+
   if (typeof response === "object") {
     setSTAFF(response.STAFF)
   } else {
@@ -53,7 +55,7 @@ function sqlDB(exchngDate, ramaid)
   const exchngExist = checkFieldExist(ramaid, 'exchange')
   const dateExist = checkFieldExist(ramaid, "exchange", exchngDate)
   const now = Date.now()
-  const sql = `sqlReturnStaff=UPDATE personnel SET profile=`
+  const sql = `UPDATE personnel SET profile=`
   const edittime = `JSON_OBJECT("${now}","${USER}")`
   const where = `WHERE profile->"$.ramaid"="${ramaid}";`
 
