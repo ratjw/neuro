@@ -1,17 +1,19 @@
 
-import { STAFF } from "../setting/constSTAFF.js"
+import { getSTAFF } from "../util/updateBOOK.js"
 import { getLatestKey, getLatestValue } from "../util/util.js"
+import { DIVISION } from "../main.js"
 
-export function getSTAFF()
+export function getSTAFFdivision(division)
 {
-  const staffs = JSON.parse(JSON.stringify(STAFF))
+  const staffs = getSTAFF()
 
-  return staffs.map(staff => JSON.parse(staff.profile))
+  return staffs.filter(staff => staff.division === division)
+                .map(staff => JSON.parse(staff.profile))
 }
 
 export function getStaffOncall()
 {
-  const staffs = getSTAFF()
+  const staffs = getSTAFFdivision(DIVISION)
 
   return staffs.filter(staff => (staff.oncall > 0))
 }
@@ -19,7 +21,7 @@ export function getStaffOncall()
 // filter only staffs with exchange and strip to only staffname and exchange fields
 export function getOncallExchange()
 {
-  const staffs = getSTAFF(),
+  const staffs = getSTAFFdivision(DIVISION),
     staffex = staffs.filter(staff => staff.exchange)
 
   return staffex.map(has => ( {[has.name]: has.exchange} ))
@@ -27,7 +29,7 @@ export function getOncallExchange()
 
 export function checkFieldExist(ramaid, field, subfield)
 {
-  const staffs = getSTAFF(),
+  const staffs = getSTAFFdivision(DIVISION),
     staff = staffs.filter(e => e.ramaid === ramaid),
     existedKeys = staff.map(e => Object.keys(e))[0],
     existedField = existedKeys.includes(field)

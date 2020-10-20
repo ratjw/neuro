@@ -1,7 +1,7 @@
 
 import { reposition, menustyle } from "../util/util.js"
 import { clearEditcell } from "../control/edit.js"
-import { setSTAFF } from "../setting/constSTAFF.js"
+import { setSTAFF } from "../util/updateBOOK.js"
 import { checkFieldExist } from "../setting/getSTAFF.js"
 import { postData, MYSQLIPHP } from "../model/fetch.js"
 import { USER } from "../main.js"
@@ -14,10 +14,10 @@ export function exchangeOncall(pointing)
   $staffConsult.menu({
     select: ( event, ui ) => {
       const staffname = ui.item.text()
-      const id = ui.item.data('id').toString()
+      const ramaid = ui.item.data('ramaid').toString()
       const opdate = pointing.closest('tr').dataset.opdate
 
-      changeOncall(pointing, opdate, id, staffname)
+      changeOncall(pointing, opdate, ramaid, staffname)
       $staffConsult.hide()
       event.stopPropagation()
     }
@@ -28,11 +28,11 @@ export function exchangeOncall(pointing)
   clearEditcell()
 }
 
-async function changeOncall(cell, opdate, id, staffname)
+async function changeOncall(cell, opdate, ramaid, staffname)
 {
   if (staffname === cell.dataset.consult) { return }
 
-  const response = await postData(MYSQLIPHP, setDB(opdate, id))
+  const response = await postData(MYSQLIPHP, sqlDB(opdate, ramaid))
   if (typeof response === "object") {
     setSTAFF(response.STAFF)
   } else {
@@ -48,14 +48,14 @@ async function changeOncall(cell, opdate, id, staffname)
   cell.dataset.consult = staffname
 }
 
-function setDB(exchngDate, id)
+function sqlDB(exchngDate, ramaid)
 {
-  const exchngExist = checkFieldExist(id, 'exchange')
-  const dateExist = checkFieldExist(id, "exchange", exchngDate)
+  const exchngExist = checkFieldExist(ramaid, 'exchange')
+  const dateExist = checkFieldExist(ramaid, "exchange", exchngDate)
   const now = Date.now()
-  const sql = `sqlReturnStaff=UPDATE staff SET profile=`
+  const sql = `sqlReturnStaff=UPDATE personnel SET profile=`
   const edittime = `JSON_OBJECT("${now}","${USER}")`
-  const where = `WHERE id=${id};`
+  const where = `WHERE profile->"$.ramaid"="${ramaid}";`
 
   return exchngExist
     ? dateExist

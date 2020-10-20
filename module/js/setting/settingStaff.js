@@ -1,11 +1,13 @@
 
 import { htmlStafflist } from "../control/html.js"
 import { sqlSaveStaff } from "../model/sqlStaff.js"
-import { START, SKIPBEGIN, SKIPEND, setSTAFF } from "../setting/constSTAFF.js"
-import { getSTAFF, getLatestStart } from "../setting/getSTAFF.js"
+import { START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
+import { getSTAFFdivision, getLatestStart } from "../setting/getSTAFF.js"
 import { getLatestKey, Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
+import { setSTAFF } from "../util/updateBOOK.js"
+import { DIVISION } from "../main.js"
 
 export function settingStaff()
 {
@@ -16,7 +18,7 @@ export function settingStaff()
     $stafftbltr = $("#stafftbl tr"),
     $staffcellstr = $('#staffcells tr'),
     maxHeight = winHeight(90),
-    staffs = getSTAFF()
+    staffs = getSTAFFdivision(DIVISION)
 
   $stafftbltr.slice(2).remove()
 

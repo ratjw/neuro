@@ -284,7 +284,7 @@ td img.hide
 }
 
 td.consult[data-origconsult] { 
-  --consultant: '\Aเดิม ' attr(data-origconsult);
+  --consultant: '\Aแทน ' attr(data-origconsult);
 }
 
 td.consult::after { 

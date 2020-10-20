@@ -3,7 +3,6 @@ import { isSplit } from "./util.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { refillDatedCases } from "../view/fill.js"
 import { renewEditcell } from "../control/edit.js"
-import { setSTAFF } from "../setting/constSTAFF.js"
 import { setHOLIDAY } from "../setting/constHoliday.js"
 
 //--- global variables --------------
@@ -15,13 +14,17 @@ import { setHOLIDAY } from "../setting/constHoliday.js"
 
 let BOOK = [],
   CONSULT = [],
+  STAFF = [],
   TIMESTAMP = ""
 
 // return the deep-cloned data, instead of the array's reference
 // not = [...array] which is only one-layer cloning
 export function getBOOK() { return JSON.parse(JSON.stringify(BOOK)) }
 export function getCONSULT() { return JSON.parse(JSON.stringify(CONSULT)) }
+export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
 export function getTIMESTAMP() { return TIMESTAMP }
+
+export function setSTAFF(staff) { STAFF = staff }
 
 // Save data got from server
 // Two main data for tables (BOOK, CONSULT) and a TIMESTAMP

@@ -16,9 +16,10 @@ import { settingResident } from '../setting/settingResident.js'
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
-import { getSTAFF } from "../setting/getSTAFF.js"
+import { getSTAFFdivision } from "../setting/getSTAFF.js"
 import { sqlResident } from "../model/sqlResident.js"
 import { getRESIDENT } from "../setting/constResident.js"
+import { DIVISION } from "../main.js"
 
 export function setClickAll()
 {
@@ -81,7 +82,7 @@ function setClickService()
 
 export async function getPermission(submenu, rname)
 {
-  const staffid = getSTAFF().map(e => e.ramaid),
+  const staffid = getSTAFFdivision(DIVISION).map(e => e.ramaid),
     residents = await startRESIDENT(),
     residentid = residents.map(e => e.ramaid),
     barname = residents.find(e => e.name === rname),

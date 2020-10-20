@@ -5,6 +5,8 @@ import { Alert } from "./util/util.js"
 // from login.js
 export let ADMIN = sessionStorage.getItem("admin")
 export let USER = sessionStorage.getItem("userid")
+export let DIVISION = 'ประสาทศัลยศาสตร์'
+//new URLSearchParams(window.location.search).get("division")
 
 let wrapper = document.getElementById("wrapper")
 let mcontainer = document.getElementById("maintblContainer")
