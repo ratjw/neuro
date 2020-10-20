@@ -36,7 +36,7 @@ async function changeOncall(cell, opdate, ramaid, staffname)
     response = await postData(MYSQLIPHP, { sqlReturnStaff: sql })
 
   if (typeof response === "object") {
-    setSTAFF(response.STAFF)
+    setSTAFF(response)
   } else {
     alert("changeOncall", response)
   }
