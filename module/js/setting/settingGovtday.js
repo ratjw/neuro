@@ -9,7 +9,7 @@ import {
 export function settingGovtday()
 {
   fillGovtday()
-  dialogHoliday("Government Holiday")
+  dialogHoliday("วันหยุดทุกปี")
 }
 
 export function fillGovtday()
@@ -25,7 +25,7 @@ export function fillGovtday()
         .filldataGovtday(this)
   });
 
-  moreHoliday()
+  newGovtday()
   onclickDelete()
 }
 
@@ -43,7 +43,7 @@ jQuery.fn.extend({
   }
 })
 
-function moreHoliday()
+function newGovtday()
 {
   let holidaytbody = document.querySelector("#holidaytbl tbody"),
     holidaycells = document.querySelector("#holidaycells tr"),

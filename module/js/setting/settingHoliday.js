@@ -10,7 +10,7 @@ import {
 export function settingHoliday()
 {
   fillHolyDay()
-  dialogHoliday("Religious Holiday")
+  dialogHoliday("วันหยุดเฉพาะปี")
 }
 
 function fillHolyDay()
@@ -28,7 +28,7 @@ function fillHolyDay()
         .filldataHoliday(this)
   });
 
-  moreHoliday()
+  newHoliday()
   onclickDelete()
 }
 
@@ -46,7 +46,7 @@ jQuery.fn.extend({
   }
 })
 
-function moreHoliday()
+function newHoliday()
 {
   let holidaytbody = document.querySelector("#holidaytbl tbody"),
     holidaycells = document.querySelector("#holidaycells tr"),
