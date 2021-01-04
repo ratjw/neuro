@@ -59,7 +59,8 @@ function setClickSetting()
   },
   disable = [
     "#clickSetResident",
-    "#clickSetStaff"
+    "#clickSetStaff",
+    "#clickSetGovtday"
   ]
 
   Object.entries(clickSetting).forEach(([key, val]) => {
