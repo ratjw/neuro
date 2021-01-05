@@ -48,7 +48,7 @@ function setClickMenu()
   })
 }
 
-function setClickSetting()
+async function setClickSetting()
 {
   const clickSetting = {
     "clickresResearch": researchResident,
@@ -67,7 +67,7 @@ function setClickSetting()
     document.getElementById(key).onclick = val
   })
 
-  if (!getPermission('disable')){
+  if (!await getPermission('disable')){
     disable.forEach(e => document.querySelector(e).className = "disabled")
   }
 }
