@@ -5,7 +5,7 @@ import { apostrophe } from "../util/util.js"
 import { USER } from "../main.js"
 
 export function sqlStart() {
-  return postData(MYSQLIPHP, {start:START_DATE});
+  return postData(MYSQLIPHP, { start: START_DATE });
 }
 
 export function sqldoUpdate()

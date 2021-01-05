@@ -8,14 +8,14 @@ export function sqlSaveStaff(row)
 {
   const cells = row.cells
   const ramaid = cells[RAMAID].dataset.val
-  const sql = ramaid ? sqlUpdate(cells, ramaid) : sqlInsert(cells)
+  const sql = ramaid ? sqlUpdateStaff(cells, ramaid) : sqlInsertStaff(cells)
 
   if (!sql) { return "Incomplete Entry" }
 
   return postData(MYSQLIPHP, sql)
 }
 
-function sqlUpdate(cells, ramaid)
+function sqlUpdateStaff(cells, ramaid)
 {
   let data = [
     getTextContent(cells[NAME], 'name'),
@@ -58,7 +58,7 @@ function sqlUpdate(cells, ramaid)
   }
 }
 
-function sqlInsert(cells)
+function sqlInsertStaff(cells)
 {
   const cname = cells[NAME].textContent
   const cramaid = cells[RAMAID].textContent

@@ -7,7 +7,7 @@ import {
   POINTER, OLDCONTENT, getNewcontent, editcellLocation, renewEditcell
 } from "./edit.js"
 import { clearAllEditing } from "./clearAllEditing.js"
-import { sqlSaveOnChange } from "../model/sqlupdate.js"
+import { sqlSaveOnChange } from "../model/sqlStart.js"
 import { sqlSaveService } from "../model/sqlservice.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert, apostrophe } from "../util/util.js"

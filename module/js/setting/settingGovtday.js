@@ -5,6 +5,7 @@ import { dialogHoliday, saveHoliday, onclickDelete } from "../setting/dialogHoli
 import {
   MAXYEAR, HOLIDATE, HOLINAME, INPUT, ACTION, SAVE, DELETE, getHOLIDAY
 } from "../setting/constHoliday.js"
+import { getPermission } from '../control/setClickAll.js'
 
 export function settingGovtday()
 {
@@ -12,7 +13,7 @@ export function settingGovtday()
   dialogHoliday("วันหยุดทุกปี")
 }
 
-export function fillGovtday()
+export async function fillGovtday()
 {
   const $holidaytbl = $("#holidaytbl"),
     holiday = getHOLIDAY().filter(day => day.holidate > MAXYEAR)
@@ -25,8 +26,12 @@ export function fillGovtday()
         .filldataGovtday(this)
   });
 
-  newGovtday()
-  onclickDelete()
+  if (await getPermission('disable')) {
+    newGovtday()
+    onclickDelete()
+  } else {
+    $holidaytbl.after("<br> * Staff and Admin can edit this table")
+  }
 }
 
 jQuery.fn.extend({
