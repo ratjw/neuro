@@ -1,7 +1,7 @@
 
 import { PATIENT } from "../control/const.js"
 import { obj_2_ISO, nextdates } from "../util/date.js"
-import { getStaffOncall, getLatestStart } from "../setting/getSTAFF.js"
+import { getStaffOncall, getLatestStart } from "../setting/getStaff.js"
 import { fillExchange } from "../view/fillExchange.js"
 
 // The staff who has latest startoncall date, is to start

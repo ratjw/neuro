@@ -1,7 +1,8 @@
 
 import { postData, MYSQLIPHP } from "../model/fetch.js"
-import { checkFieldExist } from "../setting/getSTAFF.js"
+import { checkFieldExist } from "../setting/getStaff.js"
 import { NAME, RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
+import { DIVISION } from "../main.js"
 
 // cell.dataset was set from filldataStaff() in settingStaff.js
 export function sqlSaveStaff(row)
@@ -77,7 +78,7 @@ function sqlInsertStaff(cells)
 
   return {
     sqlReturnStaff:`INSERT INTO personnel (division,profile)`
-                    + `VALUES ("ประสาทศัลยศาสตร์",${json});`
+                    + `VALUES ("${DIVISION}",${json});`
   }
 }
 

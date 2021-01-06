@@ -2,7 +2,7 @@
 import { htmlStafflist } from "../control/html.js"
 import { sqlSaveStaff } from "../model/sqlStaff.js"
 import { START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
-import { getSTAFFdivision, getLatestStart } from "../setting/getSTAFF.js"
+import { getSTAFFdivision, getLatestStart } from "../setting/getStaff.js"
 import { getLatestKey, Alert, winHeight } from "../util/util.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"

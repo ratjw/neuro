@@ -1,7 +1,9 @@
 
-import { getRESIDENT, ICONS, EDUYEAR } from "../setting/constResident.js"
+import { ICONS, EDUYEAR } from "../setting/constResident.js"
 import { newResident, updateResident, deleteResident } from "../model/sqlResident.js"
 import { winHeight } from "../util/util.js"
+import { presentRESIDENT } from "../setting/getResident.js"
+import { DIVISION } from "../main.js"
 
 const ENTRYLEVEL = 2,
   IMAGE1 = `<img class="updateResident" src="css/pic/general/update.png">`,
@@ -17,7 +19,7 @@ export function settingResident()
 
   $residenttbltr.slice(1).remove()
 
-  let residents = getRESIDENT()
+  let residents = presentRESIDENT(DIVISION)
 
   if (residents.length) {
     $.each( residents, function() {

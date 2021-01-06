@@ -30,6 +30,7 @@ function start($mysqli)
 	$data = array();
 	$data = book($mysqli);
 	$data[STAFF] = getStaff($mysqli);
+	$data[RESIDENT] = getResident($mysqli);
 	$data[HOLIDAY] = getHoliday($mysqli);
 	return json_encode($data);
 }

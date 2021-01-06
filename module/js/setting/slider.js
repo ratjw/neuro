@@ -4,9 +4,10 @@ import { obj_2_ISO, ISO_2_th, obj_2_th } from "../util/date.js"
 import { winWidth } from "../util/util.js"
 import { updateResearch } from "../model/sqlResident.js"
 import { getPermission } from '../control/setClickAll.js'
-import {
-  presentRESIDENT, MAXYEAR, XRANGE, DATEBEGINX, DATEENDX, RESEARCHBAR
+import { MAXYEAR, XRANGE, DATEBEGINX, DATEENDX, RESEARCHBAR
 } from '../setting/constResident.js'
+import { presentRESIDENT } from "../setting/getResident.js"
+import { DIVISION } from "../main.js"
 
 export function slider(evt, barChart)
 {
@@ -110,7 +111,7 @@ function getDateSlider(timemap)
 
 function getResText(ridx)
 {
-  const residents = presentRESIDENT(),
+  const residents = presentRESIDENT(DIVISION),
     research = residents.map(e => e.research),
     resbar = RESEARCHBAR.map(e => e.progress).filter(e => e)
 

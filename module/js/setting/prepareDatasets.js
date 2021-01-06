@@ -1,11 +1,13 @@
 
 import {
-  presentRESIDENT, MAXYEAR, XRANGE, EDUMONTH, EDUDATE, EDUYEAR, DATEBEGINX, DATEENDX, RESEARCHBAR
+  MAXYEAR, XRANGE, EDUMONTH, EDUDATE, EDUYEAR, DATEBEGINX, DATEENDX, RESEARCHBAR
 } from "../setting/constResident.js"
+import { presentRESIDENT } from "../setting/getResident.js"
+import { DIVISION } from "../main.js"
 
 export function prepareDatasets()
 {
-  const residents = presentRESIDENT()
+  const residents = presentRESIDENT(DIVISION)
 
   return {
     data: prepareData(residents),

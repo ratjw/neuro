@@ -1,7 +1,7 @@
 
 import { LABSHEET, EQUIPSHEET} from "../control/const.js"
 import { staffqueue } from "../view/staffqueue.js"
-import { getSTAFFdivision } from "../setting/getSTAFF.js"
+import { getSTAFFdivision } from "../setting/getStaff.js"
 import { DIVISION } from "../main.js"
 
 // stafflist for enter name in Staff column

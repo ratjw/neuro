@@ -1,21 +1,12 @@
 
 import { postData, MYSQLIPHP } from "./fetch.js"
-import { Alert } from "../util/util.js"
 import { settingResident } from "../setting/settingResident.js"
-import {
-  setRESIDENT, presentRESIDENT, XRANGE, MAXYEAR, RAMAID, RNAME,
-  LEVEL, EDUYEAR, RESEARCHBAR
+import { XRANGE, MAXYEAR, RAMAID, RNAME, LEVEL, EDUYEAR, RESEARCHBAR
 } from '../setting/constResident.js'
-
-export async function sqlResident()
-{
-  const response = await postData(MYSQLIPHP, {sqlReturnResident:""})
-  if (typeof response === "object") {
-    setRESIDENT(response)
-  } else {
-    Alert("sqlResident", response)
-  }  
-}
+import { Alert } from "../util/util.js"
+import { setRESIDENT } from "../util/updateBOOK.js"
+import { presentRESIDENT } from "../setting/getResident.js"
+import { DIVISION } from "../main.js"
 
 // XRANGE (X axis) is double the research time range (fulltrain),
 // because half of it is the white bars
@@ -120,7 +111,7 @@ function showResident(response)
 
 export async function updateResearch(barChart, ridx, _ranges)
 {
-  const residents = presentRESIDENT(),
+  const residents = presentRESIDENT(DIVISION),
     ramaid = residents[ridx].ramaid,
     addLevel = residents[ridx].addLevel,
     addRatio = 1 + (addLevel / MAXYEAR),
