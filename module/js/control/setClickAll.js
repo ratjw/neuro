@@ -47,7 +47,7 @@ function setClickMenu()
   })
 }
 
-async function setClickSetting()
+function setClickSetting()
 {
   const clickSetting = {
     "clickresResearch": researchResident,
@@ -65,7 +65,7 @@ async function setClickSetting()
     document.getElementById(key).onclick = val
   })
 
-  if (!await getPermission('disable')){
+  if (!getPermission('disable')){
     disable.forEach(e => document.querySelector(e).className = "disabled")
   }
 }
@@ -79,7 +79,7 @@ function setClickService()
   service.onmouseout = hidemonthpicker
 }
 
-export async function getPermission(submenu, rname)
+export function getPermission(submenu, rname)
 {
   const staffid = getSTAFFdivision(DIVISION),
     residents = getRESIDENTdivision(DIVISION),
