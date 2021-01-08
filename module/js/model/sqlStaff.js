@@ -24,7 +24,7 @@ function sqlUpdateStaff(cells, ramaid)
     getTextContent(cells[ROLE], 'role'),
     getOncallNum(cells[ONCALL], 'oncall'),
     getDateContent(ramaid, cells[START], 'start'),
-    getSkipContent(ramaid, cells, 'skip'),
+    getSkipContent(ramaid, cells, 'skip')
   ]
   let remove = data.filter(e => e.includes('JSON_REMOVE'))
   let jsonremove = ''
