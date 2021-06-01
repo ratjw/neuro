@@ -81,8 +81,8 @@ jQuery.fn.extend({
 
     // fill leave of absence (begin, end)
     const key = getLatestKey(q.skip)
-    const beginDate = key ? getActiveDate(q.skip[key]["begin"]) : ''
-    const endDate = key ? getActiveDate(q.skip[key]["end"]) : ''
+    let beginDate = key ? getActiveDate(q.skip[key]["begin"]) : ''
+    let endDate = key ? getActiveDate(q.skip[key]["end"]) : ''
 
     // if one of them is after today, show both
     if (beginDate) { endDate = q.skip[key]["end"] }
