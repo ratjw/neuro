@@ -3,6 +3,11 @@ require_once "book.php";
 
 function saveRecord($mysqli, $record)
 {
+  // Escape special characters, if any
+  $record['diagnosis'] = $mysqli -> real_escape_string($record['diagnosis']);
+  $record['treatment'] = $mysqli -> real_escape_string($record['treatment']);
+  $record['contact'] = $mysqli -> real_escape_string($record['contact']);
+
   if ($record[qn]) {
     $sql = sqlUpdate($record);
 	} else {
