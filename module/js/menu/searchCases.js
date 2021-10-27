@@ -66,11 +66,11 @@ function getSaffName(pointing, $staffsearch)
 
 export function searchDB()
 {
-  let hn = $('#dialogInput input[name="hn"]').val(),
-    name = $('#dialogInput input[name="name"]').val(),
-    surname = $('#dialogInput input[name="surname"]').val(),
-    staffname = $('#dialogInput input[name="staffname"]').val(),
-    others = $('#dialogInput input[name="others"]').val(),
+  let hn = $('#dialogInput input[name="hn"]').val().trim(),
+    name = $('#dialogInput input[name="name"]').val().trim(),
+    surname = $('#dialogInput input[name="surname"]').val().trim(),
+    staffname = $('#dialogInput input[name="staffname"]').val().trim(),
+    others = $('#dialogInput input[name="others"]').val().trim(),
     fullname = name + (surname ? " " : "") + surname,
     search = ""
 

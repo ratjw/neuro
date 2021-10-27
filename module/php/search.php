@@ -36,10 +36,9 @@ function getData($mysqli, $sql, $others)
 {
 	$column = array("diagnosis","treatment","equipment","admission","final");
 	$data = array();
-	$findArr = explode(" ", $others);
-
-	// Create array for the names that are close to or match the search term
 	$qns = array();
+	$findArr = explode(" ", $others);
+  $findArr = array_filter($findArr);
 
 	$sqlx = $sql ? "AND $sql" : "";
 	$sqls = "SELECT * FROM book
@@ -89,6 +88,7 @@ function getData($mysqli, $sql, $others)
 			// must found every $find, if one $find is not found => no match
 			if (!$match) { break; }
 		}
+    // Create array for the names that are close to or match the search term
 		if ($match === true) {
 			array_push($qns, $row);
 		}
