@@ -29,7 +29,7 @@
 				$resultz = (string)$resulty->children()->children()->role;
 			}
 
-      $admin = $userid = "000000" && $pwd = "BzAs1953";
+      $admin = $userid === "000000" && $pwd === "BzAs1953";
 			$staff = $resultz === "S";
       $resident = $resultz === "R";
       $nurse = $resultz === "N";
