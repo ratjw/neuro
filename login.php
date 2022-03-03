@@ -31,11 +31,12 @@
 
       $admin = $userid === "000000" && $pwd === "BzAs1953";
 			$staff = $resultz === "S";
+			$fellow = $resultz === "F";
       $resident = $resultz === "R";
       $nurse = $resultz === "N";
       $secretary = $resultz === "G";
  
-      if ($admin || $staff || $resident || $secretary) {
+      if ($admin || $staff || $fellow || $resident || $secretary) {
 				header($browserDoctor);
 			}
 			else if ($nurse) {
