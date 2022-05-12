@@ -5,7 +5,7 @@ import { oneRowMenu } from '../control/oneRowMenu.js'
 export function selectRow(event, target)
 {
   let row = target.closest("tr"),
-    selected = /selected/.test(row.getAttribute('class'))
+    selected = new RegExp(SELECTED).test(row.getAttribute('class'))
 
   clearSelection()
   if (!selected) {
@@ -14,13 +14,15 @@ export function selectRow(event, target)
   }
 }
 
+// All ids are the items in cssmenu
 export function clearSelection()
 {
   let table = document.querySelector("#maintbl"),
-    ids = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", "#delete"]
+    menu = document.querySelector("#cssmenu"),
+    ids = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", "#delete", "#setholiday"]
 
   ids.forEach(each => {
-    let row = table.querySelector(`${each}`)
+    let row = menu.querySelector(`${each}`)
     if (row) {
       row.classList.add("disabled")
     }

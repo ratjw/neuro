@@ -1,18 +1,16 @@
 
-import { SELECTED } from "../control/const.js"
 import { ISO_2_th, th_2_ISO } from "../util/date.js"
 import { datePicker } from "../util/datePicker.js"
 import { dialogHoliday, saveHoliday, onclickDelete } from "../setting/dialogHoliday.js"
 import {
-  THISYEAR, MAXYEAR, HOLIDAYTHAI, HOLIDATE, HOLINAME, SELECT,
+  THISYEAR, MAXYEAR, HOLIDAYTHAI, HOLIDATE, HOLINAME, INPUT, SELECT,
   ACTION, SAVE, LIST, DELETE, getHOLIDAY
 } from "../setting/constHoliday.js"
 
 export function settingHoliday()
 {
-  dialogHoliday("วันหยุดเฉพาะปีนี้")
   fillHolyDay()
-  newHoliday()
+  dialogHoliday("วันหยุดเฉพาะปี")
 }
 
 function fillHolyDay()
@@ -30,6 +28,7 @@ function fillHolyDay()
         .filldataHoliday(this)
   });
 
+  newHoliday()
   onclickDelete()
 }
 
@@ -55,15 +54,19 @@ function newHoliday()
     cells = clone.cells,
     holidaylist = LIST,
     checkComplete = () => {
-      if (holiname.value) {
+      if (holidate.value && holiname.value) {
         cells[ACTION].innerHTML = SAVE
       }
-    },
-    date = document.querySelector(`.${SELECTED}`).dataset.opdate
+    }
 
   holidaytbody.appendChild(clone)
 
-  cells[HOLIDATE].innerHTML = ISO_2_th(date)
+  cells[HOLIDATE].innerHTML = INPUT
+  const holidate = document.querySelector("#holidate"),
+    $holidate = $(holidate)
+  holidate.tabIndex = "-1"
+  datePicker($holidate)
+  $holidate.datepicker('option', 'onClose', checkComplete)
 
   cells[HOLINAME].innerHTML = SELECT
   const holiname = document.querySelector("#holidayname")
@@ -72,7 +75,7 @@ function newHoliday()
   holiname.onchange = checkComplete
 
   cells[ACTION].onclick = async () => {
-    await saveHoliday(date, holiname.value)
+    await saveHoliday(th_2_ISO(holidate.value), holiname.value)
     fillHolyDay()
   }
 }

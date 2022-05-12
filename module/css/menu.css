@@ -50,7 +50,7 @@
   text-shadow: 0px 1px 0px #fff;
 }
 #cssmenu > ul li#submenu ul li a {
-  width: 160px;
+  width: 140px;
   height: auto;
   text-align: left;
   padding-top: 12px;
@@ -97,8 +97,7 @@
   #cssmenu > ul li#moveCase,
   #cssmenu > ul li#copyCase,
   #cssmenu > ul li#delete,
-  #cssmenu > ul li#EXCEL,
-  #cssmenu > ul li#LINE,
+  #cssmenu > ul li#setholiday,
   #cssmenu > ul li#submenu {
     display: none
   }

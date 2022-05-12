@@ -39,7 +39,8 @@ function setClickMenu()
     "postponecase": postponeCase,
     "moveCase": moveCase,
     "copyCase": copyCase,
-    "deleteCase": deleteCase
+    "deleteCase": deleteCase,
+    "setholiday": settingHoliday
   }
 
   Object.entries(clickMenu).forEach(([key, val]) => {
@@ -53,7 +54,6 @@ function setClickSetting()
     "clickresResearch": researchResident,
     "clickSetResident": settingResident,
     "clickSetStaff": settingStaff,
-    "clickSetHoliday": settingHoliday,
     "clickSetGovtday": settingGovtday
   },
   disable = [
