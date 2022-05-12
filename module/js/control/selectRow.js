@@ -4,27 +4,29 @@ import { oneRowMenu } from '../control/oneRowMenu.js'
 
 export function selectRow(event, target)
 {
-  let $table = $(target).closest("table"),
-    $rows = $table.find("tr"),
-    $row = $(target).closest("tr"),
-    $allRows = $("tr")
+  let row = target.closest("tr"),
+    selected = /selected/.test(row.getAttribute('class'))
 
-  if (/selected/.test($row.attr('class'))) {
-    clearSelection()
-  } else {
-    $rows.removeClass(SELECTED)
-    $row.addClass(SELECTED)
+  clearSelection()
+  if (!selected) {
+    row.classList.add(SELECTED)
     oneRowMenu()
   }
 }
 
 export function clearSelection()
 {
-  let ids = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", "#delete"]
+  let table = document.querySelector("#maintbl"),
+    ids = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", "#delete"]
 
-  ids.forEach(function(each) {
-    $(each).addClass("disabled")
+  ids.forEach(each => {
+    let row = table.querySelector(`${each}`)
+    if (row) {
+      row.classList.add("disabled")
+    }
   })
 
-  $(`.${SELECTED}`).removeClass(SELECTED)
+  table.querySelectorAll(`.${SELECTED}`).forEach(each => {
+    each.classList.remove(SELECTED)
+  })
 }
