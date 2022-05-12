@@ -50,29 +50,35 @@ jQuery.fn.extend({
 function newHoliday()
 {
   let holidaytbody = document.querySelector("#holidaytbl tbody"),
-    holidaycells = document.querySelector("#holidaycells tr"),
-    clone = holidaycells.cloneNode(true),
+    holidayrows = document.querySelector("#holidaycells tr"),
+    clone = holidayrows.cloneNode(true),
     cells = clone.cells,
     holidaylist = LIST,
-    checkComplete = () => {
+    selected = document.querySelector(`.${SELECTED}`),
+    date = selected.dataset.opdate
+
+  if (selected.querySelector(".holiday")) {
+    let rows = Array.from(holidaytbody.children),
+      hightlight = rows.find(row => row.dataset.holidate = date)
+    hightlight.classList.add("deletedcase")
+  } else {
+    holidaytbody.appendChild(clone)
+
+    cells[HOLIDATE].innerHTML = ISO_2_th(date)
+
+    cells[HOLINAME].innerHTML = SELECT
+    const holiname = holidaytbody.querySelector("#holidayname")
+    HOLIDAYTHAI.forEach(holi => holidaylist += `<option value="${holi}">${holi}</option>`)
+    holiname.innerHTML = holidaylist
+    holiname.onchange = () => {
       if (holiname.value) {
         cells[ACTION].innerHTML = SAVE
       }
-    },
-    date = document.querySelector(`.${SELECTED}`).dataset.opdate
+    }
 
-  holidaytbody.appendChild(clone)
-
-  cells[HOLIDATE].innerHTML = ISO_2_th(date)
-
-  cells[HOLINAME].innerHTML = SELECT
-  const holiname = document.querySelector("#holidayname")
-  HOLIDAYTHAI.forEach(holi => holidaylist += `<option value="${holi}">${holi}</option>`)
-  holiname.innerHTML = holidaylist
-  holiname.onchange = checkComplete
-
-  cells[ACTION].onclick = async () => {
-    await saveHoliday(date, holiname.value)
-    fillHolyDay()
+    cells[ACTION].onclick = async () => {
+      await saveHoliday(date, holiname.value)
+      fillHolyDay()
+    }
   }
 }
