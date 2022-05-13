@@ -21,7 +21,7 @@ HOLINAME = 1,
 ACTION = 2,
 
 INPUT = `<input id="holidate" class="w80"></input>`,
-SELECT = `<select id="holidayname" class="w150"></select>`,
+SELECT = `<select class="w150"></select>`,
 LIST = `<option style="display:none"></option>`,
 SAVE = `<img src="css/pic/general/save.png">`,
 DELETE = `<img class="delholiday" src="css/pic/general/delete.png">`

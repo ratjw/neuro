@@ -55,30 +55,32 @@ function newHoliday()
     cells = clone.cells,
     holidaylist = LIST,
     selected = document.querySelector(`.${SELECTED}`),
-    date = selected.dataset.opdate
+    date = selected.dataset.opdate,
+    clickDay, preholiname
 
   if (selected.querySelector(".holiday")) {
-    let rows = Array.from(holidaytbody.children),
-      hightlight = rows.find(row => row.dataset.holidate = date)
-    hightlight.classList.add("deletedcase")
+    let rows = Array.from(holidaytbody.children)
+    clickDay = rows.find(row => row.dataset.holidate === date)
+    clickDay.classList.add("deletedcase")
+    preholiname = clickDay.dataset.dayname
   } else {
-    holidaytbody.appendChild(clone)
-
     cells[HOLIDATE].innerHTML = ISO_2_th(date)
+    clickDay = holidaytbody.appendChild(clone)
+  }
 
-    cells[HOLINAME].innerHTML = SELECT
-    const holiname = holidaytbody.querySelector("#holidayname")
-    HOLIDAYTHAI.forEach(holi => holidaylist += `<option value="${holi}">${holi}</option>`)
-    holiname.innerHTML = holidaylist
-    holiname.onchange = () => {
-      if (holiname.value) {
-        cells[ACTION].innerHTML = SAVE
-      }
+  clickDay.cells[HOLINAME].innerHTML = SELECT
+  const holiname = clickDay.querySelector("select")
+  HOLIDAYTHAI.forEach(holi => holidaylist += `<option value="${holi}">${holi}</option>`)
+  holiname.innerHTML = holidaylist
+  holiname.value = preholiname
+  holiname.onchange = () => {
+    if (holiname.value) {
+      clickDay.cells[ACTION].innerHTML = SAVE
     }
+  }
 
-    cells[ACTION].onclick = async () => {
-      await saveHoliday(date, holiname.value)
-      fillHolyDay()
-    }
+  clickDay.cells[ACTION].onclick = async () => {
+    await saveHoliday(date, holiname.value)
+    $("#dialogHoliday").dialog("close")
   }
 }
