@@ -3,7 +3,7 @@ import { postData, MYSQLIPHP } from "./fetch.js"
 
 export function sqlSaveHoliday(holidate, holiname)
 {
-  let sql = `INSERT INTO holiday (holidate,dayname)
+  let sql = `REPLACE INTO holiday (holidate,dayname)
                 VALUES('${holidate}','${holiname}');
               SELECT * FROM holiday ORDER BY holidate;`
 

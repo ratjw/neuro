@@ -29,8 +29,6 @@ function fillHolyDay()
       .appendTo($holidaytbl.find('tbody'))
         .filldataHoliday(this)
   });
-
-  onclickDelete()
 }
 
 jQuery.fn.extend({
@@ -63,6 +61,7 @@ function newHoliday()
     clickDay = rows.find(row => row.dataset.holidate === date)
     clickDay.classList.add("deletedcase")
     preholiname = clickDay.dataset.dayname
+    onclickDelete()
   } else {
     cells[HOLIDATE].innerHTML = ISO_2_th(date)
     clickDay = holidaytbody.appendChild(clone)
@@ -77,10 +76,9 @@ function newHoliday()
     if (holiname.value) {
       clickDay.cells[ACTION].innerHTML = SAVE
     }
-  }
-
-  clickDay.cells[ACTION].onclick = async () => {
-    await saveHoliday(date, holiname.value)
-    $("#dialogHoliday").dialog("close")
+    clickDay.cells[ACTION].onclick = async () => {
+      await saveHoliday(date, holiname.value)
+      $("#dialogHoliday").dialog("close")
+    }
   }
 }
