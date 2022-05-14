@@ -48,8 +48,8 @@ jQuery.fn.extend({
 function newHoliday()
 {
   let holidaytbody = document.querySelector("#holidaytbl tbody"),
-    holidayrows = document.querySelector("#holidaycells tr"),
-    clone = holidayrows.cloneNode(true),
+    holicellsrow = document.querySelector("#holidaycells tr"),
+    clone = holicellsrow.cloneNode(true),
     cells = clone.cells,
     holidaylist = LIST,
     selected = document.querySelector(`.${SELECTED}`),
