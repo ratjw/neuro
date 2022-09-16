@@ -213,7 +213,7 @@ jQuery.fn.extend({
 
 function findLastDateInBOOK(book)
 {
-  let q = book.find(e => e.opdate === MAXDATE)
+  let opdates = book.map(e => e.opdate)
 
-  return book[book.indexOf(q) - 1].opdate
+  return opdates.reduce((a, b) => a > b ? a : b)
 }
