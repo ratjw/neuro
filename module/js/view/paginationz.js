@@ -7,11 +7,13 @@ import { winWidth, winHeight, winResizeFix } from "../util/util.js"
 
 export function pagination($dialog, $showtbl, found, search)
 {
-  let week = 7,
-    month = 28,
-    year = 364,
-    previous = -1,
-    firstday
+  let firstday
+  const backwardYear = "<<< Year",
+    backwardMonth = "<< Month",
+    backwardweek = "< week",
+    forwardweek = "week >",
+    forwardMonth = "Month >>",
+    forwardYear = "Year >>>"
 
   $dialog.dialog({
     title: search,
@@ -27,52 +29,52 @@ export function pagination($dialog, $showtbl, found, search)
     },
     buttons: [
       {
-        text: "<<< Year",
+        text: backwardYear,
         class: "yearbut",
         click: function () {
-          showOneWeek(found, previous * year)
+          showOneWeek(found, backwardYear)
         }
       },
       {
-        text: "<< Month",
+        text: backwardMonth,
         class: "monthbut",
         click: function () {
-          showOneWeek(found, previous * month)
+          showOneWeek(found, backwardMonth)
         }
       },
       {
-        text: "< Week",
+        text: backwardweek,
         click: function () {
-          showOneWeek(found, previous * week)
+          showOneWeek(found, backwardweek)
         }
       },
       {
         click: function () { return }
       },
       {
-        text: "Week >",
+        text: forwardweek,
         click: function () {
-          showOneWeek(found, week)
+          showOneWeek(found, forwardweek)
         }
       },
       {
-        text: "Month >>",
+        text: forwardMonth,
         class: "monthbut",
         click: function () {
-          showOneWeek(found, month)
+          showOneWeek(found, forwardMonth)
         }
       },
       {
-        text: "Year >>>",
+        text: forwardYear,
         class: "yearbut",
         click: function () {
-          showOneWeek(found, year)
+          showOneWeek(found, forwardYear)
         }
       }
     ]
   })
 
-  showOneWeek(found, 0)
+  showOneWeek(found, "")
 
   //for resizing dialogs in landscape / portrait view
   $(window).on("resize", resizeDialog )
@@ -92,12 +94,12 @@ export function pagination($dialog, $showtbl, found, search)
       MAXDATEyear = new Date(MAXDATE).getFullYear(),
       Monday
 
-    if ((firstdayYear === MAXDATEyear) && (offset < 0)) {
+    if ((firstdayYear === MAXDATEyear) && (offset[0] === "<")) {
       opdates = opdates.filter(e => e !== MAXDATE)
       lastday = opdates.reduce((a, b) => a > b ? a : b)
       Monday = getPrevMonday(lastday)
     } else {
-      Monday = offset ? nextdates(firstday, offset) : getPrevMonday()
+      Monday = offset ? getOffsetMonday(firstday, offset) : getPrevMonday()
     }
 
     if ((Monday < beginday) || (Monday > lastday)) return
@@ -111,6 +113,26 @@ export function pagination($dialog, $showtbl, found, search)
       newMonday = getPrevMonday(date)
 
     showAllCases(bookOneWeek, newMonday)
+  }
+
+  function getOffsetMonday(firstday, offset)
+  {
+    let off = { backwardYear: backwardYear,
+      backwardMonth: backwardMonth,
+      backwardweek: backwardweek,
+      forwardweek: forwardweek,
+      forwardMonth: forwardMonth,
+      forwardYear: forwardMonth
+    }
+
+    nextdates(firstday, offset)
+
+    return obj_2_ISO(today);
+  }
+
+  function backwardYear()
+  {
+    
   }
 
   function getPrevMonday(date)
