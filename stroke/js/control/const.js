@@ -11,25 +11,9 @@ NAMEOFDAYTHAI = ["อาทิตย์", "จันทร์", "อังคา
 THAIMONTH = ["มค.", "กพ.", "มีค.", "เมย.", "พค.", "มิย.", "กค.", "สค.", "กย.", "ตค.", "พย.", "ธค."],
 THAIMONTHFULL = [ "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", 
                   "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" ],
-MAXDATE = "9999-12-31",
-NODATE = "nodate",
-
-SELECTED = "selected",
-MOVECASE = "moveCase",
-COPYCASE = "copyCase",
-PASTETOP = "pasteDateTop",
-PASTEBOTTOM = "pasteDateBottom",
-
-COMPLICATION = {
-  admitted: "Readmission",
-//  operated: "Reoperation",
-  infection: "Infection",
-  morbid: "Morbidity",
-  dead: "Dead"
-},
 
 // ["type", "width", "name", "label", "id"]
-EQUIPSHEET = [
+REGISTERSHEET = [
   ["spanInSpan", "70", "", "ห้อง ", "oproomequip"],
   ["spanInSpan", "70", "", "Case ", "casenumequip"],
   ["spanInSpan", "100", "", "เวลา ", "optimeequip"],

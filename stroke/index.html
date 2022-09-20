@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+<title>Stroke Registry</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="css/css.css" rel="stylesheet">
+
+<script src="js/main.js" type="module"></script>
+
+</HEAD>
+<BODY>
+
+<div id="wrapper" class="padding10">
+  <br>
+  <div class="textcenter fontsize30">Stroke Registry</div>
+  <br>
+
+ <div class="solid padding10" id="Profile">
+  <span class="w40">HN</span>
+    <input class="w70" type="text" name="hn">
+  <br>
+  <span class="w40">ชื่อ</span>
+    <input class="w100" type="text" name="name">
+    <span class="w10"></span>
+    <span class="w50">นามสกุล</span><span class="w10"></span>
+    <input class="w150" type="text" name="surname">
+  <br>
+  <span class="w40">อายุ</span>
+    <input class="w20" type="text" name="age">
+  <br>
+  <span class="w40">เพศ</span>
+   <label>
+    <input type="radio" name="sex" value="M">
+    <span class="w120">ชาย</span>
+   </label>
+   <label>
+    <input type="radio" name="sex" value="F">
+    <span class="w120">หญิง</span>
+   </label>
+  <br>
+  <span class="w40">สิทธิ</span>
+   <label>
+    <input type="radio" name="insure" value="สุขภาพถ้วนหน้า">
+    <span class="w120">สุขภาพถ้วนหน้า</span>
+   </label>
+   <label>
+    <input type="radio" name="insure" value="ประกันสังคม รามา">
+    <span class="w120">ประกันสังคม รามา</span>
+   </label>
+   <label>
+    <input type="radio" name="insure" value="ประกันสังคม">
+    <span class="w150">ประกันสังคม ........................................</span>
+   </label>
+  <br>
+  <span class="w40"></span>
+   <label>
+    <input type="radio" name="insure" value="ข้าราชการ">
+    <span class="w120">ข้าราชการ</span>
+   </label>
+   <label>
+    <input type="radio" name="insure" value="รัฐวิสาหกิจ">
+    <span class="w120">รัฐวิสาหกิจ</span>
+   </label>
+   <label>
+    <input type="radio" name="insure" value="ประกันเอกชน">
+    <span class="w120">ประกันเอกชน</span>
+   </label>
+   <label>
+    <input type="radio" name="insure" value="จ่ายเอง">
+    <span class="w100">จ่ายเอง</span>
+   </label>
+  <br>
+  <span class="w40">โทร</span>
+  <input class="w100" type="text">
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10" id="SFT">
+  <span class="w250">
+    <span class="w40">Onset</span>
+    <input type="date">
+    <input type="time">
+  </span>
+  <span>ER
+    <input type="date">
+    <input type="time">
+  </span>
+  <br>
+  <span class="w200">1st MD visit
+    <input type="time">
+  </span>
+  <span class="w200">
+    <span class="w80">Neurologist</span>
+    <input type="time">
+  </span>
+  <span>
+    <span>Neurosurgeon</span>
+    <input type="time">
+  </span>
+  <br>
+  <span class="w200">
+    <span class="w40">CT</span>
+    <input type="time">
+  </span>
+  <span class="w200">
+    <span class="w80">CT Result</span>
+    <input type="time">
+  </span>
+  <span>
+    <span class="w90">Lab Result</span>
+    <input type="time">
+  </span>
+    <br>
+  <span class="w200">
+    <span class="w40">IVT</span>
+    <input type="time">
+    <input class="w30" type="text">
+    <span>mg</span>
+  </span>
+  <span class="w200">
+    <span class="w80">EVT: Groin</span>
+    <input type="time">
+  </span>
+  <span>
+    <span class="w90">Recanalize</span>
+    <input type="time">
+  </span>
+    <br>
+  <span class="w100">
+   <span class="w40">TIMI</span>
+   <input class="w20" type="text">
+  </span>
+  <span class="w100">
+   <span class="w20">BW</span>
+   <input class="w20" type="text">
+  </span>
+  <span class="w200">
+   <span class="w20">no:</span>
+   <input class="w100" type="text">
+  </span>
+  <span>
+   <span class="w80">delay SFT</span>
+   <input class="w100" type="text">
+  </span>
+   <br>
+  <span class="w250">
+    <span class="w40">Admit</span>
+    <input type="date">
+    <input type="time">
+  </span>
+    <input type="radio" name="Admit">
+    <span class="w40">MDJ</span>
+    <input type="radio" name="Admit">
+    <span class="w40">ICU</span>
+    <input type="radio" name="Admit">
+    <span class="w40">7NW</span>
+    <input type="radio" name="Admit">
+    <span class="w40">5SW</span>
+    <br>
+    <span class="w250"></span>
+    <input type="radio" name="Admit">
+    <span class="w40">7SE</span>
+    <input type="radio" name="Admit">
+    <span class="w40">OW1</span>
+    <input type="radio" name="Admit">
+    <span class="w40">OW2</span>
+    <input type="radio" name="Admit">
+    <span>Readmit in 4 wk</span>
+  <br>
+  <span class="w250">
+    <span class="w60">Refer to</span>
+    <input type="text">
+  </span>
+    <input type="radio" name="Refer">
+    <span class="w65">ตามสิทธิ</span>
+    <input type="radio" name="Refer">
+    <span class="w55">no bed</span>
+    <input type="radio" name="Refer">
+    <span class="w65">pt. prefer</span>
+    <input type="radio" name="Refer">
+    <span5>Stay at ER</span>
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10" id="S&S">
+  <span class="w40 top">S&S</span>
+  <textarea rows="3" cols="80"></textarea>
+  <br>
+  <span class="w40"></span>
+  <span class="w100">
+    <span>H&H</span>
+    <input class="w10" type="text">
+  </span>
+  <span class="w100">
+    <span>WFNS</span>
+    <input class="w20" type="text">
+  </span>
+  <span class="w100">
+    <span class="w50">NIHSH</span>
+    <input class="w20" type="text">
+  </span>
+  <span class="w100">
+    <span class="w30">mRS</span>
+    <input class="w20" type="text">
+  </span>
+  <span class="w100">
+    <span class="w20">sBP</span>
+    <input class="w30" type="text">
+  </span>
+  <br>
+  <span class="w40"></span>
+  <span class="w250">
+    <span>TIA duration</span>
+    <input type="time">
+  </span>
+  <span class="w60">ABCD2</span>
+  <span class="w80">
+    <input type="checkbox">
+    <span>seizure</span>
+  </span>
+  <span class="w80">
+    <input type="checkbox">
+    <span>headache</span>
+  </span>
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10"v id="Underlying">
+  <span class="w80">Underlying</span>
+  <input class="w500" type="text">
+  <br>
+  <span class="w40"></span>
+  <input type="checkbox">
+  <span>No</span>
+  <br>
+  <span class="w40"></span>
+  <span class="w80">
+    <input type="checkbox">
+    <span>DM</span>
+  </span>
+  <span class="w80">
+    <input type="checkbox">
+    <span>HT</span>
+  </span>
+  <span class="w80">
+    <input type="checkbox">
+    <span>DLP</span>
+  </span>
+  <br>
+  <span class="w40"></span>
+  <span class="w80">
+    <input type="checkbox">
+    <span>Smoker</span>
+  </span>
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10" id="Investigation">
+   <span class="w40">HN</span><input class="w70" type="text" name="hn">
+   <br>
+   <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
+   <span class="w10"></span>
+   <span class="w50">นามสกุล</span><span class="w10"></span>
+   <input class="w150" type="text" name="surname">
+   <br>
+   <span class="w40">อายุ</span><input class="w20" type="text" name="age">
+   <br>
+   <span class="w30">เพศ</span>
+   <input type="radio" name="M">ชาย
+   <span class="w20"></span>
+   <input type="radio" name="F">หญิง
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10" id="Diagnosis">
+   <span class="w40">HN</span><input class="w70" type="text" name="hn">
+   <br>
+   <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
+   <span class="w10"></span>
+   <span class="w50">นามสกุล</span><span class="w10"></span>
+   <input class="w150" type="text" name="surname">
+   <br>
+   <span class="w40">อายุ</span><input class="w20" type="text" name="age">
+   <br>
+   <span class="w30">เพศ</span>
+   <input type="radio" name="M">ชาย
+   <span class="w20"></span>
+   <input type="radio" name="F">หญิง
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10" id="Treatment">
+   <span class="w40">HN</span><input class="w70" type="text" name="hn">
+   <br>
+   <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
+   <span class="w10"></span>
+   <span class="w50">นามสกุล</span><span class="w10"></span>
+   <input class="w150" type="text" name="surname">
+   <br>
+   <span class="w40">อายุ</span><input class="w20" type="text" name="age">
+   <br>
+   <span class="w30">เพศ</span>
+   <input type="radio" name="M">ชาย
+   <span class="w20"></span>
+   <input type="radio" name="F">หญิง
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10" id="Complication">
+   <span class="w40">HN</span><input class="w70" type="text" name="hn">
+   <br>
+   <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
+   <span class="w10"></span>
+   <span class="w50">นามสกุล</span><span class="w10"></span>
+   <input class="w150" type="text" name="surname">
+   <br>
+   <span class="w40">อายุ</span><input class="w20" type="text" name="age">
+   <br>
+   <span class="w30">เพศ</span>
+   <input type="radio" name="M">ชาย
+   <span class="w20"></span>
+   <input type="radio" name="F">หญิง
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10" id="Discharge">
+   <span class="w40">HN</span><input class="w70" type="text" name="hn">
+   <br>
+   <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
+   <span class="w10"></span>
+   <span class="w50">นามสกุล</span><span class="w10"></span>
+   <input class="w150" type="text" name="surname">
+   <br>
+   <span class="w40">อายุ</span><input class="w20" type="text" name="age">
+   <br>
+   <span class="w30">เพศ</span>
+   <input type="radio" name="M">ชาย
+   <span class="w20"></span>
+   <input type="radio" name="F">หญิง
+ </div>
+ <hr class="div">
+
+ <div class="solid padding10" id="Outcome">
+   <span class="w40">HN</span><input class="w70" type="text" name="hn">
+   <br>
+   <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
+   <span class="w10"></span>
+   <span class="w50">นามสกุล</span><span class="w10"></span>
+   <input class="w150" type="text" name="surname">
+   <br>
+   <span class="w40">อายุ</span><input class="w20" type="text" name="age">
+   <br>
+   <span class="w30">เพศ</span>
+   <input type="radio" name="M">ชาย
+   <span class="w20"></span>
+   <input type="radio" name="F">หญิง
+ </div>
+
+</div>
+
+</BODY>
+</HTML>

@@ -45,7 +45,7 @@ export function searchCases()
     let keycode = event.which || window.Event.keyCode
     if (keycode === 13) { searchDB() }
   })
-  .find("img").click(function() { searchDB() })
+  .find("span[title='ค้นหา']").click(function() { searchDB() })
 }
 
 function getSaffName(pointing, $staffsearch)

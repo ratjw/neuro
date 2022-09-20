@@ -83,6 +83,7 @@
 .textcenter { text-align: center; }
 .bold { font-weight: bold; }
 .inline { display: inline-block; }
+.middle { vertical-align: middle }
 
 .w10 { width:10px !important; }
 .w20 { width:20px !important; }
