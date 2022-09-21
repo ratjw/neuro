@@ -42,17 +42,21 @@
   <br>
   <span class="w40">สิทธิ</span>
    <label>
-    <input type="radio" name="insure" value="สุขภาพถ้วนหน้า">
-    <span class="w120">สุขภาพถ้วนหน้า</span>
+    <input type="radio" name="insure" value="UC">
+    <span class="w120">UC</span>
    </label>
    <label>
-    <input type="radio" name="insure" value="ประกันสังคม รามา">
-    <span class="w120">ประกันสังคม รามา</span>
+    <input type="radio" name="insure" value="ปกส">
+    <span class="w150">ปกส</span>
    </label>
-   <label>
-    <input type="radio" name="insure" value="ประกันสังคม">
-    <span class="w150">ประกันสังคม ........................................</span>
-   </label>
+   <span>(</span>
+    <label>
+      <input type="radio" name="insure" value="รามา">
+      <span class="w40">รามา</span>
+     </label>
+     <span>:</span>
+     <input type="text" name="insure" value="">
+   <span>)</span>
   <br>
   <span class="w40"></span>
    <label>
@@ -78,7 +82,9 @@
  <hr class="div">
 
  <div class="solid padding10" id="SFT">
-  <span class="w250">
+  <span class="w40 bold">SFT</span>
+  <br>
+  <span class="w300">
     <span class="w40">Onset</span>
     <input type="date">
     <input type="time">
@@ -116,7 +122,7 @@
   <span class="w200">
     <span class="w40">IVT</span>
     <input type="time">
-    <input class="w30" type="text">
+    <input class="w20" type="text">
     <span>mg</span>
   </span>
   <span class="w200">
@@ -146,46 +152,70 @@
   </span>
    <br>
   <span class="w250">
-    <span class="w40">Admit</span>
+    <span>Admit</span>
     <input type="date">
     <input type="time">
   </span>
+   <label>
     <input type="radio" name="Admit">
     <span class="w40">MDJ</span>
+   </label>
+   <label>
     <input type="radio" name="Admit">
     <span class="w40">ICU</span>
+   </label>
+   <label>
     <input type="radio" name="Admit">
     <span class="w40">7NW</span>
+   </label>
+   <label>
     <input type="radio" name="Admit">
     <span class="w40">5SW</span>
-    <br>
-    <span class="w250"></span>
+   </label>
+   <label>
     <input type="radio" name="Admit">
     <span class="w40">7SE</span>
+   </label>
+   <br>
+   <label>
+    <span class="w250"></span>
+   </label>
+   <label>
     <input type="radio" name="Admit">
     <span class="w40">OW1</span>
+   </label>
+   <label>
     <input type="radio" name="Admit">
     <span class="w40">OW2</span>
+   </label>
+   <label>
     <input type="radio" name="Admit">
     <span>Readmit in 4 wk</span>
+   </label>
   <br>
-  <span class="w250">
-    <span class="w60">Refer to</span>
-    <input type="text">
-  </span>
+   <span class="w60">Refer to</span>
+   <input type="text">
+   <label>
     <input type="radio" name="Refer">
     <span class="w65">ตามสิทธิ</span>
+   </label>
+   <label>
     <input type="radio" name="Refer">
     <span class="w55">no bed</span>
+   </label>
+   <label>
     <input type="radio" name="Refer">
     <span class="w65">pt. prefer</span>
+   </label>
+   <label>
     <input type="radio" name="Refer">
-    <span5>Stay at ER</span>
+    <span>Stay at ER</span>
+   </label>
  </div>
  <hr class="div">
 
  <div class="solid padding10" id="S&S">
-  <span class="w40 top">S&S</span>
+  <span class="w40 top bold">S&S</span>
   <textarea rows="3" cols="80"></textarea>
   <br>
   <span class="w40"></span>
@@ -215,83 +245,554 @@
     <span>TIA duration</span>
     <input type="time">
   </span>
-  <span class="w60">ABCD2</span>
   <span class="w80">
-    <input type="checkbox">
-    <span>seizure</span>
+   <label>
+    <input type="checkbox" value="ABCD2">
+    <span>ABCD2</span>
+   </label>
   </span>
   <span class="w80">
-    <input type="checkbox">
+   <label>
+    <input type="checkbox" value="seizure">
+    <span>seizure</span>
+   </label>
+  </span>
+  <span class="w80">
+   <label>
+    <input type="checkbox" value="headache">
     <span>headache</span>
+   </label>
   </span>
  </div>
  <hr class="div">
 
  <div class="solid padding10"v id="Underlying">
-  <span class="w80">Underlying</span>
+  <span class="bold">Underlying</span>
   <input class="w500" type="text">
   <br>
-  <span class="w40"></span>
-  <input type="checkbox">
-  <span>No</span>
+   <label>
+    <input type="checkbox">
+    <span>No</span>
+   </label>
   <br>
-  <span class="w40"></span>
   <span class="w80">
+   <label>
     <input type="checkbox">
     <span>DM</span>
+   </label>
   </span>
   <span class="w80">
+   <label>
     <input type="checkbox">
     <span>HT</span>
-  </span>
-  <span class="w80">
-    <input type="checkbox">
-    <span>DLP</span>
+   </label>
   </span>
   <br>
-  <span class="w40"></span>
-  <span class="w80">
+  <label>
     <input type="checkbox">
+    <span>DLP (<small class="red">FBS > 125; BP > 140/90; Chol > 200; LDL > 130; HDL < 40(M) 50(F); TG > 150 or treated</small>)</span>
+  </label>
+  <br>
+  <span class="w70">
+   <label>
+    <input type="radio" name="smoker">
     <span>Smoker</span>
+   </label>
   </span>
+  <span>
+    <span class="w300">
+      <span class="w140">(everyday within 5 y,</span>
+      <input type="text" class="w20">
+      <span>/day</span>
+      <input type="text" class="w20">
+      <span>y)</span>
+    </span>
+    <label>
+    <input type="radio" name="smoker">
+    <span>former (<small class="red">occasional/stop > 5 y</small>)</span>
+    </label>
+  </span>
+  <br>
+  <span class="w70">
+   <label>
+    <input type="radio" name="alcohol">
+    <span>Alcohol</span>
+   </label>
+  </span>
+  <span>
+    <span class="w300">
+      <span class="w140">(everyday,</span>
+      <input type="text" class="w20">
+      <span>/day</span>
+      <input type="text" class="w20">
+      <span>y)</span>
+    </span>
+   <label>
+    <input type="radio" name="alcohol">
+    <span>social (<small class="red">whisky 45cc/ wine 120cc/ beer 360cc/ 1 drink</small>)</span>
+   </label>
+  </span>
+  <br>
+  <span class="w80">
+   <label>
+    <input type="checkbox">
+    <span>AF</span>
+   </label>
+  </span>
+  <span class="w170">
+   <label>
+    <input type="checkbox">
+    <span class="w40">(1st;</span>
+   </label>
+    <span>CHAD2</span>
+    <input type="text" class="w20">)
+  </span>
+  <span class="w140">
+   <label>
+    <input type="checkbox">
+    <span>VHD</span>
+   </label>
+    <input type="text" class="w50">
+  </span>
+  <span class="w200">
+   <label>
+    <input type="checkbox">
+    <span>CAD (</span>
+   </label>
+   <label>
+    <input type="checkbox">
+    <span class="w55">CABG</span>
+   </label>
+   <label>
+    <input type="checkbox">
+    <span>PCI</span>)
+  </span>
+   <label>
+    <input type="checkbox">
+    <span>PAD</span>
+   </label>
+  <br>
+  <span class="w80">
+   <label>
+    <input type="checkbox">
+    <span>IS</span>
+   </label>
+  </span>
+  <span class="w80">
+   <label>
+    <input type="checkbox">
+    <span>ICH</span>
+   </label>
+  </span>
+  <span class="w120">
+   <label>
+    <input type="checkbox">
+    <span>Family Stroke</span>
+   </label>
+  </span>
+  <span class="w80">
+   <label>
+    <input type="checkbox">
+    <span>CKD</span>
+   </label>
+  </span>
+  <span class="w80">
+   <label>
+    <input type="checkbox">
+    <span>OSA</span>
+   </label>
+  </span>
+  <span class="w100">
+   <label>
+    <input type="checkbox">
+    <span>Pill</span>
+   </label>
+   <label>
+    <input type="text" class="w20">
+    <span>y</span>
+   </label>
+  </span>
+  <br>
+  <span class="w80">
+   <label>
+    <input type="checkbox">
+    <span>APS</span>
+  </span>
+  <label>
+    <input type="checkbox">
+    <span>CA</span>
+  </label>
+  <input type="text" class="w100">
+  <label>
+    <input type="checkbox">
+    <span>Vasculitis</span>
+  </label>
+  <input type="text" class="w100">
+  <label>
+    <input type="checkbox">
+    <span>Dz</span>
+  </label>
+  <input type="text" class="w100">
  </div>
  <hr class="div">
 
  <div class="solid padding10" id="Investigation">
-   <span class="w40">HN</span><input class="w70" type="text" name="hn">
-   <br>
-   <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
-   <span class="w10"></span>
-   <span class="w50">นามสกุล</span><span class="w10"></span>
-   <input class="w150" type="text" name="surname">
-   <br>
-   <span class="w40">อายุ</span><input class="w20" type="text" name="age">
-   <br>
-   <span class="w30">เพศ</span>
-   <input type="radio" name="M">ชาย
-   <span class="w20"></span>
-   <input type="radio" name="F">หญิง
+  <span class="bold">Investigation</span>
+  <br>
+  <span class="w40">CT</span>
+   <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>ICH</span>
+    </label>
+   </span>
+   <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>IVH</span>
+    </label>
+   </span>
+   <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>SAH</span>
+    </label>
+   </span>
+   <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>SDH</span>
+    </label>
+   </span>
+   <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>HTf</span>
+    </label>
+   </span>
+   <span class="w170">
+    <label>
+     <input type="checkbox">
+     <span>ASPECTS</span>
+    </label>
+    <input type="text" class="w20">
+    (<label>
+     <input type="checkbox">
+     <span>pc)</span>
+    </label>
+   </span>
+   <span>
+    <label>
+     <input type="checkbox">
+     <span>Hyperdense A sign</span>
+    </label>
+   </span>
  </div>
  <hr class="div">
 
  <div class="solid padding10" id="Diagnosis">
-   <span class="w40">HN</span><input class="w70" type="text" name="hn">
-   <br>
-   <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
-   <span class="w10"></span>
-   <span class="w50">นามสกุล</span><span class="w10"></span>
-   <input class="w150" type="text" name="surname">
-   <br>
-   <span class="w40">อายุ</span><input class="w20" type="text" name="age">
-   <br>
-   <span class="w30">เพศ</span>
-   <input type="radio" name="M">ชาย
-   <span class="w20"></span>
-   <input type="radio" name="F">หญิง
+  <span class="bold">Diagnosis</span>
+  <input class="w500" type="text">
+  <br>
+  <label>
+   <input type="checkbox">
+   <span>TIA</span>
+  </label>
+  (<label>
+   <input type="checkbox">
+   <span class="w80">cerebral</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span>retinal)</span>
+  </label>
+  <br>
+  <label>
+    <input type="checkbox">
+    <span>IS:</span>
+  </label>
+  <br>
+  <span class="w10"></span>
+  <span class="w80">Oxfordshire</span>
+  <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>TACI</span>
+    </label>
+  </span>
+  <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>PACI</span>
+    </label>
+  </span>
+  <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>POCI</span>
+    </label>
+  </span>
+  <span class="w70">
+    <label>
+     <input type="checkbox">
+     <span>Lacune</span>
+    </label>
+  </span>
+  <span class="w50">
+    <label>
+     <input type="checkbox">
+     <span>PM</span>
+    </label>
+  </span>
+  <span class="w50">
+    <label>
+     <input type="checkbox">
+     <span>PS</span>
+    </label>
+  </span>
+  <span class="w50">
+    <label>
+     <input type="checkbox">
+     <span>SM</span>
+    </label>
+  </span>
+  <span class="w50">
+    <label>
+     <input type="checkbox">
+     <span>AH</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span>DCS</span>
+    </label>
+    <input type="text" class="w60">
+  </span>
+  <br>
+  <span class="w10"></span>
+  <span class="w80">TOAST by</span>
+  <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>Lab</span>
+    </label>
+  </span>
+  <span class="w85">
+    <label>
+     <input type="checkbox">
+     <span>CD/TCD</span>
+    </label>
+  </span>
+  <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>MRI</span>
+    </label>
+  </span>
+  <span class="w100">
+    <label>
+     <input type="checkbox">
+     <span>CTA/MRA</span>
+    </label>
+  </span>
+  <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>TTE</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span>By</span>
+    </label>
+    <input type="text" class="w60">
+  </span>
+  <br>
+  <span class="w10"></span>
+  <span class="w200">
+    <label>
+     <input type="checkbox">
+     <span>Large Artery Ateriosclerosis</span>
+    </label>
+  </span>
+  <span class="w140">
+    <label>
+     <input type="checkbox">
+     <span>Cardioembolism</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span>Small Vessel Occlusion</span>
+    </label>
+  </span>
+  <br>
+  <span class="w10"></span>
+  <span class="w200">
+    <label>
+     <input type="checkbox">
+     <span>Other Determined Etiology</span>
+    </label>
+  </span>
+  <span class="w90">
+    <label>
+     <input type="checkbox">
+     <span>Dissection</span>
+    </label>
+  </span>
+  <span class="w90">
+    <label>
+     <input type="checkbox">
+     <span>Vasculitis</span>
+    </label>
+  </span>
+  <span class="w100">
+    <label>
+     <input type="checkbox">
+     <span>Hypercoag</span>
+    </label>
+  </span>
+  <span class="w60">
+    <label>
+     <input type="checkbox">
+     <span>IS</span>
+    </label>
+  </span>
+  <input class="w50" type="text" name="IS">
+  <br>
+  <span class="w10"></span>
+  <span class="w170">
+    <label>
+     <input type="checkbox">
+     <span>Undetermined Etiology</span>
+    </label>
+  </span>
+  <label>
+   <input type="checkbox">
+   <span>>= 2 causes</span>
+  </label>
+  (<label>
+   <input type="checkbox">
+   <span class="w40">LAA</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span class="w30">CE</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span class="w50">SVO)</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span class="w50">ESUS</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span>Cryptogenic</span>
+  </label>
+  <br>
+  <label>
+   <input type="checkbox">
+   <span class="w40">ICH</span>
+  </label>
+  (<label>
+   <input type="checkbox">
+   <span class="w30">HT</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span class="w40">coag</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span class="w50">abn vv</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span class="w60">trauma</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span class="w50">tumor</span>
+  </label>
+  <label>
+   <input type="checkbox">
+   <span>with</span>
+  </label>
+  <input type="text" class="w50">)
+  <br>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w50">IVH</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w50">SAH</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w50">CVT</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w60">Mimics</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w80">Migraine</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w40">SDH</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w120">Metabolic Enceph</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w60">Seizure</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span class="w50">Tumor</span>
+    </label>
+  </span>
+  <span>
+    <label>
+     <input type="checkbox">
+     <span>Dx</span>
+    </label>
+  </span>
+  <input class="w50" type="text" name="DX">
  </div>
  <hr class="div">
 
  <div class="solid padding10" id="Treatment">
+  <span class="bold">Treatment</span>
+  <input class="w500" type="text">
+  <br>
    <span class="w40">HN</span><input class="w70" type="text" name="hn">
    <br>
    <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
@@ -309,6 +810,9 @@
  <hr class="div">
 
  <div class="solid padding10" id="Complication">
+  <span class="bold">Complication</span>
+  <input class="w500" type="text">
+  <br>
    <span class="w40">HN</span><input class="w70" type="text" name="hn">
    <br>
    <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
@@ -326,6 +830,7 @@
  <hr class="div">
 
  <div class="solid padding10" id="Discharge">
+  <span class="bold">Discharge</span>
    <span class="w40">HN</span><input class="w70" type="text" name="hn">
    <br>
    <span class="w40">ชื่อ</span><input class="w100" type="text" name="name">
