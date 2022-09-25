@@ -1,46 +1,42 @@
+
 import { sqlSaveRegistry } from "./sqlRegistry.js"
 import { fillRegistrySheet } from "./fillRegistrySheet.js"
 
-export function saveRegistry()
+export function saveCurrentElement(target)
 {
-  let allElenotDIV = document.querySelectorAll('*[id]:not(div[id]'),
-    allIDnotDIV = allElenotDIV.map(e => e.id),
-    allElename = document.querySelectorAll('*[name]'),
-    allname = allElename.map(e => e.name),
-    record = {}
+  let record = {}
 
-  allElenotDIV.forEach(e => (e.value) && record[e] = value)
-  allElename.forEach(e => (e.check) && record[e] = value)
-/*
-  if (deepEqual(RegistryJSON, _JsonRegistry)) { return }
+  if (target.tagName !== "INPUT") { return } 
 
-  Registryment = JSON.stringify(RegistryJSON)
-  Registryment = apostrophe(Registryment)
-*/
+  if (target.id) { record[target.id] = target.value } 
+  else if (target.checked) { record[target.name] = target.value } 
+
   if (!Object.key(record).length) { return }
 
-  sqlSaveRegistry(record).then(response => {
+  sqlSaveCurrentElement(record).then(response => {
     if (typeof response === "object") {
-      localStorage.setItem("updateSheet", response)
-    } else {
-      Alert("saveRegistry", response)
-
-      // failed save, roll back
-      fillRegistrySheet()
+      alert("saveCurrentElement", response)
     }
   }).catch(error => alert(error.stack))
 }
 
-export function cancelAllRegistry()
+export function saveRegistry()
 {
-  sqlCancelAllRegistry(_qn).then(response => {
-    if (typeof response === "object") {
-      updateBOOK(response)
-    } else {
-      Alert("cancelAllRegistry", response)
+  let allinputID = document.querySelectorAll("input[id]"),
+    allinputName = document.querySelectorAll("input[name]"),
+    record = {}
 
-      // failed cancel, roll back
-      fillRegistrySheet()
+  allinputID.forEach(e => {
+    if (e.value) { record[e] = value } 
+  })
+
+  allinputName.forEach(e => {
+    if (e.checked) { record[e] = value } 
+  })
+
+  sqlSaveRegistry(record).then(response => {
+    if (typeof response === "object") {
+      alert("saveRegistry", response)
     }
   }).catch(error => alert(error.stack))
 }

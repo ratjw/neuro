@@ -1,6 +1,6 @@
 
 import { fillRegistrySheet } from "./fillRegistrySheet.js"
-import { saveRegistry } from "./saveRegistry.js"
+import { addEventListener } from "./eventListener.js"
 /*
 // from login.js
 export let ADMIN = sessionStorage.getItem("admin")
@@ -9,23 +9,9 @@ export let DIVISION = 'ประสาทศัลยศาสตร์'
 //new URLSearchParams(window.location.search).get("division")
 // For staff & residents with login id / password from Get_staff_detail
 */
-  const inputhn = document.querySelector("#hn"),
-    spanmessage = document.querySelector("#message")
+  const inputhn = document.querySelector("#hn")
 
   inputhn.addEventListener('input', getHN);
-
-  if (Number(1 + inputhn.value) >= 10000000) {
-    getOldRecord(inputhn.value)
-  } else {
-    spanmessage.innerHTML = "กรุณาใส่หมายเลขเวชระเบียน"
-  }
-
-  window.addEventListener("keyup", (event) => {
-    setTimeout(saveRegistry, 3)
-  });
-  window.addEventListener("click", (event) => {
-    saveRegistry()
-  });
 
 function getHN(e) {
   const hn = e.target.value
@@ -35,12 +21,26 @@ function getHN(e) {
 
 function getOldRecord(hn)
 {
-  document.querySelector("#message").innerHTML = "here"
-  return
   sqlGetOldRecord(hn).then(response => {
 		typeof response === "object"
-		? fillRegistrySheet(response)
+		? success(response)
 		: alert(response)
 	})
   .catch(error => alert(error + "\n\n" + error.stack))
+}
+
+function success(response)
+{
+  fillRegistrySheet(response)
+  newAdmission()
+  addEventListener()
+}
+
+function newAdmission()
+{
+  const spanmessage = document.querySelector("#message")
+
+  fillRegistrySheet(response)
+  newAdmission()
+  addEventListener()
 }
