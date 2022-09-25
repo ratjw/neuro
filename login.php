@@ -22,7 +22,7 @@
 			if ($localhost || $localnet) {
 				$resultz = "S";
 			}
-			else if ($intranet) {
+      else if ($intranet) {
 				$client = new SoapClient($wsdl);
 				$resultx = $client->Get_staff_detail($userid, $pwd);
 				$resulty = simplexml_load_string($resultx);

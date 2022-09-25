@@ -6,22 +6,8 @@ function login()
 //		window.location = "https://" + window.host
 //	}
 
-	// mobile via vpn is to "mobilevpn"
 	// desktop via vpn or old browser is to "es5"
-	// Browsers that support module: Chrome/61, Firefox/60, Safari 10.1
-	// (.*)$ is the second argument
-	var ua = navigator.userAgent
-	var Chrome = ua.match(/Chrome\/(.*)$/)
-	var Firefox = ua.match(/Firefox\/(.*)$/)
-	var Safari = ua.match(/Safari\/(.*)$/)
-	var module = (Chrome && Chrome.length > 1)
-                ? Chrome[1] >= "61"
-                : (Firefox && Firefox.length > 1)
-                  ? Firefox[1] >= "60"
-                  : (Safari && Safari.length > 1)
-                    ? Safari[1] >= "10.1"
-                    : false
-	var browser = /rvpn/.test(window.origin) ? "es5/es5.html" : "module"
+	var browser = /rvpn/.test(window.origin) ? "es5/es5.html" : "es6"
   var admin = '000000'
 					
   sessionStorage.setItem('admin', admin)
