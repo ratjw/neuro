@@ -7,7 +7,8 @@ export function fillRegistrySheet(record)
   if (!record.length) { return }
 
   Object.entries(JSON.parse(record)).forEach(([key, val]) => {
-    if (const id = document.getElementById(key)) {
+    const id = {}
+    if (id = document.getElementById(key)) {
       id.innerHTML = value
     } else {
       document.getElementsByName("key").find(e => e.value === val).checked = true

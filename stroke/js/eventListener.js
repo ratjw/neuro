@@ -1,14 +1,14 @@
 
-import { timer } from "./const.js"
+import { saveCurrentElement } from "./saveRegistry.js"
 
 export function addEventListener()
 {
   window.addEventListener("keyup", (event) => {
-    timer = setTimeout(saveRegistry, 3000)
+    saveCurrentElement(event.target)
   });
 
   window.addEventListener("click", (event) => {
-    saveRegistry()
+    saveCurrentElement(event.target)
   });
 
   window.addEventListener('focusout', (event) => {})

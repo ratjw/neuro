@@ -6,11 +6,13 @@ require_once "registry.php";
   $input = json_decode(file_get_contents('php://input'));
 
 	if (isset($input->hn)) {
-		if (session_id() == "") { session_start(); }
-		$_SESSION['RECORD'] = $input->hn;
-
-		echo json_encode(registry($mysqli), "");
-/*		echo start($mysqli);
+		echo json_encode(registryHN($mysqli, $input->hn));
+  }
+	else if (isset($input->qn)) {
+		echo json_encode(registryQN($mysqli, $input->qn));
+  }
+/*
+		echo start($mysqli);
 	}
 	else if (isset($input->sqlReturnregistry)) {
 		echo returnregistry($mysqli, $input->hn);

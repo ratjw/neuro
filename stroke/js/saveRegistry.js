@@ -1,4 +1,5 @@
 
+import { sqlSaveCurrentElement } from "./sqlRegistry.js"
 import { sqlSaveRegistry } from "./sqlRegistry.js"
 import { fillRegistrySheet } from "./fillRegistrySheet.js"
 
@@ -11,7 +12,7 @@ export function saveCurrentElement(target)
   if (target.id) { record[target.id] = target.value } 
   else if (target.checked) { record[target.name] = target.value } 
 
-  if (!Object.key(record).length) { return }
+  if (!Object.keys(record).length) { return }
 
   sqlSaveCurrentElement(record).then(response => {
     if (typeof response === "object") {

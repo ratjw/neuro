@@ -77,7 +77,7 @@
  <hr class="div">
 
  <div class="solid padding10" id="SFT">
-  <span class="w40 bold">Stroke Fast Track</span>
+  <span class="bold">Stroke Fast Track</span>
   <br>
   <span class="w300">
     <span class="w40">Onset</span>
@@ -1743,6 +1743,22 @@
  </div>
 
 </div>
+
+<!-- Simple modal dialog containing a form -->
+<dialog id="admission">
+  <form method="dialog">
+    <p>
+      <label>เลือกครั้ง:
+        <select default="newAdmission">
+        </select>
+      </label>
+    </p>
+    <div>
+      <button value="cancel">Cancel</button>
+      <button id="confirmBtn" value="default">Confirm</button>
+    </div>
+  </form>
+</dialog>
 
 </BODY>
 </HTML>
