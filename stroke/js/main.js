@@ -12,35 +12,52 @@ export let DIVISION = 'ประสาทศัลยศาสตร์'
 */
   const inputhn = document.querySelector("#hn")
 
-  inputhn.addEventListener('input', getHN);
+  inputhn.addEventListener('input', getHN)
+  inputhn.focus()
 
 function getHN(e) {
   const hn = e.target.value
 
-  if (Number(1 + hn) >= 10000000) { getOldRecord(hn) }
+  if (Number(1 + hn) >= 10000000) {
+    getOldRecord(hn)
+    addEventListener()
+  }
 }
 
 function getOldRecord(hn)
 {
   sqlGetOldHN(hn).then(response => {
 		typeof response === "object"
-		? success(response)
-		: alert(response)
+		? haveOldRecord(response)
+		: noOldRecord(hn)
 	})
   .catch(error => alert(error + "\n\n" + error.stack))
 }
 
-function success(response)
-{
+function haveOldRecord(response)
+{return
 /*  const registry = JSON.parse(response)
-
-
-
   const selected = selectAdmission(response)
   
   if (selected === "newAdmission")
   fillRegistrySheet(response)*/
-  addEventListener()
+}
+
+function noOldRecord(hn)
+{return
+
+  let record = {}
+
+  const qn = document.getElementById("wrapper").dataset.qn
+
+  sqlInsertNewRecord(record, qn).then(response => {
+    if (typeof response === "object") {
+      return
+    } else {
+      
+//      alert("saveFocusOutElement", response)
+    }
+  }).catch(error => alert(error.stack))
 }
 
 function selectAdmission(response)

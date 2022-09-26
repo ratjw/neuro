@@ -21,6 +21,10 @@ function registryHN($mysqli, $hn)
     $registry[] = $rowi;
   }
 
+  $sql = "INSERT INTO registry (registrysheet) VALUES ('{\"hn\":\"$hn\"}');";
+  $mysqli->query($sql);
+  return $mysqli->error;
+
   return $registry;
 }
 

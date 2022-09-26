@@ -2,7 +2,6 @@
 include "connect.php";
 require_once "registry.php";
 
-
   $input = json_decode(file_get_contents('php://input'));
 
 	if (isset($input->hn)) {
@@ -10,6 +9,9 @@ require_once "registry.php";
   }
 	else if (isset($input->qn)) {
 		echo json_encode(registryQN($mysqli, $input->qn));
+  }
+	else if (isset($input->sqlNoReturn)) {
+		echo json_encode(multiquery($mysqli, $input->sqlNoReturn));
   }
 /*
 		echo start($mysqli);

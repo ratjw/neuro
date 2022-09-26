@@ -10,24 +10,33 @@ export function sqlGetOldQN(qn) {
   return postData(MYSQLIPHP, { qn: qn });
 }
 
-export function sqlSaveRegistry(record, qn)
+export function sqlSaveFocusOutElement(input, qn)
 {
-  let sql = {
-    sqlNoReturn: `UPDATE registry
-                      SET registrysheet=JSON_SET(registrysheet, "$.0", record)
-                      WHERE qn=qn;`
-  }
+  let inp = JSON.stringify(input),
+    sql
 
-  return postData(MYSQLIPHP, sql);
+  sql = "UPDATE registry SET registrysheet= '" +  inp + "' WHERE qn=qn;"
+
+  return postData(MYSQLIPHP, { sqlNoReturn: sql })
 }
 
-export function sqlSaveCurrentElement(record, qn)
+export function sqlInsertNewRecord(input)
 {
-  let sql = {
-    sqlNoReturn: `UPDATE registry
-                   SET registrysheet=record
-                   WHERE qn=qn;`
-  }
+  let inp = JSON.stringify(input),
+    sql
 
-  return postData(MYSQLIPHP, sql)
+  sql = "INSERT INTO registry (registrysheet) VALUES ('" + inp + "');"
+
+  return postData(MYSQLIPHP, { sqlNoReturn: sql })
+}
+
+export function sqlSaveRegistry(input, qn)
+{
+  let sql = 'UPDATE registry '
+          + 'SET registrysheet=JSON_SET(registrysheet, "$.0", '
+          + JSON.stringify(input)
+          + ') '
+          + 'WHERE qn=qn;'
+
+  return postData(MYSQLIPHP, { sqlNoReturn: sql });
 }

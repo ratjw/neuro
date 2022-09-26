@@ -1,17 +1,17 @@
 
-import { saveCurrentElement } from "./saveRegistry.js"
+import { saveFocusOutElement } from "./saveRegistry.js"
 
 export function addEventListener()
 {
-  window.addEventListener("keyup", (event) => {
-    saveCurrentElement(event.target)
-  });
+  const wrapper = document.getElementById("wrapper"),
+    inputs = wrapper.querySelectorAll("INPUT")
 
-  window.addEventListener("click", (event) => {
-    saveCurrentElement(event.target)
+  inputs.forEach(e => {
+    e.addEventListener("focusout", (event) => {
+      saveFocusOutElement(event.target)
+      e.blur()
+    })
   });
-
-  window.addEventListener('focusout', (event) => {})
 }
 
 export function removeEventListener()

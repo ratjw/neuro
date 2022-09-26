@@ -1,9 +1,9 @@
 
-import { sqlSaveCurrentElement } from "./sqlRegistry.js"
+import { sqlSaveFocusOutElement } from "./sqlRegistry.js"
 import { sqlSaveRegistry } from "./sqlRegistry.js"
 import { fillRegistrySheet } from "./fillRegistrySheet.js"
 
-export function saveCurrentElement(target)
+export function saveFocusOutElement(target)
 {
   let record = {}
 
@@ -14,9 +14,11 @@ export function saveCurrentElement(target)
 
   if (!Object.keys(record).length) { return }
 
-  sqlSaveCurrentElement(record).then(response => {
-    if (typeof response === "object") {
-      alert("saveCurrentElement", response)
+  const qn = document.getElementById("wrapper").dataset.qn
+
+  sqlSaveFocusOutElement(record, qn).then(response => {
+    if (typeof response !== "object") {
+return;      alert("saveFocusOutElement", response)
     }
   }).catch(error => alert(error.stack))
 }
@@ -36,7 +38,7 @@ export function saveRegistry()
   })
 
   sqlSaveRegistry(record).then(response => {
-    if (typeof response === "object") {
+    if (typeof response !== "object") {
       alert("saveRegistry", response)
     }
   }).catch(error => alert(error.stack))
