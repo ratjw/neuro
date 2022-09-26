@@ -43,7 +43,7 @@ h4 {
 </HEAD>
 <BODY onload=login()>
 
-<p id="logo"><img src="logoRama.png"></p>
+<p id="logo"><img src="logoRama.jpg"></p>
 
 <div id="login">
 	<br>
