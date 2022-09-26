@@ -6,8 +6,28 @@
 
 function registryHN($mysqli, $hn)
 {
-  date_default_timezone_set("Asia/Bangkok");
+  $rowi = array();
+  $registry = array();
 
+  $registry = findExistingHN($mysqli, $hn);
+
+  if (empty($registry)) {
+    $sql = "INSERT INTO registry (registrysheet) VALUES ('{\"hn\":\"$hn\"}');";
+
+    if (!$result = $mysqli->query ($sql)) {
+      return $mysqli->error;
+    }
+
+    $registry = findExistingHN($mysqli, $hn);
+    $new[newHN] = $registry;
+    return $new;
+  }
+
+  return $registry;
+}
+
+function findExistingHN($mysqli, $hn)
+{
   $rowi = array();
   $registry = array();
 
@@ -21,17 +41,11 @@ function registryHN($mysqli, $hn)
     $registry[] = $rowi;
   }
 
-  $sql = "INSERT INTO registry (registrysheet) VALUES ('{\"hn\":\"$hn\"}');";
-  $mysqli->query($sql);
-  return $mysqli->error;
-
   return $registry;
 }
 
 function registryQN($mysqli, $qn)
 {
-  date_default_timezone_set("Asia/Bangkok");
-
   $rowi = array();
   $registry = array();
 

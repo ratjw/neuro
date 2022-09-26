@@ -4,14 +4,20 @@
 
 export function fillRegistrySheet(record)
 {
-  if (!record.length) { return }
+  if (!Object.keys(record)) { return }
+  
+  document.getElementById("wrapper").dataset.qn = record["qn"]
 
-  Object.entries(JSON.parse(record)).forEach(([key, val]) => {
-    const id = {}
+  const sheetstr = record["registrysheet"],
+    registrysheet = JSON.parse(sheetstr)
+
+  Object.entries(registrysheet).forEach(([key, val]) => {
+    let id = {}
     if (id = document.getElementById(key)) {
-      id.innerHTML = value
+      id.innerHTML = val
     } else {
-      document.getElementsByName("key").find(e => e.value === val).checked = true
+      const name = document.getElementsByName(key)
+      Array.from(name).find(e => e.value === val).checked = true
     }
   })
 }

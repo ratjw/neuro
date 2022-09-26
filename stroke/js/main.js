@@ -2,6 +2,7 @@
 import { fillRegistrySheet } from "./fillRegistrySheet.js"
 import { sqlGetOldHN } from "./sqlRegistry.js"
 import { addEventListener } from "./eventListener.js"
+import { addNewRecord } from "./saveRegistry.js"
 /*
 // from login.js
 export let ADMIN = sessionStorage.getItem("admin")
@@ -28,36 +29,48 @@ function getOldRecord(hn)
 {
   sqlGetOldHN(hn).then(response => {
 		typeof response === "object"
-		? haveOldRecord(response)
-		: noOldRecord(hn)
+		? success(response)
+		: alert(response)
 	})
   .catch(error => alert(error + "\n\n" + error.stack))
 }
 
-function haveOldRecord(response)
-{return
-/*  const registry = JSON.parse(response)
-  const selected = selectAdmission(response)
-  
-  if (selected === "newAdmission")
-  fillRegistrySheet(response)*/
+function success(response)
+{
+  if (Object.keys(response)[0] === "newHN") {
+    newRecord(response)
+  } else {
+    oldRecord(response)
+  }
 }
 
-function noOldRecord(hn)
-{return
+function newRecord(response)
+{
+  let registry = Object.values(response)
 
-  let record = {}
+  document.getElementById("wrapper").dataset.qn = registry[0][0].qn
+}
 
-  const qn = document.getElementById("wrapper").dataset.qn
+function oldRecord(response)
+{
+  const registryArr = Object.values(response),
+    registry = registryArr[0]
 
-  sqlInsertNewRecord(record, qn).then(response => {
-    if (typeof response === "object") {
-      return
+  if (registryArr.length > 1) {
+    selectAdmission(registry)
+  } else {
+    const registrysheet = registry.registrysheet
+
+    if (registrysheet.discharge) {
+      if (confirm("มาครั้งใหม่")) {
+        addNewRecord(registrysheet.hn)
+      } else {
+        fillRegistrySheet(registry)
+      }
     } else {
-      
-//      alert("saveFocusOutElement", response)
+      fillRegistrySheet(registry)
     }
-  }).catch(error => alert(error.stack))
+  }
 }
 
 function selectAdmission(response)
@@ -70,6 +83,7 @@ function selectAdmission(response)
 
   return selectEl.value;
 }
+
 function newAdmission()
 {
   const spanmessage = document.querySelector("#message")
@@ -81,8 +95,6 @@ function newAdmission()
 
 function oldAdmission(response)
 {
-  const admission = document.getElementById("admission"),
-    admit = prompt("เลือกครั้ง", admission.innerHTML)
 
   fillRegistrySheet(response)
   newAdmission()

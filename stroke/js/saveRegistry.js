@@ -43,3 +43,14 @@ export function saveRegistry()
     }
   }).catch(error => alert(error.stack))
 }
+
+export function addNewRecord(hn)
+{
+  const record = {hn: hn}
+
+  sqlInsertNewRecord(record).then(response => {
+    if (typeof response !== "object") {
+      alert("addNewRecord", response)
+    }
+  }).catch(error => alert(error.stack))
+}
