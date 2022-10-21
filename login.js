@@ -7,7 +7,7 @@ function login()
 //	}
 
 	// desktop via vpn or old browser is to "es5"
-	var browser = /rvpn/.test(window.origin) ? "es5/es5.html" : "surg"
+	var browser = /rvpn/.test(window.origin) ? "es5/es5.html" : "module"
   var admin = '000000'
 					
   sessionStorage.setItem('admin', admin)
