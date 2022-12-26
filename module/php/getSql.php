@@ -23,7 +23,8 @@ function getStaff($mysqli)
 {
 	$sql = "SELECT * FROM personnel "
        . "WHERE profile->'$.role'='อาจารย์แพทย์เต็มเวลา' "
-       .    "OR profile->'$.role'='อาจารย์แพทย์ไม่เต็มเวลา' ;";
+       .    "OR profile->'$.role'='อาจารย์แพทย์ไม่เต็มเวลา' "
+       .    "OR profile->'$.role'='อาจารย์พิเศษ' ;";
 	return multiquery($mysqli, $sql);
 }
 

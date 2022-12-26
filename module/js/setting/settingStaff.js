@@ -131,8 +131,10 @@ function activateButtons($tbody)
   const $saveStaff = $('#saveStaff'),
     $cancelStaff = $('#cancelStaff')
 
-  $saveStaff.off("click").on("click", () => getEditingStaff($tbody))
-  $cancelStaff.off("click").on("click", settingStaff)
+  $saveStaff.off("click")
+  $saveStaff.on("click", () => getEditingStaff($tbody))
+  $cancelStaff.off("click")
+  $cancelStaff.on("click", settingStaff)
 }
 
 function getEditingStaff($tbody)
