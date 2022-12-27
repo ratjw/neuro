@@ -1,21 +1,21 @@
 
-import { START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
+import { RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
 import { getSTAFFdivision, getLatestStart } from "../setting/getStaff.js"
 import { saveStaff } from "../setting/saveStaff.js"
 import { getLatestKey, winHeight } from "../util/util.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
-import { DIVISION } from "../main.js"
 
 export function settingStaff()
 {
   const actionIcons = document.querySelector('#actionIcons'),
     actionTemplate = document.querySelector('#actionTemplate'),
+    roletemplate = document.querySelector("#roletemplate"),
     $dialogStaff = $("#dialogStaff"),
     $stafftbltbody = $("#stafftbl tbody"),
     $stafftbltr = $("#stafftbl tr"),
     $staffcellstr = $('#staffcells tr'),
     maxHeight = winHeight(90),
-    staffs = getSTAFFdivision(DIVISION)
+    staffs = getSTAFFdivision()
 
   $stafftbltr.slice(2).remove()
 
@@ -29,6 +29,15 @@ export function settingStaff()
   // create a blank row for adding a staff
   $staffcellstr.clone().appendTo($stafftbltbody)
     .find('td').each(function() { this.dataset.val = '' })
+
+  $dialogStaff.find(`td:nth-child(${ROLE+1})`).each(function() {
+    let roletemp = roletemplate.content.cloneNode(true)
+    let val = this.innerHTML
+    this.innerHTML = ""
+    this.appendChild(roletemp)
+    let role = this.querySelector("select")
+    role.value = val
+  })
 
   actionIcons.innerHTML = actionTemplate.innerHTML
 
