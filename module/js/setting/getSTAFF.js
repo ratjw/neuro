@@ -3,7 +3,7 @@ import { getSTAFF } from "../util/updateBOOK.js"
 import { getLatestKey, getLatestValue } from "../util/util.js"
 import { DIVISION } from "../main.js"
 
-export function getSTAFFdivision(division)
+export function getSTAFFdivision(division = DIVISION)
 {
   const staffs = getSTAFF()
 
@@ -11,9 +11,17 @@ export function getSTAFFdivision(division)
                 .map(staff => JSON.parse(staff.profile))
 }
 
+// อาจารย์พิเศษ cannot be the main surgeon in OR
+export function getStaffOR()
+{
+  const staffs = getSTAFFdivision()
+
+  return staffs.filter(staff => (staff.role != "อาจารย์พิเศษ"))
+}
+
 export function getStaffOncall()
 {
-  const staffs = getSTAFFdivision(DIVISION)
+  const staffs = getSTAFFdivision()
 
   return staffs.filter(staff => (staff.oncall > 0))
 }
@@ -21,7 +29,7 @@ export function getStaffOncall()
 // filter only staffs with exchange and strip to only staffname and exchange fields
 export function getOncallExchange()
 {
-  const staffs = getSTAFFdivision(DIVISION),
+  const staffs = getSTAFFdivision(),
     staffex = staffs.filter(staff => staff.exchange)
 
   return staffex.map(has => ( {[has.name]: has.exchange} ))
@@ -29,7 +37,7 @@ export function getOncallExchange()
 
 export function checkFieldExist(ramaid, field, subfield)
 {
-  const staffs = getSTAFFdivision(DIVISION),
+  const staffs = getSTAFFdivision(),
     staff = staffs.filter(e => e.ramaid === ramaid),
     existedKeys = staff.map(e => Object.keys(e))[0],
     existedField = existedKeys.includes(field)

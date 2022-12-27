@@ -1,12 +1,9 @@
 
-import { htmlStafflist } from "../control/html.js"
-import { sqlSaveStaff } from "../model/sqlStaff.js"
 import { START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
 import { getSTAFFdivision, getLatestStart } from "../setting/getStaff.js"
-import { getLatestKey, Alert, winHeight } from "../util/util.js"
-import { fillConsults } from "../view/fillConsults.js"
+import { saveStaff } from "../setting/saveStaff.js"
+import { getLatestKey, winHeight } from "../util/util.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
-import { setSTAFF } from "../util/updateBOOK.js"
 import { DIVISION } from "../main.js"
 
 export function settingStaff()
@@ -149,18 +146,4 @@ function getEditingStaff($tbody)
         }
     })
   })
-}
-
-async function saveStaff(row)
-{
-  let response = await sqlSaveStaff(row)
-
-  if (typeof response === "object") {
-    setSTAFF(response)
-    htmlStafflist()
-    fillConsults()
-  } else {
-    alert("saveStaff\n\n" + response)
-  }
-  settingStaff()
 }
