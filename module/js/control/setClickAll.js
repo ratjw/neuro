@@ -81,7 +81,8 @@ function setClickService()
 
 export function getPermission(submenu, rname)
 {
-  const staffid = getSTAFFdivision(DIVISION),
+  const staffs = getSTAFFdivision(DIVISION),
+    staffid = staffs.map(e => e.ramaid),
     residents = getRESIDENTdivision(DIVISION),
     residentid = residents.map(e => e.ramaid),
     barname = residents.find(e => e.name === rname),
