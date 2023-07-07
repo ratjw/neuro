@@ -69,7 +69,9 @@
   text-shadow: 0px 1px 0px #000;
 }
 #cssmenu > ul li.disabled a,
-#cssmenu > ul li#submenu ul li.disabled a {
+#cssmenu > ul li#submenu ul li.disabled a,
+#cssmenu > ul li.disabled,
+#cssmenu > ul li#submenu ul li.disabled {
   pointer-events: none;
   cursor: default;
   color: #CCCCCC;
