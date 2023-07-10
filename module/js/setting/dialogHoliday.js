@@ -4,7 +4,7 @@ import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { setHOLIDAY } from "../setting/constHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
 import { Alert, winHeight } from "../util/util.js"
-import { refillHoliday } from "../view/fillHoliday.js"
+import { fillHoliday, refillHoliday } from "../view/fillHoliday.js"
 
 export function dialogHoliday(title)
 {
@@ -44,6 +44,9 @@ export function onclickDelete()
       delHoliday(item.closest("tr"))
     })
   })
+
+  const mainTable = document.querySelector("#maintbl")
+  fillHoliday(mainTable)
 }
 
 function delHoliday(row)

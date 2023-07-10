@@ -56,9 +56,9 @@ function newHoliday()
     date = selected.dataset.opdate,
     clickDay, preholiname
 
-  if (selected.querySelector(".holiday")) {
-    let rows = Array.from(holidaytbody.children)
-    clickDay = rows.find(row => row.dataset.holidate === date)
+  let rows = Array.from(holidaytbody.children)
+  clickDay = rows.find(row => row.dataset.holidate === date)
+  if (clickDay) {
     clickDay.classList.add("deletedcase")
     preholiname = clickDay.dataset.dayname
     onclickDelete()
