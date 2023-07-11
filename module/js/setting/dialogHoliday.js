@@ -28,13 +28,13 @@ export async function saveHoliday(holidate, holiname)
   if (!holidate || !holiname) { return }
 
   let response = await sqlSaveHoliday(holidate, holiname)
-    if (typeof response === "object") {
-      setHOLIDAY(response)
-      const rows = getTableRowsByDate('maintbl', holidate)
-      refillHoliday(rows, holiname)
-    } else {
-      Alert ("saveHoliday", response)
-    }
+  if (typeof response === "object") {
+    setHOLIDAY(response)
+//      const rows = getTableRowsByDate('maintbl', holidate)
+    refillHoliday(/*rows, holiname*/)
+  } else {
+    Alert ("saveHoliday", response)
+  }
 }
 
 export function onclickDelete()
@@ -49,20 +49,21 @@ export function onclickDelete()
   fillHoliday(mainTable)
 }
 
-function delHoliday(row)
+function delHoliday(holirow)
 {
-  const holidate = row.dataset.holidate,
-    dayname = row.dataset.dayname,
+  const holidate = holirow.dataset.holidate,
+    dayname = holirow.dataset.dayname,
     maintblrows = getTableRowsByDate('maintbl', holidate)
 
   sqlDelHoliday(holidate, dayname).then(response => {
     if (typeof response === "object") {
       setHOLIDAY(response)
-      row.remove()
-      maintblrows.forEach(row => {
-        row.cells[DIAGNOSIS].classList.remove("holiday")
-        delete row.cells[DIAGNOSIS].dataset.holiday
-      })
+      holirow.remove()
+//      maintblrows.forEach(row => {
+//        row.cells[DIAGNOSIS].classList.remove("holiday")
+//        delete row.cells[DIAGNOSIS].dataset.holiday
+//      })
+      refillHoliday(/*rows, holiname*/)
     } else {
       Alert ("delHoliday", response)
     }
