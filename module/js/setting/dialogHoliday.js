@@ -1,6 +1,5 @@
 
 import { DIAGNOSIS } from "../control/const.js"
-import { getTableRowsByDate } from "../util/rowsgetting.js"
 import { setHOLIDAY } from "../setting/constHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
 import { Alert, winHeight } from "../util/util.js"
@@ -30,8 +29,7 @@ export async function saveHoliday(holidate, holiname)
   let response = await sqlSaveHoliday(holidate, holiname)
   if (typeof response === "object") {
     setHOLIDAY(response)
-//      const rows = getTableRowsByDate('maintbl', holidate)
-    refillHoliday(/*rows, holiname*/)
+    refillHoliday()
   } else {
     Alert ("saveHoliday", response)
   }
@@ -44,26 +42,18 @@ export function onclickDelete()
       delHoliday(item.closest("tr"))
     })
   })
-
-  const mainTable = document.querySelector("#maintbl")
-  fillHoliday(mainTable)
 }
 
 function delHoliday(holirow)
 {
   const holidate = holirow.dataset.holidate,
-    dayname = holirow.dataset.dayname,
-    maintblrows = getTableRowsByDate('maintbl', holidate)
+    dayname = holirow.dataset.dayname
 
   sqlDelHoliday(holidate, dayname).then(response => {
     if (typeof response === "object") {
       setHOLIDAY(response)
       holirow.remove()
-//      maintblrows.forEach(row => {
-//        row.cells[DIAGNOSIS].classList.remove("holiday")
-//        delete row.cells[DIAGNOSIS].dataset.holiday
-//      })
-      refillHoliday(/*rows, holiname*/)
+      refillHoliday()
     } else {
       Alert ("delHoliday", response)
     }

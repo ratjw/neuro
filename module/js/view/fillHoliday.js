@@ -1,11 +1,8 @@
 
-import { DIAGNOSIS } from "../control/const.js"
+import { DIAGNOSIS} from "../control/const.js"
 import { getTableRowsByDate } from "../util/rowsgetting.js"
-import { getHOLIDAY3Y } from "../setting/constHoliday.js"
+import { getHOLIDAY3Y, NOTHOLIDAY, COMPENSATE  } from "../setting/constHoliday.js"
 import { nextdates } from "../util/date.js"
-
-const COMPENSATE = "ชดเชย"
-const NOTHOLIDAY = "ไม่หยุด"
 
 export function fillHoliday(table)
 {

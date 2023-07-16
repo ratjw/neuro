@@ -2,14 +2,17 @@
 let HOLIDAY = []
 let HOLIDAY3Y = []
 
-export const HOLIDAYTHAI = [
+export const NOTHOLIDAY = "ไม่หยุด",
+COMPENSATE = "ชดเชย",
+
+HOLIDAYTHAI = [
   "วันมาฆบูชา",
   "วันพืชมงคล",
   "วันวิสาขบูชา",
   "วันอาสาฬหบูชา",
   "วันเข้าพรรษา",
   "วันหยุดพิเศษ",
-  "ไม่หยุด"
+  NOTHOLIDAY
 ],
 
 THISYEAR = new Date().getFullYear().toString(),
@@ -36,14 +39,14 @@ export function setHOLIDAY(holiday)
   HOLIDAY3Y = allHoliday3y(holiday)
 }
 
-// newHoliday = Buddhist holidays from this year
+// movHoliday = Buddhist holidays from this year
 // fixHoliday = Thai govt. holidays
 // layout for 3 calendar-years to fill maintable 2 years ahead
 function allHoliday3y(holiday)
 {
   const nextyear = (+THISYEAR + 1).toString(),
     extyear = (+THISYEAR + 2).toString(),
-    newHoliday = holiday.filter(day =>
+    movHoliday = holiday.filter(day =>
                    (day.holidate > THISYEAR) && (day.holidate < MAXYEAR)
                  ),
     fixHoliday1 = holiday.filter(day => day.holidate > MAXYEAR),
@@ -54,5 +57,10 @@ function allHoliday3y(holiday)
   fixHoliday2.forEach(d => d.holidate = d.holidate.replace(MAXYEAR, nextyear))
   fixHoliday3.forEach(d => d.holidate = d.holidate.replace(MAXYEAR, extyear))
 
-  return [...newHoliday, ...fixHoliday1, ...fixHoliday2, ...fixHoliday3]  
+  const holidays = [...movHoliday, ...fixHoliday1, ...fixHoliday2, ...fixHoliday3],
+    notHol = holidays.filter(e => e.dayname === NOTHOLIDAY),
+    notHoldates = notHol.map(e => e.holidate)
+
+  return holidays.filter(e => e.dayname === NOTHOLIDAY 
+                            || !notHoldates.includes(e.holidate))
 }
