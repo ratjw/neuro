@@ -115,18 +115,18 @@ export function pagination($dialog, $showtbl, found, search)
 
   function getPrevMonday(date)
   {
-    let today = date
+    let todate = date
           ? new Date(date.replace(/-/g, "/"))
           : new Date();
-    today.setDate(today.getDate() - today.getDay() + 1);
-    return obj_2_ISO(today);
+    todate.setDate(todate.getDate() - todate.getDay() + 1);
+    return obj_2_ISO(todate);
   }
 
   function getNextSunday(date)
   {
-    let today = new Date(date);
-    today.setDate(today.getDate() - today.getDay() + 7);
-    return obj_2_ISO(today);
+    let todate = new Date(date);
+    todate.setDate(todate.getDate() - todate.getDay() + 7);
+    return obj_2_ISO(todate);
   }
 
   function getBookOneWeek(found, Monday, offset)
@@ -171,11 +171,13 @@ export function pagination($dialog, $showtbl, found, search)
 
   function showAllCases(bookOneWeek, Monday)
   {
+    firstday = Monday
+
     let Sunday = getNextSunday(Monday),
       Mon = Monday && ISO_2_th(Monday) || "",
-      Sun = Sunday && ISO_2_th(Sunday) || ""
-
-    firstday = Monday
+      Sun = parseInt(Sunday) >= parseInt(MAXDATE)
+            ? "Waiting List"
+            : ISO_2_th(Sunday)
 
     $dialog.dialog({
       title: search + " : " + Mon + " - " + Sun
