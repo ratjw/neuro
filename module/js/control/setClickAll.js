@@ -1,6 +1,7 @@
 
 import { searchCases, searchDB } from "../menu/searchCases.js"
 import { caseAll } from "../menu/caseAll.js"
+import { caseAll2Excel,  caseAll2CSV, cases2Excel, cases2CSV} from "../menu/save2File.js"
 import { allDeletedCases } from "../menu/allDeletedCases.js"
 import { readme } from "../menu/readme.js"
 import { addnewrow } from "../menu/addnewrow.js"
@@ -31,7 +32,11 @@ function setClickMenu()
 {
   const clickMenu = {
     "clicksearchCases": searchCases,
-    "clickcaseAll": caseAll,
+    "clickShowAll": caseAll,
+    "clickAll2Excel": caseAll2Excel,
+    "clickAll2CSV": caseAll2CSV,
+    "clickcases2Excel": cases2Excel,
+    "clickcases2CSV": cases2CSV,
     "clickallDeletedCases": allDeletedCases,
     "clickeditHistory": editHistory,
     "clickreadme": readme,
