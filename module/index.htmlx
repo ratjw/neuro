@@ -41,7 +41,7 @@
            <p class="padleft10">Search in All Time</p>
            <ul class="w150">
             <li class="w150">
-             <a id="clicksearchCases">Show on Screen</a>
+             <a id="clicksearchCases">Show  on Screen</a>
             </li>
             <li class="w150">
              <a id="clickcases2Excel">Save to Excel file</a>
@@ -66,7 +66,8 @@
            </ul>
           </li>
         </ul>
-      <!--li>
+      </li>
+      <li>
        <p>Search All Saved Cases</p>
         <ul>
           <li>
@@ -97,14 +98,15 @@
             </li>
            </ul>
           </li>
-        </ul-->
+        </ul>
+      </li>
       <li class="w250">
        <p>
         <a id="clickallDeletedCases">Show Deleted Cases in last 3 months</a>
       </p>
       </li>
-      </li>
      </ul>
+    </li>
     <li id="history">
      <a id="clickeditHistory">Retrace</a>
     </li>
