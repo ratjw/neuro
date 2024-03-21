@@ -83,7 +83,10 @@
 .textcenter { text-align: center; }
 .bold { font-weight: bold; }
 .inline { display: inline-block; }
-.middle { vertical-align: middle }
+.middle { vertical-align: middle; }
+
+.padleft17 { padding-left: 17px !important; }
+.padleft50 { padding-left: 50px !important; }
 
 .w10 { width:10px !important; }
 .w20 { width:20px !important; }
