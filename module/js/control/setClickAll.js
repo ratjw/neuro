@@ -31,12 +31,12 @@ export function setClickAll()
 function setClickMenu()
 {
   const clickMenu = {
-    "clicksearchCases": searchCases,
+/*    "clicksearchCases": searchCases,
     "clickShowAll": caseAll,
     "clickAll2Excel": caseAll2Excel,
     "clickAll2CSV": caseAll2CSV,
     "clickcases2Excel": cases2Excel,
-    "clickcases2CSV": cases2CSV,
+    "clickcases2CSV": cases2CSV,*/
     "clickallDeletedCases": allDeletedCases,
     "clickeditHistory": editHistory,
     "clickreadme": readme,
