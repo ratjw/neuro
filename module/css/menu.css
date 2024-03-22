@@ -17,7 +17,7 @@
   display: inline-block;
   position: relative;
 }
-#cssmenu > ul li:hover ul {
+#cssmenu > ul > li:hover > ul {
   display: block;
 }
 #cssmenu > ul li.hassub a {
@@ -38,18 +38,17 @@
   line-height: 3px;
   z-index: 1;
 }
-#cssmenu ul li#postpone ul,
-#cssmenu ul li#delete ul {
+#cssmenu > ul li#postpone ul,
+#cssmenu > ul li#delete ul {
   line-height: normal;
 }
 #cssmenu > ul li a {
   display: block;
   padding: 12px 10px 12px 10px;
   text-decoration: none;
-  color: gray;
   text-shadow: 0px 1px 0px #fff;
 }
-#cssmenu > ul li#submenu ul li a {
+#cssmenu > ul > li#submenu > ul > li > a {
   width: 140px;
   height: auto;
   text-align: left;
@@ -76,11 +75,46 @@
   cursor: default;
   color: #CCCCCC;
 }
-#cssmenu ul li.disabled ul li {
+#cssmenu > ul li.disabled ul li {
   display: none;
 }
-#cssmenu ul li ul li a {
-  padding: 12px 7px 12px 7px;
+#cssmenu > ul > li > ul > li > p {
+  color: gray;
+  padding-left: 10px;
+}
+
+#cssmenu > ul > li > ul > li > a {
+  color: black;
+}
+#cssmenu > ul > li > ul > li:hover {
+  background: aquamarine;
+  color: #fff;
+  text-shadow: 0px 1px 0px #000;
+}
+#cssmenu > ul > li > ul > li:hover > ul {
+  display: block;
+}
+#cssmenu > ul > li > ul > li > ul {
+  display: none;
+  color: gray;
+  left: 100%;
+  top: 0%;
+  width: 150px;
+}
+#cssmenu > ul > li > ul > li > ul > li:hover {
+  background: aquamarine;
+  color: #000;
+  text-shadow: 0px 1px 0px #000;
+}
+#cssmenu > ul > li > ul > li > ul > li:hover > ul {
+  display: block;
+}
+#cssmenu > ul > li > ul > li > ul > li > ul {
+  display: none;
+  color: black;
+  left: 100%;
+  top: 0%;
+  width: 150px;
 }
 
 @media (max-width: 800px) {

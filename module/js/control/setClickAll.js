@@ -1,7 +1,9 @@
 
 import { searchCases, searchDB } from "../menu/searchCases.js"
 import { caseAll } from "../menu/caseAll.js"
-import { caseAll2Excel,  caseAll2CSV, cases2Excel, cases2CSV} from "../menu/save2File.js"
+import { caseAll2Excel,  caseAll2CSV, cases2Excel, cases2CSV, InterTime,
+  InterTime2Excel, InterTime2CSV, InterAll, InterAll2Excel, InterAll2CSV
+} from "../menu/save2File.js"
 import { allDeletedCases } from "../menu/allDeletedCases.js"
 import { readme } from "../menu/readme.js"
 import { addnewrow } from "../menu/addnewrow.js"
@@ -31,12 +33,18 @@ export function setClickAll()
 function setClickMenu()
 {
   const clickMenu = {
-/*    "clicksearchCases": searchCases,
-    "clickShowAll": caseAll,
+    "clicksearchCases": searchCases,
+    "clickcases2Excel": cases2Excel,
+    "clickcases2CSV": cases2CSV,
+    "clickInterTime": InterTime,
+    "clickInterTime2Excel": InterTime2Excel,
+    "clickInterTime2CSV": InterTime2CSV,
+    "clickAll": caseAll,
     "clickAll2Excel": caseAll2Excel,
     "clickAll2CSV": caseAll2CSV,
-    "clickcases2Excel": cases2Excel,
-    "clickcases2CSV": cases2CSV,*/
+    "clickInterAll": InterAll,
+    "clickInterAll2Excel": InterAll2Excel,
+    "clickInterAll2CSV": InterAll2CSV,
     "clickallDeletedCases": allDeletedCases,
     "clickeditHistory": editHistory,
     "clickreadme": readme,

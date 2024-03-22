@@ -34,3 +34,51 @@ export function cases2CSV() {
     : Alert("caseAll", response)
 	}).catch(error => alert(error.stack))
 }
+
+export function InterTime() {
+  sqlCaseAll().then(response => {
+    typeof response === "object"
+    ? pagination($("#dialogAll"), $("#alltbl"), response, "All Saved Cases")
+    : Alert("caseAll", response)
+	}).catch(error => alert(error.stack))
+}
+
+export function InterTime2Excel() {
+  sqlCaseAll().then(response => {
+    typeof response === "object"
+    ? pagination($("#dialogAll"), $("#alltbl"), response, "All Saved Cases")
+    : Alert("caseAll", response)
+	}).catch(error => alert(error.stack))
+}
+
+export function InterTime2CSV() {
+  sqlCaseAll().then(response => {
+    typeof response === "object"
+    ? pagination($("#dialogAll"), $("#alltbl"), response, "All Saved Cases")
+    : Alert("caseAll", response)
+	}).catch(error => alert(error.stack))
+}
+
+export function InterAll() {
+  sqlCaseAll().then(response => {
+    typeof response === "object"
+    ? pagination($("#dialogAll"), $("#alltbl"), response, "All Saved Cases")
+    : Alert("caseAll", response)
+	}).catch(error => alert(error.stack))
+}
+
+export function InterAll2Excel() {
+  sqlCaseAll().then(response => {
+    typeof response === "object"
+    ? pagination($("#dialogAll"), $("#alltbl"), response, "All Saved Cases")
+    : Alert("caseAll", response)
+	}).catch(error => alert(error.stack))
+}
+
+export function InterAll2CSV() {
+  sqlCaseAll().then(response => {
+    typeof response === "object"
+    ? pagination($("#dialogAll"), $("#alltbl"), response, "All Saved Cases")
+    : Alert("caseAll", response)
+	}).catch(error => alert(error.stack))
+}
