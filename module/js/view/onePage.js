@@ -4,11 +4,11 @@ import { OPDATE } from "../control/const.js"
 import { viewEquip } from "./viewEquip.js"
 import { obj_2_ISO, th_2_ISO, ISO_2_th } from "../util/date.js"
 import { winWidth, winHeight, winResizeFix } from "../util/util.js"
-import { exportFindToExcel } from "../util/excel.js"
+import { exportFindToExcel } from "../util/exportFindToExcel.js"
 
-export function onePage($dialogFind, $findtbl, found, search)
+export function onePage($dialogAll, $alltbl, found, search)
 {
-  $dialogFind.dialog({
+  $dialogAll.dialog({
     title: "Search: " + search,
     closeOnEscape: true,
     modal: true,
@@ -39,24 +39,24 @@ export function onePage($dialogFind, $findtbl, found, search)
   })
 
   // delete previous table lest it accumulates
-  $findtbl.find('tr').slice(1).remove()
+  $alltbl.find('tr').slice(1).remove()
 
   $.each( found, function() {  // each === this
-    $('#findcells tr').clone()
-      .appendTo($findtbl.find('tbody'))
+    $('#allcells tr').clone()
+      .appendTo($alltbl.find('tbody'))
         .filldataFind(this)
   });
-  $findtbl.fixMe($dialogFind);
+  $alltbl.fixMe($dialogAll);
 
   //for resizing dialogs in landscape / portrait view
   $(window).on("resize", resizeFind )
 
   function resizeFind() {
-    $dialogFind.dialog({
+    $dialogAll.dialog({
       width: winWidth(95),
       height: winHeight(95)
     })
-    winResizeFix($findtbl, $dialogFind)
+    winResizeFix($alltbl, $dialogAll)
   }
 
   //scroll to todate when there many cases
@@ -64,12 +64,12 @@ export function onePage($dialogFind, $findtbl, found, search)
     todate = obj_2_ISO(today),
     thishead
 
-  $findtbl.find("tr").each(function() {
+  $alltbl.find("tr").each(function() {
     thishead = this
     return th_2_ISO(this.cells[OPDATE].innerHTML) < todate
   })
-  $dialogFind.animate({
-    scrollTop: $(thishead).offset().top - $dialogFind.height()
+  $dialogAll.animate({
+    scrollTop: $(thishead).offset().top - $dialogAll.height()
   }, 300);
 }
 

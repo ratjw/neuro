@@ -1,20 +1,20 @@
 
-import { pagination } from "./pagination.js"
-import { scrolltoThisCase } from "./scrolltoThisCase.js"
-import { onePage } from "./onePage.js"
+import { pagination } from "../view/pagination.js"
+import { scrolltoThisCase } from "../view/scrolltoThisCase.js"
+import { onePage } from "../view/onePage.js"
 
 export function viewSearchDB(found, search)
 {
   let flen = found.length,
-    $dialogFind = $("#dialogFind"),
-    $findtbl = $("#findtbl"),
+    $dialogAll = $("#dialogAll"),
+    $alltbl = $("#alltbl"),
     show = flen && scrolltoThisCase(found[flen-1].qn)
 
   if (!show || (flen > 1)) {
     if (flen > 100) {
-      pagination($dialogFind, $findtbl, found, search)
+      pagination($dialogAll, $alltbl, found, search)
     } else {
-      onePage($dialogFind, $findtbl, found, search)
+      onePage($dialogAll, $alltbl, found, search)
     }
   }
 }

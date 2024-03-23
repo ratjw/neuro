@@ -1,5 +1,5 @@
 
-import { exportReportToExcel } from "../util/excel.js"
+import { exportReportToExcel } from "../util/exportReportToExcel.js"
 import { SERVICE } from "./setSERVICE.js"
 import { winHeight } from "../util/util.js"
 

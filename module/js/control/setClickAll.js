@@ -1,9 +1,10 @@
 
 import { searchCases, searchDB } from "../menu/searchCases.js"
 import { caseAll } from "../menu/caseAll.js"
-import { caseAll2Excel,  caseAll2CSV, cases2Excel, cases2CSV, InterTime,
+import { caseAll2Excel } from "../menu/caseAll2Excel.js"
+import { caseAll2CSV, cases2Excel, cases2CSV, InterTime,
   InterTime2Excel, InterTime2CSV, InterAll, InterAll2Excel, InterAll2CSV
-} from "../menu/save2File.js"
+} from "../menu/cases2File.js"
 import { allDeletedCases } from "../menu/allDeletedCases.js"
 import { readme } from "../menu/readme.js"
 import { addnewrow } from "../menu/addnewrow.js"
