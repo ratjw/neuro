@@ -5,7 +5,6 @@ export function exportFindToExcel(search)
 {
   // getting data from our table
   // IE uses "txt/html", "replace" with blob
-  let title = $('#dialogAll').dialog( "option", "title" )
   let style = '\
     <style type="text/css">\
       #exceltbl {\
@@ -40,13 +39,8 @@ export function exportFindToExcel(search)
         border: none;\
       }\
     </style>'
-  let head = `<thead id="excelhead">
-      <tr></tr>
-      <tr>
-        <td colspan="10">${title}</td>
-      </tr>
-      </thead>`
-  let filename = `Search ${search}.xls`
+  let head = `<thead id="excelhead"></thead>`
+  let filename = `${search}.xls`
 
   exportToExcel("#alltbl", style, head, filename)
 }
