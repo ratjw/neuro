@@ -1,5 +1,5 @@
 
-import { exportToExcel } from "../util/exportToExcel.js"
+import { downloadTableToExcel } from "../util/downloadTableToExcel.js"
 
 export function exportFindToExcel(search)
 {
@@ -42,5 +42,5 @@ export function exportFindToExcel(search)
   let head = `<thead id="excelhead"></thead>`
   let filename = `${search}.xls`
 
-  exportToExcel("#alltbl", style, head, filename)
+  downloadTableToExcel("#alltbl", style, head, filename)
 }

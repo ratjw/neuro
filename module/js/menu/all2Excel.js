@@ -1,5 +1,5 @@
 
-import { sqlCaseAll } from "../model/sqlCaseAll.js"
+import { sqlall } from "../model/sqlall.js"
 import { Alert } from "../util/util.js"
 import { ISO_2_th } from "../util/date.js"
 import { exportFindToExcel } from "../util/exportFindToExcel.js"
@@ -7,11 +7,11 @@ import { rowDecoration } from "../view/rowDecoration.js"
 import { viewEquip } from "../view/viewEquip.js"
 
 // All cases (exclude the deleted ones)
-export function caseAll2Excel() {
-  sqlCaseAll().then(response => {
+export function all2Excel() {
+  sqlall().then(response => {
     typeof response === "object"
     ? prepareHTMLtoExcel(response, "AllTimeCases")
-    : Alert("caseAll2Excel", response)
+    : Alert("all2Excel", response)
 	}).catch(error => alert(error.stack))
 }
 

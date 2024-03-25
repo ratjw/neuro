@@ -1,5 +1,5 @@
 
-import { exportToExcel } from "../util/exportToExcel.js"
+import { downloadTableToExcel } from "../util/downloadTableToExcel.js"
 
 export function exportServiceToExcel()
 {
@@ -56,5 +56,5 @@ export function exportServiceToExcel()
   month = month.substring(0, month.lastIndexOf("-"))
   let filename = `Service Neurosurgery ${month}.xls`
 
-  exportToExcel("#servicetbl", style, head, filename)
+  downloadTableToExcel("#servicetbl", style, head, filename)
 }

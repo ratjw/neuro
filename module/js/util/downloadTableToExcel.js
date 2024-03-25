@@ -1,5 +1,5 @@
 
-export function exportToExcel(id, style, head, filename)
+export function downloadTableToExcel(id, style, head, filename)
 {
   if ($("#exceltbl").length) {
     $("#exceltbl").remove()

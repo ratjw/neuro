@@ -1,16 +1,16 @@
 
-import { searchCases, searchDB } from "../menu/searchCases.js"
-import { caseAll } from "../menu/caseAll.js"
-import { cases2Excel } from "../menu/cases2Excel.js"
-import { caseAll2Excel } from "../menu/caseAll2Excel.js"
-import { caseAll2CSV } from "../menu/caseAll2CSV.js"
-import { cases2CSV } from "../menu/cases2CSV.js"
-import { InterTime } from "../menu/InterTime.js"
-import { InterTime2Excel } from "../menu/InterTime2Excel.js"
-import { InterTime2CSV } from "../menu/InterTime2CSV.js"
-import { InterAll } from "../menu/InterAll.js"
-import { InterAll2Excel } from "../menu/InterAll2Excel.js"
-import { InterAll2CSV } from "../menu/InterAll2CSV.js"
+import { search2Screen, searchDB } from "../menu/search2Screen.js"
+import { search2Excel } from "../menu/search2Excel.js"
+import { search2CSV } from "../menu/search2CSV.js"
+import { searchPeriod2Screen } from "../menu/searchPeriod2Screen.js"
+import { searchPeriod2Excel } from "../menu/searchPeriod2Excel.js"
+import { searchPeriod2CSV } from "../menu/searchPeriod2CSV.js"
+import { all2Screen } from "../menu/all2Screen.js"
+import { all2Excel } from "../menu/all2Excel.js"
+import { all2CSV } from "../menu/all2CSV.js"
+import { allPeriod2Screen } from "../menu/allPeriod2Screen.js"
+import { allPeriod2Excel } from "../menu/allPeriod2Excel.js"
+import { allPeriod2CSV } from "../menu/allPeriod2CSV.js"
 import { allDeletedCases } from "../menu/allDeletedCases.js"
 import { readme } from "../menu/readme.js"
 import { addnewrow } from "../menu/addnewrow.js"
@@ -40,18 +40,18 @@ export function setClickAll()
 function setClickMenu()
 {
   const clickMenu = {
-    "clicksearchCases": searchCases,
-    "clickcases2Excel": cases2Excel,
-    "clickcases2CSV": cases2CSV,
-    "clickInterTime": InterTime,
-    "clickInterTime2Excel": InterTime2Excel,
-    "clickInterTime2CSV": InterTime2CSV,
-    "clickAll": caseAll,
-    "clickAll2Excel": caseAll2Excel,
-    "clickAll2CSV": caseAll2CSV,
-    "clickInterAll": InterAll,
-    "clickInterAll2Excel": InterAll2Excel,
-    "clickInterAll2CSV": InterAll2CSV,
+    "clicksearch2Screen": search2Screen,
+    "clicksearch2Excel": search2Excel,
+    "clicksearch2CSV": search2CSV,
+    "clicksearchPeriod2Screen": searchPeriod2Screen,
+    "clicksearchPeriod2Excel": searchPeriod2Excel,
+    "clicksearchPeriod2CSV": searchPeriod2CSV,
+    "clickall2Screen": all2Screen,
+    "clickall2Excel": all2Excel,
+    "clickall2CSV": all2CSV,
+    "clickallPeriod2Screen": allPeriod2Screen,
+    "clickallPeriod2Excel": allPeriod2Excel,
+    "clickallPeriod2CSV": allPeriod2CSV,
     "clickallDeletedCases": allDeletedCases,
     "clickeditHistory": editHistory,
     "clickreadme": readme,

@@ -11,7 +11,7 @@ import { Alert, reposition, menustyle } from "../util/util.js"
 import { viewSearchDB } from "../view/viewSearchDB.js"
 import { clearAllEditing } from "../control/clearAllEditing.js"
 
-export function searchCases()
+export function search2Screen()
 {
   let $dialogInput = $("#dialogInput"),
     $staffsearch = $('#stafflist').clone()
@@ -45,7 +45,7 @@ export function searchCases()
     let keycode = event.which || window.Event.keyCode
     if (keycode === 13) { searchDB() }
   })
-  .find("span[title='ค้นหา']").click(function() { searchDB() })
+  .find("span[title]").click(function() { searchDB() })
 }
 
 function getSaffName(pointing, $staffsearch)

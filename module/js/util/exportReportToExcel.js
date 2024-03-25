@@ -1,5 +1,5 @@
 
-import { exportToExcel } from "../util/exportToExcel.js"
+import { downloadTableToExcel } from "../util/downloadTableToExcel.js"
 
 export function exportReportToExcel(title)
 {
@@ -48,5 +48,5 @@ export function exportReportToExcel(title)
   let head = `<div id="excelhead">\<br><br>${title}<br><br></div>`
   let filename = `Report ${title}.xls`
 
-  exportToExcel("#dialogReview", style, head, filename)
+  downloadTableToExcel("#dialogReview", style, head, filename)
 }
