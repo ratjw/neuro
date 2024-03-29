@@ -1,12 +1,6 @@
 
 export function inputPeriod()
 {
-  $("#dialogPeriod").dialog({
-    title: "Date Begin End",
-    closeOnEscape: true,
-    modal: true
-  })
-
   $("#dateFrom").datepicker({
     numberOfMonths:1,
     dateFormat:'yy-mm-dd',

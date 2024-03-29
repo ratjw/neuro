@@ -1,11 +1,11 @@
 
-import { inputPeriod } from "../util/inputPeriod.js"
+import { dialogPeriod } from "../util/dialogPeriod.js"
 import { sqlallInPeriod } from "../model/sqlallInPeriod.js"
 import { Alert } from "../util/util.js"
 import { pagination } from "../view/pagination.js"
 
 export function allPeriod2Screen() {
-  inputPeriod()
+  dialogPeriod()
   $("#dialogPeriod span[title]").click(function() {
     queryPeriod($("#dateFrom").val(), $("#dateTo").val())
     $("#dialogPeriod").dialog('close')

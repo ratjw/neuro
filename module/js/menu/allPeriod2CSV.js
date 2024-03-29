@@ -1,11 +1,11 @@
 
-import { inputPeriod } from "../util/inputPeriod.js"
+import { dialogPeriod } from "../util/dialogPeriod.js"
 import { sqlallInPeriod } from "../model/sqlallInPeriod.js"
 import { Alert } from "../util/util.js"
 import { downloadJSONasCSV } from "../util/downloadJSONasCSV.js"
 
 export function allPeriod2CSV() {
-  inputPeriod()
+  dialogPeriod()
   $("#dialogPeriod span[title]").click(function() {
     queryPeriod($("#dateFrom").val(), $("#dateTo").val())
     $("#dialogPeriod").dialog('close')
