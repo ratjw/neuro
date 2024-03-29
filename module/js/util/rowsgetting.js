@@ -28,7 +28,6 @@ export function sameDateRoomTableRows(tableID, row)
 {
   return Array.from(document.querySelectorAll(`#${tableID} tr`)).filter(e => {
     return e.dataset.opdate === row.dataset.opdate
-      && e.dataset.theatre === row.dataset.theatre
       && e.dataset.oproom === row.dataset.oproom;
   })
 }

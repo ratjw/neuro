@@ -1,6 +1,6 @@
 import {
-  OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT, DIAGNOSIS,
-  TREATMENT, LAB, EQUIPMENT, CONTACT
+  OPDATE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT, DIAGNOSIS,
+  TREATMENT, EQUIPMENT, CONTACT
 } from "../control/const.js"
 import {
   POINTER, OLDCONTENT, getNewcontent, createEditcell, clearEditcell
@@ -8,7 +8,6 @@ import {
 import { clearMouseoverTR } from "../util/util.js"
 import { clearAllEditing } from "./clearAllEditing.js"
 
-import { saveTheatre } from "../save/saveTheatre.js"
 import { saveOpRoom } from "../save/saveOpRoom.js"
 import { saveOpTime } from "../save/saveOpTime.js"
 import { saveContent } from "../save/saveContent.js"
@@ -17,14 +16,12 @@ import { saveHN } from "../save/saveHN.js"
 import { savePATIENT } from "../save/savePATIENT.js"
 
 import { selectRow, clearSelection } from "../control/selectRow.js"
-import { getTHEATRE } from "../get/getTHEATRE.js"
 import { getROOM } from "../get/getROOM.js"
 import { getOPTIME } from "../get/getOPTIME.js"
 import { getCASENUM } from "../get/getCASENUM.js"
 import { getSTAFFNAME } from "../get/getSTAFFNAME.js"
 import { getHN } from "../get/getHN.js"
 import { getPATIENT } from "../get/getPATIENT.js"
-import { getLAB } from "../get/getLAB.js"
 import { getEQUIP } from "../get/getEQUIP.js"
 
 // Click on main or staff table
@@ -51,7 +48,6 @@ export function savePreviousCell() {
   switch(column)
   {
     case OPDATE: break
-    case THEATRE: saveTheatre(POINTER, newcontent); break
     case OPROOM: saveOpRoom(POINTER, newcontent); break
     case OPTIME: saveOpTime(POINTER, newcontent); break
     case CASENUM: saveCaseNum(POINTER, newcontent); break
@@ -78,7 +74,6 @@ export function editPresentCell(evt, pointing) {
   switch(column)
   {
     case OPDATE: selectRow(evt, pointing); break
-    case THEATRE: createEditcell(pointing); break
     case OPROOM: getROOM(pointing); break
     case OPTIME: getOPTIME(pointing); break
     case CASENUM: getCASENUM(pointing); break
@@ -87,7 +82,6 @@ export function editPresentCell(evt, pointing) {
     case PATIENT: getPATIENT(pointing); break
     case DIAGNOSIS: createEditcell(pointing); break
     case TREATMENT: createEditcell(pointing); break
-    case LAB: getLAB(pointing); break
     case EQUIPMENT: getEQUIP(pointing); break
     case CONTACT: createEditcell(pointing); break
   }

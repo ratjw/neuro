@@ -30,7 +30,6 @@ function sqlCopyPaster(moverow, pasterow)
   let origin = moverow.dataset,
     dob = origin.dob ? `'${origin.dob}'` : null,
     pastedate = pasterow.dataset.opdate,
-    pastetheatre = pasterow.dataset.theatre,
     pasteroom = pasterow.dataset.oproom,
     pastecasenum = pasterow.dataset.casenum,
     pastepos = pasterow.classList.contains(PASTEBOTTOM) ? 1 : 0,
@@ -39,7 +38,6 @@ function sqlCopyPaster(moverow, pasterow)
   if (pastedate === MAXDATE) {
     paster.waitnum = getLargestWaitnum(getBOOK(), origin.staffname) + 1
     paster.opdate = MAXDATE
-    paster.theatre = ''
     paster.oproom = null
     paster.casenum = null
   } else {
@@ -47,7 +45,6 @@ function sqlCopyPaster(moverow, pasterow)
       ? calcWaitnum(pastedate, pasterow, pasterow.nextElementSibling)
       : calcWaitnum(pastedate, pasterow.previousElementSibling, pasterow)
     paster.opdate = pastedate
-    paster.theatre = pastetheatre
     if (pasteroom) {
       paster.oproom = pasteroom
       paster.casenum = +pastecasenum + pastepos
@@ -60,7 +57,6 @@ function sqlCopyPaster(moverow, pasterow)
   return `INSERT INTO book SET
     waitnum=${paster.waitnum},
     opdate='${paster.opdate}',
-    theatre='${apostrophe(paster.theatre)}',
     oproom=${paster.oproom},
     optime='${origin.optime}',
     casenum=${paster.casenum},

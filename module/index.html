@@ -166,7 +166,6 @@
      <tbody>
       <tr>
        <th>Date</th>
-       <th>OR</th>
        <th>Rm</th>
        <th>Time</th>
        <th>№</th>
@@ -175,7 +174,6 @@
        <th>Patient</th>
        <th>Diagnosis</th>
        <th>Treatment</th>
-       <th>Req</th>
        <th>Equipment</th>
        <th>Contact & Notes</th>
       </tr>
@@ -194,7 +192,6 @@
      <tbody>
       <tr>
        <th>Date</th>
-       <th>OR</th>
        <th>Rm</th>
        <th>Time</th>
        <th>№</th>
@@ -203,7 +200,6 @@
        <th>Patient</th>
        <th>Diagnosis</th>
        <th>Treatment</th>
-       <th>Req</th>
        <th>Equipment</th>
        <th>Contact</th>
       </tr>
@@ -218,8 +214,6 @@
 <table id="tblcells">
  <tbody>
   <tr>
-    <td></td>
-    <td></td>
     <td></td>
     <td></td>
     <td></td>
@@ -537,39 +531,37 @@
 </table>
 
 <div id="dialogInput" class="dialogBox">
- <span class="w40">HN:</span><input class="w70" type="text" name="hn">
- <br>
- <br>
- <span class="w40">ชื่อ:</span><input class="w100" type="text" name="name">
- <span class="w10"></span>
- <span class="w60">นามสกุล:</span><input class="w150" type="text" name="surname">
- <br>
- <br>
- <span class="w40">Staff:</span><input class="w100" type="text" name="staffname">
- <br>
- <br>
- <div>
-   <input type="text" name="others" placeholder="Dx, Rx, Adm & Final Status">
- </div>
- <br>
- <span title="ค้นหา" class="floatright">
-  Enter <img class="middle" src="css/pic/general/Find.png"/>
- </span>
-</div>
-
-<div id="dialogPeriod" class="dialogBox">
-  <br>
-  <br>
-  <span class="w40">เริ่ม:</span><input readonly="readonly" placeholder="date begin"
-    maxlength="10" name="datebegin" id="dateFrom" required>
-  <span class="w30"></span>
-  <span class="w30">ถึง:</span><input readonly="readonly" placeholder="date end"
-    maxlength="10" name="dateend" id="dateTo" required>
-  <br>
-  <br>
-  <span title="ค้นหา" class="floatright">
-    Enter <img class="middle" src="css/pic/general/Find.png"/>
-  </span>
+  <div id="searchpart">
+    <span class="w40">HN:</span><input class="w70" type="text" name="hn">
+    <br>
+    <br>
+    <span class="w40">ชื่อ:</span><input class="w100" type="text" name="name">
+    <span class="w10"></span>
+    <span class="w60">นามสกุล:</span><input class="w150" type="text" name="surname">
+    <br>
+    <br>
+    <span class="w40">Staff:</span><input class="w100" type="text" name="staffname">
+    <br>
+    <br>
+    <span class="w40">หาคำ: </span>
+      <input type="text" name="others" placeholder="Dx, Rx, Adm & Final Status">
+    
+  </div>
+  <div id="periodpart">
+    <br>
+    <br>
+    <br>
+    <span class="w40">ตั้งแต่:</span><input readonly="readonly" placeholder="date begin"
+       maxlength="10" name="datebegin" id="dateFrom" required>
+    <span class="w20"></span>
+    <span class="w40">จนถึง:</span><input readonly="readonly" placeholder="date end"
+       maxlength="10" name="dateend" id="dateTo" required>
+    <br>
+    <br>
+    <span title="ค้นหา" class="floatright">
+      Enter <img class="middle" src="css/pic/general/Find.png"/>
+    </span>
+  </div>
 </div>
 
 <div id="dialogStaff">
@@ -756,8 +748,6 @@
 <div id="dialogAlert"></div>
 
 <div id="editcell"></div>
-
-<div id="dialogLab" class="dialogBox"></div>
 
 <div id="dialogEquip" class="dialogBox"></div>
 

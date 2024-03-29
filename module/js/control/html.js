@@ -1,5 +1,5 @@
 
-import { LABSHEET, EQUIPSHEET} from "../control/const.js"
+import { EQUIPSHEET} from "../control/const.js"
 import { staffqueue } from "../view/staffqueue.js"
 import { getStaffOR } from "../setting/getStaff.js"
 
@@ -38,48 +38,6 @@ export function htmlStafflist() {
       staffqueue(name)
     }
   })
-}
-
-export function htmlLab()
-{
-  let lab = "",
-    type = "",
-    width = "",
-    name = "",
-    label = "",
-    id = "",
-    min = "",
-    max = ""
-
-  LABSHEET.forEach(item => {
-    type = item[0]
-    width = item[1]
-    name = item[2]
-    label = item[3]
-    id = item[4]
-    min = item[5] || ""
-    max = item[6] || ""
-
-    if (type === "span") {
-      lab += `<span class="w${width}" id="${id}">${label}</span>`
-    } else if (type === "spanInSpan") {
-      lab += `<span class="w${width}">${label}<span id="${id}"></span></span>`
-    } else if (type === "br") {
-      lab += `<br>`
-    } else if (type === "text") {
-      lab += `<label>
-        <span class="w${width}">${label}</span>
-        <input class="w40" type="${type}" id="${id}" value="">
-      </label>`
-    } else if (type === "number") {
-      lab += `<label>
-        <span class="w${width}">${label}</span>
-        <input class="w40" type="${type}" id="${id}" value="" min="${min}" max="${max}">
-      </label>`
-    }
-  })
-
-  document.getElementById("dialogLab").innerHTML = lab
 }
 
 export function htmlEquipment()

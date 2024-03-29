@@ -10,7 +10,7 @@ import { fillmain } from "../view/fill.js"
 import { fillConsults } from "../view/fillConsults.js"
 import { updateBOOK } from "../util/updateBOOK.js"
 import { Alert } from "../util/util.js"
-import { htmlStafflist, htmlLab, htmlEquipment } from "../control/html.js"
+import { htmlStafflist, htmlEquipment } from "../control/html.js"
 import { scrolltoToday } from "../view/scrolltoThisCase.js"
 import { dialogServiceEvent } from "./startsub/dialogServiceEvent.js"
 import { wrapperEvent } from "./startsub/wrapperEvent.js"
@@ -43,8 +43,6 @@ function success(response) {
   clearSelection()
 
   // setting up html
-  htmlLab()
-  htmlEquipment()
   htmlStafflist()
 
   // make the document editable

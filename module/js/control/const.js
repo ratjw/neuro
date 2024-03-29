@@ -4,18 +4,16 @@
 export const
 //maintbl, queuetbl
 OPDATE    = 0,
-THEATRE   = 1,
-OPROOM    = 2,
-OPTIME    = 3,
-CASENUM   = 4,
-STAFFNAME = 5,
-HN        = 6,
-PATIENT   = 7,
-DIAGNOSIS = 8,
-TREATMENT = 9,
-LAB       = 10,
-EQUIPMENT = 11,
-CONTACT   = 12,
+OPROOM    = 1,
+OPTIME    = 2,
+CASENUM   = 3,
+STAFFNAME = 4,
+HN        = 5,
+PATIENT   = 6,
+DIAGNOSIS = 7,
+TREATMENT = 8,
+EQUIPMENT = 9,
+CONTACT   = 10,
 
 //servicetbl
 CASENUMSV   = 0,
@@ -30,7 +28,6 @@ DISCHARGESV = 8,
 
 COLUMNDATASET = {
   waitnum: null,
-  theatre: THEATRE,
   oproom: OPROOM,
   optime: OPTIME,
   casenum: CASENUM,
@@ -40,7 +37,6 @@ COLUMNDATASET = {
   dob: null,
   diagnosis: DIAGNOSIS,
   treatment: TREATMENT,
-  lab: LAB,
   equipment: EQUIPMENT,
   contact: CONTACT,
   qn: null
@@ -354,47 +350,6 @@ EQUIPSHEET = [
   ["span", "", "", "", "editedby"],
   ["divend", "", "", "", ""],
   ["br", "", "", "", ""]
-],
-
-// ["type", "width", "name", "label", "id", "min", "max"]
-LABSHEET = [
-  ["spanInSpan", "", "", "วัน", "opdaylab"],
-  ["spanInSpan", "100", "", "ที่ ", "opdatethlab"],
-  ["br", "", "", "", ""],
-  ["span", "70", "", "Surgeon", ""],
-  ["span", "", "", "", "staffnamelab"],
-  ["br", "", "", "", ""],
-  ["span", "70", "", "ชื่อผู้ป่วย", ""],
-  ["span", "", "", "", "patientnamelab"],
-  ["br", "", "", "", ""],
-  ["span", "70", "", "อายุ", ""],
-  ["span", "", "", "", "agelab"],
-  ["br", "", "", "", ""],
-  ["span", "70", "", "HN", ""],
-  ["span", "", "", "", "hnlab"],
-  ["br", "", "", "", ""],
-  // floatleft makes the subsequent text rows go downwards
-  // instead of pushing previous rows upward
-  ["span", "70 floatleft", "", "Diagnosis", ""],
-  ["span", "200", "", "", "diagnosislab"],
-  ["br", "", "", "", ""],
-  ["span", "70 floatleft", "", "Operation", ""],
-  ["span", "200", "", "", "treatmentlab"],
-  ["br", "", "", "", ""],
-  ["br", "", "", "", ""],
-  ["text", "150", "", "Group ABO +- Rh", "gr"],
-  ["br", "", "", "", ""],
-  ["number", "150", "", "Packed Red Cells", "PRC", "0", "99"],
-  ["br", "", "", "", ""],
-  ["number", "150", "", "Fresh Frozen Plasma", "FFP", "0", "99"],
-  ["br", "", "", "", ""],
-  ["number", "150", "", "Whole Blood", "WB", "0", "99"],
-  ["br", "", "", "", ""],
-  ["number", "150", "", "Platelet Concentrate", "Plt", "0", "99"],
-  ["br", "", "", "", ""],
-  ["number", "150", "", "Cryoprecipitate", "Cryo", "0", "99"],
-  ["br", "", "", "", ""],
-  ["number", "150", "", "Factor IX", "IX", "0", "99"]
 ],
 
 // [type, width, name, label, id, min, max]

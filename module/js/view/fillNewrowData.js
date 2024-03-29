@@ -1,11 +1,10 @@
 
 import {
-  OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
-  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT, COLUMNDATASET, CELLDATASET
+  OPDATE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
+  DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT, COLUMNDATASET, CELLDATASET
 } from "../control/const.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { putNameAge } from "../util/date.js"
-import { viewLab } from "./viewLab.js"
 import { viewEquip } from "./viewEquip.js"
 
 // make null to "", if not, the dataset will change it to "null"
@@ -71,9 +70,6 @@ function fillRow(row, bookq, key, val)
 
   if (val === PATIENT) {
     cells[val].innerHTML = putNameAge(bookq)
-  }
-  else if (val === LAB) {
-    cells[val].innerHTML = viewLab(bookq.lab)
   }
   else if (val === EQUIPMENT) {
     cells[val].innerHTML = viewEquip(bookq.equipment)

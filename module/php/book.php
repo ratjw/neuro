@@ -17,12 +17,12 @@ function book($mysqli)
   $consult = array();
   $time = array();
 
-  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
-            patient,dob,diagnosis,treatment,lab,equipment,contact,qn
+  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,staffname,hn,
+            patient,dob,diagnosis,treatment,equipment,contact,qn
           FROM book 
           WHERE opdate >= '$start'
             AND deleted = 0 AND waitnum > 0
-          ORDER BY opdate, theatre='',theatre, oproom is null,oproom,
+          ORDER BY opdate, oproom is null,oproom,
             casenum is null,casenum, optime='',optime, waitnum;";
             // The one with blank/null will be the last, sorted by ASC
 
@@ -33,8 +33,8 @@ function book($mysqli)
     $book[] = $rowi;
   }
 
-  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
-            patient,dob,diagnosis,treatment,lab,equipment,contact,qn
+  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,staffname,hn,
+            patient,dob,diagnosis,treatment,equipment,contact,qn
           FROM book 
           WHERE opdate >= '$start'
             AND deleted = 0 AND waitnum < 0
