@@ -6,16 +6,16 @@ import { prepareHTMLtoExcel } from "../util/prepareHTMLtoExcel.js"
 
 export function allPeriod2Excel() {
   dialogPeriod()
-  $("#dialogPeriod span[title]").click(function() {
+  $("#dialogInput span[title]").one("click", function() {
     queryPeriod($("#dateFrom").val(), $("#dateTo").val())
-    $("#dialogPeriod").dialog('close')
+    $("#dialogInput").dialog('close')
   })
 }
 
 function queryPeriod(dateFrom, dateTo) {
   sqlallInPeriod(dateFrom, dateTo).then(response => {
     typeof response === "object"
-    ? prepareHTMLtoExcel(response, "AllInPeriod")
+    ? prepareHTMLtoExcel(response, `AllInPeriod, ${dateFrom}, ${dateTo}`)
     : Alert("queryPeriod", response)
 	}).catch(error => alert(error.stack))
 }

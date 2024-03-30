@@ -1,12 +1,10 @@
 
-import { sqlall } from "../model/sqlall.js"
-import { Alert } from "../util/util.js"
-import { pagination } from "../view/pagination.js"
+import { search } from "../menu/search.js"
 
-export function search2Excel() {
-  sqlall().then(response => {
-    typeof response === "object"
-    ? pagination($("#dialogAll"), $("#alltbl"), response, "All Saved Cases")
-    : Alert("caseAll", response)
-	}).catch(error => alert(error.stack))
+export function search2Excel()
+{
+  $("#searchpart").show()
+  $("#periodpart").hide()
+
+  search("excel")
 }

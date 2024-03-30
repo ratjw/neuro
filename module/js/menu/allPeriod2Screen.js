@@ -6,9 +6,9 @@ import { pagination } from "../view/pagination.js"
 
 export function allPeriod2Screen() {
   dialogPeriod()
-  $("#dialogPeriod span[title]").click(function() {
+  $("#dialogInput span[title]").one("click", function() {
     queryPeriod($("#dateFrom").val(), $("#dateTo").val())
-    $("#dialogPeriod").dialog('close')
+    $("#dialogInput").dialog('close')
   })
 }
 

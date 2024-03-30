@@ -6,7 +6,7 @@ export function downloadJSONasCSV(jsonData, filename) {
   let a = document.createElement('a');
 
   a.href = url;
-  a.download = 'data.csv';
+  a.download = filename + '.csv';
   document.body.appendChild(a);
   a.click();
 }

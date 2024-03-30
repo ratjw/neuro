@@ -22,6 +22,14 @@ require_once "mysqli.php";
 		if ($sql) { $sql .= " AND "; }
 		$sql .= "staffname='$staffname'";
 	}
+	if ($datebegin) {
+		if ($sql) { $sql .= " AND "; }
+		$sql .= "opdate BETWEEN '$datebegin'";
+	}
+	if ($dateend) {
+		if ($sql) { $sql .= " AND "; }
+		$sql .= "'$dateend'";
+	}
 	if ($others) {
 		$data = getData($mysqli, $sql, $others);
 	} else {

@@ -1,5 +1,5 @@
 
-import { search2Screen, searchDB } from "../menu/search2Screen.js"
+import { search2Screen } from "../menu/search2Screen.js"
 import { search2Excel } from "../menu/search2Excel.js"
 import { search2CSV } from "../menu/search2CSV.js"
 import { searchPeriod2Screen } from "../menu/searchPeriod2Screen.js"
