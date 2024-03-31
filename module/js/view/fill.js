@@ -2,11 +2,12 @@
 import { MAXDATE } from "../control/const.js"
 import { START_DATE, obj_2_ISO, nextdates } from "../util/date.js"
 import { getBOOK } from "../util/updateBOOK.js"
-import { rowDecoration } from "./rowDecoration.js"
+import { rowDecoration } from "../view/rowDecoration.js"
 import { blankRowData } from "../view/fillNewrowData.js"
-import { viewOneDay } from "./viewOneDay.js"
-import { fillNewrowData } from "./fillNewrowData.js"
+import { viewOneDay } from "../view/viewOneDay.js"
+import { fillNewrowData } from "../view/fillNewrowData.js"
 import { fillHoliday, refillHoliday } from "../view/fillHoliday.js"
+import { fillAnnouncement } from "../view/fillAnnouncement.js"
 
 // Render Main table
 // Consults and dialogAll tables use this too
@@ -24,6 +25,7 @@ export function fillmain()
   // fill blank rows to two years from now
   fillBlankDates(table, lastcase, until)
   fillHoliday(table)
+  fillAnnouncement(table)
 }
 
 // truncate the cases without opdate

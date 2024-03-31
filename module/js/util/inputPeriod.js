@@ -1,18 +1,22 @@
 
 export function inputPeriod()
 {
-  $("#dateTo").datepicker({
+  $("#dateend").datepicker({
     numberOfMonths:1,
-    dateFormat:'yy-mm-dd',
+    altField: $("#dateTo"),
+    altFormat: "yy-mm-dd",
+    dateFormat:'dd MM yy',
     onSelect:function(selectdate){
       var dt = new Date(selectdate);
       dt.setDate(dt.getDate()-1)
       $("#dateFrom").datepicker("option","maxDate",dt);
     }
   });
-    $("#dateFrom").datepicker({
+    $("#datebegin").datepicker({
     numberOfMonths:1,
-    dateFormat:'yy-mm-dd',
+    altField: $("#dateFrom"),
+    altFormat: "yy-mm-dd",
+    dateFormat:'dd MM yy',
     onSelect:function(selectdate) {
       var dt = new Date(selectdate);
       dt.setDate(dt.getDate()+1)

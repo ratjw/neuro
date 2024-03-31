@@ -43,6 +43,7 @@ function success(response) {
   clearSelection()
 
   // setting up html
+  htmlEquipment()
   htmlStafflist()
 
   // make the document editable

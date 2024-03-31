@@ -1,5 +1,4 @@
 
-import { DIAGNOSIS } from "../control/const.js"
 import { setHOLIDAY } from "../setting/constHoliday.js"
 import { sqlSaveHoliday, sqlDelHoliday } from "../model/sqlSaveHoliday.js"
 import { Alert, winHeight } from "../util/util.js"

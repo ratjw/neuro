@@ -92,15 +92,9 @@ td img.imgpale {
 #maintbl th:nth-child(11) { width: 20%; }
 
 #maintbl td:nth-child(1) { font-size: 12px; }
-#maintbl th:nth-child(2) { font-size: xx-small; padding: 0px; }
-#maintbl td:nth-child(2) { font-size: 14px; padding: 0px; }
-#maintbl td:nth-child(2) { text-align: center; }
-#maintbl th:nth-child(3) { font-size: xx-small; padding: 0px; }
-#maintbl td:nth-child(3) { font-size: xx-small; padding: 0px; }
-#maintbl td:nth-child(3) { text-align: center; }
-#maintbl th:nth-child(4) { font-size: xx-small; padding: 0px; }
-#maintbl td:nth-child(4) { font-size: 14px; padding: 0px; }
-#maintbl td:nth-child(4) { text-align: center; }
+#maintbl td:nth-child(2) { font-size: 14px; padding: 0px; text-align: center; }
+#maintbl td:nth-child(3) { font-size: xx-small; padding: 0px; text-align: center; }
+#maintbl td:nth-child(4) { font-size: 14px; padding: 0px; text-align: center; }
 #maintbl td:nth-child(5) { font-size: 12px; }
 #maintbl td:nth-child(6) { font-size: 12px; }
 #maintbl td:nth-child(7) { font-size: 12px; }
@@ -111,7 +105,6 @@ td img.imgpale {
 }
 
 #queuetbl th:nth-child(1) { width: 2%; }
-#queuetbl th:nth-child(2), #queuetbl td:nth-child(2) { display: none; }
 #queuetbl th:nth-child(2), #queuetbl td:nth-child(2) { display: none; }
 #queuetbl th:nth-child(3), #queuetbl td:nth-child(3) { display: none; }
 #queuetbl th:nth-child(4), #queuetbl td:nth-child(4) { display: none; }
@@ -290,6 +283,12 @@ td.holiday::after {
   font-size: 24px;
   font-weight: bold;
   content: attr(data-holiday);
+}
+
+td.announce { 
+  color: Silver;
+  font-size: 24px;
+  font-weight: bold;
 }
 
 #editcell { 

@@ -77,8 +77,8 @@ function searchDB(destine)
     surname = $('#dialogInput input[name="surname"]').val().trim(),
     staffname = $('#dialogInput input[name="staffname"]').val().trim(),
     others = $('#dialogInput input[name="others"]').val().trim(),
-    datebegin = $('#dialogInput input[name="datebegin"]').val().trim(),
-    dateend = $('#dialogInput input[name="dateend"]').val().trim(),
+    datebegin = $('#dialogInput input[id="dateFrom"]').val().trim(),
+    dateend = $('#dialogInput input[id="dateTo"]').val().trim(),
     fullname = name + (surname ? " " : "") + surname,
     search = ""
 

@@ -7,6 +7,7 @@ import {
 } from "./edit.js"
 import { clearMouseoverTR } from "../util/util.js"
 import { clearAllEditing } from "./clearAllEditing.js"
+import { fillAnnounce } from "../view/fillAnnounce.js"
 
 import { saveOpRoom } from "../save/saveOpRoom.js"
 import { saveOpTime } from "../save/saveOpTime.js"
@@ -80,8 +81,8 @@ export function editPresentCell(evt, pointing) {
     case STAFFNAME: getSTAFFNAME(pointing); break
     case HN: getHN(evt, pointing); break
     case PATIENT: getPATIENT(pointing); break
-    case DIAGNOSIS: createEditcell(pointing); break
-    case TREATMENT: createEditcell(pointing); break
+    case DIAGNOSIS: fillAnnounce(pointing); createEditcell(pointing); break
+    case TREATMENT: fillAnnounce(pointing); createEditcell(pointing); break
     case EQUIPMENT: getEQUIP(pointing); break
     case CONTACT: createEditcell(pointing); break
   }
