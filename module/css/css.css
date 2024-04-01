@@ -230,10 +230,6 @@ td img.imgpale {
   width: 20px;
 }
 
-#residenttbl { text-align: center; }
-#residenttbl th { padding: 0px 7px 0px 7px; }
-#residenttbl td:nth-child(2) { text-align: left; }
-
 #wrapper,
 #queuewrapper,
 #tblcells,
@@ -252,8 +248,6 @@ td img.imgpale {
 #dialogReadme,
 #editcell,
 #undelete,
-#dialogResident, #residentcells,
-#dialogSlider,
 #dialogStaff, #staffcells,
 #scbb option:first-of-type,
 #dialogPatient, #patientcells,

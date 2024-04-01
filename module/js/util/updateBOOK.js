@@ -15,7 +15,6 @@ import { setHOLIDAY } from "../setting/constHoliday.js"
 let BOOK = [],
   CONSULT = [],
   STAFF = [],
-  RESIDENT = [],
   TIMESTAMP = ""
 
 // return the deep-cloned data, instead of the array's reference
@@ -27,7 +26,6 @@ export function getRESIDENT() { return JSON.parse(JSON.stringify(RESIDENT)) }
 export function getTIMESTAMP() { return TIMESTAMP }
 
 export function setSTAFF(staff) { STAFF = staff }
-export function setRESIDENT(resident) { RESIDENT = resident }
 
 // Save data got from server
 // Two main data for tables (BOOK, CONSULT) and a TIMESTAMP
@@ -42,7 +40,6 @@ export function updateBOOK(response) {
   if (response.QTIME) { TIMESTAMP = response.QTIME }
 
   if (response.STAFF) { setSTAFF(response.STAFF) }
-  if (response.RESIDENT) { setRESIDENT(response.RESIDENT) }
   if (response.HOLIDAY) { setHOLIDAY(response.HOLIDAY) }
 
   if (isSplit()) { staffqueue(titlename.innerHTML) }

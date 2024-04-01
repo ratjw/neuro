@@ -54,7 +54,6 @@ function success(response) {
   setClickAll()
   overrideJqueryUI()
   resetTimer()
-//  serverSentEvent()
 }
 
 // *** to do -> offline browsing by service worker ***

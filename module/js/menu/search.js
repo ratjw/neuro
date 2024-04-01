@@ -20,6 +20,11 @@ export function search(destine)
   $staffsearch.attr('id', 'staffsearch')
   $staffsearch.css('position', 'fixed')
   
+  if ($("#periodpart").is(":hidden")) {
+    $("#dateFrom").val("")
+    $("#dateTo").val("")
+  }
+
   inputPeriod()
 
   $dialogInput.dialog({

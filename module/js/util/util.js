@@ -204,9 +204,9 @@ export function deepEqual(x, y)
   ) : (x === y);
 }
 
-export function string25(longtext)
+export function string50(longtext)
 {
-  let result1 = stringChopper(longtext, 25),
+  let result1 = stringChopper(longtext, 50),
     endresult = [],
     i = 0
 
@@ -218,17 +218,8 @@ export function string25(longtext)
   return endresult.join('<br>')
 }
 
-export function string25_1(longtext)
-{
-   return stringChopper(longtext, 25)[0]
-}
-
-export function string50(longtext)
-{
-   return stringChopper(longtext, 50)[0]
-}
-
-export function stringChopper(longtext, width)
+// cut string for display in LINE notify
+function stringChopper(longtext, width)
 {
   let result1 = [],
    result2 = [],

@@ -118,32 +118,7 @@
 .consultedcase,
 .copybutton { background-color: skyblue !important }
 .nodate { background-color: #EEEEFF }
- 
-#dialogSlider {
-  padding: 50px 15px 10px 0px;
-}
-#dialogSlider table {
-  width: 100%;
-}
-#dialogSlider .rangeGrip {
-  position: absolute;
-  top: -45px;
-  font-family: "MS Gothic";
-  font-size: 12px;
-  letter-spacing: -1px;
-}
-#dialogSlider div.vline {
-  position: absolute;
-  top: 0px;
-  border-left: 1px solid red;
-}
-#dialogSlider span {
-  display: inline-block;
-  width: 20px;
-  font-family: "MS Gothic";
-  font-size: 12px;
-  letter-spacing: -1px;
-}
+
 #begindate {
   text-align: left;
 }

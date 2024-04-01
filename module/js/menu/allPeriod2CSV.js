@@ -15,7 +15,7 @@ export function allPeriod2CSV() {
 function queryPeriod(dateFrom, dateTo) {
   sqlallInPeriod(dateFrom, dateTo).then(response => {
     typeof response === "object"
-    ? downloadJSONasCSV(response, `AllInPeriod, ${dateFrom}, ${dateTo}`)
+    ? downloadJSONasCSV(response, `All cases from ${dateFrom} to ${dateTo}`)
     : Alert("queryPeriod", response)
 	}).catch(error => alert(error.stack))
 }

@@ -15,7 +15,7 @@ export function allPeriod2Excel() {
 function queryPeriod(dateFrom, dateTo) {
   sqlallInPeriod(dateFrom, dateTo).then(response => {
     typeof response === "object"
-    ? prepareHTMLtoExcel(response, `AllInPeriod, ${dateFrom}, ${dateTo}`)
+    ? prepareHTMLtoExcel(response, `All cases from ${dateFrom} to ${dateTo}`)
     : Alert("queryPeriod", response)
 	}).catch(error => alert(error.stack))
 }

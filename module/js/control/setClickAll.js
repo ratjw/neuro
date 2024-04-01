@@ -19,15 +19,12 @@ import { moveCase } from "../menu/moveCopyCase.js"
 import { copyCase } from "../menu/moveCopyCase.js"
 import { editHistory } from "../menu/editHistory.js"
 import { deleteCase } from "../menu/deleteCase.js"
-import { researchResident } from '../setting/researchResident.js'
 import { settingHoliday } from "../setting/settingHoliday.js"
 import { settingGovtday } from "../setting/settingGovtday.js"
-import { settingResident } from '../setting/settingResident.js'
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
 import { getSTAFFdivision } from "../setting/getStaff.js"
-import { getRESIDENTdivision } from "../setting/getResident.js"
 import { DIVISION } from "../main.js"
 
 export function setClickAll()
@@ -71,13 +68,10 @@ function setClickMenu()
 function setClickSetting()
 {
   const clickSetting = {
-    "clickresResearch": researchResident,
-    "clickSetResident": settingResident,
     "clickSetStaff": settingStaff,
     "clickSetGovtday": settingGovtday
   },
   disable = [
-    "#clickSetResident",
     "#clickSetStaff"
   ]
 
@@ -103,14 +97,8 @@ export function getPermission(submenu, rname)
 {
   const staffs = getSTAFFdivision(DIVISION),
     staffid = staffs.map(e => e.ramaid),
-    residents = getRESIDENTdivision(DIVISION),
-    residentid = residents.map(e => e.ramaid),
-    barname = residents.find(e => e.name === rname),
-    barid = barname && barname.ramaid || '',
     permission = {
-      disable: [ADMIN, ...staffid],
-      slider: [ADMIN, ...staffid, ...residentid],
-      resBar: [ADMIN, ...staffid, barid]
+      disable: [ADMIN, ...staffid]
     }
 
   return permission[submenu].includes(USER)
