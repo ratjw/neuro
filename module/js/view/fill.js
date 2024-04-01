@@ -113,6 +113,7 @@ export function refillDatedCases(table, oldbook, newbook)
   })
 
   refillHoliday()
+  fillAnnouncement(table)
 }
 
 let groupBy = function(items, key) {
