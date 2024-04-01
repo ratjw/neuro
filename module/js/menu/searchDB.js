@@ -4,9 +4,8 @@ import { Alert } from "../util/util.js"
 import { viewSearchDB } from "../view/viewSearchDB.js"
 import { prepareHTMLtoExcel } from "../util/prepareHTMLtoExcel.js"
 import { downloadJSONasCSV } from "../util/downloadJSONasCSV.js"
-import { inputPeriod } from "../util/inputPeriod.js"
 
-function searchDB(destine)
+export function searchDB(destine)
 {
   let hn = $('#dialogInput input[name="hn"]').val().trim(),
     name = $('#dialogInput input[name="name"]').val().trim(),

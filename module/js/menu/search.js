@@ -8,6 +8,8 @@ Forgotten word part       *
 
 import { reposition, menustyle } from "../util/util.js"
 import { clearAllEditing } from "../control/clearAllEditing.js"
+import { inputPeriod } from "../util/inputPeriod.js"
+import { searchDB } from "../menu/searchDB.js"
 
 export function search(destine)
 {
