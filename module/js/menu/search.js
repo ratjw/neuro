@@ -21,8 +21,7 @@ export function search(destine)
   $staffsearch.css('position', 'fixed')
   
   if ($("#periodpart").is(":hidden")) {
-    $("#dateFrom").val("")
-    $("#dateTo").val("")
+    $("#periodpart").find("input").val("")
   }
 
   inputPeriod()

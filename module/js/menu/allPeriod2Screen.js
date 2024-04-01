@@ -6,16 +6,23 @@ import { pagination } from "../view/pagination.js"
 
 export function allPeriod2Screen() {
   dialogPeriod()
-  $("#dialogInput span[title]").one("click", function() {
-    queryPeriod($("#dateFrom").val(), $("#dateTo").val())
+  $("#dialogInput").keydown(event => {
+    let keycode = event.which || window.Event.keyCode
+    if (keycode === 13) {
+      queryPeriod2Screen($("#dateFrom").val(), $("#dateTo").val())
+      $("#dialogInput").dialog('close')
+    }
+  })
+  .find("span[title]").one("click", function() {
+    queryPeriod2Screen($("#dateFrom").val(), $("#dateTo").val())
     $("#dialogInput").dialog('close')
   })
 }
 
-function queryPeriod(dateFrom, dateTo) {
+function queryPeriod2Screen(dateFrom, dateTo) {
   sqlallInPeriod(dateFrom, dateTo).then(response => {
     typeof response === "object"
     ? pagination($("#dialogAll"), $("#alltbl"), response, "All in Period")
-    : Alert("queryPeriod", response)
+    : Alert("queryPeriod2Screen", response)
 	}).catch(error => alert(error.stack))
 }
