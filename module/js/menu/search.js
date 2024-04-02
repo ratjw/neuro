@@ -22,6 +22,10 @@ export function search(destine)
   
   if ($("#periodpart").is(":hidden")) {
     $("#periodpart").find("input").val("")
+    $dialogInput.keydown(event => {
+      let keycode = event.which || window.Event.keyCode
+      if (keycode === 13) { searchDB(destine) }
+    })
   }
 
   inputPeriod()
@@ -47,11 +51,7 @@ export function search(destine)
       getSaffName(target, $staffsearch)
     }
   })
-  .keydown(event => {
-    let keycode = event.which || window.Event.keyCode
-    if (keycode === 13) { searchDB(destine) }
-  })
-  .find("span[title]").one("click", function() { searchDB(destine) })
+  $dialogInput.find("span[title]").one("click", function() { searchDB(destine) })
 }
 
 function getSaffName(pointing, $staffsearch)

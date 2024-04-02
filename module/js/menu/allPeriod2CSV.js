@@ -6,14 +6,7 @@ import { downloadJSONasCSV } from "../util/downloadJSONasCSV.js"
 
 export function allPeriod2CSV() {
   dialogPeriod()
-  $("#dialogInput").keydown(event => {
-    let keycode = event.which || window.Event.keyCode
-    if (keycode === 13) {
-      queryPeriod2CSV($("#dateFrom").val(), $("#dateTo").val())
-      $("#dialogInput").dialog('close')
-    }
-  })
-  .find("span[title]").one("click", function() {
+  $("#dialogInput").find("span[title]").one("click", function() {
     queryPeriod2CSV($("#dateFrom").val(), $("#dateTo").val())
     $("#dialogInput").dialog('close')
   })

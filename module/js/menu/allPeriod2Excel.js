@@ -6,14 +6,7 @@ import { prepareHTMLtoExcel } from "../util/prepareHTMLtoExcel.js"
 
 export function allPeriod2Excel() {
   dialogPeriod()
-  $("#dialogInput").keydown(event => {
-    let keycode = event.which || window.Event.keyCode
-    if (keycode === 13) {
-      queryPeriod2Excel($("#dateFrom").val(), $("#dateTo").val())
-      $("#dialogInput").dialog('close')
-    }
-  })
-  .find("span[title]").one("click", function() {
+  $("#dialogInput").find("span[title]").one("click", function() {
     queryPeriod2Excel($("#dateFrom").val(), $("#dateTo").val())
     $("#dialogInput").dialog('close')
   })

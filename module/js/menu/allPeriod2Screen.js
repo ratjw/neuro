@@ -6,14 +6,7 @@ import { pagination } from "../view/pagination.js"
 
 export function allPeriod2Screen() {
   dialogPeriod()
-  $("#dialogInput").keydown(event => {
-    let keycode = event.which || window.Event.keyCode
-    if (keycode === 13) {
-      queryPeriod2Screen($("#dateFrom").val(), $("#dateTo").val())
-      $("#dialogInput").dialog('close')
-    }
-  })
-  .find("span[title]").one("click", function() {
+  $("#dialogInput").find("span[title]").one("click", function() {
     queryPeriod2Screen($("#dateFrom").val(), $("#dateTo").val())
     $("#dialogInput").dialog('close')
   })
