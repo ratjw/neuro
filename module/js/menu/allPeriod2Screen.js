@@ -2,7 +2,7 @@
 import { dialogPeriod } from "../util/dialogPeriod.js"
 import { sqlallInPeriod } from "../model/sqlallInPeriod.js"
 import { Alert } from "../util/util.js"
-import { pagination } from "../view/pagination.js"
+import { viewSearchDB } from "../view/viewSearchDB.js"
 
 export function allPeriod2Screen() {
   dialogPeriod()
@@ -15,7 +15,7 @@ export function allPeriod2Screen() {
 function queryPeriod2Screen(dateFrom, dateTo) {
   sqlallInPeriod(dateFrom, dateTo).then(response => {
     typeof response === "object"
-    ? pagination($("#dialogAll"), $("#alltbl"), response, "All in Period")
+    ? viewSearchDB(response, `All cases from ${dateFrom} to ${dateTo}`)
     : Alert("queryPeriod2Screen", response)
 	}).catch(error => alert(error.stack))
 }

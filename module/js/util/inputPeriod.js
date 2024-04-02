@@ -6,10 +6,10 @@ export function inputPeriod()
     altField: $("#dateFrom"),
     altFormat: "yy-mm-dd",
     dateFormat:'dd MM yy',
-    onSelect:function(selectdate) {
+    onClose:function(selectdate) {
       var dt = new Date(selectdate);
       dt.setDate(dt.getDate()+1)
-      $("#dateTo").datepicker("option","minDate",dt);
+      $("#dateend").datepicker("option","minDate",dt).focus()
     }
   }).focus()
   $("#dateend").datepicker({
@@ -20,7 +20,7 @@ export function inputPeriod()
     onSelect:function(selectdate){
       var dt = new Date(selectdate);
       dt.setDate(dt.getDate()-1)
-      $("#dateFrom").datepicker("option","maxDate",dt);
+      $("#datebegin").datepicker("option","maxDate",dt);
     }
   })
 }
