@@ -22,10 +22,6 @@ export function search(destine)
   
   if ($("#periodpart").is(":hidden")) {
     $("#periodpart").find("input").val("")
-    $dialogInput.keydown(event => {
-      let keycode = event.which || window.Event.keyCode
-      if (keycode === 13) { searchDB(destine) }
-    })
   }
 
   inputPeriod()

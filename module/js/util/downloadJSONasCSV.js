@@ -1,5 +1,10 @@
 
 export function downloadJSONasCSV(jsonData, filename) {
+  if (!jsonData.length) {
+    alert("Data Empty")
+    return
+  }
+
   let csvData = jsonToCSV(jsonData);
   let blob = new Blob([csvData], { type: 'text/csv' });
   let url = window.URL.createObjectURL(blob);

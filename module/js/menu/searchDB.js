@@ -25,8 +25,9 @@ export function searchDB(destine)
   search += (search && fullname ? ", " : "") + fullname
   search += (search && staffname ? ", " : "") + staffname
   search += (search && others ? ", " : "") + others
-  search += (search && datebegin ? " from " : "") + datebegin
-  search += (search && dateend ? " to " : "") + dateend
+  search += search && datebegin && dateend
+            ? ", from " + datebegin + " to " + dateend
+            : ""
 
   if (!search) { return }
 
