@@ -11,7 +11,7 @@ export function readme()
     closeOnEscape: true,
     modal: true,
     show: 200,
-    width: 430,
+    width: "auto",
     height: 570,
     open: function () {
       $dialogReadme.html(object)
