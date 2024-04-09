@@ -1,10 +1,9 @@
 
 import {
-  OPDATE, THEATRE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
-  DIAGNOSIS, TREATMENT, LAB, EQUIPMENT, CONTACT, COLUMN
+  OPDATE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
+  DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT, COLUMN
 } from "./const.js"
 import { putNameAge } from "./date.js"
-import { viewLab } from "./viewLab.js"
 import { viewEquip } from "./viewEquip.js"
 
 export function fillNewrowData(row, q)
@@ -44,9 +43,6 @@ function fillRow(row, q, key, val)
 
   if (val === PATIENT) {
     cells[val].innerHTML = putNameAge(q)
-  }
-  else if (val === LAB) {
-    cells[val].innerHTML = viewLab(q.lab)
   }
   else if (val === EQUIPMENT) {
     cells[val].innerHTML = viewEquip(q.equipment)

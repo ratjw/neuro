@@ -228,13 +228,8 @@
 #patientnameequip,
 #ageequip { font-size: 16px; font-weight: bold; }
 
-#dialogLab,
 #dialogEquip {
   font-size: 14px;
-}
-
-#dialogLab input[type="number"] {
-  text-align: center;
 }
 
 #dialogEquip input[type=radio] + span,
