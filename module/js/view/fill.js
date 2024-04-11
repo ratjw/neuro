@@ -8,6 +8,7 @@ import { viewOneDay } from "../view/viewOneDay.js"
 import { fillNewrowData } from "../view/fillNewrowData.js"
 import { fillHoliday, refillHoliday } from "../view/fillHoliday.js"
 import { fillAnnouncement } from "../view/fillAnnouncement.js"
+import { refillAnnouncement } from "../view/refillAnnouncement.js"
 
 // Render Main table
 // Consults and dialogAll tables use this too
@@ -25,7 +26,7 @@ export function fillmain()
   // fill blank rows to two years from now
   fillBlankDates(table, lastcase, until)
   fillHoliday(table)
-  fillAnnouncement(table)
+  fillAnnouncement()
 }
 
 // truncate the cases without opdate
@@ -113,7 +114,7 @@ export function refillDatedCases(table, oldbook, newbook)
   })
 
   refillHoliday()
-  fillAnnouncement(table)
+  refillAnnouncement()
 }
 
 let groupBy = function(items, key) {
