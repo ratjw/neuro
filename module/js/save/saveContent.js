@@ -1,7 +1,7 @@
 
-import { apostrophe, Alert } from "../util/util.js"
+import { apostrophe, trailingBR, Alert } from "../util/util.js"
 import { updateBOOK } from "../util/updateBOOK.js"
-import { OLDCONTENT, reCreateEditcell } from "../control/edit.js"
+import { OLDCONTENT } from "../control/edit.js"
 import { sqlSaveContentQN, sqlSaveContentNoQN } from "../model/sqlSaveContent.js"
 
 // use only "pointed" to save data
@@ -11,8 +11,11 @@ export function saveContent(pointed, column, newcontent) {
   // show instantly, no re-render after save to DB
   pointed.innerHTML = newcontent
 
-  // take care of white space, double qoute, single qoute, and back slash
+  // take care of apostrophe, and back slash
   newcontent = apostrophe(newcontent)
+
+  // remove trailing <br>
+  newcontent = trailingBR(newcontent)
 
   qn
   ? saveContentQN(pointed, column, newcontent)
@@ -37,17 +40,12 @@ function saveContentQN(pointed, column, newcontent)
 function saveContentNoQN(pointed, column, newcontent)
 {
   sqlSaveContentNoQN(pointed, column, newcontent).then(response => {
-    let hasData = function () {
+    if (typeof response === "object") {
       updateBOOK(response)
-      reCreateEditcell()
-    }
-    let noData = function () {
+    } else {
       Alert("saveContentNoQN", response)
-
-      // return to previous content
       pointed.innerHTML = OLDCONTENT
-    };
-
-    typeof response === "object" ? hasData() : noData()
+      // return to previous content
+    }
   }).catch(error => alert(error.stack))
 }

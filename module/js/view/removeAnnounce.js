@@ -1,10 +1,13 @@
 
-import { nextAll } from "../util/util.js"
-
-// create td banner for announcement
 export function removeAnnounce(pointing)
 {
-  pointing.classList.remove("announce")
-  pointing.setAttribute('colspan', 1)
-  nextAll(pointing).forEach(e => e.style.display = "")
+  const nextSib = pointing.getAttribute('colspan') - 1
+  let point = pointing
+
+  point.classList.remove("announce")
+  point.setAttribute('colspan', 1)
+  for (let i=0; i<nextSib; i++) {
+    point = point.nextElementSibling
+    point.style.display = ""
+  }
 }

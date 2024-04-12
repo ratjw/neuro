@@ -9,22 +9,25 @@ export function removeAnnouncement()
   let table = document.getElementById("maintbl")
 
   Array.from(table.rows).forEach(e => {
+    let dx = e.cells[DIAGNOSIS]
+    let rx = e.cells[TREATMENT]
+
     if (e.dataset.hn) {
-      if (e.cells[DIAGNOSIS].classList.contains("announce")) {
-        removeAnnounce(e.cells[DIAGNOSIS])
+      if (dx.classList.contains("announce")) {
+        removeAnnounce(dx)
       }
-      if (e.cells[TREATMENT].classList.contains("announce")) {
-        removeAnnounce(e.cells[TREATMENT])
+      if (rx.classList.contains("announce")) {
+        removeAnnounce(rx)
       }
     } else {
-      if (e.cells[DIAGNOSIS].classList.contains("announce")) {
+      if (dx.classList.contains("announce")) {
         if (!e.dataset.diagnosis) {
-          removeAnnounce(e.cells[DIAGNOSIS])
+          removeAnnounce(dx)
         }
       }
-      if (e.cells[TREATMENT].classList.contains("announce")) {
+      if (rx.classList.contains("announce")) {
         if (!e.dataset.treatment) {
-          removeAnnounce(e.cells[TREATMENT])
+          removeAnnounce(rx)
         }
       }
     }

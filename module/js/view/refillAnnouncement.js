@@ -10,28 +10,21 @@ export function refillAnnouncement()
   let table = document.getElementById("maintbl")
 
   Array.from(table.rows).forEach(e => {
+    let dx = e.cells[DIAGNOSIS]
+    let rx = e.cells[TREATMENT]
+
     if (e.dataset.hn) {
-      if (e.cells[DIAGNOSIS].classList.contains("announce")) {
-        removeAnnounce(e.cells[DIAGNOSIS])
+      if (dx.classList.contains("announce")) {
+        removeAnnounce(dx)
       }
-      if (e.cells[TREATMENT].classList.contains("announce")) {
-        removeAnnounce(e.cells[TREATMENT])
+      if (rx.classList.contains("announce")) {
+        removeAnnounce(rx)
       }
     } else {
-      if (e.cells[DIAGNOSIS].classList.contains("announce")) {
-        if (e.dataset.diagnosis) {
-          fillAnnounce(e.cells[DIAGNOSIS])
-        } else {
-          removeAnnounce(e.cells[DIAGNOSIS])
-        }
-      }
-      if (e.cells[TREATMENT].classList.contains("announce")) {
-        if (e.dataset.treatment) {
-          fillAnnounce(e.cells[TREATMENT])
-        } else {
-          removeAnnounce(e.cells[TREATMENT])
-        }
-      }
+      e.dataset.diagnosis ? fillAnnounce(dx)
+                            : removeAnnounce(dx)
+      e.dataset.treatment ? fillAnnounce(rx)
+                            : removeAnnounce(rx)
     }
   })
 }

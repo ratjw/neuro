@@ -1,9 +1,12 @@
 
 import { MAXDATE, MOVECASE, COPYCASE, PASTETOP, PASTEBOTTOM } from "../control/const.js"
 
-// Why ?????????????
 export function apostrophe(content) {
   return content.replace(/\\/g, "\\\\").replace(/'/g, "\\'")
+}
+
+export function trailingBR(content) {
+  return content.replace(/<div><br><\/div>/g, "<br>").replace(/(<br>)+$/, "")
 }
 
 export function isSplit()
