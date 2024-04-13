@@ -101,11 +101,12 @@ let mainTable9 = function (evt, editable, Shift) {
   if (!POINTER || POINTER.cellIndex > PATIENT) {
     let thiscell = Shift
         ? findPrevcell(editable, POINTER)
-        : findNextcell(editable, POINTER)
+        : POINTER.closest("tr").dataset.hn
+          ? findNextcell(editable, POINTER)
+          : editPresentCell(evt, POINTER)
+        
     thiscell
-      ? POINTER.closest("tr").dataset.hn || !POINTER.innerText
-        ? editPresentCell(evt, thiscell)
-        : editPresentCell(evt, POINTER)
+      ? editPresentCell(evt, thiscell)
       : clearEditcell()
   } else {
     clearEditcell()

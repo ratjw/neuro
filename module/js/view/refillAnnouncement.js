@@ -10,6 +10,8 @@ export function refillAnnouncement()
   let table = document.getElementById("maintbl")
 
   Array.from(table.rows).forEach(e => {
+    if (e.querySelector("th")) return
+
     let dx = e.cells[DIAGNOSIS]
     let rx = e.cells[TREATMENT]
 
@@ -21,10 +23,20 @@ export function refillAnnouncement()
         removeAnnounce(rx)
       }
     } else {
-      e.dataset.diagnosis ? fillAnnounce(dx)
-                            : removeAnnounce(dx)
-      e.dataset.treatment ? fillAnnounce(rx)
-                            : removeAnnounce(rx)
+      e.dataset.diagnosis
+        ? dx.classList.contains("announce")
+          ? null
+          : fillAnnounce(dx)
+        : dx.classList.contains("announce")
+          ? removeAnnounce(dx)
+          : null
+      e.dataset.treatment
+        ? rx.classList.contains("announce")
+          ? null
+          : fillAnnounce(rx)
+        : rx.classList.contains("announce")
+          ? removeAnnounce(rx)
+          : null
     }
   })
 }
