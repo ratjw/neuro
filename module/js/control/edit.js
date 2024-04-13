@@ -1,15 +1,13 @@
 
-import { savePreviousCell, editPresentCell } from "./clicktable.js"
-import {
-  HN, PATIENT, DIAGNOSIS, TREATMENT, CONTACT,
-  DIAGNOSISSV, ADMISSIONSV, FINALSV
+import { savePreviousCell, editPresentCell } from "../control/clicktable.js"
+import { PATIENT, DIAGNOSIS, TREATMENT, CONTACT, DIAGNOSISSV, ADMISSIONSV, FINALSV
 } from "../control/const.js"
-import { resetTimer, resetTimerCounter } from "./timer.js"
+import { resetTimer, resetTimerCounter } from "../control/timer.js"
 import { getTableRowByQN } from "../util/rowsgetting.js"
 import { reposition } from "../util/util.js"
 import { savePreviousCellService } from "../service/savePreviousCellService.js"
 import { editPresentCellService } from "../service/editPresentCellService.js"
-import { clearAllEditing } from "./clearAllEditing.js"
+import { clearAllEditing } from "../control/clearAllEditing.js"
 
 const EDITABLESV = [DIAGNOSISSV, ADMISSIONSV, FINALSV]
 const EDITABLETBL = [DIAGNOSIS, TREATMENT, CONTACT]
