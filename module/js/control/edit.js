@@ -105,7 +105,9 @@ let mainTable9 = function (evt, editable, Shift) {
         ? findPrevcell(editable, POINTER)
         : findNextcell(editable, POINTER)
     thiscell
-      ? editPresentCell(evt, thiscell)
+      ? POINTER.closest("tr").dataset.hn || !POINTER.innerText
+        ? editPresentCell(evt, thiscell)
+        : editPresentCell(evt, POINTER)
       : clearEditcell()
   } else {
     clearEditcell()
