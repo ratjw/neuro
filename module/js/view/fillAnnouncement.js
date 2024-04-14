@@ -12,7 +12,7 @@ export function fillAnnouncement()
       if (e.dataset.diagnosis) {
         fillAnnounce(e.cells[DIAGNOSIS])
       }
-      else if (e.dataset.treatment) {
+      if (e.dataset.treatment) {
         fillAnnounce(e.cells[TREATMENT])
       }
     }
