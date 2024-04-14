@@ -9,6 +9,8 @@ export function removeAnnouncement()
   let table = document.getElementById("maintbl")
 
   Array.from(table.rows).forEach(e => {
+    if (e.querySelector("th")) return
+
     let dx = e.cells[DIAGNOSIS]
     let rx = e.cells[TREATMENT]
 
