@@ -100,11 +100,12 @@ let mainTable9 = function (evt, editable, Shift) {
   savePreviousCell()
   if (!POINTER || POINTER.cellIndex > PATIENT) {
     let thiscell = Shift
-        ? findPrevcell(editable, POINTER)
-        : POINTER.closest("tr").dataset.hn
-          ? findNextcell(editable, POINTER)
-          : editPresentCell(evt, POINTER)
-        
+                    ? findPrevcell(editable, POINTER)
+                    : POINTER.closest("tr").dataset.hn
+                      ? findNextcell(editable, POINTER)
+                      : editPresentCell(evt, POINTER)
+                      // avoid cursor jump
+
     thiscell
       ? editPresentCell(evt, thiscell)
       : clearEditcell()
@@ -116,8 +117,8 @@ let mainTable9 = function (evt, editable, Shift) {
 let serviceTable9 = function (evt, editable, Shift) {
   savePreviousCellService()
   let thiscell = Shift
-      ? findPrevcell(editable, POINTER)
-      : findNextcell(editable, POINTER)
+                  ? findPrevcell(editable, POINTER)
+                  : findNextcell(editable, POINTER)
   thiscell
     ? editPresentCellService(evt, thiscell)
     : clearEditcell()
@@ -132,20 +133,19 @@ let findPrevcell = function (editable, pointing) {
       // Service Table cell may invisible due to colspan
       do {
         $prevcell = $prevcell.parent().index() > 1
-              ? $prevcell.parent().prev()
-                .children().eq(editable[editable.length-1])
-              : null
+                    ? $prevcell.parent().prev().children().eq(editable[editable.length-1])
+                    : null
       }
       while ($prevcell && $prevcell.get(0).nodeName === "TH"
-        || $prevcell && !$prevcell.is(':visible'))
+              || $prevcell && !$prevcell.is(':visible'))
 
       return $prevcell && $prevcell[0]
     }
   
   column = editable[($.inArray(column, editable) - 1)]
   return column
-      ? $prevcell.parent().find("td")[column]
-      : prevcell()
+          ? $prevcell.parent().find("td")[column]
+          : prevcell()
 }
 
 let findNextcell = function (editable, pointing) {
@@ -155,8 +155,8 @@ let findNextcell = function (editable, pointing) {
   column = editable[($.inArray(column, editable) + 1)]
 
   return column
-      ? $nextcell.parent().find("td")[column]
-      : findNextRow(editable, pointing)
+          ? $nextcell.parent().find("td")[column]
+          : findNextRow(editable, pointing)
 }
 
 let findNextRow = function (editable, pointing) {
@@ -169,14 +169,14 @@ let findNextRow = function (editable, pointing) {
     $nextcell = $nextcell.parent().next().children().eq(editable[0])
   }
   while ($nextcell.length && ((!$nextcell.is(':visible'))
-    || ($nextcell.get(0).nodeName === "TH")))
+          || ($nextcell.get(0).nodeName === "TH")))
 
   return $nextcell.length && $nextcell[0]
 }
 
 let findThisCellNextRow = function (editable, pointing) {
   let $nextcell = $(pointing),
-    thiscell = editable.find(e => e === pointing.cellIndex)
+      thiscell = editable.find(e => e === pointing.cellIndex)
 
   // go to next row corresponding editable
   // $nextcell.length = 0 when reach end of table
@@ -185,7 +185,7 @@ let findThisCellNextRow = function (editable, pointing) {
     $nextcell = $nextcell.parent().next().children().eq(thiscell)
   }
   while ($nextcell.length && ((!$nextcell.is(':visible'))
-    || ($nextcell.get(0).nodeName === "TH")))
+          || ($nextcell.get(0).nodeName === "TH")))
 
   return $nextcell.length && $nextcell[0]
 }
@@ -253,12 +253,12 @@ export function renewEditcell()
 
   let whereisEditcell = editcellLocation()
   let id = (whereisEditcell === "maintblContainer")
-         ? "maintbl"
-     : (whereisEditcell === "queuetblContainer")
-     ? "queuetbl"
-     : (whereisEditcell === "dialogService")
-     ? "servicetbl"
-     : ""
+             ? "maintbl"
+             : (whereisEditcell === "queuetblContainer")
+               ? "queuetbl"
+               : (whereisEditcell === "dialogService")
+                 ? "servicetbl"
+                 : ""
   let qn = POINTER.closest("tr").dataset.qn
   if (!id || !qn) { return }
   let row = getTableRowByQN(id, qn)
@@ -290,7 +290,7 @@ export function clearEditcell() {
 export function getHtmlText(innerhtml)
 {
   let HTMLBRDIV = /(<(?!br|div|\/div).*?>)/gi,
-    HTMLNBSP = /(?:^(?:&nbsp;)+)|(?:(?:&nbsp;)+$)/g
+       HTMLNBSP = /(?:^(?:&nbsp;)+)|(?:(?:&nbsp;)+$)/g
 
   return innerhtml.trim().replace(HTMLBRDIV, '').replace(HTMLNBSP, '')
 }
