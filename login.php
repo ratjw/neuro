@@ -10,22 +10,24 @@
     $localnet = strpos($thisname, "192.168") !== false;
 
     // exclude non-Rama registers
-    if (!$localhost && !$localnet && !$admin) {
+    if ($localhost || $localnet || $admin) {
+      $neurosurgery = $userid;
+    } else {
       $success = getLogin($userid, $pwd);
       if (!$success) {
 				$error = "Incorrect password or username";
         header("location:index.php?error=$error");
         return;
       }
+
+      $neurosurgery = getOrgId($userid);
+
+      // exclude non-neurosurgery personnels
+      if (!$neurosurgery) {
+        $error = "For Neurosurgery Personnels Only";
+        header("location:index.php?error=$error");
+      }
     }
-
-    $neurosurgery = getOrgId($userid);
-
-		// exclude non-neurosurgery personnels
-    if (!$neurosurgery) {
-			$error = "For Neurosurgery Personnels Only";
-      header("location:index.php?error=$error");
-		}
 
     echo "<script>localStorage.setItem('role', '$neurosurgery');</script>";
 		$browserDoctor = "location:$doctor";
@@ -70,9 +72,6 @@ function getOrgId($userid)
   $roleCode = $resultz->data->roleCode;
   $positionName = $resultz->data->positionName;
 
-  if ($userid === "000000") {
-    return true;
-  }
   if ($orgID === $neurosurg) {
     if ($roleCode === "S" && $positionName === "แพทย์") {
       return "F";

@@ -10,7 +10,6 @@ function login()
 	var browser = /rvpn/.test(window.origin) ? "es5/es5.html" : "module"
   var admin = '000000'
 					
-  sessionStorage.setItem('admin', admin)
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
 	document.getElementById("browser").value = browser
   if (location.host === "localhost") {

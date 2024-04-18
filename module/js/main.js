@@ -3,7 +3,7 @@ import { start } from "./control/start.js"
 import { Alert } from "./util/util.js"
 
 // from login.js
-export let ADMIN = sessionStorage.getItem("admin")
+export let ADMIN = sessionStorage.getItem("userid")
 export let USER = sessionStorage.getItem("userid")
 export let DIVISION = 'ประสาทศัลยศาสตร์'
 //new URLSearchParams(window.location.search).get("division")

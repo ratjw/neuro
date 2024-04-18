@@ -289,8 +289,8 @@ export const nextAll = element => {
   let nextElement = element
 
   while(nextElement.nextElementSibling) {
-    nextElements.push(nextElement.nextElementSibling)
     nextElement = nextElement.nextElementSibling
+    nextElements.push(nextElement)
   }
 
   return nextElements
