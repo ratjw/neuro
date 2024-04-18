@@ -1,12 +1,11 @@
 
-import { nextAll } from "../util/util.js"
-
 // create td banner for announcement
-export function fillAnnounce(pointing)
+export function fillAnnounce(pointing, count)
 {
   pointing.classList.add("announce")
-  if (!pointing.nextElementSibling.innerText) {
-    pointing.setAttribute('colspan', nextAll(pointing).length+1)
-    nextAll(pointing).forEach(e => e.style.display = "none")
+  pointing.setAttribute('colspan', count)
+  for (let i=0; i<count-1; i++) {
+    pointing = pointing.nextElementSibling
+    pointing.style.display = "none"
   }
 }

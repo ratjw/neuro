@@ -8,6 +8,7 @@ import { removeAnnounce } from "../view/removeAnnounce.js"
 export function refillAnnouncement()
 {
   let table = document.getElementById("maintbl")
+  let count = nextAll(table.rows[0].cells[DIAGNOSIS]).length
 
   Array.from(table.rows).forEach(e => {
     if (e.querySelector("th")) return
@@ -26,14 +27,14 @@ export function refillAnnouncement()
       e.dataset.diagnosis
         ? dx.classList.contains("announce")
           ? null
-          : fillAnnounce(dx)
+          : fillAnnounce(dx, count + 1)
         : dx.classList.contains("announce")
           ? removeAnnounce(dx)
           : null
       e.dataset.treatment
         ? rx.classList.contains("announce")
           ? null
-          : fillAnnounce(rx)
+          : fillAnnounce(rx, count)
         : rx.classList.contains("announce")
           ? removeAnnounce(rx)
           : null
