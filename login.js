@@ -1,20 +1,13 @@
 
 function login()
 {
-	// Ridirect to https
-//	if (window.location.protocol === "http:" && window.location.hostname !== "localhost") {
-//		window.location = "https://" + window.host
-//	}
-
-	// desktop via vpn or old browser is to "es5"
-	var browser = /rvpn/.test(window.origin) ? "es5/es5.html" : "module"
-  var admin = '000000'
+  var ADMIN = '000000'
 					
 	sessionStorage.setItem('userid', document.getElementById("userid").value)
-	document.getElementById("browser").value = browser
+
   if (location.host === "localhost") {
-    sessionStorage.setItem('userid', admin)
-    document.getElementById("userid").value = admin
+    sessionStorage.setItem('userid', ADMIN)           // for main.js
+    document.getElementById("userid").value = ADMIN  // for login.php
     document.getElementById("form").submit()
   }
 }

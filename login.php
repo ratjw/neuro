@@ -2,8 +2,7 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$userid = !empty($_POST['userid']) ? $_POST['userid'] : '';
 		$pwd = !empty($_POST['pwd']) ? $_POST['pwd'] : '';
-		$doctor = !empty($_POST['browser']) ? $_POST['browser'] : '';
-    $admin = ($userid === "000000") && ($pwd === "BzAs1953");
+    $admin = ($userid === "000000") && ($pwd === "BzAs1953") ? "A" : '';
 
     $thisname = $_SERVER["SERVER_NAME"];
     $localhost = strpos($thisname, "localhost") !== false;
@@ -11,7 +10,7 @@
 
     // exclude non-Rama registers
     if ($localhost || $localnet || $admin) {
-      $neurosurgery = $userid;
+      $neurosurgery = $admin;
     } else {
       $success = getLogin($userid, $pwd);
       if (!$success) {
@@ -30,7 +29,7 @@
     }
 
     echo "<script>localStorage.setItem('role', '$neurosurgery');</script>";
-		$browserDoctor = "location:$doctor";
+		$browserDoctor = "location:module";
 		$browserNurse = "location:nurse/nurse.html";
     if ($neurosurgery === "N") {
       header($browserNurse);
