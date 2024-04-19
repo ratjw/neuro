@@ -1,6 +1,4 @@
 
-import { fillmain } from "./fill.js"
-
 //--- global variables --------------
 // BOOK is for main table and individual staff's cases table
 // CONSULT is for Consults table (special table in queuetbl)

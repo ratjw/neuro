@@ -4,6 +4,7 @@ import { nextdates } from "./date.js"
 import { BOOK } from "./updateBOOK.js"
 import { rowDecoration } from "./rowDecoration.js"
 import { blankRowData, fillNewrowData } from "./fillNewrowData.js"
+import { fillAnnouncement } from "./fillAnnouncement.js"
 
 // Render Main table
 // Consults and dialogAll tables use this too
@@ -20,9 +21,10 @@ export function fillmain(begindate, enddate)
     date = fillDatedCases(table, begindate, book)
 
   fillBlankDates(table, date, enddate)
+  fillAnnouncement(table)
 }
 
-export function fillDatedCases(table, begindate, book)
+function fillDatedCases(table, begindate, book)
 {
 
   let tbody = table.querySelector("tbody"),

@@ -4,16 +4,18 @@
 export const
 //maintbl, queuetbl
 OPDATE    = 0,
-OPROOM    = 1,
-OPTIME    = 2,
-CASENUM   = 3,
-STAFFNAME = 4,
-HN        = 5,
-PATIENT   = 6,
-DIAGNOSIS = 7,
-TREATMENT = 8,
-EQUIPMENT = 9,
-CONTACT   = 10,
+THEATRE   = 1,
+OPROOM    = 2,
+OPTIME    = 3,
+CASENUM   = 4,
+STAFFNAME = 5,
+HN        = 6,
+PATIENT   = 7,
+DIAGNOSIS = 8,
+TREATMENT = 9,
+LAB       = 10,
+EQUIPMENT = 11,
+CONTACT   = 12,
 
 //servicetbl
 CASENUMSV   = 0,
@@ -28,6 +30,7 @@ DISCHARGESV = 8,
 
 COLUMN = {
   waitnum: null,
+  theatre: THEATRE,
   oproom: OPROOM,
   optime: OPTIME,
   casenum: CASENUM,
@@ -37,6 +40,7 @@ COLUMN = {
   dob: null,
   diagnosis: DIAGNOSIS,
   treatment: TREATMENT,
+  lab: LAB,
   equipment: EQUIPMENT,
   contact: CONTACT,
   qn: null
