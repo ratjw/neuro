@@ -113,7 +113,6 @@ td img.imgpale {
 
 #tblcontainer,
 #tblcells,
-#tbl th:nth-child(13), #tbl td:nth-child(13),
 #dialogEquip {
 	display: none;
 }
@@ -150,6 +149,19 @@ td.pacs { background-image: url(pic/general/pacs.png); }
 td.pacs2 { background-image: url(pic/general/pacs2.png); }
 td.camera { background-image: url(pic/general/camera.png); }
 td.camera2 { background-image: url(pic/general/camera2.png); }
+
+td.holiday::after { 
+  color: Silver;
+  font-size: 24px;
+  font-weight: bold;
+  content: attr(data-holiday);
+}
+
+td.announce { 
+  color: Silver;
+  font-size: 24px;
+  font-weight: bold;
+}
 
 .ui-dialog {
 	position: fixed;

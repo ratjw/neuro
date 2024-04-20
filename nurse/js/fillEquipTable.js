@@ -1,4 +1,7 @@
-function fillEquipTable(book, $row, qn, blankcase)
+
+import { getBOOKrowByQN, putThdate, putAgeOpdate } from "./function.js"
+
+export function fillEquipTable(book, $row, qn, blankcase)
 {
   var NAMEOFDAYTHAI  = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัส", "ศุกร์", "เสาร์"],
     bookq = qn ? getBOOKrowByQN(book, qn) : blankcase,

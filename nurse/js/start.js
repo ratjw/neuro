@@ -1,6 +1,11 @@
 
-function Start()
-{
+import { MYSQLIPHP, GV, OPDATE, OPROOM, STAFFNAME, QN, EQUIPSHEET } from "./const.js"
+import { fillEquipTable } from "./fillEquipTable.js"
+import { fillupstart } from "./fill.js"
+import { fillHoliday } from "./fillHoliday.js"
+import { fillAnnouncement } from "./fillAnnouncement.js"
+import { Ajax, sameDateRoomBookQN, getTableRowByQN, showFind } from "./function.js"
+
 	Ajax(MYSQLIPHP, "start=start", loading);
 
 	$("#tblcontainer").show()
@@ -30,18 +35,20 @@ function Start()
 		event.preventDefault();
 	})
 
-	function loading(response) {
-		if (typeof response === "object") {
-			updateBOOK(response)
-			fillupstart();
+function loading(response)
+{
+  if (typeof response === "object") {
+    updateBOOK(response)
+    fillupstart()
+    fillHoliday()
+    fillAnnouncement()
 //			fillConsults()
-		}
-	}
+  }
 }
 
 function fillForRoom(opdate, room, qn)
 {
-	var	book = gv.BOOK
+	var	book = GV.BOOK
 	var	sameRoomQN = sameDateRoomBookQN(book, opdate, room)
 	var	slen = sameRoomQN.length
 	var	row = {}
@@ -123,12 +130,12 @@ function fillForRoom(opdate, room, qn)
 
 function updateBOOK(result)
 {
-	if (result.BOOK) { gv.BOOK = result.BOOK }
-	if (result.CONSULT) { gv.CONSULT = result.CONSULT }
-//	if (result.STAFF) { gv.STAFF = result.STAFF }
-//	if (result.ONCALL) { gv.ONCALL = result.ONCALL }
-//	if (result.HOLIDAY) { gv.HOLIDAY = result.HOLIDAY }
-	if (result.QTIME) { gv.timestamp = result.QTIME }
+	if (result.BOOK) { GV.BOOK = result.BOOK }
+	if (result.CONSULT) { GV.CONSULT = result.CONSULT }
+//	if (result.STAFF) { GV.STAFF = result.STAFF }
+//	if (result.ONCALL) { GV.ONCALL = result.ONCALL }
+	if (result.HOLIDAY) { GV.HOLIDAY = result.HOLIDAY }
+	if (result.QTIME) { GV.timestamp = result.QTIME }
 }
 
 // Only on main table
@@ -139,7 +146,7 @@ function fillConsults()
 		tlen = rows.length,
 		today = new Date().ISOdate(),
 		lastopdate = rows[tlen-1].cells[OPDATE].innerHTML.numDate(),
-		staffoncall = gv.STAFF.filter(function(staff) {
+		staffoncall = GV.STAFF.filter(function(staff) {
 			return staff.oncall === "1"
 		}),
 		slen = staffoncall.length,
@@ -177,7 +184,7 @@ function fillConsults()
 	}
 
 	nextrow = 1
-	gv.ONCALL.forEach(function(oncall) {
+	GV.ONCALL.forEach(function(oncall) {
 		dateoncall = oncall.dateoncall
 		if (dateoncall > today) {
 			oncallRow = findOncallRow(rows, nextrow, tlen, dateoncall)
@@ -206,11 +213,11 @@ function htmlwrap(staffname) {
 
 function resetTimer()
 {
-	// gv.timer is just an id, not the clock
+	// GV.timer is just an id, not the clock
 	// poke server every 1000 sec.
-//	clearTimeout(gv.timer)
-	gv.timer = setInterval( updating, 10000)
-	gv.idleCounter = 0
+//	clearTimeout(GV.timer)
+	GV.timer = setInterval( updating, 10000)
+	GV.idleCounter = 0
 }
 
 function updating()
@@ -221,16 +228,16 @@ function updating()
 
 	function updatingback(response)
 	{
-		// gv.timestamp is this client last edit
+		// GV.timestamp is this client last edit
 		// timestamp is from server bookhistory last editdatetime
 		if (typeof response === "object") {
-			if (gv.timestamp < response[0].timestamp) {
+			if (GV.timestamp < response[0].timestamp) {
 				getUpdate()
 			}
 		}
 		// idle not more than 1000 min.
-		gv.idleCounter += 1
-		if (gv.idleCounter > 6000) {
+		GV.idleCounter += 1
+		if (GV.idleCounter > 6000) {
 			history.back()
 		}
 	}

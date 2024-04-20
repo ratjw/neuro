@@ -1,4 +1,6 @@
 
+import { THAIMONTH, LARGESTDATE, OPDATE } from "./const.js"
+
 String.prototype.thDate = function () 
 {	//MySQL date (2014-05-11) to Thai date (11 พค. 2557) 
 	var date = this.split("-")
@@ -22,6 +24,50 @@ String.prototype.numDate = function ()
     var yyyy = Number(date[1].slice(-4)) - 543;
     return yyyy +"-"+ mm +"-"+ date[0];
 } 
+
+// Date Object or ISOdate to be added or substracted by days
+// Result in ISOdate (2014-05-11)
+export function nextdates(date, days) {
+  if (!date) { return date }
+
+  let next = new Date(date);
+
+  next.setDate(next.getDate() + days);
+
+  return obj_2_ISO(next);
+}
+
+export function putNameAge(bookq)
+{
+	return bookq.patient
+		+ (bookq.dob? ("<br>อายุ " + putAgeOpdate(bookq.dob, bookq.opdate)) : "")
+}
+ 
+Date.prototype.ISOdate = function () 
+{	// Javascript Date Object to MySQL date (2014-05-11)
+    var yyyy = this.getFullYear();
+    var mm = this.getMonth()+1;
+	mm = (mm < 10)? "0"+mm : ""+mm;
+    var dd = this.getDate();
+	dd = (dd < 10)? "0"+dd : ""+dd;
+    return yyyy + "-" + mm + "-" + dd;
+} 
+
+String.prototype.nextdays = function (days)
+{	// ISOdate to be added or substract by days
+	var morrow = new Date(this);
+	morrow.setDate(morrow.getDate()+days);
+	return morrow.ISOdate();
+}
+
+export function findStartRowInBOOK(book, opdate)
+{
+	var q = 0
+	while ((q < book.length) && (book[q].opdate < opdate)) {
+		q++
+	}
+	return (q < book.length)? q : -1
+}
 
 String.prototype.getAge = function (toDate)
 {	//Calculate age at (toDate) (iso format) from birth date
@@ -68,18 +114,7 @@ String.prototype.getAge = function (toDate)
 	return years? ageyears : months? agemonths : agedays;
 }
 
-function getOpdate(date)	//change Thai date from table to ISO date
-{
-	if ((date === undefined) || (parseInt(date) === NaN)) {
-		return ""
-	}
-	if (date === "") {
-		return LARGESTDATE
-	}
-	return date.numDate()
-}
-
-function putThdate(date)	//change date in book to show on table
+export function putThdate(date)	//change date in book to show on table
 {
 	if (!date) { return date }
 	if (date === LARGESTDATE) {
@@ -89,7 +124,7 @@ function putThdate(date)	//change date in book to show on table
 	}
 }
 
-function putAgeOpdate(dob, date)
+export function putAgeOpdate(dob, date)
 {
 	if (!date || !dob) {
 		return ""
@@ -98,7 +133,7 @@ function putAgeOpdate(dob, date)
 	}
 }
 
-function Ajax(url, params, callback)
+export function Ajax(url, params, callback)
 {
 	var http = new XMLHttpRequest();
 	http.open("POST", url, true);
@@ -115,7 +150,7 @@ function Ajax(url, params, callback)
 	http.send(params);
 }
 
-function sameDateRoomBookQN(book, opdate, room)
+export function sameDateRoomBookQN(book, opdate, room)
 {
 	var sameRoom = book.filter(function(row) {
 		return row.opdate === opdate && Number(row.oproom) === Number(room);
@@ -126,22 +161,9 @@ function sameDateRoomBookQN(book, opdate, room)
 	return sameRoom
 }
 
-function getBOOKrowByQN(book, qn)
-{  
-	var bookq
-	$.each(book, function() {
-		bookq = this
-		return (this.qn !== qn);
-	})
-	if (bookq.qn !== qn) {
-		return null
-	}
-	return bookq
-}
-
 // if the row is above the screen, then scrollTop to it
 // if too low, then scrollTop to it minus (scroll down) container height
-function showFind($container, row)
+export function showFind($container, row)
 {
   var scrolledTop = $container.scrollTop(),
     offset = row.offsetTop,
@@ -166,23 +188,24 @@ function showFind($container, row)
   }
 }
 
-function getTableRowByQN(tableID, qn)
-{
-  return $("#" + tableID + " tr:has(td)").filter(function() {
-    return this.cells[QN].innerHTML === qn
-  })[0]
+export function getBOOKrowByQN(book, qn) {  
+  return book.find(q => Number(q.qn) === Number(qn) )
 }
 
-// main table (#tbl) only
-function getTableRowsByDate(opdateth)
+export function getTableRowByQN(tableID, qn)
 {
-  if (!opdateth) { return [] }
-  return $("#tbl tr").filter(function() {
-    return this.cells[OPDATE].innerHTML === opdateth;
-  })
+  return Array.from(document.querySelectorAll(`#${tableID} tr`))
+        .find(row => Number(row.dataset.qn) === Number(qn))
 }
 
-function Alert(title, message)
+// main table (#maintbl) only
+export function getTableRowsByDate(tableID, opdate)
+{
+  return Array.from(document.querySelectorAll(`#${tableID} tr`))
+            .filter(e => e.dataset.opdate === opdate)
+}
+
+export function Alert(title, message)
 {
 	var $dialogAlert = $("#dialogAlert")
 	$dialogAlert.css({
@@ -199,7 +222,7 @@ function Alert(title, message)
 	}).fadeIn();
 }
 
-function showEquip(equipString)
+export function showEquip(equipString)
 {
 	if (equipString) {
 		return makeEquip(JSON.parse(equipString))
@@ -264,4 +287,16 @@ function equipImg(equipPics)
 	})
 
 	return img
+}
+
+export const nextAll = element => {
+  const nextElements = []
+  let nextElement = element
+
+  while(nextElement.nextElementSibling) {
+    nextElement = nextElement.nextElementSibling
+    nextElements.push(nextElement)
+  }
+
+  return nextElements
 }
