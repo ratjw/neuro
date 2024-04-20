@@ -1,8 +1,8 @@
 
-export const HOLIDAY = [],
-  HOLIDAY3Y = [],
+let HOLIDAY = [],
+  HOLIDAY3Y = []
 
-  NOTHOLIDAY = "ไม่หยุด",
+export const NOTHOLIDAY = "ไม่หยุด",
   COMPENSATE = "ชดเชย",
   THISYEAR = new Date().getFullYear().toString(),
   MAXYEAR = "9999"

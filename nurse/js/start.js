@@ -1,10 +1,22 @@
 
-import { MYSQLIPHP, GV, OPDATE, OPROOM, STAFFNAME, QN, EQUIPSHEET } from "./const.js"
+import { MYSQLIPHP, OPDATE, OPROOM, STAFFNAME, EQUIPSHEET } from "./const.js"
+import { setHOLIDAY } from "./constHoliday.js"
 import { fillEquipTable } from "./fillEquipTable.js"
 import { fillupstart } from "./fill.js"
 import { fillHoliday } from "./fillHoliday.js"
 import { fillAnnouncement } from "./fillAnnouncement.js"
-import { Ajax, sameDateRoomBookQN, getTableRowByQN, showFind } from "./function.js"
+import {
+  Ajax, sameDateRoomBookQN, getTableRowByQN, getTableRowsByDate, showFind
+} from "./function.js"
+
+
+export let BOOK = [],
+	CONSULT = [],
+	STAFF = []
+
+let	timestamp = "",
+	timer = {},
+	idleCounter = 0
 
 	Ajax(MYSQLIPHP, "start=start", loading);
 
@@ -16,14 +28,13 @@ import { Ajax, sameDateRoomBookQN, getTableRowByQN, showFind } from "./function.
 		event.stopPropagation()
 		var target = event.target
 		if (target.nodeName !== "TD") { return }
-		var $row = $(target).closest('tr')
-		var	$cell = $row.children('td')
-		var opdate = $cell.eq(OPDATE).html().numDate()
-		var room = $cell.eq(OPROOM).html()
-		var qn = $cell.eq(QN).html()
+		var row = target.closest('tr')
+		var opdate = row.dataset.opdate
+		var oproom = row.dataset.oproom
+		var qn = row.dataset.qn
 
 		if (target.nodeName === "TD") {
-			fillForRoom(opdate, room, qn)
+			fillForRoom(opdate, oproom, qn)
 		}
 	})
 
@@ -46,10 +57,10 @@ function loading(response)
   }
 }
 
-function fillForRoom(opdate, room, qn)
+function fillForRoom(opdate, oproom, qn)
 {
-	var	book = GV.BOOK
-	var	sameRoomQN = sameDateRoomBookQN(book, opdate, room)
+	var	book = BOOK
+	var	sameRoomQN = sameDateRoomBookQN(book, opdate, oproom)
 	var	slen = sameRoomQN.length
 	var	row = {}
 	var q = 0
@@ -59,7 +70,7 @@ function fillForRoom(opdate, room, qn)
 			equipment: "",
 			hn: "",
 			opdate: opdate,
-			oproom: room,
+			oproom: oproom,
 			optime: "",
 			patient: "",
 			staffname: "",
@@ -74,7 +85,7 @@ function fillForRoom(opdate, room, qn)
 			if (qn) {
 				row = getTableRowByQN("tbl", qn)
 			} else {
-				row = getTableRowsByDate(opdate.thDate())[0]
+				row = getTableRowsByDate("tbl", opdate)[0]
 			}
 			fillEquipTable(book, $(row), sameRoomQN[q], blank)
 			showButtons()
@@ -90,7 +101,7 @@ function fillForRoom(opdate, room, qn)
 				width: "140",
 				class: "silver floatleft",
 				click: function () {
-					fillForRoom(opdate.nextdays(-1), room)
+					fillForRoom(opdate.nextdays(-1), oproom)
 				}
 			},
 			{
@@ -121,7 +132,7 @@ function fillForRoom(opdate, room, qn)
 				width: "120",
 				class: "silver",
 				click: function () {
-					fillForRoom(opdate.nextdays(+1), room)
+					fillForRoom(opdate.nextdays(+1), oproom)
 				}
 			}
 		])
@@ -130,12 +141,12 @@ function fillForRoom(opdate, room, qn)
 
 function updateBOOK(result)
 {
-	if (result.BOOK) { GV.BOOK = result.BOOK }
-	if (result.CONSULT) { GV.CONSULT = result.CONSULT }
-//	if (result.STAFF) { GV.STAFF = result.STAFF }
-//	if (result.ONCALL) { GV.ONCALL = result.ONCALL }
-	if (result.HOLIDAY) { GV.HOLIDAY = result.HOLIDAY }
-	if (result.QTIME) { GV.timestamp = result.QTIME }
+	if (result.BOOK) { BOOK = result.BOOK }
+	if (result.CONSULT) { CONSULT = result.CONSULT }
+//	if (result.STAFF) { STAFF = result.STAFF }
+//	if (result.ONCALL) { ONCALL = result.ONCALL }
+	if (result.HOLIDAY) { setHOLIDAY(result.HOLIDAY) }
+	if (result.QTIME) { timestamp = result.QTIME }
 }
 
 // Only on main table
@@ -146,7 +157,7 @@ function fillConsults()
 		tlen = rows.length,
 		today = new Date().ISOdate(),
 		lastopdate = rows[tlen-1].cells[OPDATE].innerHTML.numDate(),
-		staffoncall = GV.STAFF.filter(function(staff) {
+		staffoncall = STAFF.filter(function(staff) {
 			return staff.oncall === "1"
 		}),
 		slen = staffoncall.length,
@@ -175,7 +186,7 @@ function fillConsults()
 	index = index % slen
 	while (dateoncall <= lastopdate) {
 		oncallRow = findOncallRow(rows, nextrow, tlen, dateoncall)
-		if (oncallRow && !oncallRow.cells[QN].innerHTML) {
+		if (oncallRow && !oncallRow.dataset.qn) {
 			oncallRow.cells[STAFFNAME].innerHTML = htmlwrap(staffoncall[index].staffname)
 		}
 		nextrow = oncallRow.rowIndex + 1
@@ -184,11 +195,11 @@ function fillConsults()
 	}
 
 	nextrow = 1
-	GV.ONCALL.forEach(function(oncall) {
+	ONCALL.forEach(function(oncall) {
 		dateoncall = oncall.dateoncall
 		if (dateoncall > today) {
 			oncallRow = findOncallRow(rows, nextrow, tlen, dateoncall)
-			if (oncallRow && !oncallRow.cells[QN].innerHTML) {
+			if (oncallRow && !oncallRow.dataset.qn) {
 				oncallRow.cells[STAFFNAME].innerHTML = htmlwrap(staffoncall[index].staffname)
 			}
 			nextrow = oncallRow.rowIndex + 1
@@ -213,11 +224,11 @@ function htmlwrap(staffname) {
 
 function resetTimer()
 {
-	// GV.timer is just an id, not the clock
+	// timer is just an id, not the clock
 	// poke server every 1000 sec.
-//	clearTimeout(GV.timer)
-	GV.timer = setInterval( updating, 10000)
-	GV.idleCounter = 0
+  // clearTimeout(timer)
+	timer = setInterval( updating, 10000)
+	idleCounter = 0
 }
 
 function updating()
@@ -228,16 +239,16 @@ function updating()
 
 	function updatingback(response)
 	{
-		// GV.timestamp is this client last edit
+		// timestamp is this client last edit
 		// timestamp is from server bookhistory last editdatetime
 		if (typeof response === "object") {
-			if (GV.timestamp < response[0].timestamp) {
+			if (timestamp < response[0].timestamp) {
 				getUpdate()
 			}
 		}
 		// idle not more than 1000 min.
-		GV.idleCounter += 1
-		if (GV.idleCounter > 6000) {
+		idleCounter += 1
+		if (idleCounter > 6000) {
 			history.back()
 		}
 	}

@@ -14,18 +14,17 @@ export const GETIPD		= "php/getipd.php",
   TREATMENT	= 9,
   EQUIPMENT	= 10,
   CONTACT		= 11,
-  QN			= 12,
 
   // NAMEOFDAYABBR for row color
   // NAMEOFDAYFULL for 1st column color
   NAMEOFDAYABBR	= ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
   NAMEOFDAYFULL	= ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
   THAIMONTH		= ["มค.", "กพ.", "มีค.", "เมย.", "พค.", "มิย.", "กค.", "สค.", "กย.", "ตค.", "พย.", "ธค."],
-  LARGESTDATE		= "9999-12-31",
+  LARGESTDATE		= "9999-12-31"
 
 //=================================================================================
 
-COLUMN = {
+export const COLUMN = {
   waitnum: null,
   oproom: OPROOM,
   optime: OPTIME,
@@ -33,27 +32,16 @@ COLUMN = {
   staffname: STAFFNAME,
   hn: HN,
   patient: PATIENT,
+  dob: null,
   diagnosis: DIAGNOSIS,
   treatment: TREATMENT,
   equipment: EQUIPMENT,
-  contact: CONTACT
-},
-
-GV = {
-	BOOK: [],
-	CONSULT: [],
-	STAFF: [],
-	HOLIDAY: [],
-	user: "",
-	timestamp: "",
-	timer: {},
-	idleCounter: 0,
-	isMobile: false,
-	isPACS: false
-},
+  contact: CONTACT,
+  qn: null
+}
 
 // ["type", "width", "name", "label", "id"]
-EQUIPSHEET = [
+export const EQUIPSHEET = [
   ["spanInSpan", "70", "", "ห้อง ", "oproomequip"],
   ["spanInSpan", "70", "", "Case ", "casenumequip"],
   ["spanInSpan", "120", "", "เวลา ", "optimeequip"],

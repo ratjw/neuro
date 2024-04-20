@@ -1,24 +1,22 @@
 
-import { NAMEOFDAYABBR, NAMEOFDAYFULL, LARGESTDATE, GV,
+import { NAMEOFDAYABBR, NAMEOFDAYFULL, LARGESTDATE, 
  OPDATE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
- DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT, QN
+ DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT
 } from "./const.js"
+import { BOOK } from "./start.js"
 import { showEquip, findStartRowInBOOK, putNameAge } from "./function.js"
-import { fillNewrowData } from "./fillNewrowData.js"
+import { fillNewrowData, blankRowData } from "./fillNewrowData.js"
 
 export function fillupstart()
 {	//Display all cases in each day of 5 weeks
 	// Find the 1st of last month
 	// fill until 2 year from now
 	var	table = document.getElementById("tbl"),
-		today = new Date(),
-		start = new Date(today.setDate(today.getDate() - 77)).ISOdate(),
-		today = new Date(),
-		until = new Date(today.setDate(today.getDate() + 100)).ISOdate(),
-		today = new Date(),
-		todate = today.ISOdate(),
+		start = new Date(new Date().getFullYear(), new Date().getMonth()-1, 1).ISOdate(),
+		until = new Date(new Date().setDate(new Date().getDate() + 100)).ISOdate(),
+		todate = new Date().ISOdate(),
 		todateth = todate.thDate(),
-		book = GV.BOOK
+		book = BOOK
 
 	if (book.length === 0) { book.push({"opdate" : todate}) }
 	
@@ -109,6 +107,7 @@ function makenextrow(table, date)
 	rowi.cells[OPDATE].className = dayName(NAMEOFDAYABBR, date)
 //	rowi.cells[DIAGNOSIS].style.backgroundImage = holiday(date)
 	rowi.className = dayName(NAMEOFDAYFULL, date)
+  blankRowData(rowi, date)
 }
 
 function dayName(DAYNAME, date)

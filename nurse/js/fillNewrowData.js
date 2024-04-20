@@ -42,3 +42,12 @@ function fillRow(row, q, key, val)
     cells[val].innerHTML = q[key]
   }
 }
+
+export function blankRowData(row, opdate)
+{
+  let rowdata = row.dataset
+
+  Object.keys(COLUMN).forEach(k => rowdata[k] = "")
+
+  rowdata.opdate = opdate
+}

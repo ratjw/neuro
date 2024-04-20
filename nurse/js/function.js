@@ -37,6 +37,19 @@ export function nextdates(date, days) {
   return obj_2_ISO(next);
 }
 
+// Javascript Date Object to MySQL date (ISOdate 2014-05-11)
+export function obj_2_ISO(date) {
+  if (!date) { return date }
+
+  let mm = date.getMonth() + 1,
+    dd = date.getDate();
+
+  return [date.getFullYear(),
+      (mm < 10) ? "0" + mm : "" + mm,
+      (dd < 10) ? "0" + dd : "" + dd
+      ].join("-")
+} 
+
 export function putNameAge(bookq)
 {
 	return bookq.patient

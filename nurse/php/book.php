@@ -17,12 +17,12 @@ function book($mysqli)
   $wait = array();
   $staff = array();
 
-  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
+  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,staffname,hn,
             patient,dob,diagnosis,treatment,equipment,contact,qn,editor
           FROM book 
           WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
             AND deleted = 0 AND waitnum > 0
-          ORDER BY opdate,theatre,oproom is null,oproom,casenum,
+          ORDER BY opdate,oproom is null,oproom,casenum,
             IF(oproom, optime, null),waitnum;";
           // The one with no oproom will be the last, sorted by ASC
           // If no oproom, then will not sort on optime
@@ -34,7 +34,7 @@ function book($mysqli)
     $book[] = $rowi;
   }
 
-  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,theatre,staffname,hn,
+  $sql = "SELECT waitnum,opdate,oproom,optime,casenum,staffname,hn,
             patient,dob,diagnosis,treatment,equipment,contact,qn,editor
           FROM book 
           WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
