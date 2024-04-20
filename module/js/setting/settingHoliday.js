@@ -10,7 +10,7 @@ import {
 
 export function settingHoliday()
 {
-  dialogHoliday("วันหยุดเฉพาะปีนี้")
+  dialogHoliday("วันหยุดปฏิทินไทย")
   fillHolyDay()
   newHoliday()
 }

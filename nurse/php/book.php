@@ -21,7 +21,7 @@ function book($mysqli)
             patient,dob,diagnosis,treatment,equipment,contact,qn,editor
           FROM book 
           WHERE opdate >= DATE_FORMAT(CURDATE()-INTERVAL 1 MONTH,'%Y-%m-01')
-            AND deleted = 0 AND waitnum > 0
+            AND deleted = 0 AND waitnum > 0 AND opdate < '9999-01-01'
           ORDER BY opdate,oproom is null,oproom,casenum,
             IF(oproom, optime, null),waitnum;";
           // The one with no oproom will be the last, sorted by ASC

@@ -55,9 +55,10 @@ function fillall(book, table, start, until)
 		{
 			if (date !== madedate)
 			{
-				//make a blank row for each day which is not in book
-				makenextrow(table, date)	//insertRow
+				//make a blank row with dataset for each day which is not in book
+				makenextrow(table, date)
 				i++
+        blankRowData(table.rows[i], date)
 				
 				madedate = date
 			}
@@ -79,20 +80,6 @@ function fillall(book, table, start, until)
 		fillNewrowData(rows[i], book[q])
 		madedate = date
 	}
-
-	while (date < until)
-	{
-		date = date.nextdays(1)
-
-		//make table head row before every Monday
-		if (((new Date(date)).getDay())%7 === 1)
-		{
-			var clone = head.cloneNode(true)
-			tbody.appendChild(clone)
-		}
-		//make a blank row
-		makenextrow(table, date)	//insertRow
-	}
 }
 
 //create and decorate new row
@@ -105,9 +92,7 @@ function makenextrow(table, date)
 
 	rowi.cells[OPDATE].innerHTML = date.thDate()
 	rowi.cells[OPDATE].className = dayName(NAMEOFDAYABBR, date)
-//	rowi.cells[DIAGNOSIS].style.backgroundImage = holiday(date)
 	rowi.className = dayName(NAMEOFDAYFULL, date)
-  blankRowData(rowi, date)
 }
 
 function dayName(DAYNAME, date)
