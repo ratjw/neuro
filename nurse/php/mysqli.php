@@ -18,6 +18,7 @@ function start($mysqli)
 	$data = array();
 	$data = book($mysqli);
 	$data["HOLIDAY"] = getHoliday($mysqli);
+	$data["STAFF"] = getStaff($mysqli);
 
 	return json_encode($data);
 }
@@ -37,6 +38,12 @@ function getHoliday($mysqli)
 	$sql = "SELECT * FROM holiday
           WHERE holidate >= MAKEDATE(year(now()),1)- interval 1 month
           ORDER BY holidate;";
+	return multiquery($mysqli, $sql);
+}
+
+function getStaff($mysqli)
+{
+	$sql = "SELECT * FROM personnel;";
 	return multiquery($mysqli, $sql);
 }
 

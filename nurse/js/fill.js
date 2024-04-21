@@ -3,7 +3,7 @@ import { NAMEOFDAYABBR, NAMEOFDAYFULL, LARGESTDATE,
  OPDATE, OPROOM, OPTIME, CASENUM, STAFFNAME, HN, PATIENT,
  DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT
 } from "./const.js"
-import { BOOK } from "./start.js"
+import { BOOK } from "./updateBOOK.js"
 import { showEquip, findOpdateRowInBOOK, putNameAge } from "./function.js"
 import { fillNewrowData, blankRowData } from "./fillNewrowData.js"
 
