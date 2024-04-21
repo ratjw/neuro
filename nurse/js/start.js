@@ -24,28 +24,6 @@ let	timestamp = "",
   htmlEquipment()
 	resetTimer()
 
-	$("#tblcontainer").on("click", function (event) {
-		event.stopPropagation()
-		var target = event.target
-		if (target.nodeName !== "TD") { return }
-		var row = target.closest('tr')
-		var opdate = row.dataset.opdate
-		var oproom = row.dataset.oproom
-		var qn = row.dataset.qn
-
-		if (target.nodeName === "TD") {
-			fillForRoom(opdate, oproom, qn)
-		}
-	})
-
-	$(document).contextmenu( function (event) {
-		event.preventDefault();
-	})
-
-	$(document).keydown(function(event) {
-		event.preventDefault();
-	})
-
 function loading(response)
 {
   if (typeof response === "object") {
@@ -53,7 +31,31 @@ function loading(response)
     fillupstart()
     fillHoliday()
     fillAnnouncement()
-//			fillConsults()
+//		fillConsults()
+
+    $("#tblcontainer").on("click", function (event) {
+      event.stopPropagation()
+      var target = event.target
+      if (target.nodeName !== "TD") { return }
+      var row = target.closest('tr')
+      var opdate = row.dataset.opdate
+      var oproom = row.dataset.oproom
+      var qn = row.dataset.qn
+
+      if (target.nodeName === "TD") {
+        fillForRoom(opdate, oproom, qn)
+      }
+    })
+
+    $(document).contextmenu( function (event) {
+      event.preventDefault();
+    })
+
+    $(document).keydown(function(event) {
+      event.preventDefault();
+	})
+  } else {console.log(response)
+    alert ("Error in loading " + response)
   }
 }
 
@@ -142,7 +144,7 @@ function fillForRoom(opdate, oproom, qn)
 function updateBOOK(result)
 {
 	if (result.BOOK) { BOOK = result.BOOK }
-	if (result.CONSULT) { CONSULT = result.CONSULT }
+//	if (result.CONSULT) { CONSULT = result.CONSULT }
 //	if (result.STAFF) { STAFF = result.STAFF }
 //	if (result.ONCALL) { ONCALL = result.ONCALL }
 	if (result.HOLIDAY) { setHOLIDAY(result.HOLIDAY) }

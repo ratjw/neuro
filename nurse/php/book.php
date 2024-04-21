@@ -33,7 +33,7 @@ function book($mysqli)
   while ($rowi = $result->fetch_assoc()) {
     $book[] = $rowi;
   }
-
+/*
   $sql = "SELECT waitnum,opdate,oproom,optime,casenum,staffname,hn,
             patient,dob,diagnosis,treatment,equipment,contact,qn,editor
           FROM book 
@@ -49,14 +49,14 @@ function book($mysqli)
   while ($rowi = $result->fetch_assoc()) {
     $consult[] = $rowi;
   }
-
+*/
   // current() = array.toString()
   if ($result = $mysqli->query ("SELECT now();")) {
     $time = current($result->fetch_row());
   }
 
   $allarray["BOOK"] = $book;
-  $allarray["CONSULT"] = $consult;
+//  $allarray["CONSULT"] = $consult;
   $allarray["QTIME"] = $time;
 
   return $allarray;
