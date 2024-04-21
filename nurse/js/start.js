@@ -9,10 +9,9 @@ import {
   Ajax, sameDateRoomBookQN, getTableRowByQN, getTableRowsByDate, showFind
 } from "./function.js"
 
-
 export let BOOK = [],
-	CONSULT = [],
-	STAFF = []
+	STAFF = [],
+  DIVISION = 'ประสาทศัลยศาสตร์'
 
 let	timestamp = "",
 	timer = {},
@@ -144,9 +143,7 @@ function fillForRoom(opdate, oproom, qn)
 function updateBOOK(result)
 {
 	if (result.BOOK) { BOOK = result.BOOK }
-//	if (result.CONSULT) { CONSULT = result.CONSULT }
-//	if (result.STAFF) { STAFF = result.STAFF }
-//	if (result.ONCALL) { ONCALL = result.ONCALL }
+	if (result.STAFF) { STAFF = result.STAFF }
 	if (result.HOLIDAY) { setHOLIDAY(result.HOLIDAY) }
 	if (result.QTIME) { timestamp = result.QTIME }
 }
@@ -159,17 +156,13 @@ function fillConsults()
 		tlen = rows.length,
 		today = new Date().ISOdate(),
 		lastopdate = rows[tlen-1].cells[OPDATE].innerHTML.numDate(),
-		staffoncall = STAFF.filter(function(staff) {
-			return staff.oncall === "1"
-		}),
+		staffneuro = STAFF.filter(staff => staff.division === DIVISION)
+                      .map(staff => JSON.parse(staff.profile)),
+		staffoncall = staffneuro.filter(staff => (staff.oncall > 0)),
 		slen = staffoncall.length,
 		nextrow = 1,
 		index = 0,
-		start = staffoncall.filter(function(staff) {
-			return staff.startoncall
-		}).reduce(function(a, b) {
-			return a.startoncall > b.startoncall ? a : b
-		}, 0),
+		start = getLatestStart(staffoncall),
 		dateoncall = start.startoncall,
 		staffstart = start.staffname,
 		oncallRow = {}
@@ -207,6 +200,16 @@ function fillConsults()
 			nextrow = oncallRow.rowIndex + 1
 		}
 	})
+}
+
+function getLatestStart(staffs)
+{
+  staffs.forEach(staff => {
+    staff.startKey = getLatestKey(staff.start)
+    staff.startDate = getLatestValue(staff.start)
+  })
+
+  return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)
 }
 
 function findOncallRow(rows, nextrow, tlen, dateoncall)
