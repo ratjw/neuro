@@ -9,9 +9,7 @@ import {
   Ajax, sameDateRoomBookQN, getTableRowByQN, getTableRowsByDate, showFind
 } from "./function.js"
 
-export let BOOK = [],
-	STAFF = [],
-  DIVISION = 'ประสาทศัลยศาสตร์'
+export let BOOK = []
 
 let	timestamp = "",
 	timer = {},
@@ -30,7 +28,6 @@ function loading(response)
     fillupstart()
     fillHoliday()
     fillAnnouncement()
-//		fillConsults()
 
     $("#tblcontainer").on("click", function (event) {
       event.stopPropagation()
@@ -52,7 +49,7 @@ function loading(response)
 
     $(document).keydown(function(event) {
       event.preventDefault();
-	})
+    })
   } else {console.log(response)
     alert ("Error in loading " + response)
   }
@@ -143,88 +140,8 @@ function fillForRoom(opdate, oproom, qn)
 function updateBOOK(result)
 {
 	if (result.BOOK) { BOOK = result.BOOK }
-	if (result.STAFF) { STAFF = result.STAFF }
 	if (result.HOLIDAY) { setHOLIDAY(result.HOLIDAY) }
 	if (result.QTIME) { timestamp = result.QTIME }
-}
-
-// Only on main table
-function fillConsults()
-{
-	var	table = document.getElementById("tbl"),
-		rows = table.rows,
-		tlen = rows.length,
-		today = new Date().ISOdate(),
-		lastopdate = rows[tlen-1].cells[OPDATE].innerHTML.numDate(),
-		staffneuro = STAFF.filter(staff => staff.division === DIVISION)
-                      .map(staff => JSON.parse(staff.profile)),
-		staffoncall = staffneuro.filter(staff => (staff.oncall > 0)),
-		slen = staffoncall.length,
-		nextrow = 1,
-		index = 0,
-		start = getLatestStart(staffoncall),
-		dateoncall = start.startoncall,
-		staffstart = start.staffname,
-		oncallRow = {}
-
-	// find staff to start
-	while ((index < slen) && (staffoncall[index].staffname !== staffstart)) {
-		index++
-	}
-
-	// find first date to start immediately after today
-	while (dateoncall <= today) {
-		dateoncall = dateoncall.nextdays(7)
-		index++
-	}
-
-	index = index % slen
-	while (dateoncall <= lastopdate) {
-		oncallRow = findOncallRow(rows, nextrow, tlen, dateoncall)
-		if (oncallRow && !oncallRow.dataset.qn) {
-			oncallRow.cells[STAFFNAME].innerHTML = htmlwrap(staffoncall[index].staffname)
-		}
-		nextrow = oncallRow.rowIndex + 1
-		dateoncall = dateoncall.nextdays(7)
-		index = (index + 1) % slen
-	}
-
-	nextrow = 1
-	ONCALL.forEach(function(oncall) {
-		dateoncall = oncall.dateoncall
-		if (dateoncall > today) {
-			oncallRow = findOncallRow(rows, nextrow, tlen, dateoncall)
-			if (oncallRow && !oncallRow.dataset.qn) {
-				oncallRow.cells[STAFFNAME].innerHTML = htmlwrap(staffoncall[index].staffname)
-			}
-			nextrow = oncallRow.rowIndex + 1
-		}
-	})
-}
-
-function getLatestStart(staffs)
-{
-  staffs.forEach(staff => {
-    staff.startKey = getLatestKey(staff.start)
-    staff.startDate = getLatestValue(staff.start)
-  })
-
-  return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)
-}
-
-function findOncallRow(rows, nextrow, tlen, dateoncall)
-{
-	var opdateth = dateoncall && dateoncall.thDate()
-
-	for (var i = nextrow; i < tlen; i++) {
-		if (rows[i].cells[OPDATE].innerHTML === opdateth) {
-			return rows[i]
-		}
-	}
-}
-
-function htmlwrap(staffname) {
-	return '<p style="color:#999999;font-size:14px">Consult<br>' + staffname + '</p>'
 }
 
 function resetTimer()

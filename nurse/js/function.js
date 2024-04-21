@@ -73,15 +73,6 @@ String.prototype.nextdays = function (days)
 	return morrow.ISOdate();
 }
 
-export function findStartRowInBOOK(book, opdate)
-{
-	var q = 0
-	while ((q < book.length) && (book[q].opdate < opdate)) {
-		q++
-	}
-	return (q < book.length)? q : -1
-}
-
 String.prototype.getAge = function (toDate)
 {	//Calculate age at (toDate) (iso format) from birth date
 	//with LARGESTDATE as today
@@ -163,17 +154,6 @@ export function Ajax(url, params, callback)
 	http.send(params);
 }
 
-export function sameDateRoomBookQN(book, opdate, room)
-{
-	var sameRoom = book.filter(function(row) {
-		return row.opdate === opdate && Number(row.oproom) === Number(room);
-	})
-	$.each(sameRoom, function(i) {
-		sameRoom[i] = this.qn
-	})
-	return sameRoom
-}
-
 // if the row is above the screen, then scrollTop to it
 // if too low, then scrollTop to it minus (scroll down) container height
 export function showFind($container, row)
@@ -201,6 +181,17 @@ export function showFind($container, row)
   }
 }
 
+export function sameDateRoomBookQN(book, opdate, room)
+{
+	var sameRoom = book.filter(function(row) {
+		return row.opdate === opdate && Number(row.oproom) === Number(room);
+	})
+	$.each(sameRoom, function(i) {
+		sameRoom[i] = this.qn
+	})
+	return sameRoom
+}
+
 export function getBOOKrowByQN(book, qn) {  
   return book.find(q => Number(q.qn) === Number(qn) )
 }
@@ -209,6 +200,15 @@ export function getTableRowByQN(tableID, qn)
 {
   return Array.from(document.querySelectorAll(`#${tableID} tr`))
         .find(row => Number(row.dataset.qn) === Number(qn))
+}
+
+export function findOpdateRowInBOOK(book, opdate)
+{
+	var q = 0
+	while ((q < book.length) && (book[q].opdate < opdate)) {
+		q++
+	}
+	return (q < book.length)? q : -1
 }
 
 // main table (#maintbl) only

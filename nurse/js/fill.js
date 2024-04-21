@@ -4,7 +4,7 @@ import { NAMEOFDAYABBR, NAMEOFDAYFULL, LARGESTDATE,
  DIAGNOSIS, TREATMENT, EQUIPMENT, CONTACT
 } from "./const.js"
 import { BOOK } from "./start.js"
-import { showEquip, findStartRowInBOOK, putNameAge } from "./function.js"
+import { showEquip, findOpdateRowInBOOK, putNameAge } from "./function.js"
 import { fillNewrowData, blankRowData } from "./fillNewrowData.js"
 
 export function fillupstart()
@@ -36,8 +36,8 @@ function fillall(book, table, start, until)
 	var head = table.rows[0]
 	var date = start
 	var madedate
-	var q = findStartRowInBOOK(book, start)
-	var k = findStartRowInBOOK(book, LARGESTDATE)
+	var q = findOpdateRowInBOOK(book, start)
+	var k = findOpdateRowInBOOK(book, LARGESTDATE)
 
 	// get rid of cases with unspecified opdate
 	// Consult cases and new start have no LARGESTDATE, so k = -1
