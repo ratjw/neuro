@@ -127,6 +127,25 @@ td.announce {
   font-weight: bold;
 }
 
+:root {
+  --consultant: "";
+}
+
+td.consult[data-origconsult] { 
+  --consultant: '\Aแทน ' attr(data-origconsult);
+}
+
+td.consult[data-origconsult] { 
+  --consultant: '\Aแทน ' attr(data-origconsult);
+}
+
+td.consult::after { 
+  color: #999999;
+  font-size: 12px;
+  content: 'สัปดาห์ Consult\A'attr(data-consult)var(--consultant);
+  white-space: pre;
+}
+
 .ui-dialog {
 	position: fixed;
 	box-shadow: 10px 20px 30px slategray;

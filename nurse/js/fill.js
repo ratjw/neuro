@@ -7,6 +7,8 @@ import { BOOK } from "./updateBOOK.js"
 import { showEquip, findOpdateRowInBOOK, putNameAge } from "./function.js"
 import { fillNewrowData, blankRowData } from "./fillNewrowData.js"
 
+export let START_DATE = ""
+
 export function fillupstart()
 {	//Display all cases in each day of 5 weeks
 	// Find the 1st of last month
@@ -18,6 +20,7 @@ export function fillupstart()
 		todateth = todate.thDate(),
 		book = BOOK
 
+  START_DATE = start
 	if (book.length === 0) { book.push({"opdate" : todate}) }
 	
 	fillall(book, table, start, until)

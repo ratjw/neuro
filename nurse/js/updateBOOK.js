@@ -1,10 +1,10 @@
 
 import { MYSQLIPHP } from "./const.js"
 import { setHOLIDAY } from "./constHoliday.js"
-import { setSTAFF } from "./getSTAFF.js"
 import { Ajax } from "./function.js"
 
 export let	BOOK = [],
+  STAFF = [],
   timestamp = "",
 	timer = {},
 	idleCounter = 0
@@ -16,6 +16,11 @@ export function updateBOOK(result)
 	if (result.STAFF) { setSTAFF(result.STAFF) }
 	if (result.QTIME) { timestamp = result.QTIME }
 }
+
+// JSON.parse/JSON.stringify to deep clone
+export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
+
+export function setSTAFF(staff) { STAFF = JSON.parse(JSON.stringify(staff)) }
 
 export function resetTimer()
 {

@@ -1,12 +1,6 @@
 
 import { DIVISION } from "./start.js"
-
-let STAFF = []
-
-// JSON.parse/JSON.stringify to deep clone
-export function getSTAFF() { return JSON.parse(JSON.stringify(STAFF)) }
-
-export function setSTAFF(staff) { STAFF = JSON.parse(JSON.stringify(staff)) }
+import { getSTAFF } from "./updateBOOK.js"
 
 export function getStaffOncall()
 {
