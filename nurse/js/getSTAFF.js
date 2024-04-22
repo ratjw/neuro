@@ -1,4 +1,6 @@
 
+import { DIVISION } from "./start.js"
+
 let STAFF = []
 
 // JSON.parse/JSON.stringify to deep clone

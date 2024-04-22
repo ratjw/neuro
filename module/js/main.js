@@ -3,9 +3,9 @@ import { start } from "./control/start.js"
 import { Alert } from "./util/util.js"
 
 // from login.js
-export let ADMIN = "000000"
-export let USER = sessionStorage.getItem("userid")
-export let DIVISION = 'ประสาทศัลยศาสตร์'
+export const ADMIN = "000000"
+export const USER = sessionStorage.getItem("userid")
+export const DIVISION = 'ประสาทศัลยศาสตร์'
 //new URLSearchParams(window.location.search).get("division")
 
 let wrapper = document.getElementById("wrapper")

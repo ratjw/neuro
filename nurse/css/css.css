@@ -85,13 +85,13 @@ td img.imgpale {
 
 tr.marker {	border: solid 3px skyblue !important; }
 
-tr.sunday { background-color: #FFDDEE; }
-tr.monday { background-color: #FFFFE0; }
-tr.tuesday { background-color: #FFF0F9; }
-tr.wednesday { background-color: #EEFFEE; }
-tr.thursday { background-color: #FFF7EE; }
-tr.friday { background-color: #E7F7FF; }
-tr.saturday { background-color: #E7E7FF; }
+tr.Sunday { background-color: #FFDDEE; }
+tr.Monday { background-color: #FFFFE0; }
+tr.Tuesday { background-color: #FFF0F9; }
+tr.Wednesday { background-color: #EEFFEE; }
+tr.Thursday { background-color: #FFF7EE; }
+tr.Friday { background-color: #E7F7FF; }
+tr.Saturday { background-color: #E7E7FF; }
 
 td.sun { background-color: #F099BB; }
 td.mon { background-color: #F0F0BB; }

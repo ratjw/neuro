@@ -211,13 +211,6 @@ export function findOpdateRowInBOOK(book, opdate)
 	return (q < book.length)? q : -1
 }
 
-export function getLatestKey(obj)
-{
-  if (!obj || !Object.entries(obj).length) { return '' }
-
-  return Math.max(...Object.keys(obj)) || ''
-}
-
 // main table (#maintbl) only
 export function getTableRowsByDate(tableID, opdate)
 {

@@ -5,7 +5,7 @@ import { getStaffOncall, getLatestStart } from "./getStaff.js"
 import { fillExchange } from "./fillExchange.js"
 
 // The staff who has latest startoncall date, is to start
-export function fillConsults(tableID = 'maintbl')
+export function fillConsults(tableID = 'tbl')
 {
   const table = document.getElementById(tableID),
     tableSaturdayRows = Array.from(table.querySelectorAll("tr.Saturday")),

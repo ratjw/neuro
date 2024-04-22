@@ -9,6 +9,11 @@ import { fillAnnouncement } from "./fillAnnouncement.js"
 import { fillEquipOproom } from "./fillEquipOproom.js"
 import { fillConsults } from "./fillConsults.js"
 
+// from login.js
+export const ADMIN = "000000"
+export const USER = sessionStorage.getItem("userid")
+export const DIVISION = 'ประสาทศัลยศาสตร์'
+
 	Ajax(MYSQLIPHP, "start=start", loading);
 
 	$("#tblcontainer").show()
@@ -22,7 +27,7 @@ function loading(response)
     fillupstart()
     fillHoliday()
     fillAnnouncement()
-//    fillConsults()
+    fillConsults()
 
     $("#tblcontainer").on("click", function (event) {
       event.stopPropagation()

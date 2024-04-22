@@ -18,7 +18,7 @@ export const GETIPD		= "php/getipd.php",
   // NAMEOFDAYABBR for row color
   // NAMEOFDAYFULL for 1st column color
   NAMEOFDAYABBR	= ["sun", "mon", "tue", "wed", "thu", "fri", "sat"],
-  NAMEOFDAYFULL	= ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
+  NAMEOFDAYFULL	= ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
   THAIMONTH		= ["มค.", "กพ.", "มีค.", "เมย.", "พค.", "มิย.", "กค.", "สค.", "กย.", "ตค.", "พย.", "ธค."],
   LARGESTDATE		= "9999-12-31"
 

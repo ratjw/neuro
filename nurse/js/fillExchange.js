@@ -1,7 +1,6 @@
 
 import { PATIENT } from "./const.js"
-import { getOncallExchange } from "./getStaff.js"
-import { getLatestKey } from "./function.js"
+import { getOncallExchange, getLatestKey } from "./getStaff.js"
 
 export function fillExchange(tableSaturdayRows)
 {
