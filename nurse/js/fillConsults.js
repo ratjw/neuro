@@ -23,7 +23,7 @@ export function fillConsults(tableID = 'tbl')
 
   const startFirstSat = getFirstSat(startStaff),
     allSaturdays = getAllSaturdays(startFirstSat, tableSaturdates),
-    allLen = allSaturdays.length + 20,
+    allLen = allSaturdays.length,
     oncallList = getOncallList(startStaff, allLen),
     staffsOncall = getStaffOncall()
 
