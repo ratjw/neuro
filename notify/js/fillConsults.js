@@ -46,7 +46,8 @@ export function fillConsults(tableID = 'maintbl')
 
   // fill default name
   tableSaturdayRows.forEach(e => {
-    dataAttr(e.cells[PATIENT], allSaturdays[e.dataset.opdate])
+    e.cells[PATIENT].dataset.consult = allSaturdays[e.dataset.opdate]
+    e.cells[PATIENT].classList.add("consult")
   })
 
   // fill exchange name
@@ -132,10 +133,4 @@ function getSkipSat(allSaturdays, staff)
   })
 
   return [...new Set(skipSat)]
-}
-
-function dataAttr(pointing, name)
-{
-  pointing.dataset.consult = name
-  pointing.classList.add("consult")
 }

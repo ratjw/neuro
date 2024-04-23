@@ -28,7 +28,9 @@
 
 	// Save file locally
 	$subdir = "imagefile/";
-  mkdir($subdir);
+  if(!is_dir($subdir)) {
+    mkdir($subdir);
+  }
 	file_put_contents($subdir . $filename, $file_content);
 
 	// "@" is deprecated from PHP 5.5 upward
@@ -37,10 +39,10 @@
 		"imageFile" => new CURLFile($subdir . $filename)
 	);
 
-  curl($line_api, $data, $line_token);
-//  curl($line_api, $data, $line_token1);
-//  curl($line_api, $data, $line_token2);
-//  curl($line_api, $data, $line_token3);
+//  curl($line_api, $data, $line_token);
+  curl($line_api, $data, $line_token1);
+  curl($line_api, $data, $line_token2);
+  curl($line_api, $data, $line_token3);
 
 function curl($line_api, $data, $line_token)
 {

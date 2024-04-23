@@ -47,11 +47,8 @@ export function fillConsults(tableID = 'tbl')
 
   // fill default staffname
   tableSaturdayRows.forEach(e => {
-    const cell = e.cells[PATIENT],
-      staffname = allSaturdays[e.dataset.opdate]
-
-    cell.dataset.consult = staffname
-    cell.classList.add("consult")
+    e.cells[PATIENT].dataset.consult = allSaturdays[e.dataset.opdate]
+    e.cells[PATIENT].classList.add("consult")
   })
 
   fillExchange(tableSaturdayRows)
