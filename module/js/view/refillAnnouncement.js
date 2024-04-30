@@ -24,19 +24,19 @@ export function refillAnnouncement()
         removeAnnounce(rx)
       }
     } else {
-      e.dataset.diagnosis
-        ? dx.classList.contains("announce")
-          ? null
-          : fillAnnounce(dx, count + 1)
-        : dx.classList.contains("announce")
-          ? removeAnnounce(dx)
-          : null
       e.dataset.treatment
         ? rx.classList.contains("announce")
           ? null
           : fillAnnounce(rx, count)
         : rx.classList.contains("announce")
           ? removeAnnounce(rx)
+          : null
+      e.dataset.diagnosis
+        ? rx.classList.contains("announce")
+          ? fillAnnounce(dx, 1)
+          : fillAnnounce(dx, count + 1)
+        : dx.classList.contains("announce")
+          ? removeAnnounce(dx)
           : null
     }
   })
