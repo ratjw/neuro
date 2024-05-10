@@ -31,8 +31,10 @@ export async function sendNotifyLINE(message)
       // Sat. สัปดาห์ Consult has no HN
       cell[OPDATE].innerHTML = cell[OPDATE].innerHTML.replace(' ', '<br>')
       cell[PATIENT].innerHTML = hn ? (hn + '<br>' + patient.split(" ")[0]) : ''
-      cell[DIAGNOSIS].innerHTML = string25(cell[DIAGNOSIS].innerHTML)
-      cell[TREATMENT].innerHTML = string25(cell[TREATMENT].innerHTML)
+      if (cell[DIAGNOSIS].colSpan <= 1)
+        cell[DIAGNOSIS].innerHTML = string25(cell[DIAGNOSIS].innerHTML)
+      if (cell[TREATMENT].colSpan <= 1)
+        cell[TREATMENT].innerHTML = string25(cell[TREATMENT].innerHTML)
       cell[EQUIPMENT].innerHTML = cell[EQUIPMENT].innerHTML.replace(/\<br\>/g, '')
       equipImage(cell[EQUIPMENT])
     }
