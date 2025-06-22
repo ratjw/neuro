@@ -146,13 +146,37 @@ function activateButtons($tbody)
 function getEditingStaff($tbody)
 {
   $tbody.find('tr').each(function(i, row) {
-    $(row).find('td').each(function(i) {
-      let input = this.querySelector('input')
-      let val = input ? input.value : this.textContent
-      if (val !== this.dataset.val) {
-          saveStaff(row)
-          return false
-        }
+    let save = false
+    $(row).find('td').each(function(i, cell) {
+      let selected = cell.querySelector("select")
+      let input = cell.querySelector('input')
+      if (selected) {
+        if (getSelected(selected, cell)) save = true
+      } else if (input) {
+        if (getInput(input, cell)) save = true
+      } else {
+        if (cell.textContent !== cell.dataset.val) save = true
+      }
     })
+    if (save) saveStaff(row)
   })
+}
+
+function getSelected(selected, cell)
+{
+  let index = selected.selectedIndex 
+  if (index > -1) {
+    if (selected[index].text !== cell.dataset.val) {
+      cell.innerHTML = selected[index].text
+      return true
+    }
+  }
+}
+
+function getInput(input, cell)
+{
+  if (input.value !== cell.dataset.val) {
+    cell.innerHTML = input.value
+    return true
+  }
 }

@@ -21,10 +21,15 @@ function getResident($mysqli)
 
 function getStaff($mysqli)
 {
-	$sql = "SELECT * FROM personnel "
-       . "WHERE profile->'$.role'='อาจารย์แพทย์เต็มเวลา' "
-       .    "OR profile->'$.role'='อาจารย์แพทย์ไม่เต็มเวลา' "
-       .    "OR profile->'$.role'='อาจารย์พิเศษ' ;";
+/*	$sql = "SELECT * FROM personnel
+          WHERE profile->'$.role' LIKE '%อาจารย์%';";
+	return multiquery($mysqli, $sql);
+}
+
+function getPersonNeuro($mysqli)
+{*/
+	$sql = "SELECT * FROM personnel;";
+
 	return multiquery($mysqli, $sql);
 }
 

@@ -24,7 +24,7 @@ import { settingGovtday } from "../setting/settingGovtday.js"
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
 import { ADMIN, USER } from "../main.js"
-import { getSTAFFdivision } from "../setting/getStaff.js"
+import { getPersondivision } from "../setting/getStaff.js"
 import { DIVISION } from "../main.js"
 
 export function setClickAll()
@@ -95,7 +95,7 @@ function setClickService()
 
 export function getPermission(submenu, rname)
 {
-  const staffs = getSTAFFdivision(DIVISION),
+  const staffs = getPersondivision(DIVISION),
     staffid = staffs.map(e => e.ramaid),
     permission = {
       disable: [ADMIN, ...staffid]
