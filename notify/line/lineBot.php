@@ -45,7 +45,7 @@ include('Net/SFTP.php');
 	$arrayPostData['messages'][0]['type'] = "image";
 	$arrayPostData['messages'][0]['originalContentUrl'] = $image_url;
 	$arrayPostData['messages'][0]['previewImageUrl'] = $image_url;
-
+/*
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $strUrl);
 	curl_setopt($ch, CURLOPT_HEADER, false);
@@ -56,4 +56,22 @@ include('Net/SFTP.php');
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_exec($ch);
 	curl_close ($ch);
+*/
+curl -v -X POST https://api.line.me/v2/bot/message/push \
+-H 'Content-Type: application/json' \
+-H 'Authorization: Bearer {$accessToken}' \
+-H 'X-Line-Retry-Key: {UUID}' \
+-d '{
+    "to": $userID,
+    "messages":[
+        {
+            "type":"text",
+            "text":"Hello, world1"
+        },
+        {
+            "type":"image",
+            "originalContentUrl":$image_url
+        }
+    ]
+}';
 ?>
