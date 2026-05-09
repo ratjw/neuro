@@ -1,6 +1,7 @@
 
 export const MYSQLIPHP = "php/mysqli.php"
-export const LINENOTIFY = "line/lineNotify.php"
+//export const LINENOTIFY = "line/lineNotify.php"
+export const LINENOTIFY = "line/linemessage.php"
 
 export async function postData(url = ``, data, signal) {
   const response = await fetch(url, {
