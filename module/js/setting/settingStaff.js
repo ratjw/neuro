@@ -1,9 +1,9 @@
 
 import { RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
 import { getSTAFFdivision, getLatestStart, getStaffOR } from "../setting/getStaff.js"
-import { saveStaff } from "../setting/saveStaff.js"
 import { getLatestKey, winHeight } from "../util/util.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
+import { getEditingStaff } from "../setting/getEditingStaff.js"
 
 export function settingStaff()
 {
@@ -141,42 +141,4 @@ function activateButtons($tbody)
   $saveStaff.on("click", () => getEditingStaff($tbody))
   $cancelStaff.off("click")
   $cancelStaff.on("click", settingStaff)
-}
-
-function getEditingStaff($tbody)
-{
-  $tbody.find('tr').each(function(i, row) {
-    let save = false
-    $(row).find('td').each(function(i, cell) {
-      let selected = cell.querySelector("select")
-      let input = cell.querySelector('input')
-      if (selected) {
-        if (getSelected(selected, cell)) save = true
-      } else if (input) {
-        if (getInput(input, cell)) save = true
-      } else {
-        if (cell.textContent !== cell.dataset.val) save = true
-      }
-    })
-    if (save) saveStaff(row)
-  })
-}
-
-function getSelected(selected, cell)
-{
-  let index = selected.selectedIndex 
-  if (index > -1) {
-    if (selected[index].text !== cell.dataset.val) {
-      cell.innerHTML = selected[index].text
-      return true
-    }
-  }
-}
-
-function getInput(input, cell)
-{
-  if (input.value !== cell.dataset.val) {
-    cell.innerHTML = input.value
-    return true
-  }
 }
