@@ -66,7 +66,7 @@ export function getLatestStart()
 
   staffs.forEach(staff => {
     staff.startKey = getLatestKey(staff.start)
-    staff.startDate = getLatestValue(staff.start)
+    staff.startDate = staff.start//getLatestValue(staff.start)
   })
 
   return staffs.reduce((a, b) => a.startKey > b.startKey ? a : b, 0)

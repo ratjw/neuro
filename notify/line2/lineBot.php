@@ -9,8 +9,8 @@ include('Net/SFTP.php');
 
 	// ID and token from LINE
 	$strUrl = "https://api.line.me/v2/bot/message/push";
-  $accessToken = "hUNVJKEFaDK+g5KNdPK7kU6DzaiEke19xDI8lPriN0d4E6FibCkzku2Cm1eKjJGrNPvt0METVy5Y09wS6lwrMFmD11tchvXv+u9hP1DTQUX81O75EOaErmUXjV60JMjlCW10JMfZRCJSb9vB14g7/AdB04t89/1O/w1cDnyilFU=";
-  $userID = "Uc16be047bd7242f5163bdf7c34331c6a";
+    $accessToken = "hUNVJKEFaDK+g5KNdPK7kU6DzaiEke19xDI8lPriN0d4E6FibCkzku2Cm1eKjJGrNPvt0METVy5Y09wS6lwrMFmD11tchvXv+u9hP1DTQUX81O75EOaErmUXjV60JMjlCW10JMfZRCJSb9vB14g7/AdB04t89/1O/w1cDnyilFU=";
+    $userID = "Uc16be047bd7242f5163bdf7c34331c6a";
 
 	// Webhook server
 	$remote_domain = "med.mahidol.ac.th";
@@ -45,7 +45,7 @@ include('Net/SFTP.php');
 	$arrayPostData['messages'][0]['type'] = "image";
 	$arrayPostData['messages'][0]['originalContentUrl'] = $image_url;
 	$arrayPostData['messages'][0]['previewImageUrl'] = $image_url;
-/*
+
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $strUrl);
 	curl_setopt($ch, CURLOPT_HEADER, false);
@@ -56,22 +56,4 @@ include('Net/SFTP.php');
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_exec($ch);
 	curl_close ($ch);
-*/
-curl -v -X POST https://api.line.me/v2/bot/message/push \
--H 'Content-Type: application/json' \
--H 'Authorization: Bearer {$accessToken}' \
--H 'X-Line-Retry-Key: {UUID}' \
--d '{
-    "to": $userID,
-    "messages":[
-        {
-            "type":"text",
-            "text":"Hello, world1"
-        },
-        {
-            "type":"image",
-            "originalContentUrl":$image_url
-        }
-    ]
-}';
 ?>

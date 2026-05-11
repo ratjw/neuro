@@ -1,6 +1,6 @@
 
 import { RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
-import { getSTAFFdivision, getLatestStart } from "../setting/getStaff.js"
+import { getSTAFFdivision, getLatestStart, getStaffOR } from "../setting/getStaff.js"
 import { saveStaff } from "../setting/saveStaff.js"
 import { getLatestKey, winHeight } from "../util/util.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
@@ -15,7 +15,7 @@ export function settingStaff()
     $stafftbltr = $("#stafftbl tr"),
     $staffcellstr = $('#staffcells tr'),
     maxHeight = winHeight(90),
-    staffs = getSTAFFdivision()
+    staffs = getStaffOR()//getSTAFFdivision()
 
   $stafftbltr.slice(2).remove()
 
