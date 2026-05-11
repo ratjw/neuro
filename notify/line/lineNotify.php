@@ -11,8 +11,11 @@
 
 	$message = $user . "\n" . $message;
    
-	$line_api = 'https://notify-api.line.me/api/notify';
-	$line_token = 'jyaKhr5MuY9jBeWbEzk2OjhT9ucAzCY9Q8ei3ieEGac'; // my LINE
+//	$line_api = 'https://notify-api.line.me/api/notify';
+	$line_api = "https://api.line.me/v2/bot/message/push";
+
+//	$line_token = 'jyaKhr5MuY9jBeWbEzk2OjhT9ucAzCY9Q8ei3ieEGac'; // my LINE
+	$line_token = 'g5KNdPK7kU6DzaiEke19xDI8lPriN0d4E6FibCkzku2Cm1eKjJGrNPvt0METVy5Y09wS6lwrMFmD11tchvXv'; // my LINE
 	$line_token1 = '2ItNh2j4Z1fIFCSWkZXBH4qtDYigXpl19ahsdWIR5pX'; // group LINE นิวโรศัลย์ รามา ปัจจุบัน
 	$line_token2 = 'KKVhc6ZVdAHqGQtL23U9kvfT502cjprMNNbRTH9NEll'; // group LINE Navigator
 	$line_token3 = 'GDcs3oGABywMlCJAxlwT3egmcEDlnfMoA8mQTADKLXh'; // group LINE Nerve monitoring
@@ -39,10 +42,10 @@
 		"imageFile" => new CURLFile($subdir . $filename)
 	);
 
-//  curl($line_api, $data, $line_token);
-  curl($line_api, $data, $line_token1);
-  curl($line_api, $data, $line_token2);
-  curl($line_api, $data, $line_token3);
+  curl($line_api, $data, $line_token);
+//  curl($line_api, $data, $line_token1);
+//  curl($line_api, $data, $line_token2);
+//  curl($line_api, $data, $line_token3);
 
 function curl($line_api, $data, $line_token)
 {
