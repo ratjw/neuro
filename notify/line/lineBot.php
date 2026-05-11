@@ -9,8 +9,8 @@ include('Net/SFTP.php');
 
 	// ID and token from LINE
 	$strUrl = "https://api.line.me/v2/bot/message/push";
-    $accessToken = "hUNVJKEFaDK+g5KNdPK7kU6DzaiEke19xDI8lPriN0d4E6FibCkzku2Cm1eKjJGrNPvt0METVy5Y09wS6lwrMFmD11tchvXv+u9hP1DTQUX81O75EOaErmUXjV60JMjlCW10JMfZRCJSb9vB14g7/AdB04t89/1O/w1cDnyilFU=";
-    $userID = "Uc16be047bd7242f5163bdf7c34331c6a";
+  $accessToken = "hUNVJKEFaDK+g5KNdPK7kU6DzaiEke19xDI8lPriN0d4E6FibCkzku2Cm1eKjJGrNPvt0METVy5Y09wS6lwrMFmD11tchvXv+u9hP1DTQUX81O75EOaErmUXjV60JMjlCW10JMfZRCJSb9vB14g7/AdB04t89/1O/w1cDnyilFU=";
+  $userID = "Uc16be047bd7242f5163bdf7c34331c6a";
 
 	// Webhook server
 	$remote_domain = "med.mahidol.ac.th";
