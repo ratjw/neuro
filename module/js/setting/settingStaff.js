@@ -1,9 +1,9 @@
 
 import { RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
 import { getSTAFFdivision, getLatestStart, getStaffOR } from "../setting/getStaff.js"
-import { saveStaff } from "../setting/saveStaff.js"
 import { getLatestKey, winHeight } from "../util/util.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
+import { getEditingStaff } from "../setting/getEditingStaff.js"
 
 export function settingStaff()
 {
