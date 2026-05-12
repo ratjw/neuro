@@ -4,18 +4,19 @@
 //	$message = isset($_POST['message']) ? $_POST['message'] : "";
 //	$image = isset($_POST['image']) ? $_POST['image'] : "";
 
+  $userID = "Uc16be047bd7242f5163bdf7c34331c6a";
+
   $input = json_decode(file_get_contents('php://input'), true);
 	$user = $input['user'];
-	$message = $input['message'];
+	$message = 'image';//$input['message'];
 	$image = $input['image'];
-
-	$message = $user . "\n" . $message;
+	$message = $userID . "," . $message;
    
-//	$line_api = 'https://notify-api.line.me/api/notify';
 	$line_api = "https://api.line.me/v2/bot/message/push";
-
-//	$line_token = 'jyaKhr5MuY9jBeWbEzk2OjhT9ucAzCY9Q8ei3ieEGac'; // my LINE
+	
+	$line_token = 'jyaKhr5MuY9jBeWbEzk2OjhT9ucAzCY9Q8ei3ieEGac'; // my LINE
 	$line_token = 'g5KNdPK7kU6DzaiEke19xDI8lPriN0d4E6FibCkzku2Cm1eKjJGrNPvt0METVy5Y09wS6lwrMFmD11tchvXv'; // my LINE
+  $line_token = "hUNVJKEFaDK+g5KNdPK7kU6DzaiEke19xDI8lPriN0d4E6FibCkzku2Cm1eKjJGrNPvt0METVy5Y09wS6lwrMFmD11tchvXv+u9hP1DTQUX81O75EOaErmUXjV60JMjlCW10JMfZRCJSb9vB14g7/AdB04t89/1O/w1cDnyilFU=";
 	$line_token1 = '2ItNh2j4Z1fIFCSWkZXBH4qtDYigXpl19ahsdWIR5pX'; // group LINE นิวโรศัลย์ รามา ปัจจุบัน
 	$line_token2 = 'KKVhc6ZVdAHqGQtL23U9kvfT502cjprMNNbRTH9NEll'; // group LINE Navigator
 	$line_token3 = 'GDcs3oGABywMlCJAxlwT3egmcEDlnfMoA8mQTADKLXh'; // group LINE Nerve monitoring

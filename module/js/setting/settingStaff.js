@@ -3,7 +3,7 @@ import { RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/cons
 import { getSTAFFdivision, getLatestStart, getStaffOR } from "../setting/getStaff.js"
 import { getLatestKey, winHeight } from "../util/util.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
-import { getEditingStaff } from "../setting/getEditingStaff.js"
+import { saveStaff } from "../setting/saveStaff.js"
 
 export function settingStaff()
 {
@@ -32,11 +32,10 @@ export function settingStaff()
 
   $dialogStaff.find(`td:nth-child(${ROLE+1})`).each(function() {
     let roletemp = roletemplate.content.cloneNode(true)
-    let val = this.innerHTML
     this.innerHTML = ""
     this.appendChild(roletemp)
     let role = this.querySelector("select")
-    role.value = val
+    role.value = this.dataset.val
   })
 
   actionIcons.innerHTML = actionTemplate.innerHTML
@@ -141,4 +140,28 @@ function activateButtons($tbody)
   $saveStaff.on("click", () => getEditingStaff($tbody))
   $cancelStaff.off("click")
   $cancelStaff.on("click", settingStaff)
+}
+
+function getEditingStaff($tbody)
+{
+  $tbody.find('tr').each(function(i, row) {
+    let save = false
+    $(row).find('td').each(function(j, cell) {
+      let selected = cell.querySelector("select")
+      let input = cell.querySelector('input')
+      if (selected) {
+        cell.textContent = selected.value
+        if (cell.textContent !== cell.dataset.val)
+          save = true
+      } else if (input && input.value) {
+        cell.textContent = input.value
+        save = true
+      } else {
+        if (cell.textContent !== cell.dataset.val) {
+          save = true
+        }
+      }
+    })
+    if (save) saveStaff(row)
+  })
 }
