@@ -151,15 +151,11 @@ function getEditingStaff($tbody)
       let input = cell.querySelector('input')
       if (selected) {
         cell.textContent = selected.value
-        if (cell.textContent !== cell.dataset.val)
-          save = true
       } else if (input && input.value) {
         cell.textContent = input.value
+      }
+      if (cell.textContent !== cell.dataset.val) {
         save = true
-      } else {
-        if (cell.textContent !== cell.dataset.val) {
-          save = true
-        }
       }
     })
     if (save) saveStaff(row)
