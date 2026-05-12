@@ -3,7 +3,7 @@ import { RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/cons
 import { getSTAFFdivision, getLatestStart, getStaffOR } from "../setting/getStaff.js"
 import { getLatestKey, winHeight } from "../util/util.js"
 import { obj_2_ISO, th_2_ISO } from "../util/date.js"
-import { getEditingStaff } from "../setting/getEditingStaff.js"
+import { saveStaff } from "../setting/saveStaff.js"
 
 export function settingStaff()
 {
@@ -32,11 +32,11 @@ export function settingStaff()
 
   $dialogStaff.find(`td:nth-child(${ROLE+1})`).each(function() {
     let roletemp = roletemplate.content.cloneNode(true)
-    let val = this.innerHTML
+    this.dataset.oldrole = this.innerHTML
     this.innerHTML = ""
     this.appendChild(roletemp)
     let role = this.querySelector("select")
-    role.value = val
+    role.value = this.dataset.oldrole
   })
 
   actionIcons.innerHTML = actionTemplate.innerHTML
@@ -151,32 +151,18 @@ function getEditingStaff($tbody)
       let selected = cell.querySelector("select")
       let input = cell.querySelector('input')
       if (selected) {
-        if (getSelected(selected, cell)) save = true
-      } else if (input) {
-        if (getInput(input, cell)) save = true
+        cell.textContent = selected.value
+        if (cell.textContent !== cell.dataset.oldrole)
+          save = true
+      } else if (input && input.value) {
+        cell.textContent = input.value
+        save = true
       } else {
-        if (cell.textContent !== cell.dataset.val) save = true
+        if (cell.textContent !== cell.dataset.val) {
+          save = true
+        }
       }
     })
     if (save) saveStaff(row)
   })
-}
-
-function getSelected(selected, cell)
-{
-  let index = selected.selectedIndex 
-  if (index > -1) {
-    if (selected[index].text !== cell.dataset.val) {
-      cell.innerHTML = selected[index].text
-      return true
-    }
-  }
-}
-
-function getInput(input, cell)
-{
-  if (input.value !== cell.dataset.val) {
-    cell.innerHTML = input.value
-    return true
-  }
 }
