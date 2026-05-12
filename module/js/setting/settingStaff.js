@@ -32,11 +32,10 @@ export function settingStaff()
 
   $dialogStaff.find(`td:nth-child(${ROLE+1})`).each(function() {
     let roletemp = roletemplate.content.cloneNode(true)
-    this.dataset.oldrole = this.innerHTML
     this.innerHTML = ""
     this.appendChild(roletemp)
     let role = this.querySelector("select")
-    role.value = this.dataset.oldrole
+    role.value = this.dataset.val
   })
 
   actionIcons.innerHTML = actionTemplate.innerHTML
@@ -152,7 +151,7 @@ function getEditingStaff($tbody)
       let input = cell.querySelector('input')
       if (selected) {
         cell.textContent = selected.value
-        if (cell.textContent !== cell.dataset.oldrole)
+        if (cell.textContent !== cell.dataset.val)
           save = true
       } else if (input && input.value) {
         cell.textContent = input.value
