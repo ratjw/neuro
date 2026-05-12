@@ -147,7 +147,7 @@ function getEditingStaff($tbody)
 {
   $tbody.find('tr').each(function(i, row) {
     let save = false
-    $(row).find('td').each(function(i, cell) {
+    $(row).find('td').each(function(j, cell) {
       let selected = cell.querySelector("select")
       let input = cell.querySelector('input')
       if (selected) {
