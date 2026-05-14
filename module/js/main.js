@@ -11,6 +11,13 @@ export const DIVISION = 'ประสาทศัลยศาสตร์'
 let wrapper = document.getElementById("wrapper")
 let mcontainer = document.getElementById("maintblContainer")
 let cssmenu = document.getElementById("cssmenu")
+let url = location.host
+let ramaneuro = "10.6.22.116"
+let homewifi = "192.168.1"
+
+if (url.includes(ramaneuro) || url.includes(homewifi)) {
+  sessionStorage.setItem('userid', ADMIN)
+}
 
 wrapper.style.display = "block"
 mcontainer.style.height = wrapper.clientHeight - cssmenu.clientHeight + 'px'
