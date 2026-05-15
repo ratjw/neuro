@@ -13,9 +13,9 @@ let mcontainer = document.getElementById("maintblContainer")
 let cssmenu = document.getElementById("cssmenu")
 let url = location.host
 let ramaneuro = "10.6.22.116"
-let homewifi = "192.168.1"
+let homehub = "192.168.1"
 
-if (url.includes(ramaneuro) || url.includes(homewifi)) {
+if (url.includes(ramaneuro) || url.includes(homehub)) {
   sessionStorage.setItem('userid', ADMIN)
 }
 
