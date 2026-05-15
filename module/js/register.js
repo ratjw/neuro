@@ -9,7 +9,7 @@ const check = () => {
 }
 
 const registerServiceWorker = async () => {
-  const swRegistration = await navigator.serviceWorker.register('js/serviceWorker.js')
+  const swRegistration = await navigator.serviceWorker.register('js/service-worker.js')
   return swRegistration
 }
 
