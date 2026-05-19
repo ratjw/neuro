@@ -1,5 +1,4 @@
 
-import { register } from "../register.js"
 import { editcellEvent } from "../control/edit.js"
 import { resetTimer } from "../control/timer.js"
 import { setClickAll } from "../control/setClickAll.js"
@@ -28,7 +27,6 @@ export function start() {
   .catch(error => alert(error + "\n\n" + error.stack))
 
 	document.oncontextmenu = contextmenu
-	register()
 }
 
 // Success return from server
