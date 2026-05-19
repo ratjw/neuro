@@ -9,13 +9,11 @@
 <link href="css/dialog.css" rel="stylesheet">
 <link href="css/menu.css" rel="stylesheet">
 <link href="css/jquery-ui.min.css" rel="stylesheet">
+<link href="../manifest.json" rel="manifest">
 
-<script src="js/html2canvas.min.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery.mousewheel.min.js"></script>
 <script src="js/jquery-ui.min.js"></script>
-<script src="js/chart.min.js"></script>
-<script src="js/colResizable-1.6.min.js"></script>
 <script src="js/main.js" type="module"></script>
 
 </HEAD>
@@ -31,20 +29,80 @@
     <li>
      <a id="clickserviceReview">Service Review</a>
     </li>
-    <li class="hassub">
-     <a>Search</a>
-     <ul class="w170">
-      <li class="w170">
-       <a id="clicksearchCases">Search Cases by Words</a>
-      </li>
-      <li class="w170">
-       <a id="clickcaseAll">All Saved Cases</a>
-      </li>
-      <li class="w170">
-       <a id="clickallDeletedCases">All Deleted Cases</a>
-      </li>
-     </ul>
-    </li>
+       <li class="hassub">
+         <a>Search</a>
+         <ul class="w250">
+          <li class="w250">
+            <p>Search Cases by Words</p>
+            <ul class="w200">
+              <li class="w200">
+               <p class="padleft10">Search in All Time</p>
+               <ul class="w150">
+                <li class="w150">
+                 <a id="clicksearch2Screen">Show on Screen</a>
+                </li>
+                <li class="w150">
+                 <a id="clicksearch2Excel">Save to Excel file</a>
+                </li>
+                <li class="w150">
+                 <a id="clicksearch2CSV">Save to CSV files</a>
+                </li>
+               </ul>
+              </li>
+              <li class="w200">
+               <p class="padleft10">Search in Time Interval</p>
+               <ul class="w150">
+                <li class="w150">
+                 <a id="clicksearchPeriod2Screen">Show on Screen</a>
+                </li>
+                <li class="w150">
+                 <a id="clicksearchPeriod2Excel">Save to Excel file</a>
+                </li>
+                <li class="w150">
+                 <a id="clicksearchPeriod2CSV">Save to CSV files</a>
+                </li>
+               </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="w250">
+            <p>Search All Saved Cases</p>
+            <ul class="w200">
+              <li class="w200">
+               <p class="padleft10">Search in All Time</p>
+               <ul class="w150">
+                <li class="w150">
+                 <a id="clickall2Screen">Show on Screen</a>
+                </li>
+                <li class="w150">
+                 <a id="clickall2Excel">Save to Excel file</a>
+                </li>
+                <li class="w150">
+                 <a id="clickall2CSV">Save to CSV files</a>
+                </li>
+               </ul>
+              </li>
+              <li class="w200">
+               <p class="padleft10">Search in Time Interval</p>
+               <ul class="w150">
+                <li class="w150">
+                 <a id="clickallPeriod2Screen">Show on Screen</a>
+                </li>
+                <li class="w150">
+                 <a id="clickallPeriod2Excel">Save to Excel file</a>
+                </li>
+                <li class="w150">
+                 <a id="clickallPeriod2CSV">Save to CSV files</a>
+                </li>
+               </ul>
+              </li>
+            </ul>
+          </li>
+          <li class="w250">
+            <a id="clickallDeletedCases">Show Deleted Cases last 3 months</a>
+          </li>
+        </ul>
+       </li>
     <li id="history">
      <a id="clickeditHistory">Retrace</a>
     </li>
@@ -73,23 +131,17 @@
       </li>
      </ul>
     </li>
-    <li id="submenu" class="floatright">
+    <li id="setholiday">
+      <a>Holiday</a>
+    </li>
+    <li id="submenu">
      <a>Settings</a>
      <ul class="right">
-      <li id="clickresResearch">
-        <a>Resident Research</a>
-      </li>
-      <li id="clickSetResident">
-        <a>Resident Setting</a>
-      </li>
       <li id="clickSetStaff">
         <a>Staff Setting</a>
       </li>
-      <li id="clickSetHoliday">
-        <a>Religious Holiday Setting</a>
-      </li>
       <li id="clickSetGovtday">
-        <a>Govt. Holiday Setting</a>
+        <a>วันหยุดปฏิทินสากล</a>
       </li>
       <li id="clickreadme">
         <a>Readme</a>
@@ -106,7 +158,6 @@
      <tbody>
       <tr>
        <th>Date</th>
-       <th>OR</th>
        <th>Rm</th>
        <th>Time</th>
        <th>№</th>
@@ -115,7 +166,6 @@
        <th>Patient</th>
        <th>Diagnosis</th>
        <th>Treatment</th>
-       <th>Req</th>
        <th>Equipment</th>
        <th>Contact & Notes</th>
       </tr>
@@ -134,7 +184,6 @@
      <tbody>
       <tr>
        <th>Date</th>
-       <th>OR</th>
        <th>Rm</th>
        <th>Time</th>
        <th>№</th>
@@ -143,7 +192,6 @@
        <th>Patient</th>
        <th>Diagnosis</th>
        <th>Treatment</th>
-       <th>Req</th>
        <th>Equipment</th>
        <th>Contact</th>
       </tr>
@@ -158,8 +206,6 @@
 <table id="tblcells">
  <tbody>
   <tr>
-    <td></td>
-    <td></td>
     <td></td>
     <td></td>
     <td></td>
@@ -477,59 +523,42 @@
 </table>
 
 <div id="dialogInput" class="dialogBox">
- <span class="w40">HN:</span><input class="w70" type="text" name="hn">
- <br>
- <br>
- <span class="w40">ชื่อ:</span><input class="w100" type="text" name="name">
- <span class="w10"></span>
- <span class="w60">นามสกุล:</span><input class="w150" type="text" name="surname">
- <br>
- <br>
- <span class="w40">Staff:</span><input class="w100" type="text" name="staffname">
- <br>
- <br>
- <div>
-   <input type="text" name="others" placeholder="Dx, Rx, Adm & Final Status">
- </div>
+  <div id="searchpart">
+    <span class="w40">HN:</span><input class="w70" type="text" name="hn">
+    <br>
+    <br>
+    <span class="w40">ชื่อ:</span><input class="w100" type="text" name="name">
+    <span class="w10"></span>
+    <span class="w60">นามสกุล:</span><input class="w150" type="text" name="surname">
+    <br>
+    <br>
+    <span class="w40">Staff:</span><input class="w100" type="text" name="staffname">
+    <br>
+    <br>
+    <span class="w40">หาคำ: </span>
+      <input type="text" name="others" placeholder="Dx, Rx, Adm & Final Status">
+    
+  </div>
+  <div id="periodpart">
+    <br>
+    <br>
+    <br>
+    <span class="w40">ตั้งแต่:</span>
+    <input readonly="readonly" placeholder="date begin"
+       maxlength="10" name="datebegin" id="datebegin" required>
+    <span class="w20"></span>
+    <span class="w40">จนถึง:</span>
+    <input readonly="readonly" placeholder="date end"
+       maxlength="10" name="dateend" id="dateend" required>
+    <input id="dateFrom" hidden>
+    <input id="dateTo" hidden>
+  </div>
+  <br>
+  <br>
+  <span title="ค้นหา" class="floatright">
+              ค้นหา <img class="middle" src="css/pic/general/Find.png"/>
+  </span>
 </div>
-
-<div id="dialogFind">
-  <table id="findtbl">
-    <thead>
-     <tr>
-      <th>Date</th>
-      <th>Staff</th>
-      <th>HN</th>
-      <th>Patient</th>
-      <th>Diagnosis</th>
-      <th>Treatment</th>
-      <th>Equipment</th>
-      <th>Admission Status</th>
-      <th>Final Status</th>
-      <th>Contact</th>
-     </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-</div>
-
-<table id="findcells">
-  <tbody>
-   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-   </tr>
-  </tbody>
-</table>
 
 <div id="dialogStaff">
  <table id="stafftbl">
@@ -537,9 +566,10 @@
    <tr>
     <th rowspan="2">Staff Name</th>
     <th rowspan="2">Rama ID</th>
+    <th rowspan="2">Role</th>
     <th rowspan="2">Oncall</th>
     <th rowspan="2">Start Oncall</th>
-    <th colspan="2"><small>Leave of Absence<br>(Skip Oncall)</small></th>
+    <th colspan="2">ช่วงไม่อยู่เวร</th>
    </tr>
    <tr>
     <th>Begin</th>
@@ -560,6 +590,7 @@
    <tr>
     <td contentEditable></td>
     <td contentEditable></td>
+    <td></td>
     <td contentEditable></td>
     <td></td>
     <td></td>
@@ -567,6 +598,19 @@
    </tr>
   </tbody>
 </table>
+
+<template id="roletemplate">
+  <select>
+    <option></option>
+    <option>อาจารย์แพทย์เต็มเวลา</option>
+    <option>อาจารย์แพทย์ไม่เต็มเวลา</option>
+    <option>อาจารย์พิเศษ</option>
+    <option>แพทย์ประจำบ้าน</option>
+    <option>แพทย์ประจำบ้านต่อยอด</option>
+    <option>นักเทคโนโลยี</option>
+    <option>เลขานุการ</option>
+  </select>
+</template>
 
 <template id="actionTemplate">
  <button id="saveStaff">
@@ -577,53 +621,7 @@
   <span><img src="css/pic/general/cancel.png"/></span>
   <span>Cancel</span>
  </button>
-</template>
-
-<div id="dialogResident">
- <table id="residenttbl">
-  <thead>
-   <tr>
-    <th>Rama ID</th>
-    <th>Resident Name</th>
-    <th>ชั้นปี</th>
-    <th>Upd Del</th>
-   </tr>
-  </thead>
-  <tbody>
-  </tbody>
- </table>
-</div>
-
-<table id="residentcells">
-  <tbody>
-   <tr>
-    <td contentEditable></td>
-    <td contentEditable></td>
-    <td contentEditable></td>
-    <td></td>
-   </tr>
-  </tbody>
-</table>
-
-<div id="dialogResResearch">
- <canvas id="chartjs"></canvas>
-</div>
-
-<div id="dialogSlider">
-  <div class="vline"></div>
-  <table id="slidertbl"></table>
-  <span id="begindate"></span>
-  <span id="enddate"></span>
-</div>
-<template id="slidertemplate">
-   <tr contenteditable>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-   </tr>
+ <span>* เลือกช่องว่างตรง Role เพื่อลบชื่อนี้ออก</span>
 </template>
 
 <div id="dialogHoliday">
@@ -700,8 +698,6 @@
 <div id="dialogAlert"></div>
 
 <div id="editcell"></div>
-
-<div id="dialogLab" class="dialogBox"></div>
 
 <div id="dialogEquip" class="dialogBox"></div>
 
