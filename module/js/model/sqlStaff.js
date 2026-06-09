@@ -99,7 +99,7 @@ function getOncallNum(cell, field) {
 function getDateContent(ramaid, cell, field)
 {
   const newinput = cell.querySelector('input')
-  const newcontent = newinput ? newinput.value : ''
+  const newcontent = cell.innerText//newinput ? newinput.value : ''
   const oldcontent = cell.dataset.val
   const notnew = oldcontent === newcontent
 
