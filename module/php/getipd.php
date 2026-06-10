@@ -8,7 +8,7 @@ require_once "getSql.php";
 	$from = $input->from;
 	$to = $input->to;
 
-	$personnel = $mysqli->query ("SELECT * FROM personnel WHERE profile->'$.role'='staff';");
+	$personnel = $mysqli->execute_query ("SELECT * FROM personnel WHERE profile->'$.role'='staff';");
 
 	if (!$personnel) { return; }
 
@@ -20,13 +20,13 @@ require_once "getSql.php";
     $neuroStaffs[] = $staff->ramaid;
   }
 
-	$allcases = $mysqli->query ("SELECT hn, admit, discharge, qn
+	$allcases = $mysqli->execute_query ("SELECT hn, admit, discharge, qn
 		FROM book
 		WHERE opdate BETWEEN '$from' AND '$to';");
 
 	if (!$allcases) { return; }
 
-	$allcases = $mysqli->query ("SELECT hn, admit, discharge, qn
+	$allcases = $mysqli->execute_query ("SELECT hn, admit, discharge, qn
 		FROM book
 		WHERE opdate BETWEEN '$from' AND '$to';");
 
@@ -61,7 +61,7 @@ require_once "getSql.php";
 				$discharge = "discharge='$newDischarge',";
 		}
 		if ($admit || $discharge) {
-			$mysqli->query("UPDATE book SET $admit$discharge editor='getipd' WHERE qn=$qn;");
+			$mysqli->execute_query("UPDATE book SET $admit$discharge editor='getipd' WHERE qn=$qn;");
 			$update = true;
 		}
 	}

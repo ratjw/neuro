@@ -50,7 +50,7 @@ function getData($mysqli, $sql, $others)
 					 WHERE deleted=0 $sqlx
 					 ORDER BY opdate;";
 
-	if (!$result = $mysqli->query ($sqls)) {
+	if (!$result = $mysqli->execute_query ($sqls)) {
 		return $mysqli->error;
 	}
 
@@ -107,7 +107,7 @@ function search($mysqli, $sql)
 	$data = array();
   $sqls = "SELECT * FROM book WHERE $sql ORDER BY opdate;";
 
-	if (!$result = $mysqli->query ($sqls)) {
+	if (!$result = $mysqli->execute_query ($sqls)) {
 		return $mysqli->error;
 	}
 

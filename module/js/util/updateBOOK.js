@@ -29,7 +29,7 @@ export function setSTAFF(staff) { STAFF = staff }
 
 // Save data got from server
 // Two main data for tables (BOOK, CONSULT) and a TIMESTAMP
-// QTIME = datetime of last fetching : $mysqli->query("SELECT now();")
+// QTIME = datetime of last fetching : $mysqli->execute_query("SELECT now();")
 // refillDatedCases first to see the difference
 export function updateBOOK(response) {
   if (BOOK.length) {

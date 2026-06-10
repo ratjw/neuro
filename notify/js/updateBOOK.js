@@ -26,7 +26,7 @@ let table = document.getElementById('maintbl')
 
 // Save data got from server
 // Two main data for tables (BOOK, CONSULT) and a TIMESTAMP
-// QTIME = datetime of last fetching : $mysqli->query("SELECT now();")
+// QTIME = datetime of last fetching : $mysqli->execute_query("SELECT now();")
 export function updateBOOK(response) {
   if (response.BOOK) { BOOK = response.BOOK }
   if (response.CONSULT) { CONSULT = response.CONSULT }

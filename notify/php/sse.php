@@ -17,7 +17,7 @@ while (!connection_aborted()) {
 
   $sql = "SELECT MAX(editdatetime) from bookhistory;";
 
-  if (!$result = $mysqli->query ($sql)) { break; }
+  if (!$result = $mysqli->execute_query ($sql)) { break; }
   $rowi = $result->fetch_row();
   $newtimestamp = $rowi[0];
 

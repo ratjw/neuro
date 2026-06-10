@@ -24,14 +24,14 @@ function book($mysqli)
           // The one with no oproom will be the last, sorted by ASC
           // If no oproom, then will not sort on optime
 
-  if (!$result = $mysqli->query ($sql)) {
+  if (!$result = $mysqli->execute_query ($sql)) {
     return $mysqli->error;
   }
   while ($rowi = $result->fetch_assoc()) {
     $book[] = $rowi;
   }
   // current() = array.toString()
-  if ($result = $mysqli->query ("SELECT now();")) {
+  if ($result = $mysqli->execute_query ("SELECT now();")) {
     $time = current($result->fetch_row());
   }
 

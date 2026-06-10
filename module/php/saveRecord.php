@@ -15,7 +15,7 @@ function saveRecord($mysqli, $record)
     $sql = sqlInsert($record);
 	}
 
-	$query = $mysqli->query ($sql);
+	$query = $mysqli->execute_query ($sql);
 	if (!$query)
 		return $mysqli->error . $sql;
 	else

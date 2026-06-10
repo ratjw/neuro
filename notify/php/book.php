@@ -23,7 +23,7 @@ function book($mysqli, $begindate, $enddate)
             casenum is null,casenum, optime='',optime, waitnum;";
             // The one with blank/null will be the last, sorted by ASC
 
-  if (!$result = $mysqli->query ($sql)) {
+  if (!$result = $mysqli->execute_query ($sql)) {
     return $mysqli->error;
   }
   while ($rowi = $result->fetch_assoc()) {

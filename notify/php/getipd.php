@@ -11,7 +11,7 @@ $neuroStaffs = [
 	$to = $_POST["to"];
 	$sql = $_POST["sql"];
 
-	$result = $mysqli->query ("SELECT hn, admit, discharge, qn
+	$result = $mysqli->execute_query ("SELECT hn, admit, discharge, qn
 		FROM book
 		WHERE opdate BETWEEN '$from' AND '$to';");
 
@@ -47,7 +47,7 @@ $neuroStaffs = [
 				$discharge = "discharge='$newDischarge',";
 		}
 		if ($admit || $discharge) {
-			$mysqli->query("UPDATE book SET $admit$discharge editor='getipd' WHERE qn=$qn;");
+			$mysqli->execute_query("UPDATE book SET $admit$discharge editor='getipd' WHERE qn=$qn;");
 			$update = true;
 		}
 	}

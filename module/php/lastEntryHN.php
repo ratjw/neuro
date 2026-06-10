@@ -7,7 +7,7 @@ function lastEntryHN($mysqli, $input)
           FROM book
           WHERE hn = '$hn' AND deleted=0 AND opdate<CURDATE()
           ORDER BY opdate DESC;";
-	$query = $mysqli->query ($sql);
+	$query = $mysqli->execute_query ($sql);
 	if ($query) {
     $oldpatient = $query->fetch_assoc();
     if (!$input[staffname]) { $input[staffname] = $oldpatient[staffname]; }

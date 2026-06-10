@@ -26,7 +26,7 @@ function book($mysqli)
             casenum is null,casenum, optime='',optime, waitnum;";
             // The one with blank/null will be the last, sorted by ASC
 
-  if (!$result = $mysqli->query ($sql)) {
+  if (!$result = $mysqli->execute_query ($sql)) {
     return $mysqli->error;
   }
   while ($rowi = $result->fetch_assoc()) {
@@ -42,7 +42,7 @@ function book($mysqli)
           // Consult cases have negative waitnum.
           // Greater waitnum (less negative) are placed first, sorted by DESC
 
-  if (!$result = $mysqli->query ($sql)) {
+  if (!$result = $mysqli->execute_query ($sql)) {
     return $mysqli->error;
   }
   while ($rowi = $result->fetch_assoc()) {
@@ -50,7 +50,7 @@ function book($mysqli)
   }
 
   // current() = array.toString()
-  if ($result = $mysqli->query ("SELECT now();")) {
+  if ($result = $mysqli->execute_query ("SELECT now();")) {
     $time = current($result->fetch_row());
   }
 
