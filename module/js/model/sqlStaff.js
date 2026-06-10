@@ -13,6 +13,7 @@ export function sqlSaveStaff(row)
 
   if (!sql) { return "Incomplete Entry" }
 
+  postData(MYSQLIPHP, "SET SQL_SAFE_UPDATES = 0;")
   return postData(MYSQLIPHP, sql)
 }
 
@@ -99,14 +100,14 @@ function getOncallNum(cell, field) {
 function getDateContent(ramaid, cell, field)
 {
   const newinput = cell.querySelector('input')
-  const newcontent = newinput ? newinput.value : ''
+  const newcontent = cell.innerText//newinput ? newinput.value : ''
   const oldcontent = cell.dataset.val
   const notnew = oldcontent === newcontent
 
   if (notnew) {
     return ''
   }
-
+/*
   const fieldExist = checkFieldExist(ramaid, field)
   const now = Date.now()
 
@@ -120,7 +121,8 @@ function getDateContent(ramaid, cell, field)
   if (remove) {
     return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
   }
-  return `'$.${field}."${now}"',"${newcontent}"`
+*/
+  return `'$.${field}',"${newcontent}"`
 }
 
 function getSkipContent(ramaid, cells, field)
