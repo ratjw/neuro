@@ -29,7 +29,7 @@
     }
 
     echo "<script>localStorage.setItem('role', '$neurosurgery');</script>";
-		$browserDoctor = "location:module";
+		$browserDoctor = "location:module/index.html";
 		$browserNurse = "location:nurse/nurse.html";
     if ($neurosurgery === "N") {
       header($browserNurse);

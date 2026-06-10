@@ -8,7 +8,7 @@ require_once "saveRecord.php";
 
   $input = json_decode(file_get_contents('php://input'), true);
   $record = record($input);
-  $result = getPatientByName($input[patientname]);
+  $result = getPatientByName($input["patientname"]);
 
   // More than one name found
   if (!array_key_exists("initial_name", $result)) {
@@ -16,7 +16,7 @@ require_once "saveRecord.php";
   }
 
   // Name not found
-  if (empty($result[initial_name])) {
+  if (empty($result["initial_name"])) {
     exit("ไม่มีผู้ป่วยชื่อนี้");
   }
 

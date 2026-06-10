@@ -13,7 +13,6 @@ export function sqlSaveStaff(row)
 
   if (!sql) { return "Incomplete Entry" }
 
-  postData(MYSQLIPHP, "SET SQL_SAFE_UPDATES = 0;")
   return postData(MYSQLIPHP, sql)
 }
 
@@ -120,8 +119,7 @@ function getDateContent(ramaid, cell, field)
 
   if (remove) {
     return key ? `JSON_REMOVE'$.${field}."${key}"'` : ''
-  }
-*/
+  }*/
   return `'$.${field}',"${newcontent}"`
 }
 

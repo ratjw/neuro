@@ -96,7 +96,7 @@ function returnService($mysqli, $service)
     return $return;
 	} else {
     $data = book($mysqli);
-    $data[SERVICE] = getService($mysqli, $from, $to);
+    $data["SERVICE"] = getService($mysqli, $from, $to);
     return json_encode($data);
   }
 }

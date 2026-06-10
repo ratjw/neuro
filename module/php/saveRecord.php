@@ -9,7 +9,7 @@ function saveRecord($mysqli, $record)
     $record[$value] = $mysqli -> real_escape_string($record[$value]);
   }
 
-  if ($record[qn]) {
+  if ($record["qn"]) {
     $sql = sqlUpdate($record);
 	} else {
     $sql = sqlInsert($record);

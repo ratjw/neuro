@@ -13,7 +13,7 @@ require_once "getSql.php";
 	if (!$personnel) { return; }
 
 	while ($rowi = $personnel->fetch_assoc()) {
-		$staffs[] = json_decode($rowi[profile]);
+		$staffs[] = json_decode($rowi["profile"]);
 	}
 
 	foreach ($staffs as $staff) {
@@ -38,19 +38,19 @@ require_once "getSql.php";
 
 	$update = false;
 	foreach ($cases as $eachcase)	{
-		$hn = $eachcase[hn];
-		$qn = $eachcase[qn];
+		$hn = $eachcase["hn"];
+		$qn = $eachcase["qn"];
 
 		$ipd = getipd($hn);
 
-    $staff = $ipd[attender];
+    $staff = $ipd["attender"];
     if (!in_array($staff, $neuroStaffs)) { continue; }
 
-		$oldAdmit = $eachcase[admit];
-		$oldDischarge = $eachcase[discharge];
+		$oldAdmit = $eachcase["admit"];
+		$oldDischarge = $eachcase["discharge"];
 
-		$newAdmit = getIPDdate($ipd[effectivestartdate]);
-		$newDischarge = getIPDdate($ipd[effectiveenddate]);
+		$newAdmit = getIPDdate($ipd["effectivestartdate"]);
+		$newDischarge = getIPDdate($ipd["effectiveenddate"]);
 
 		$admit = "";
 		$discharge = "";

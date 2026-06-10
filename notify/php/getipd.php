@@ -32,11 +32,11 @@ $neuroStaffs = [
     $staff = $ipd[attender];
     if (!in_array($staff, $neuroStaffs)) { continue; }
 
-		$oldAdmit = $eachcase[admit];
-		$oldDischarge = $eachcase[discharge];
+		$oldAdmit = $eachcase["admit"];
+		$oldDischarge = $eachcase["discharge"];
 
-		$newAdmit = getIPDdate($ipd[effectivestartdate]);
-		$newDischarge = getIPDdate($ipd[effectiveenddate]);
+		$newAdmit = getIPDdate($ipd["effectivestartdate"]);
+		$newDischarge = getIPDdate($ipd["effectiveenddate"]);
 
 		$admit = "";
 		$discharge = "";
