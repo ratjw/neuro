@@ -10,10 +10,10 @@ function lastEntryHN($mysqli, $input)
 	$query = $mysqli->execute_query ($sql);
 	if ($query) {
     $oldpatient = $query->fetch_assoc();
-    if (!$input["staffname"]) { $input["staffname"] = $oldpatient["staffname"]; }
-    if (!$input["diagnosis"]) { $input["diagnosis"] = $oldpatient["diagnosis"]; }
-    if (!$input["treatment"]) { $input["treatment"] = $oldpatient["treatment"]; }
-    if (!$input["contact"]) { $input["contact"] = $oldpatient["contact"]; }
+    if (!(empty($input["staffname"]))) { $input["staffname"] = $oldpatient["staffname"]; }
+    if (!(empty($input["diagnosis"]))) { $input["diagnosis"] = $oldpatient["diagnosis"]; }
+    if (!(empty($input["treatment"]))) { $input["treatment"] = $oldpatient["treatment"]; }
+    if (!(empty($input["contact"]))) { $input["contact"] = $oldpatient["contact"]; }
   }
 
   return $input;

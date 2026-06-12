@@ -105,29 +105,24 @@ function multiquery($mysqli, $sql)
 {
 	$rowi = array();
 	$data = array();
-  try {
-    if ($mysqli->multi_query($sql)) {
-      do {
-        // This will be skipped when no result, but no error
-        // (success INSERT, UPDATE)
-        if ($result = $mysqli->store_result()) {
-          while ($rowi = $result->fetch_assoc()) {
-            $data[] = $rowi;
-          }
-        }
-        // no more query
-        if (!$mysqli->more_results()) {
-          return $data;
-        }
-      // next query
-      } while ($mysqli->next_result());
-    }
-    // handle failed first query
-    if ($mysqli->errno) {
-      return 'DBfailed first query ' . $sql . " \n" . $mysqli->error;
-    }
-  } catch (mysqli_sql_exception $e) {
-      // Catch errors safely without exposing credentials
-      echo "Database Error: " . $e->getMessage();
-  }
+	if ($mysqli->multi_query($sql)) {
+		do {
+			// This will be skipped when no result, but no error
+      // (success INSERT, UPDATE)
+			if ($result = $mysqli->store_result()) {
+				while ($rowi = $result->fetch_assoc()) {
+					$data[] = $rowi;
+				}
+			}
+			// no more query
+			if (!$mysqli->more_results()) {
+				return $data;
+			}
+		// next query
+		} while ($mysqli->next_result());
+	}
+	// handle failed first query
+	if ($mysqli->errno) {
+		return 'DBfailed first query ' . $sql . " \n" . $mysqli->error;
+	}
 }
