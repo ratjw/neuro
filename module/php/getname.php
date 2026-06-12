@@ -21,7 +21,7 @@ require_once "saveRecord.php";
   }
 
   // Only one name found
-  $merge = merge($input, $result);
+  $merge = merge($record, $result);
 
   $lastrecord = lastEntryHN($mysqli, $merge);
 
