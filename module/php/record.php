@@ -6,7 +6,7 @@ function record($input)
     "opdate" => date("Y-m-d"),
     "staffname" => "",
     "hn" => "1234567",
-    "patientname" => "สมหมาย หล",
+    "patient" => "สมหมาย หล",
     "initial_name" => "Mr.",
     "first_name" => "Name",
     "last_name" => "Surname",
