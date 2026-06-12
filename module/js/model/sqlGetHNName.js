@@ -7,9 +7,9 @@ import { USER } from "../main.js"
 const GETHN = "php/gethn.php"
 const GETNAME = "php/getname.php"
 
-export function sqlGetHN(pointed, content)
+export function sqlGetHN(pointed, hn)
 {
-  let sql = sqlRowData(pointed, content)
+  let sql = sqlRowData(pointed, hn)
 
   return postData(GETHN, sql)
 }
@@ -22,7 +22,7 @@ export function sqlGetName(pointed, patientname, signal)
 }
 
 // GETNAME will find last previous entry of this hn in DB
-function sqlRowData(pointed, hnval, patientnameval)
+function sqlRowData(pointed, hnval, patientname)
 {
   let row = pointed.closest('tr'),
     prevrow = row.previousElementSibling,
@@ -34,7 +34,7 @@ function sqlRowData(pointed, hnval, patientnameval)
     opdate: daterow,
     staffname: row.dataset.staffname,
     hn: hnval ? hnval : '',
-    patientname: patientnameval ? patientnameval : '',
+    patient: patientname ? patientname : '',
     diagnosis: row.dataset.diagnosis,
     treatment: row.dataset.treatment,
     contact: row.dataset.contact,
