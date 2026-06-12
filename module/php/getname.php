@@ -8,7 +8,7 @@ require_once "saveRecord.php";
 
   $input = json_decode(file_get_contents('php://input'), true);
   $record = record($input);
-  $result = getPatientByName($input["patientname"]);
+  $result = getPatientByName($input["patient"]);
 
   // More than one name found
   if (!array_key_exists("initial_name", $result)) {
