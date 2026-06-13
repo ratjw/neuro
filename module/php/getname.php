@@ -11,12 +11,12 @@ require_once "saveRecord.php";
   $result = getPatientByName($input["patient"]);
 
   // More than one name found
-  if (!array_key_exists("initial_name", $result)) {
+  if (!array_key_exists("first_name", $result)) {
     exit(json_encode($result));
   }
 
   // Name not found
-  if (empty($result["initial_name"])) {
+  if (empty($result["first_name"])) {
     exit("ไม่มีผู้ป่วยชื่อนี้");
   }
 
