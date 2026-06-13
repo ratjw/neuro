@@ -21,7 +21,7 @@ export function savePATIENT(pointed)
       controller.abort()
       wrapper.style.cursor = 'default'
       Alert(patientname, 'มีรายชื่อมากเกินไป<br><br>ควรใส่ชื่อและนามสกุล ให้เจาะจงกว่านี้')
-    }, 10000)
+    }, 5000)
 
   wrapper.style.cursor = 'wait'
   sqlGetName(pointed, patientname, signal).then(response => {
