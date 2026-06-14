@@ -71,7 +71,7 @@ function showPatientNames(response, pointed, patientname)
     hide: 200,
     width: 'auto',
     height: ($dialogPatient.height() > maxHeight) ? maxHeight : 'auto',
-    close: function() { pointed.innerHTML = OLDCONTENT }
+//    close: function() { pointed.innerHTML = OLDCONTENT }
   })
 }
 
