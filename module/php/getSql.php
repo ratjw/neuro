@@ -2,7 +2,7 @@
 function getService($mysqli, $from, $to)
 {
   $sql = "SELECT b.* FROM book b left join personnel p
-            ON JSON_CONTAINS(p.profile->'$.name',JSON_QUOTE(b.staffname))
+            ON p.profile->>'$.name' = b.staffname
           WHERE opdate BETWEEN '$from' AND '$to'
             AND deleted=0
             AND waitnum<>0
