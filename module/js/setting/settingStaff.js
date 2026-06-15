@@ -81,7 +81,7 @@ jQuery.fn.extend({
       } else {
         showCell(startCell, '')
       }
-      if (q.oncall) { inputDatepicker(startCell) }
+      if (q.oncall === 1) { inputDatepicker(startCell) }
     }
 
     // fill leave of absence (begin, end)
