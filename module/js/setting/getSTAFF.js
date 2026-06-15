@@ -31,6 +31,7 @@ export function getStaffOncall()
   const staffs = getPersondivision()
 
   return staffs.filter(staff => (staff.oncall > 0))
+                .sort(function (a, b) {return a.oncall - b.oncall})
 }
 
 // filter only staffs with exchange and strip to only staffname and exchange fields
