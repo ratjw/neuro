@@ -1,4 +1,5 @@
 
+import { PATIENT } from "../control/const.js"
 import { RAMAID, ROLE, ONCALL, START, SKIPBEGIN, SKIPEND } from "../setting/constSTAFF.js"
 import { getSTAFFdivision, getLatestStart, getStaffOR } from "../setting/getStaff.js"
 import { getLatestKey, winHeight } from "../util/util.js"
@@ -152,21 +153,33 @@ function getEditingStaff($tbody)
 
 function checkStartOncall($tbody)
 {
-  let table = $tbody[0]
-  let tr = table.querySelectorAll("tr")
-  let oldOncall = [...tr].map(r => r.querySelectorAll("td")[ONCALL].dataset.val)
-                          .filter(e => parseInt(e))
-  let newOncall = [...tr].map(r => r.querySelectorAll("td")[ONCALL].innerHTML)
-                          .filter(e => parseInt(e))
+  let tr = $tbody[0].querySelectorAll("tr")
+  let oldOncall = [...tr].filter(r => r.querySelectorAll("td")[ONCALL].dataset.val)
+  let newOncall = [...tr].filter(r => r.querySelectorAll("td")[ONCALL].textContent)
 
-  if (oldOncall.length !== newOncall.length) {
-    reStartDate($tbody)
+  if (oldOncall.length === newOncall.length) return
+
+  const table = document.getElementById('maintbl'),
+    saturdayRows = Array.from(table.querySelectorAll("tr.Saturday"))
+  const today = new Date().toISOString().split('T')[0],
+    priorSaturdayRows = [...saturdayRows].filter(e => 
+      e.dataset.opdate < today
+    )
+  const startStaff = getLatestStart(),
+      oncallStaff = startStaff.name,
+      oncalldate = startStaff.start
+  const lastprior = [...priorSaturdayRows].reverse().find(e => 
+      e.querySelectorAll("td")[PATIENT].dataset.consult === oncallStaff
+    ),
+    lastpriordate = lastprior.dataset.opdate
+
+  if (oncalldate < lastpriordate) {
+    const startStaffTR = [...tr].find(
+      e => e.querySelectorAll("td")[ONCALL].innerHTML === "1"
+    )
+
+    startStaffTR.cells[START].innerHTML = lastpriordate
   }
-}
-
-function reStartDate($tbody)
-{
-  
 }
 
 function saveStaffTable($tbody)
