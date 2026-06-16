@@ -67,6 +67,7 @@ jQuery.fn.extend({
       q.ramaid || "",
       q.role || "",
       q.oncall === 0 ? q.oncall : (q.oncall || "")
+      // show "0"
     ].forEach((e, j) => {
       if (j < START) {
         showCell(cells[j], e)
@@ -104,7 +105,8 @@ jQuery.fn.extend({
 function showCell(cell, val, key)
 {
   cell.innerHTML = val
-  cell.dataset.val = val ?  val : (val || "")
+  cell.dataset.val = val === 0 ?  val : (val || "")
+                  // if blank, then not "0"
   if (key) { cell.dataset.key = key }
 }
 
@@ -144,6 +146,26 @@ function activateButtons($tbody)
 
 function getEditingStaff($tbody)
 {
+  checkStartOncall($tbody)
+  saveStaffTable($tbody)
+}
+
+function checkStartOncall($tbody)
+{
+  let table = $tbody[0]
+  let tr = table.querySelectorAll("tr")
+  let oldOncall = [...tr].map(r => r.querySelectorAll("td")[ONCALL].dataset.val)
+                          .filter(e => parseInt(e))
+  let newOncall = [...tr].map(r => r.querySelectorAll("td")[ONCALL].innerHTML)
+                          .filter(e => parseInt(e))
+
+  if (oldOncall.length === newOncall.length) {
+    return
+  }
+}
+
+function saveStaffTable($tbody)
+{
   $tbody.find('tr').each(function(i, row) {
     let save = false
     $(row).find('td').each(function(j, cell) {
@@ -158,6 +180,7 @@ function getEditingStaff($tbody)
         save = true
       }
     })
+    // save only the changed rows, one row at a time
     if (save) saveStaff(row)
   })
 }

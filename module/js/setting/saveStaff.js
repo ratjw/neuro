@@ -1,5 +1,5 @@
 
-import { sqlSaveStaff } from "../model/sqlStaff.js"
+import { sqlSaveStaff } from "../model/sqlSaveStaff.js"
 import { setSTAFF } from "../util/updateBOOK.js"
 import { htmlStafflist } from "../control/html.js"
 import { fillConsults } from "../view/fillConsults.js"
@@ -16,5 +16,6 @@ export async function saveStaff(row)
   } else {
     alert("saveStaff\n\n" + response)
   }
+
   settingStaff()
 }
