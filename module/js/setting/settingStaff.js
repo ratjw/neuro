@@ -159,9 +159,14 @@ function checkStartOncall($tbody)
   let newOncall = [...tr].map(r => r.querySelectorAll("td")[ONCALL].innerHTML)
                           .filter(e => parseInt(e))
 
-  if (oldOncall.length === newOncall.length) {
-    return
+  if (oldOncall.length !== newOncall.length) {
+    reStartDate($tbody)
   }
+}
+
+function reStartDate($tbody)
+{
+  
 }
 
 function saveStaffTable($tbody)
