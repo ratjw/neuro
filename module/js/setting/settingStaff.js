@@ -77,7 +77,7 @@ jQuery.fn.extend({
     const start = getLatestStart()
     if (start) {
       if (q.name === start.name) {
-        showCell(startCell, start.startDate, start.startKey)
+        showCell(startCell, start.startDate/*, start.startKey*/)
       } else {
         showCell(startCell, '')
       }
