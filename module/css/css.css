@@ -384,3 +384,25 @@ tr.Wednesday td:first-child::before { content: "พุธ "; }
 tr.Thursday td:first-child::before { content: "พฤหัส "; }
 tr.Friday td:first-child::before { content: "ศุกร์ "; }
 tr.Saturday td:first-child::before { content: "เสาร์ "; }
+
+.custom-tooltip {
+   position: absolute;
+   background-color: #e8f8f8;
+   color: #000000;
+   padding: 12px 16px;
+   border-radius: 6px;
+   font-size: 14px;
+   max-width: 200px;
+   z-index: 1000;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+   opacity: 0;
+   transform: translateY(-10px);
+   transition: all 0.2s ease-out;
+   pointer-events: none;
+   white-space: pre-wrap; /* Preserves line breaks */
+}
+
+.custom-tooltip.show {
+   opacity: 1;
+   transform: translateY(0);
+}

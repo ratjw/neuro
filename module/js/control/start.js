@@ -16,6 +16,7 @@ import { wrapperEvent } from "./startsub/wrapperEvent.js"
 import { documentEvent } from "./startsub/documentEvent.js"
 import { overrideJqueryUI } from "./startsub/overrideJqueryUI.js"
 import { contextmenu } from "./startsub/contextmenu.js"
+import { tooltip } from "./startsub/tooltip.js"
 
 // For staff & residents with login id / password from Get_staff_detail
 export function start() {
@@ -52,6 +53,7 @@ function success(response) {
   setClickAll()
   overrideJqueryUI()
   resetTimer()
+  tooltip()
 }
 
 // *** to do -> offline browsing by service worker ***
