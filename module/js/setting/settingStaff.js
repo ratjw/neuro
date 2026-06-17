@@ -159,14 +159,12 @@ function checkStartOncall($tbody)
 
   if (oldOncall.length === newOncall.length) return
 
-  const table = document.getElementById('maintbl'),
-    saturdayRows = Array.from(table.querySelectorAll("tr.Saturday"))
+  const table = document.getElementById('maintbl')
   const today = new Date().toISOString().split('T')[0],
-    priorSaturdayRows = [...saturdayRows].filter(e => e.dataset.opdate < today)
   const startStaff = getLatestStart(),
       oncallStaff = startStaff.name,
       oncalldate = startStaff.start
-  const lastprior = [...priorSaturdayRows].reverse().find(e => 
+  const lastprior = [...saturdayRows].reverse().find(e => 
       e.querySelectorAll("td")[PATIENT].dataset.consult === oncallStaff
     ),
     lastpriordate = lastprior.dataset.opdate
