@@ -161,6 +161,8 @@ function checkStartOncall($tbody)
 
   const table = document.getElementById('maintbl')
   const today = new Date().toISOString().split('T')[0],
+    trSat = table.querySelectorAll("tr.Saturday"),
+    saturdayRows = [...trSat].filter(e => e.dataset.opdate < today)
   const startStaff = getLatestStart(),
       oncallStaff = startStaff.name,
       oncalldate = startStaff.start
