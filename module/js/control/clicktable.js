@@ -57,6 +57,7 @@ export function savePreviousCell() {
     case DIAGNOSIS: saveContent(POINTER, "diagnosis", newcontent); break
     case TREATMENT: saveContent(POINTER, "treatment", newcontent); break
     case CONTACT: saveContent(POINTER, "contact", newcontent); break
+    default: null
   }
 }
 
@@ -84,5 +85,6 @@ export function editPresentCell(evt, pointing) {
     case TREATMENT: createEditcell(pointing); break
     case EQUIPMENT: getEQUIP(pointing); break
     case CONTACT: createEditcell(pointing); break
+    default: null
   }
 }

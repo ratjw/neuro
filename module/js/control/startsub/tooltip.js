@@ -4,18 +4,36 @@ import {
   TREATMENT, EQUIPMENT, CONTACT
 } from "../const.js"
 
+const menulist = [
+  "Staff",
+  "clickserviceReview",
+  "Search",
+  "history",
+  "clickaddnewrow",
+  "postpone",
+  "moveCase",
+  "copyCase",
+  "delete",
+  "setholiday",
+  "submenu",
+  "clickSetStaff",
+  "clickSetGovtday",
+  "clickreadme"
+]
+
 export function tooltip()
 {
   let mainth = document.querySelectorAll("#maintbl tr:has(th)")
   let cssmenu = document.querySelectorAll("#cssmenu [id]")
+  let general = document.querySelector("#cssmenu")
 ;
   [...mainth].forEach(tr => {
     attachTooltip([...tr.querySelectorAll("th")])
   })
 ;
-  [...cssmenu].forEach(id => {
-    checkTooltip(id)
-  })
+  let menu = [...cssmenu].filter(e => menulist.includes(e.id))
+  menu.push(general)
+  attachTooltip(menu)
 }
 
 function attachTooltip(tooltipElements)
@@ -30,7 +48,7 @@ function attachTooltip(tooltipElements)
      
      element.addEventListener('mousemove', (e) => {
         tooltip.style.left = e.pageX + 10 + 'px';
-        tooltip.style.top = e.pageY - 40 + 'px';
+        tooltip.style.top = e.pageY + 'px';
      });
      
      element.addEventListener('mouseleave', (e) => {
@@ -41,9 +59,13 @@ function attachTooltip(tooltipElements)
  
 function getMessage(e)
 {
-  let target = e.target.cellIndex
+  let table = e.target.closest("table")
+  let div = e.target.closest("div")
+  let column = e.target.cellIndex
+  let id = e.target.id
 
-  return setMainMessage(target)
+  if (table && table.id === "maintbl") return setMainMessage(column)
+  if (div && div.id === "cssmenu") return setMenuMessage(id)
 }
 
 function setMainMessage(column)
@@ -61,7 +83,8 @@ function setMainMessage(column)
     case TREATMENT: return messageTREATMENT(); break
     case EQUIPMENT: return messageEQUIPMENT(); break
     case CONTACT: return messageCONTACT(); break
-  }
+    default: null
+ }
 }
 
 function messageOPDATE()
@@ -157,6 +180,29 @@ function messageCONTACT()
      Notes - ฐานะการเงิน ยาป้องกันเลือดแข็งตัว แพ้ยา`)
 }
 
+function setMenuMessage(id)
+{
+  switch(id)
+  {
+    case "Staff": return messageStaff(); break
+    case "clickserviceReview": return messageServiceReview(); break
+    case "Search": return messageSearch(); break
+    case "history": return messageRetrace(); break
+    case "clickaddnewrow": return messageAdd(); break
+    case "postpone": return messagePostpone(); break
+    case "moveCase": return messageMove(); break
+    case "copyCase": return messageCopy(); break
+    case "delete": return messageDelete(); break
+    case "setholiday": return messageHoliday(); break
+    case "submenu": return messagesubmenu(); break
+    case "clickSetStaff": return messageStaffSetting(); break
+    case "clickSetGovtday": return messageSetGovtday(); break
+    case "clickreadme": return messageReadme(); break
+    case "cssmenu": return messageGeneral(); break
+    default: null
+  }
+}
+
 function messageStaff()
 {
    return (
@@ -216,7 +262,7 @@ function messageCopy()
    return ("คลิก copy แล้วเลื่อนเมาส์ไปคลิกตรงวันที่ต้องการ")
 }
 
-function messageDel()
+function messageDelete()
 {
    return ("ลบเคสที่เลือกไว้ ต้องยืนยันก่อนเสมอ")
 }
@@ -226,12 +272,17 @@ function messageHoliday()
    return ("วันหยุดทางศาสนา วันที่ ไม่ตรงกันทุกปี ผู้ใช้ต้องกำหนดเอง")
 }
 
+function messagesubmenu()
+{
+   return ("อัพเดทรายชื่ออาจารย์")
+}
+
 function messageStaffSetting()
 {
    return ("อัพเดทรายชื่ออาจารย์")
 }
 
-function messagePublic()
+function messageSetGovtday()
 {
    return ("วันหยุดปฏิทินสากล	วันที่ ตรงกันทุกปี")
 }
@@ -244,7 +295,7 @@ function messageReadme()
 function messageGeneral()
 {
   return (
-`Login ID      เลขประจำตัว 6 หลัก            
+`Login ID     เลขประจำตัว 6 หลัก            
 Password     ที่ใช้กับโรงพยาบาล
 การบันทึกข้อมูล
    เมื่อพิมพ์ข้อความเสร็จ ให้บันทึกโดย

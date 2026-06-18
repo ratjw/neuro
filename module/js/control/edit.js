@@ -93,6 +93,7 @@ let keyin = function (evt, keycode) {
       }
       evt.preventDefault()
       return
+    default: null
   }
 }
 
