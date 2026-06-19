@@ -26,13 +26,14 @@ export function tooltip()
   let mainth = document.querySelectorAll("#maintbl tr:has(th)")
   let cssmenu = document.querySelectorAll("#cssmenu [id]")
   let general = document.querySelector("#cssmenu")
+  let service = document.querySelector("#servicetbl thead")
+  let menu = [...cssmenu].filter(e => menulist.includes(e.id))
 ;
   [...mainth].forEach(tr => {
     attachTooltip([...tr.querySelectorAll("th")])
   })
-;
-  let menu = [...cssmenu].filter(e => menulist.includes(e.id))
-  menu.push(general)
+
+  menu.push(general, service)
   attachTooltip(menu)
 }
 
@@ -64,7 +65,11 @@ function getMessage(e)
   let column = e.target.cellIndex
   let id = e.target.id
 
-  if (table && table.id === "maintbl") return setMainMessage(column)
+  if (table) {
+    if (table.id === "maintbl") return setMainMessage(column)
+    else if (table.id === "servicetbl") return setMenuMessage(table.id)
+  }
+
   if (div && div.id === "cssmenu") return setMenuMessage(id)
 }
 
@@ -90,7 +95,7 @@ function setMainMessage(column)
 function messageOPDATE()
 {
   return (
-`คอลัมน์ Date - คลิกเลือกเคส เลือกได้ทีละเคสเท่านั้น
+`เลือกเคส เลือกได้ทีละเคสเท่านั้น
  
  การเปลี่ยนวันผ่าตัด ทำได้ 2 วิธี
 	1. Drag & Drop ลากข้ามตารางได้
@@ -104,7 +109,7 @@ function messageOPDATE()
 function messageOPROOM()
 {
   return (
-`คอลัมน์ Rm - คลิกเลือกห้องผ่าตัด
+`เลือกห้องผ่าตัด
 
 เปลี่ยนเบอร์ห้อง
    - คลิกหัวลูกศร มากขึ้น-น้อยลง
@@ -115,7 +120,7 @@ function messageOPROOM()
 function messageOPTIME()
 {
   return (
-`คอลัมน์ Time – คลิกเลือกเวลา
+`เลือกเวลา
 
 เปลี่ยนเวลา
    - คลิกหัวลูกศร มากขึ้น-น้อยลง
@@ -126,7 +131,7 @@ function messageOPTIME()
 function messageCASENUM()
 {
   return (
-`คอลัมน์ № - คลิกเลือกลำดับเคส
+`เลือกลำดับเคส
 
 เปลี่ยนลำดับเคส
    - คลิกหัวลูกศร มากขึ้น-น้อยลง
@@ -137,19 +142,22 @@ function messageCASENUM()
 function messageSTAFFNAME()
 {
   return (
-"คอลัมน์ Staff - คลิกเลือกชื่ออาจารย์เจ้าของไข้")
+"เลือกชื่ออาจารย์เจ้าของไข้")
 }
 
 function messageHN()
 {
   return (
-"คอลัมน์ HN - ใส่ได้เฉพาะเมื่อยังว่าง")
+"ใส่ได้เฉพาะเมื่อยังว่าง")
 }
 
 function messagePATIENT()
 {
    return (
-"คอลัมน์ Patient - วันเสาร์เป็นชื่ออาจารย์ Consult")
+`วันเสาร์เป็นชื่ออาจารย์ Consult
+ต้องการแลกเวร
+   Right mouse click
+   เลือกชื่ออาจารย์ที่มาอยู่แทน`)
 }
 
 function messageDIAGNOSIS()
@@ -157,7 +165,7 @@ function messageDIAGNOSIS()
   return (
 `ชื่อโรคทั้งหมด
 
-ใส่ข้อความประกาศ`)
+เป็นช่องที่ใช้ใส่ข้อความประกาศได้`)
 }
 
 function messageTREATMENT()
@@ -165,7 +173,7 @@ function messageTREATMENT()
   return (
 `ชื่อการผ่าตัด
 
-ใส่ข้อความประกาศ`)
+เป็นช่องที่ใช้ใส่ข้อความประกาศได้`)
 }
 
 function messageEQUIPMENT()
@@ -176,8 +184,9 @@ function messageEQUIPMENT()
 function messageCONTACT()
 {
    return (
-`คอลัมน์ CONTACT - เบอร์โทร ที่อยู่ ชื่อญาติ
-     Notes - ฐานะการเงิน ยาป้องกันเลือดแข็งตัว แพ้ยา`)
+`เบอร์โทรติดต่อ ที่อยู่ปัจจุบัน ชื่อญาติผู้ติดตาม
+
+Notes - ฐานะการเงิน ยาป้องกันเลือดแข็งตัว แพ้ยา`)
 }
 
 function setMenuMessage(id)
@@ -199,6 +208,7 @@ function setMenuMessage(id)
     case "clickSetGovtday": return messageSetGovtday(); break
     case "clickreadme": return messageReadme(); break
     case "cssmenu": return messageGeneral(); break
+    case "servicetbl": return messageService(); break
     default: null
   }
 }
@@ -207,33 +217,30 @@ function messageStaff()
 {
    return (
 `เป็น dropdown รายชื่ออาจารย์
-         คลิกเลือกชื่ออาจารย์
-	       จะมีการแบ่งครึ่งหน้าจอ
-             ด้านซ้าย เป็นตารางรวม
-	       ด้านขวา เป็นตารางของอาจารย์ท่านนั้น
-	       ใช้เมาส์ชี้ที่เส้นแบ่งกลาง เปลี่ยนความกว้าง ซ้าย|ขวา`)
+   คลิกเลือกชื่ออาจารย์ จะมีการแบ่งครึ่งหน้าจอ โดย
+   ด้านซ้าย เป็นตารางรวม
+   ด้านขวา เป็นตารางของอาจารย์ท่านนั้น
+   ใช้เมาส์ชี้ที่เส้นแบ่งกลาง เปลี่ยนความกว้าง ซ้าย|ขวา`)
 }
 
 function messageServiceReview()
 {
-   return (
-`ต้องการเปลี่ยนเดือน คลิกหัวลูกศร ซ้าย ขวา
-	      ต้องลงเคสที่ตารางรวมก่อน ไม่สามารถลงเคสที่ตารางนี้`)
+   return ("ต้องการเปลี่ยนเดือน คลิกหัวลูกศร ซ้าย ขวา")
 }
 
 function messageSearch()
 {
    return (
-`หาเคส  ด้วย HN, ชื่อ, นามสกุล
-			            Staff
-			            คำใดๆ ที่ต้องการ
-All Saved Cases
-     ดูทุกเคสตั้งแต่เริ่มมีข้อมูล ยกเว้นเคสที่ถูกลบ
-     ปรากฏทีละ 1 สัปดาห์
-     คลิกด้านล่างเลื่อนดู ย้อนหน้า-ย้อนหลัง
-All Deleted Cases
-     เคสที่ถูกลบออกไป (แสดงเพียง 3 เดือนสุดท้าย)
-		     คลิกที่ช่องซ้ายสุดของเคส เพื่อ Undelete`)
+`หาเคส  ด้วย HN, ชื่อ, นามสกุล, ชื่อ Staff, หรือ คำใดๆ ก็ได้
+
+Search All Saved Cases
+   ดูทุกเคสตั้งแต่เริ่มมีข้อมูล ยกเว้นเคสที่ถูกลบ
+   ปรากฏทีละ 1 สัปดาห์
+   คลิกด้านล่างเลื่อนดู ย้อนหน้า-ย้อนหลัง
+
+Show Deleted Cases
+   แสดงเคสที่ถูกลบออกไปแล้ว เพียง 3 เดือนสุดท้าย
+   คลิกที่ช่องซ้ายสุดของเคส เพื่อ Undelete`)
 }
 
 function messageRetrace()
@@ -289,7 +296,7 @@ function messageSetGovtday()
 
 function messageReadme()
 {
-   return ("วันหยุดทางศาสนา วันที่ ไม่ตรงกันทุกปี ผู้ใช้ต้องกำหนดเอง")
+   return ("Help Document that is shown at mouse tip")
 }
 
 function messageGeneral()
@@ -308,4 +315,9 @@ Password     ที่ใช้กับโรงพยาบาล
 Esc ยกเลิก ไม่บันทึก (ก่อน 10 วินาที)
 
 Enter ไม่ได้บันทึก แต่ไปขึ้นบรรทัดใหม่ในช่องเดิม`)
+}
+
+function messageService()
+{
+  return "ต้องลงเคสที่ตารางรวมก่อน ไม่สามารถลงเคสที่ตารางนี้"
 }
