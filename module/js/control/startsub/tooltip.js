@@ -27,6 +27,7 @@ export function tooltip()
   let mainth = document.querySelectorAll("#maintbl tr:has(th)")
   let cssmenu = document.querySelectorAll("#cssmenu [id]")
   let user = document.querySelector("#cssmenu")
+  let waiting = document.querySelector("#titlebar")
   let service = document.querySelector("#servicetbl thead")
   let menu = [...cssmenu].filter(e => menulist.includes(e.id))
 ;
@@ -34,7 +35,7 @@ export function tooltip()
     attachTooltip([...tr.querySelectorAll("th")])
   })
 
-  menu.push(user, service)
+  menu.push(user, waiting, service)
   attachTooltip(menu)
 }
 
@@ -72,6 +73,7 @@ function getMessage(e)
   }
 
   if (div && div.id === "cssmenu") return setMenuMessage(id)
+  if (div && div.id === "titlebar") return setMenuMessage(id)
   if (div && div.id === "oneRowMenu") return setMenuMessage(id)
 }
 
@@ -211,6 +213,7 @@ function setMenuMessage(id)
     case "clickSetGovtday": return messageSetGovtday(); break
     case "clickreadme": return messageReadme(); break
     case "cssmenu": return messageUser(); break
+    case "titlebar": return messageWaiting(); break
     case "servicetbl": return messageService(); break
     default: null
   }
@@ -353,6 +356,12 @@ Esc ยกเลิก ไม่บันทึก (ก่อน 10 วินา
 Enter ไม่ได้บันทึก แต่ไปขึ้นบรรทัดใหม่ในช่องเดิม`)
 }
 
+function messageWaiting()
+{
+  return `ตารางเคสเฉพาะของอาจารย์ท่านนี้
+
+ *** ด้านท้ายตาราง มีเคสรอใน waiting list ***`
+}
 function messageService()
 {
   return "ต้องลงเคสที่ตารางรวมก่อน ไม่สามารถลงเคสที่ตารางนี้"
