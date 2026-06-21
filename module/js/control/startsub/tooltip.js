@@ -250,7 +250,7 @@ Show Deleted Cases
 
 function messageoneRowMenu()
 {
-   return ("จะใช้เมนูสีจาง ต้องคลิกเลือกเคสก่อน")
+   return ("จะใช้เมนูสีจาง ต้องเลือกเคสในตารางก่อน")
 }
 
 function messageRetrace()
@@ -270,9 +270,9 @@ function messageAdd()
 function messagePostpone()
 {
    return (
-"เลื่อนวันไปไม่มีกำหนด
+`เลื่อนวันไปไม่มีกำหนด
 
-ต้องมีชื่อ Staff ก่อน จึงจะเลื่อนเป็น waiting list ได้")
+ต้องมีชื่อ Staff ก่อน จึงจะเลื่อนเป็น waiting list ได้`)
 }
 
 function messageMove()
@@ -340,9 +340,7 @@ function messageReadme()
 function messageUser()
 {
   return (
-`จะใช้เมนูสีจาง ต้องเลือกเคสในตารางก่อน
-
-การบันทึกข้อมูล
+`การบันทึกข้อมูล
    เมื่อพิมพ์ข้อความเสร็จ ให้บันทึกโดย
    1. คลิกที่ช่องอื่น
    2. คลิกที่แถบคั่นสัปดาห์
