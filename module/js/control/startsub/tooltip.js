@@ -8,6 +8,7 @@ const menulist = [
   "Staff",
   "clickserviceReview",
   "Search",
+  "oneRowMenu",
   "history",
   "clickaddnewrow",
   "postpone",
@@ -25,7 +26,7 @@ export function tooltip()
 {
   let mainth = document.querySelectorAll("#maintbl tr:has(th)")
   let cssmenu = document.querySelectorAll("#cssmenu [id]")
-  let general = document.querySelector("#cssmenu")
+  let user = document.querySelector("#cssmenu")
   let service = document.querySelector("#servicetbl thead")
   let menu = [...cssmenu].filter(e => menulist.includes(e.id))
 ;
@@ -33,7 +34,7 @@ export function tooltip()
     attachTooltip([...tr.querySelectorAll("th")])
   })
 
-  menu.push(general, service)
+  menu.push(user, service)
   attachTooltip(menu)
 }
 
@@ -71,6 +72,7 @@ function getMessage(e)
   }
 
   if (div && div.id === "cssmenu") return setMenuMessage(id)
+  if (div && div.id === "oneRowMenu") return setMenuMessage(id)
 }
 
 function setMainMessage(column)
@@ -195,6 +197,7 @@ function setMenuMessage(id)
   {
     case "Staff": return messageStaff(); break
     case "clickserviceReview": return messageServiceReview(); break
+    case "oneRowMenu": return messageoneRowMenu(); break
     case "Search": return messageSearch(); break
     case "history": return messageRetrace(); break
     case "clickaddnewrow": return messageAdd(); break
@@ -207,7 +210,7 @@ function setMenuMessage(id)
     case "clickSetStaff": return messageStaffSetting(); break
     case "clickSetGovtday": return messageSetGovtday(); break
     case "clickreadme": return messageReadme(); break
-    case "cssmenu": return messageGeneral(); break
+    case "cssmenu": return messageUser(); break
     case "servicetbl": return messageService(); break
     default: null
   }
@@ -245,10 +248,14 @@ Show Deleted Cases
    คลิกที่ช่องซ้ายสุดของเคส เพื่อ Undelete`)
 }
 
+function messageoneRowMenu()
+{
+   return ("จะใช้เมนูสีจาง ต้องคลิกเลือกเคสก่อน")
+}
+
 function messageRetrace()
 {
    return ("ดูประวัติการแก้ไข เฉพาะของเคสที่เลือกไว้")
-          
 }
 
 function messageAdd()
@@ -330,7 +337,7 @@ function messageReadme()
    return ("Help Document that is shown at mouse tip")
 }
 
-function messageGeneral()
+function messageUser()
 {
   return (
 `จะใช้เมนูสีจาง ต้องเลือกเคสในตารางก่อน
