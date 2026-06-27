@@ -57,7 +57,7 @@ $data = [
 ];
 
 curl1($line_api, $data, $line_token)
-curl2($line_api, $data, $arrayHeader)
+//curl2($line_api, $data, $arrayHeader)
 curl3($line_api, $data, $line_token)
 
 function curl1($line_api, $data, $line_token)
