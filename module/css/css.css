@@ -12,6 +12,11 @@ html, body {
   font-family: sans-serif;
 }
 
+@media (max-width: 800px) {
+  #wrapper {
+    overflow: auto;
+  }
+}
 #mainwrapper,
 #queuewrapper {
   float: left;

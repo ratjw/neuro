@@ -39,23 +39,31 @@ export function tooltip()
 
 function attachTooltip(tooltipElements)
 {
-  const tooltip = document.querySelector('.custom-tooltip');
+  const tooltip = document.querySelector('.custom-tooltip')
+  let timeout = null
   
   tooltipElements.forEach(element => {
-     element.addEventListener('mouseenter', (e) => {
+    element.addEventListener('mouseenter', (e) => {
+      timeout = setTimeout(() => {
         tooltip.textContent = getMessage(e)
-        tooltip.classList.add('show');
-     });
-     
-     element.addEventListener('mousemove', (e) => {
-        tooltip.style.left = e.pageX + 20 + 'px';
-        tooltip.style.top = e.pageY + 'px';
-     });
-     
-     element.addEventListener('mouseleave', (e) => {
-        tooltip.classList.remove('show');
-     });
+        tooltip.classList.add('show')
+      }, 1000)
+    });
+
+    element.addEventListener('mousemove', (e) => {
+      tooltip.style.left = e.pageX + 20 + 'px';
+      tooltip.style.top = e.pageY + 'px';
+    });
+
+    element.addEventListener('mouseleave', (e) => {
+      tooltip.classList.remove('show')
+      clearTimeout(timeout)
+    });
   });
+
+  document.getElementById("wrapper").addEventListener("mousemove", 
+    tooltip.classList.remove('show')
+  )
 }
  
 function getMessage(e)
