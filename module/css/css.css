@@ -8,15 +8,10 @@ html, body {
 #wrapper {
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow: auto;
   font-family: sans-serif;
 }
 
-@media (max-width: 800px) {
-  #wrapper {
-    overflow: auto;
-  }
-}
 #mainwrapper,
 #queuewrapper {
   float: left;
