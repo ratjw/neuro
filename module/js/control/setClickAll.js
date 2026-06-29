@@ -12,7 +12,7 @@ import { allPeriod2Screen } from "../menu/allPeriod2Screen.js"
 import { allPeriod2Excel } from "../menu/allPeriod2Excel.js"
 import { allPeriod2CSV } from "../menu/allPeriod2CSV.js"
 import { allDeletedCases } from "../menu/allDeletedCases.js"
-import { readme } from "../menu/readme.js"
+import { usage } from "../menu/usage.js"
 import { addnewrow } from "../menu/addnewrow.js"
 import { postponeCase } from "../menu/postponeCase.js"
 import { moveCase } from "../menu/moveCopyCase.js"
@@ -51,13 +51,13 @@ function setClickMenu()
     "clickallPeriod2CSV": allPeriod2CSV,
     "clickallDeletedCases": allDeletedCases,
     "clickeditHistory": editHistory,
-    "clickreadme": readme,
     "addrow": addnewrow,
     "postponecase": postponeCase,
     "moveCase": moveCase,
     "copyCase": copyCase,
     "deleteCase": deleteCase,
-    "setholiday": settingHoliday
+    "setholiday": settingHoliday,
+    "usage": usage
   }
 
   Object.entries(clickMenu).forEach(([key, val]) => {

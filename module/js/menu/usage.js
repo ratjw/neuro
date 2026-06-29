@@ -1,12 +1,12 @@
 
-export function readme()
+export function usage()
 {
-  let $dialogReadme = $('#dialogReadme'),
+  let $dialogUsage = $('#dialogUsage'),
     object = "<object data='..\\readme.pdf' type='application/pdf' "
            + "width='400px' height='500px'>"
            + "</object>"
-  $dialogReadme.show()
-  $dialogReadme.dialog({
+  $dialogUsage.show()
+  $dialogUsage.dialog({
     title: "ReadMe",
     closeOnEscape: true,
     modal: true,
@@ -14,7 +14,7 @@ export function readme()
     width: "auto",
     height: 570,
     open: function () {
-      $dialogReadme.html(object)
+      $dialogUsage.html(object)
     }
   })
 }
