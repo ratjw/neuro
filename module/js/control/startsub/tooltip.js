@@ -23,11 +23,14 @@ const menulist = [
 export function tooltip()
 {
   let mainth = document.querySelectorAll("#maintbl tr:has(th)")
-  let cssmenu = document.querySelectorAll("#cssmenu [id]")
   let user = document.querySelector("#cssmenu")
+  let menuid = user.querySelectorAll("[id]")
+  let menu = [...menuid].filter(e => menulist.includes(e.id))
   let waiting = document.querySelector("#titlebar")
   let service = document.querySelector("#servicetbl thead")
-  let menu = [...cssmenu].filter(e => menulist.includes(e.id))
+  let consult = document.querySelectorAll(".consult")
+
+  if (/Mobi|Android|iPhone|iPod|iPad/i.test(navigator.userAgent)) return 
 ;
   [...mainth].forEach(tr => {
     attachTooltip([...tr.querySelectorAll("th")])
@@ -35,6 +38,8 @@ export function tooltip()
 
   menu.push(user, waiting, service)
   attachTooltip(menu)
+
+  attachTooltip([...consult])
 }
 
 function attachTooltip(tooltipElements)
@@ -58,12 +63,11 @@ function attachTooltip(tooltipElements)
     element.addEventListener('mouseleave', (e) => {
       tooltip.classList.remove('show')
       clearTimeout(timeout)
+      setTimeout(() => {
+        tooltip.classList.remove('show')
+      }, 1000)
     });
   });
-
-  document.getElementById("wrapper").addEventListener("mousemove", 
-    tooltip.classList.remove('show')
-  )
 }
  
 function getMessage(e)
@@ -72,13 +76,24 @@ function getMessage(e)
   let div = e.target.closest("div")
   let column = e.target.cellIndex
   let id = e.target.id
+  let consult = e.target.className === "consult"
 
-  if (table) {
-    if (table.id === "maintbl") return setMainMessage(column)
-    else if (table.id === "servicetbl") return setMenuMessage(table.id)
+  if (consult) return consultMessage()
+  if (table && table.id === "maintbl") return setMainMessage(column)
+
+  if (div) {
+    if (div.id === "cssmenu") return setMenuMessage(id)
+    if (div.id === "titlebar") return setMenuMessage(id)
+    if (div.id === "oneRowMenu") return setMenuMessage(id)
+    if (div.id === "dialogService") return setMenuMessage(div.id)
   }
+}
 
-  if (div && div.id === "cssmenu") return setMenuMessage(id)
-  if (div && div.id === "titlebar") return setMenuMessage(id)
-  if (div && div.id === "oneRowMenu") return setMenuMessage(id)
+function consultMessage()
+{
+  return (
+`วิธีแลกเวรคอนซัลท์อาจารย์
+ : Desktop กดปุ่มขวาเมาส์ค้างไว้ ที่
+ : Mobile นิ้วกดค้าง ที่
+ช่อง สัปดาห์ consult อ. (ช่อง Patient วันเสาร์) จะมีรายชื่ออาจารย์ขึ้นมา ให้เลือก ชื่อ อ. ที่มาอยู่แทน`)
 }

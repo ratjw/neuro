@@ -20,7 +20,7 @@ export function setMenuMessage(id)
     case "clickreadme": return messageReadme(); break
     case "cssmenu": return messageUser(); break
     case "titlebar": return messageWaiting(); break
-    case "servicetbl": return messageService(); break
+    case "dialogService": return messageService(); break
     default: null
   }
 }
