@@ -5,8 +5,8 @@ export function setMenuMessage(id)
   {
     case "Staff": return messageStaff(); break
     case "clickserviceReview": return messageServiceReview(); break
-    case "oneRowMenu": return messageoneRowMenu(); break
     case "Search": return messageSearch(); break
+    case "oneRowMenu": return messageoneRowMenu(); break
     case "history": return messageRetrace(); break
     case "clickaddnewrow": return messageAdd(); break
     case "postpone": return messagePostpone(); break
@@ -19,8 +19,6 @@ export function setMenuMessage(id)
     case "clickSetGovtday": return messageSetGovtday(); break
     case "clickreadme": return messageReadme(); break
     case "cssmenu": return messageUser(); break
-    case "titlebar": return messageWaiting(); break
-    case "dialogService": return messageService(); break
     default: null
   }
 }
@@ -160,15 +158,4 @@ function messageUser()
 Esc ยกเลิก ไม่บันทึก (ก่อน 10 วินาที)
 
 Enter ไม่ได้บันทึก แต่ไปขึ้นบรรทัดใหม่ในช่องเดิม`)
-}
-
-function messageWaiting()
-{
-  return `ตารางเคสเฉพาะของอาจารย์ท่านนี้
-
- *** ด้านท้ายตาราง มีเคสรอใน waiting list ***`
-}
-function messageService()
-{
-  return "ต้องลงเคสที่ตารางรวมก่อน ไม่สามารถลงเคสที่ตารางนี้"
 }
