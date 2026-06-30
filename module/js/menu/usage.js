@@ -2,17 +2,17 @@
 export function usage()
 {
   let $dialogUsage = $('#dialogUsage'),
-    object = "<object data='..\\readme.pdf' type='application/pdf' "
+    object = "<object data='..\\usage.pdf' type='application/pdf' "
            + "width='400px' height='500px'>"
            + "</object>"
   $dialogUsage.show()
   $dialogUsage.dialog({
-    title: "ReadMe",
+    title: "วิธีใช้",
     closeOnEscape: true,
     modal: true,
     show: 200,
     width: "auto",
-    height: 570,
+    height: 600,
     open: function () {
       $dialogUsage.html(object)
     }

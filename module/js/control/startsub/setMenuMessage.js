@@ -17,8 +17,7 @@ export function setMenuMessage(id)
     case "submenu": return messagesubmenu(); break
     case "clickSetStaff": return messageStaffSetting(); break
     case "clickSetGovtday": return messageSetGovtday(); break
-    case "clickreadme": return messageReadme(); break
-    case "cssmenu": return messageUser(); break
+    case "usage": return messageUser(); break
     default: null
   }
 }
@@ -137,11 +136,6 @@ function messageSetGovtday()
 `กำหนดวันหยุดปฏิทินสากล
 
 วันที่ ตรงกันทุกปี ตามปฏิทินสากล`)
-}
-
-function messageReadme()
-{
-   return ("Help Document that is shown at mouse tip")
 }
 
 function messageUser()

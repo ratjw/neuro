@@ -17,16 +17,16 @@ const menulist = [
   "submenu",
   "clickSetStaff",
   "clickSetGovtday",
-  "clickreadme"
+  "usage"
 ]
 
 export function tooltip()
 {
   let mainth = document.querySelectorAll("#maintbl tr:has(th)")
-  let user = document.querySelector("#cssmenu")
-  let menuid = user.querySelectorAll("[id]")
+  let usage = document.querySelector("#usage")
+  let menuid = document.querySelectorAll("#cssmenu [id]")
   let menu = [...menuid].filter(e => menulist.includes(e.id))
-  let waiting = document.querySelector("#titlebar")
+  let waitlist = document.querySelector("#titlebar")
   let service = document.querySelector("#servicetbl thead")
   let consult = document.querySelectorAll(".consult")
 
@@ -36,7 +36,7 @@ export function tooltip()
     attachTooltip([...tr.querySelectorAll("th")])
   })
 
-  menu.push(user, waiting, service)
+  menu.push(waitlist, service)
   attachTooltip(menu)
 
   attachTooltip([...consult])
