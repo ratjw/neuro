@@ -107,7 +107,7 @@ function messageDelete()
 function messageHoliday()
 {
    return (
-`เลือกเคสที่จะกำหนดให้เป็นวันหยุด
+`เลือกวันที่จะกำหนดให้เป็นวันหยุด
 คลิก holiday
 เลือกชื่อวันที่กำหนด
 

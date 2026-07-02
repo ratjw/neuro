@@ -7,6 +7,12 @@ import {
 } from "../setting/constHoliday.js"
 import { getPermission } from '../control/setClickAll.js'
 
+const everyyear = `ตรวจสอบให้แน่ใจว่า วันหยุดนี้ตรงตามวันปฏิทินสากลทุกปี
+
+OK = ตรงตามปฏิทินสากลทุกปี
+Cancel = เฉพาะปีนี้ปีเดียว ไปใส่ในปฏิทินไทย 
+               คลิกช่องวันที่ ในตารางใหญ่ -> holiday เมนูด้านบน`
+
 export function settingGovtday()
 {
   fillGovtday()
@@ -74,7 +80,10 @@ function newGovtday()
   holidayname.contentEditable = true
   holidayname.oninput = checkComplete
   cells[ACTION].onclick = async () => {
-    await saveHoliday(ddThaiM_2_ISO(holidate.value), holidayname.textContent)
+    if (confirm(everyyear)) {
+      await saveHoliday(ddThaiM_2_ISO(holidate.value), holidayname.textContent)
+    }
+
     fillGovtday()
   }
 }
