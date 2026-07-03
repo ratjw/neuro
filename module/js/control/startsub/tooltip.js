@@ -37,9 +37,7 @@ export function tooltip()
     attachTooltip([...tr.querySelectorAll("th")])
   })
 
-  attachTooltip([...menu, waitlist, service])
-
-  attachTooltip([...consult])
+  attachTooltip([...menu, ...consult, waitlist, service])
 }
 
 function attachTooltip(tooltipElements)
