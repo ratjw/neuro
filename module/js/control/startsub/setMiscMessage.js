@@ -1,5 +1,5 @@
 
-export function consultMessage()
+export function messageConsult()
 {
   return (
 `วิธีแลกเวรคอนซัลท์อาจารย์

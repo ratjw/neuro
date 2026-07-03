@@ -1,7 +1,7 @@
 
 import { setMainMessage } from "./setMainMessage.js"
 import { setMenuMessage } from "./setMenuMessage.js"
-import { consultMessage, messageWaitlist, messageService } from "./setMiscMessage.js"
+import { messageConsult, messageWaitlist, messageService } from "./setMiscMessage.js"
 
 const menulist = [
   "Staff",
@@ -79,7 +79,7 @@ function getMessage(e)
   let id = e.target.id
   let consult = e.target.className === "consult"
 
-  if (consult) return consultMessage()
+  if (consult) return messageConsult()
   if (id === "titlebar") return messageWaitlist()
   if (div && div.id === "dialogService") return messageService()
   if (div && div.id === "cssmenu") return setMenuMessage(id)
