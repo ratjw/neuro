@@ -65,7 +65,7 @@ function attachTooltip(tooltipElements)
       clearTimeout(timeout)
       setTimeout(() => {
         tooltip.classList.remove('show')
-      }, 1000)
+      }, 8000)
     });
   });
 }

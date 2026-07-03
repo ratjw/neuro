@@ -2,6 +2,9 @@
 import { SELECTED, MOVECASE, COPYCASE } from "../control/const.js"
 import { oneRowMenu } from '../control/oneRowMenu.js'
 
+const ONEROW = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", 
+                 "#delete", "#setholyday"]
+
 export function selectRow(event, target)
 {
   let row = target.closest("tr"),
@@ -17,18 +20,14 @@ export function selectRow(event, target)
 // All ids are the items in cssmenu
 export function clearSelection()
 {
-  let table = document.querySelector("#maintbl"),
-    menu = document.querySelector("#cssmenu"),
-    ids = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", "#delete", "#setholyday"]
-
-  ids.forEach(each => {
-    let row = menu.querySelector(`${each}`)
+  ONEROW.forEach(each => {
+    let row = document.querySelector(`${each}`)
     if (row) {
       row.classList.add("disabled")
     }
   })
 
-  table.querySelectorAll(`.${SELECTED}`).forEach(each => {
+  document.querySelectorAll(`.${SELECTED}`).forEach(each => {
     each.classList.remove(SELECTED)
   })
 }

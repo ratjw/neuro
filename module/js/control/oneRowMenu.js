@@ -16,7 +16,9 @@ export function oneRowMenu()
 
   enable(qn, "#addrow")
 
-  let postpone = qn && staffname && notLARGE
+  let postpone = qn && staffname && notLARGE,
+    holyday = notLARGE
+
   if (postpone) {
     $("#postponecase").html("<b>Confirm เลื่อน ไม่กำหนดวัน  </b><br>" + patient)
   }
@@ -34,7 +36,7 @@ export function oneRowMenu()
   }
   enable(Delete, "#delete")
 
-  enable(true, "#setholyday")
+  enable(holyday, "#setholyday")
 }
 
 function enable(able, id)
