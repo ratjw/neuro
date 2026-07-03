@@ -19,7 +19,7 @@ export function clearSelection()
 {
   let table = document.querySelector("#maintbl"),
     menu = document.querySelector("#cssmenu"),
-    ids = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", "#delete", "#setholiday"]
+    ids = ["#addrow", "#postpone", "#moveCase", "#copyCase", "#history", "#delete", "#setholyday"]
 
   ids.forEach(each => {
     let row = menu.querySelector(`${each}`)

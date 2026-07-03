@@ -133,7 +133,7 @@
   #cssmenu > ul li#moveCase,
   #cssmenu > ul li#copyCase,
   #cssmenu > ul li#delete,
-  #cssmenu > ul li#setholiday,
+  #cssmenu > ul li#setholyday,
   #cssmenu > ul li#submenu {
     display: none
   }

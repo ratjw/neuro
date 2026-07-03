@@ -2,7 +2,7 @@
 import { MAXDATE, SELECTED } from "../control/const.js"
 
 // disable some menu-items for the one current row
-// Menu for the current row -> addrow, postpone, moveCase, copyCase, tracking, del, setholiday
+// Menu for the current row -> addrow, postpone, moveCase, copyCase, tracking, del, setholyday
 // Menu for all cases -> staffqueue, service, all deleted, search, readme
 export function oneRowMenu()
 {
@@ -34,7 +34,7 @@ export function oneRowMenu()
   }
   enable(Delete, "#delete")
 
-  enable(true, "#setholiday")
+  enable(true, "#setholyday")
 }
 
 function enable(able, id)

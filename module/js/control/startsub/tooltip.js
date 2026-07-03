@@ -14,7 +14,7 @@ const menulist = [
   "moveCase",
   "copyCase",
   "delete",
-  "setholiday",
+  "setholyday",
   "submenu",
   "clickSetStaff",
   "clickSetGovtday",
@@ -27,7 +27,7 @@ export function tooltip()
   let usage = document.querySelector("#usage")
   let menuid = document.querySelectorAll("#cssmenu [id]")
   let menu = [...menuid].filter(e => menulist.includes(e.id))
-  let waitlist = document.querySelector("#titlebar")
+  let waitlist = document.querySelector("#queuewrapper")
   let service = document.querySelector("#servicetbl thead")
   let consult = document.querySelectorAll(".consult")
 
@@ -37,8 +37,7 @@ export function tooltip()
     attachTooltip([...tr.querySelectorAll("th")])
   })
 
-  menu.push(waitlist, service)
-  attachTooltip(menu)
+  attachTooltip([...menu, waitlist, service])
 
   attachTooltip([...consult])
 }
@@ -80,7 +79,7 @@ function getMessage(e)
   let consult = e.target.className === "consult"
 
   if (consult) return messageConsult()
-  if (id === "titlebar") return messageWaitlist()
+  if (id === "queuewrapper") return messageWaitlist()
   if (div && div.id === "dialogService") return messageService()
   if (div && div.id === "cssmenu") return setMenuMessage(id)
   if (table && table.id === "maintbl") return setMainMessage(column)

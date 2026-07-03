@@ -13,7 +13,7 @@ export function setMenuMessage(id)
     case "moveCase": return messageMove(); break
     case "copyCase": return messageCopy(); break
     case "delete": return messageDelete(); break
-    case "setholiday": return messageHoliday(); break
+    case "setholyday": return messageHolyday(); break
     case "submenu": return messagesubmenu(); break
     case "clickSetStaff": return messageStaffSetting(); break
     case "clickSetGovtday": return messageSetGovtday(); break

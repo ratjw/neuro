@@ -7,17 +7,16 @@ import { fillHoliday, refillHoliday } from "../view/fillHoliday.js"
 export function dialogHoliday(title)
 {
   const  $dialogHoliday = $("#dialogHoliday"),
-    maxHeight = winHeight(98)
+    maxHeight = winHeight(80)
 
   $dialogHoliday.dialog({ modal: true })
-  $dialogHoliday.dialog({ height: 'auto' })
   $dialogHoliday.dialog({
     title: title,
     closeOnEscape: true,
     show: 200,
     hide: 200,
     width: 'auto',
-    height: ($dialogHoliday.height() > maxHeight) ? maxHeight : 'auto'
+    height: maxHeight
   })
 }
 

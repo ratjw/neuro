@@ -377,6 +377,10 @@
   margin-left: 5px;
 }
 
+#dialogHoliday {
+  overflow-y: auto;
+}
+
 #dialogHoliday table td {
   padding: 0 10px;
 }

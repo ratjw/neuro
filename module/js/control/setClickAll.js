@@ -19,7 +19,7 @@ import { moveCase } from "../menu/moveCopyCase.js"
 import { copyCase } from "../menu/moveCopyCase.js"
 import { editHistory } from "../menu/editHistory.js"
 import { deleteCase } from "../menu/deleteCase.js"
-import { settingHoliday } from "../setting/settingHoliday.js"
+import { settingHolyday } from "../setting/settingHolyday.js"
 import { settingGovtday } from "../setting/settingGovtday.js"
 import { settingStaff } from '../setting/settingStaff.js'
 import { monthpicker, hidemonthpicker } from '../service/monthpicker.js'
@@ -56,7 +56,7 @@ function setClickMenu()
     "moveCase": moveCase,
     "copyCase": copyCase,
     "deleteCase": deleteCase,
-    "setholiday": settingHoliday,
+    "setholyday": settingHolyday,
     "usage": usage
   }
 

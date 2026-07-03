@@ -8,7 +8,7 @@ import {
   ACTION, SAVE, LIST, DELETE, getHOLIDAY
 } from "../setting/constHoliday.js"
 
-export function settingHoliday()
+export function settingHolyday()
 {
   dialogHoliday("วันหยุดปฏิทินไทย")
   fillHolyDay()
