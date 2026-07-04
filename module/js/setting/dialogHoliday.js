@@ -6,8 +6,7 @@ import { fillHoliday, refillHoliday } from "../view/fillHoliday.js"
 
 export function dialogHoliday(title)
 {
-  const  $dialogHoliday = $("#dialogHoliday"),
-    maxHeight = winHeight(80)
+  const  $dialogHoliday = $("#dialogHoliday")
 
   $dialogHoliday.dialog({ modal: true })
   $dialogHoliday.dialog({
@@ -16,7 +15,7 @@ export function dialogHoliday(title)
     show: 200,
     hide: 200,
     width: 'auto',
-    height: maxHeight
+    height: winHeight(80)
   })
 }
 

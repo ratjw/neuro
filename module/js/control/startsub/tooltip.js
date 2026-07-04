@@ -27,9 +27,9 @@ export function tooltip()
   let usage = document.querySelector("#usage")
   let menuid = document.querySelectorAll("#cssmenu [id]")
   let menu = [...menuid].filter(e => menulist.includes(e.id))
-  let waitlist = document.querySelector("#queuewrapper")
-  let service = document.querySelector("#servicetbl thead")
   let consult = document.querySelectorAll(".consult")
+  let waitlist = document.querySelector("#queuewrapper")
+  let service = document.querySelector("#dialogService")
 
   if (/Mobi|Android|iPhone|iPod|iPad/i.test(navigator.userAgent)) return 
 ;

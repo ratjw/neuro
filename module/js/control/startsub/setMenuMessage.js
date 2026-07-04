@@ -104,11 +104,11 @@ function messageDelete()
    return ("ลบเคสที่เลือกไว้ ต้องยืนยันก่อนเสมอ")
 }
 
-function messageHoliday()
+function messageHolyday()
 {
    return (
 `เลือกวันที่จะกำหนดให้เป็นวันหยุด
-คลิก holiday
+คลิก Holyday
 เลือกชื่อวันที่กำหนด
 
 วันหยุดทางศาสนา
