@@ -1,7 +1,8 @@
 
 import { setMainMessage } from "./setMainMessage.js"
 import { setMenuMessage } from "./setMenuMessage.js"
-import { messageConsult, messageWaitlist, messageService } from "./setMiscMessage.js"
+import { messageConsult, messageWaitlist, messageService,
+  messageDeleted, messageHoliday } from "./setMiscMessage.js"
 
 const menulist = [
   "Staff",
@@ -30,14 +31,16 @@ export function tooltip()
   let consult = document.querySelectorAll(".consult")
   let waitlist = document.querySelector("#queuewrapper")
   let service = document.querySelector("#dialogService")
+  let deleted = document.querySelector("#dialogAllDeleted")
+  let holiday = document.querySelector("#dialogHoliday")
 
-  if (/Mobi|Android|iPhone|iPod|iPad/i.test(navigator.userAgent)) return 
+  if (/Mobi|Android|iPhone|iPod|iPad/i.test(navigator.userAgent)) return
 ;
   [...mainth].forEach(tr => {
     attachTooltip([...tr.querySelectorAll("th")])
   })
 
-  attachTooltip([...menu, ...consult, waitlist, service])
+  attachTooltip([...menu, ...consult, waitlist, service, deleted, holiday])
 }
 
 function attachTooltip(tooltipElements)
@@ -63,7 +66,7 @@ function attachTooltip(tooltipElements)
       clearTimeout(timeout)
       setTimeout(() => {
         tooltip.classList.remove('show')
-      }, 8000)
+      }, 10000)
     });
   });
 }
@@ -79,6 +82,8 @@ function getMessage(e)
   if (consult) return messageConsult()
   if (id === "queuewrapper") return messageWaitlist()
   if (div && div.id === "dialogService") return messageService()
+  if (div && div.id === "dialogAllDeleted") return messageDeleted()
+  if (div && div.id === "dialogHoliday") return messageHoliday()
   if (div && div.id === "cssmenu") return setMenuMessage(id)
   if (table && table.id === "maintbl") return setMainMessage(column)
 }
