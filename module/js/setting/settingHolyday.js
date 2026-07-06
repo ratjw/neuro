@@ -38,6 +38,7 @@ jQuery.fn.extend({
 
     row.dataset.holidate = q.holidate
     row.dataset.dayname = q.dayname
+    cells[0].contentEditable = "true"
 ;   [ ISO_2_th(q.holidate),
       q.dayname,
       DELETE
