@@ -25,7 +25,8 @@ const menulist = [
   "SearchWordsInterval",
   "SearchAll",
   "SearchAllAll",
-  "SearchAllInterval"
+  "SearchAllInterval",
+  "clickallDeletedCases"
 ]
 
 export function tooltip()

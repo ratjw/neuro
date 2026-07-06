@@ -24,6 +24,7 @@ export function setMenuMessage(id)
     case "SearchAll": return messageSearchAll(); break
     case "SearchAllAll": return messageSearchAllAll(); break
     case "SearchAllInterval": return messageSearchAllInterval(); break
+    case "clickallDeletedCases": return messageAllDeletedCases(); break
     default: null
   }
 }
@@ -189,4 +190,9 @@ function messageSearchAllInterval()
   return (
 `หาจากเคสในช่วงเวลาเฉพาะ
 วัน "ตั้งแต่:" และวัน "จนถึง:"`)
+}
+
+function messageAllDeletedCases()
+{
+  return "ให้ Undelete เคสได้"
 }
