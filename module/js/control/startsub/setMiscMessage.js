@@ -19,3 +19,8 @@ export function messageService()
 {
   return "ต้องลงเคสที่ตารางรวมก่อน ไม่สามารถลงเคสที่ตารางนี้"
 }
+
+export function messageDeleted()
+{
+  return "คลิกที่ช่องซ้ายสุดของเคส เพื่อ Undelete เคสนี้จะกลับไปตำแหน่งเดิม"
+}
