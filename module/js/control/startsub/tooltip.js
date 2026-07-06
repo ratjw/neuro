@@ -19,7 +19,13 @@ const menulist = [
   "submenu",
   "clickSetStaff",
   "clickSetGovtday",
-  "usage"
+  "usage",
+  "SearchWords",
+  "SearchWordsAll",
+  "SearchWordsInterval",
+  "SearchAll",
+  "SearchAllAll",
+  "SearchAllInterval"
 ]
 
 export function tooltip()
@@ -50,8 +56,9 @@ function attachTooltip(tooltipElements)
   
   tooltipElements.forEach(element => {
     element.addEventListener('mouseenter', (e) => {
+      clearTimeout(timeout)
       timeout = setTimeout(() => {
-        tooltip.textContent = getMessage(e)
+        tooltip.textContent = getMessage(e, tooltip)
         tooltip.classList.add('show')
       }, 1000)
     });
@@ -66,12 +73,12 @@ function attachTooltip(tooltipElements)
       clearTimeout(timeout)
       setTimeout(() => {
         tooltip.classList.remove('show')
-      }, 10000)
+      }, 1000)
     });
   });
 }
  
-function getMessage(e)
+function getMessage(e, tooltip)
 {
   let table = e.target.closest("table")
   let div = e.target.closest("div")
@@ -81,7 +88,7 @@ function getMessage(e)
 
   if (consult) return messageConsult()
   if (id === "queuewrapper") return messageWaitlist()
-  if (div && div.id === "dialogService") return messageService()
+  if (div && div.id === "dialogService") return messageService(tooltip)
   if (div && div.id === "dialogAllDeleted") return messageDeleted()
   if (div && div.id === "dialogHoliday") return messageHoliday()
   if (div && div.id === "cssmenu") return setMenuMessage(id)

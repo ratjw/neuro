@@ -18,6 +18,12 @@ export function setMenuMessage(id)
     case "clickSetStaff": return messageStaffSetting(); break
     case "clickSetGovtday": return messageSetGovtday(); break
     case "usage": return messageUser(); break
+    case "SearchWords": return messageSearchWords(); break
+    case "SearchWordsAll": return messageSearchWordsAll(); break
+    case "SearchWordsInterval": return messageSearchWordsInterval(); break
+    case "SearchAll": return messageSearchAll(); break
+    case "SearchAllAll": return messageSearchAllAll(); break
+    case "SearchAllInterval": return messageSearchAllInterval(); break
     default: null
   }
 }
@@ -40,20 +46,8 @@ function messageServiceReview()
 function messageSearch()
 {
    return (
-`Search Cases by Words
-   หาเคส  ด้วย HN, ชื่อ, นามสกุล, ชื่อ Staff, หรือ คำใดๆ ก็ได้
-      Search in All Time หาจากเคสทั้งหมดตั้งแต่เริ่มมีข้อมูล
-            (พ.ศ.2561 ค.ศ.2018)
-      Search in Time Interval จะมีช่องให้ใส่
-            วัน "ตั้งแต่:" และวัน "จนถึง:"
-
-Search All Saved Cases
-   ดูทุกเคสตั้งแต่เริ่มมีข้อมูล ยกเว้นเคสที่ถูกลบ
-   ปรากฏทีละ 1 สัปดาห์
-   คลิกด้านล่างเลื่อนดู ย้อนหน้า-ย้อนหลัง
-
-Show Deleted Cases
-   แสดงเคสที่ถูกลบออกไปแล้ว แสดงเพียง 3 เดือนสุดท้าย`)
+`หาเคส  ด้วย HN, ชื่อ, นามสกุล, ชื่อ Staff, หรือ คำใดๆ ก็ได้
+กำหนดช่วงเวลาได้`)
 }
 
 function messageoneRowMenu()
@@ -142,13 +136,57 @@ function messageUser()
   return (
 `การบันทึกข้อมูล
    เมื่อพิมพ์ข้อความเสร็จ ให้บันทึกโดย
-   1. คลิกที่ช่องอื่น (คลิกที่ช่อง HN หรือ PATIENT ที่มีข้อมูลอยู่แล้ว จะไม่มีผลข้างเคียงปรากฏ)
+   1. คลิกที่ช่องอื่น
    2. คลิกที่แถบคั่นสัปดาห์
    3. กด Tab (เลื่อนไปช่องต่อไป) 
    4. กด Shift+Tab (เลื่อนไปช่องย้อนหลัง)
    5. โปรแกรมจะบันทึกให้เอง เมื่ออยู่นิ่ง 10 วินาที
 
+คลิกที่ช่อง HN หรือ PATIENT ที่มีข้อมูลอยู่แล้ว จะไม่มีผลข้างเคียงปรากฏ
+
 Esc ยกเลิก ไม่บันทึก (ก่อน 10 วินาที)
 
 Enter ไม่ได้บันทึก แต่ไปขึ้นบรรทัดใหม่ในช่องเดิม`)
+}
+
+function messageSearchWords()
+{
+  return (
+`หาเคส  ด้วย HN, ชื่อ, นามสกุล, ชื่อ Staff, หรือ คำใดๆ ก็ได้`)
+}
+
+function messageSearchWordsAll()
+{
+  return (
+`หาจากเคสทั้งหมดตั้งแต่เริ่มมีข้อมูล
+   (พ.ศ.2561 ค.ศ.2018)`)
+}
+
+function messageSearchWordsInterval()
+{
+  return (
+`หาจากเคสในช่วงเวลาเฉพาะ
+วัน "ตั้งแต่:" และวัน "จนถึง:"`)
+}
+
+function messageSearchAll()
+{
+  return (
+`ดูทุกเคสตั้งแต่เริ่มมีข้อมูล ยกเว้นเคสที่ถูกลบ
+ปรากฏทีละ 1 สัปดาห์
+คลิกด้านล่างเลื่อนดู ย้อนหน้า-ย้อนหลัง`)
+}
+
+function messageSearchAllAll()
+{
+  return (
+`หาจากเคสทั้งหมดตั้งแต่เริ่มมีข้อมูล
+   (พ.ศ.2561 ค.ศ.2018)`)
+}
+
+function messageSearchAllInterval()
+{
+  return (
+`หาจากเคสในช่วงเวลาเฉพาะ
+วัน "ตั้งแต่:" และวัน "จนถึง:"`)
 }

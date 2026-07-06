@@ -15,8 +15,12 @@ export function messageWaitlist()
  *** ด้านท้ายตาราง มีเคสรอใน waiting list ***`
 }
 
-export function messageService()
+export function messageService(tooltip)
 {
+  setTimeout(() => {
+    tooltip.classList.remove('show')
+  }, 8000)
+
   return "ต้องลงเคสที่ตารางรวมก่อน ไม่สามารถลงเคสที่ตารางนี้"
 }
 
