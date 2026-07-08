@@ -8,7 +8,6 @@ const menulist = [
   "Staff",
   "clickserviceReview",
   "Search",
-  "oneRowMenu",
   "history",
   "clickaddnewrow",
   "postpone",

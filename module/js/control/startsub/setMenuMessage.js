@@ -6,7 +6,6 @@ export function setMenuMessage(id)
     case "Staff": return messageStaff(); break
     case "clickserviceReview": return messageServiceReview(); break
     case "Search": return messageSearch(); break
-    case "oneRowMenu": return messageoneRowMenu(); break
     case "history": return messageRetrace(); break
     case "clickaddnewrow": return messageAdd(); break
     case "postpone": return messagePostpone(); break
@@ -49,11 +48,6 @@ function messageSearch()
    return (
 `หาเคส  ด้วย HN, ชื่อ, นามสกุล, ชื่อ Staff, หรือ คำใดๆ ก็ได้
 กำหนดช่วงเวลาได้`)
-}
-
-function messageoneRowMenu()
-{
-   return ("จะใช้เมนูสีจาง ต้องเลือกเคสในตารางก่อน")
 }
 
 function messageRetrace()
