@@ -10,23 +10,24 @@ export function oneRowMenu()
     prevDate = row.previousElementSibling.dataset.opdate,
     opdate = row.dataset.opdate,
     staffname = row.dataset.staffname,
+    hn = row.dataset.hn,
     patient = row.dataset.patient,
     qn = row.dataset.qn,
-    notLARGE = (opdate !== MAXDATE)
+    notLARGE = (opdate !== MAXDATE),
+
+    movecopy = qn && patient && hn && staffname,
+    postpone = qn && patient && hn && staffname && notLARGE
 
   enable(qn, "#addrow")
-
-  let postpone = qn && staffname && notLARGE,
-    holyday = notLARGE
 
   if (postpone) {
     $("#postponecase").html("<b>Confirm เลื่อน ไม่กำหนดวัน  </b><br>" + patient)
   }
   enable(postpone, "#postpone")
 
-  enable(qn, "#moveCase")
+  enable(movecopy, "#moveCase")
 
-  enable(qn, "#copyCase")
+  enable(movecopy, "#copyCase")
 
   enable(qn, "#history")
 
@@ -36,7 +37,7 @@ export function oneRowMenu()
   }
   enable(Delete, "#delete")
 
-  enable(holyday, "#setholyday")
+  enable(notLARGE, "#setholyday")
 }
 
 function enable(able, id)
