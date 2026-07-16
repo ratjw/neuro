@@ -4,7 +4,6 @@
 //use json encode-decode to make numeric array into assoc array
 function getPatientByName($name)
 {
-  $name = [];
   $name = explode(" ", $name);
   $first_name = isset($name[0]) ? $name[0] : "";
   $last_name = isset($name[1]) ? $name[1] : "";
